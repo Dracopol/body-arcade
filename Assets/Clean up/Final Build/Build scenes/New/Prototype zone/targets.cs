@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Splines;
+using UnityEngine.InputSystem;
 
 public class targets : MonoBehaviour
 {
@@ -27,37 +28,24 @@ public class targets : MonoBehaviour
         }
 
         splineAnimate.Container = targetSpline;
-        splineAnimate.Loop = SplineAnimate.LoopMode.Once; 
-        splineAnimate.Completed += () => Destroy(instance); 
+        splineAnimate.Loop = SplineAnimate.LoopMode.Once;
+        splineAnimate.Completed += () => Destroy(instance);
         splineAnimate.Play();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            SpawnAndAnimate(redPrefab, 1);
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            SpawnAndAnimate(yellowPrefab, 1);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            SpawnAndAnimate(bluePrefab, 1);
-        }
+        var kb = Keyboard.current;
+        if (kb == null) return;
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SpawnAndAnimate(redPrefab, 2);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            SpawnAndAnimate(yellowPrefab, 2);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            SpawnAndAnimate(bluePrefab, 2);
-        }
+        // Spline 1
+        if (kb.qKey.wasPressedThisFrame) SpawnAndAnimate(redPrefab, 1);
+        if (kb.wKey.wasPressedThisFrame) SpawnAndAnimate(yellowPrefab, 1);
+        if (kb.eKey.wasPressedThisFrame) SpawnAndAnimate(bluePrefab, 1);
+
+        // Spline 2
+        if (kb.aKey.wasPressedThisFrame) SpawnAndAnimate(redPrefab, 2);
+        if (kb.sKey.wasPressedThisFrame) SpawnAndAnimate(yellowPrefab, 2);
+        if (kb.dKey.wasPressedThisFrame) SpawnAndAnimate(bluePrefab, 2);
     }
 }

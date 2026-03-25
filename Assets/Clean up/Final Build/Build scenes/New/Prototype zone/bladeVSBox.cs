@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class bladeVSBox : MonoBehaviour
 {
@@ -7,17 +8,15 @@ public class bladeVSBox : MonoBehaviour
     [SerializeField] private GameObject boxLeft;
     [SerializeField] private GameObject boxRight;
 
-
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            switchToBox();
+        var kb = Keyboard.current;
+        if (kb == null) return;
 
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            switchToBlade();
+        if (kb.digit3Key.wasPressedThisFrame) switchToBox();
+        if (kb.digit4Key.wasPressedThisFrame) switchToBlade();
     }
-    
+
     private void switchToBox()
     {
         bladeRight.SetActive(false);
