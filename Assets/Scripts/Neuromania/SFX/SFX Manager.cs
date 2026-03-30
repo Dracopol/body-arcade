@@ -35,6 +35,7 @@ namespace IMVR.BodyArcade.Neuromania.SFX
             signal.OnTargetDestroy += HandleTargetDestroy;
             signal.OnProjectileDestroy += HandleProjectileDestroy;
             signal.OnIncorrectProjectile += HandleIncorrectProjectile;
+            signal.OnDestroyed += HandleSignalDestroyed;
         }
 
         private void HandleTargetDestroy(Vector3 position, SignalType type, bool isProjectile)
@@ -51,6 +52,15 @@ namespace IMVR.BodyArcade.Neuromania.SFX
         {
             PlayClip(_incorrectProjectileClip, position);
         }
+
+        private void HandleSignalDestroyed(Signal signal)
+        {
+            signal.OnTargetDestroy -= HandleTargetDestroy;
+            signal.OnProjectileDestroy -= HandleProjectileDestroy;
+            signal.OnIncorrectProjectile -= HandleIncorrectProjectile;
+            signal.OnDestroyed -= HandleSignalDestroyed;
+        }
+
 
         #endregion
 

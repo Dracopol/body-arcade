@@ -10,6 +10,7 @@ namespace IMVR.BodyArcade.Neuromania.Signals
         internal event Action<Vector3, SignalType, bool> OnTargetDestroy;
         internal event Action<Vector3, SignalType, bool> OnProjectileDestroy;
         internal event Action<Vector3, SignalType, bool> OnIncorrectProjectile;
+        internal event Action<Signal> OnDestroyed;
 
         #endregion
 
@@ -105,6 +106,11 @@ namespace IMVR.BodyArcade.Neuromania.Signals
         {
             float healthRatio = (float)_hitPoints / _initialHitPoints;
             transform.localScale = _initialScale * healthRatio;
+        }
+
+        private void OnDestroy()
+        {
+            OnDestroyed?.Invoke(this);
         }
 
         #endregion
