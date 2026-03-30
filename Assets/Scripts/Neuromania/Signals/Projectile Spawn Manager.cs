@@ -1,8 +1,9 @@
-using System.Threading;
+using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Splines;
+using IMVR.BodyArcade.Neuromania.Input;
 
 namespace IMVR.BodyArcade.Neuromania.Signals
 {
@@ -11,15 +12,15 @@ namespace IMVR.BodyArcade.Neuromania.Signals
         #region Entities
 
         [System.Serializable]
-        private struct Projectiles
+        private struct Projectile
         {
             [SerializeField] private SplineContainer _splineContainer;
             [SerializeField] private GameObject _signalPrefab;
-            [SerializeField] private Key _spawnKey;
+            [SerializeField] private SpringButton _button;
 
             internal SplineContainer SplineContainer => _splineContainer;
             internal GameObject SignalPrefab => _signalPrefab;
-            internal Key SpawnKey => _spawnKey;
+            internal SpringButton Button => _button;
         }
 
         #endregion
@@ -27,22 +28,49 @@ namespace IMVR.BodyArcade.Neuromania.Signals
         #region Serialized fields
 
         [SerializeField] private SignalSpawner _signalSpawner;
-        [SerializeField] private Projectiles[] _projectiles;
+        [SerializeField] private Projectile[] _projectiles;
 
         #endregion
 
-        #region Update
+        #region Fields
 
-        private void Update()
+        private Dictionary<SpringButton, Action> _listeners;
+
+        #endregion
+
+        #region Setup
+
+        private void Awake()
         {
-            var kb = Keyboard.current;
-            if (kb == null) return;
+            _listeners = new Dictionary<SpringButton, Action>();
 
             foreach (var projectile in _projectiles)
             {
-                if (kb[projectile.SpawnKey].wasPressedThisFrame)
-                    _signalSpawner.SpawnAsync(projectile.SignalPrefab, projectile.SplineContainer, destroyCancellationToken).Forget();
+                var captured = projectile;
+                Action listener = () => HandleButtonPressed(captured);
+                _listeners[captured.Button] = listener;
             }
+        }
+
+        private void OnEnable()
+        {
+            foreach (var (button, listener) in _listeners)
+                button.OnPressed += listener;
+        }
+
+        private void OnDisable()
+        {
+            foreach (var (button, listener) in _listeners)
+                button.OnPressed -= listener;
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        private void HandleButtonPressed(Projectile projectile)
+        {
+            _signalSpawner.SpawnAsync(projectile.SignalPrefab, projectile.SplineContainer, destroyCancellationToken).Forget();
         }
 
         #endregion

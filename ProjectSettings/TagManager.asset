@@ -11,6 +11,7 @@ TagManager:
   - Red2
   - Blue2
   - Yellow2
+  - Hand
   layers:
   - Default
   - TransparentFX
