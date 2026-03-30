@@ -155,5 +155,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Signals.Signal
   _signalType: 0
   _hitPoints: 1
-  _movementSpeed: 1
+  _movementSpeed: 0.5
   _isProjectile: 1

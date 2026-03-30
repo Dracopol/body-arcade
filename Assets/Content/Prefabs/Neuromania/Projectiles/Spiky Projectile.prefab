@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 2962724649542261872}
   - component: {fileID: 964409484617176284}
   - component: {fileID: 5220855447499472956}
-  - component: {fileID: 6667875960471292834}
-  - component: {fileID: 5151287777741355843}
   - component: {fileID: 7270665015509094250}
   - component: {fileID: 8498875644562661376}
+  - component: {fileID: 8635675708569944977}
   m_Layer: 0
   m_Name: Spiky Projectile
   m_TagString: Untagged
@@ -94,46 +93,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6667875960471292834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 951350382701708365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29a074d529cf945029ef7cf40540c9df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Target: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_LoopMode: 1
-  m_Method: 1
-  m_Duration: 1.5
-  m_MaxSpeed: 20
-  m_EasingMode: 0
-  m_AlignmentMode: 1
-  m_ObjectForwardAxis: 2
-  m_ObjectUpAxis: 1
-  m_StartOffset: 0
---- !u!114 &5151287777741355843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 951350382701708365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2375ab3580bd38c49890849a8c5245c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyTag: Red
-  destroyEffect: {fileID: 3398879697373554938, guid: a60421a00b412fb4dacfad90aaf669a1, type: 3}
-  destroyEffectOther: {fileID: 1267230159966524351, guid: 4d99f73bb9351b84b9404c761d4cf717, type: 3}
-  destroySound: {fileID: 8300000, guid: 445921b4a2fa4004cb850b6178890e59, type: 3}
-  destroySoundOther: {fileID: 8300000, guid: f9174e5cf8df3894c94db3e6481cadb5, type: 3}
 --- !u!135 &7270665015509094250
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -182,3 +141,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &8635675708569944977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951350382701708365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f210a242f61362240943f3a90cc69355, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Signals.Signal
+  _signalType: 2
+  _hitPoints: 1
+  _movementSpeed: 0.5
+  _isProjectile: 1

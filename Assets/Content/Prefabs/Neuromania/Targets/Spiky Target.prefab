@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3670828378518004486}
   - component: {fileID: 1542535690481854668}
   - component: {fileID: 1546825382280792518}
-  - component: {fileID: 3808661806465603044}
   - component: {fileID: 5242412005076486128}
   - component: {fileID: 1848065435940224648}
+  - component: {fileID: 8768439795260709827}
   m_Layer: 0
   m_Name: Spiky Target
   m_TagString: Red
@@ -93,29 +93,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3808661806465603044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7709155532543777643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29a074d529cf945029ef7cf40540c9df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Target: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_LoopMode: 1
-  m_Method: 1
-  m_Duration: 6
-  m_MaxSpeed: 5
-  m_EasingMode: 0
-  m_AlignmentMode: 1
-  m_ObjectForwardAxis: 2
-  m_ObjectUpAxis: 1
-  m_StartOffset: 0
 --- !u!54 &5242412005076486128
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -164,3 +141,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.9266658, y: 3.7664008, z: 11.203434}
   m_Center: {x: 0, y: 0.000000059604645, z: -0.000000059604645}
+--- !u!114 &8768439795260709827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7709155532543777643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f210a242f61362240943f3a90cc69355, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Signals.Signal
+  _signalType: 2
+  _hitPoints: 2
+  _movementSpeed: 0.25
+  _isProjectile: 0
