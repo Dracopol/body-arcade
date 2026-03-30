@@ -15,49 +15,29 @@ namespace IMVR.BodyArcade.Neuromania.Signals
 
         #endregion
 
-        #region Serialized fields
+        #region Internal
 
-        [SerializeField] private SplineContainer _splineContainer;
-        [SerializeField] private GameObject _prefabA;
-        [SerializeField] private GameObject _prefabB;
-
-        #endregion
-
-        #region Update
-
-        private void Update()
-        {
-            var kb = Keyboard.current;
-            if (kb == null) return;
-
-            if (kb.qKey.wasPressedThisFrame)
-                SpawnAndAnimateAsync(_prefabA, _splineContainer, destroyCancellationToken).Forget();
-
-            if (kb.wKey.wasPressedThisFrame)
-                SpawnAndAnimateAsync(_prefabB, _splineContainer, destroyCancellationToken).Forget();
-        }
-
-        #endregion
-
-        #region Private
-
-        private async UniTask SpawnAndAnimateAsync(GameObject prefab, SplineContainer targetSpline, CancellationToken ct)
+        internal async UniTask SpawnAsync(GameObject prefab, SplineContainer targetSpline, CancellationToken ct)
         {
             try
             {
                 if (prefab == null) return;
                 if (targetSpline == null) return;
 
-                Signal signalData = prefab.GetComponent<Signal>();
-                if (signalData == null) return;
-
-                float speed = signalData.MovementSpeed;
-                bool isReversed = signalData.IsProjectile;
-                float startT = isReversed ? 1f : 0f;
-                Vector3 spawnPos = targetSpline.EvaluatePosition(startT);
-
-                GameObject instance = Instantiate(prefab, spawnPos, Quaternion.identity);
+                GameObject instance = Instantiate(prefab, targetSpline.EvaluatePosition(0f), Quaternion.identity);
                 Signal instanceSignal = instance.GetComponent<Signal>();
+
+                if (instanceSignal == null)
+                {
+                    Destroy(instance);
+                    return;
+                }
+
+                float speed = instanceSignal.MovementSpeed;
+                bool isReversed = instanceSignal.IsProjectile;
+
+                if (isReversed)
+                    instance.transform.position = targetSpline.EvaluatePosition(1f);
 
                 OnSignalSpawned?.Invoke(instanceSignal);
 
@@ -68,6 +48,10 @@ namespace IMVR.BodyArcade.Neuromania.Signals
                 Debug.Log("Signal animation cancelled.");
             }
         }
+
+        #endregion
+
+        #region Private
 
         private async UniTask AnimateAsync(Signal signal, SplineContainer targetSpline, float speedMetersPerSecond, bool isReversed, CancellationToken ct)
         {

@@ -11,9 +11,13 @@ namespace IMVR.BodyArcade.Neuromania.VFX
         [System.Serializable]
         private struct SignalEffects
         {
-            public SignalType Type;
-            public bool IsProjectile;
-            public ParticleSystem Effect;
+            [SerializeField] private SignalType _type;
+            [SerializeField] private bool _isProjectile;
+            [SerializeField] private ParticleSystem _effect;
+
+            internal SignalType Type => _type;
+            internal bool IsProjectile => _isProjectile;
+            internal ParticleSystem Effect => _effect;
         }
 
         #endregion

@@ -519,6 +519,7 @@ GameObject:
   - component: {fileID: 335714702}
   - component: {fileID: 335714701}
   - component: {fileID: 335714703}
+  - component: {fileID: 335714704}
   m_Layer: 0
   m_Name: Signal Spawner
   m_TagString: Untagged
@@ -538,9 +539,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf9b06ac7c73e9448c7c10fcc3a8196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Signals.SignalSpawner
-  _splineContainer: {fileID: 364143738}
-  _prefabA: {fileID: 8913656579928663160, guid: 17742242682cf2e44a3203e02d7888d2, type: 3}
-  _prefabB: {fileID: 9204208041905124561, guid: 810213b7122ae8746a1963aac1690ff7, type: 3}
 --- !u!4 &335714702
 Transform:
   m_ObjectHideFlags: 0
@@ -570,9 +568,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.VFX.VFXManager
   _signalSpawner: {fileID: 335714701}
   _effectsByType:
-  - Type: 0
-    IsProjectile: 0
-    Effect: {fileID: 717006053379501614, guid: 0f65f5b50b05f73499fbafcdc4e74a44, type: 3}
+  - _type: 0
+    _isProjectile: 0
+    _effect: {fileID: 0}
+--- !u!114 &335714704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335714700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 507d0f1d8883c4a43a59c27c80b361e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Signals.SpawnManager
+  _signalSpawner: {fileID: 335714701}
+  _projectiles: []
 --- !u!1 &342523816
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,9 +1102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf9b06ac7c73e9448c7c10fcc3a8196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SplineSpawner
-  _splineContainer: {fileID: 0}
-  _prefabA: {fileID: 0}
-  _prefabB: {fileID: 0}
 --- !u!1 &422288121
 GameObject:
   m_ObjectHideFlags: 0
@@ -6954,5 +6963,5 @@ SceneRoots:
   - {fileID: 1731188615}
   - {fileID: 4329495086716003237}
   - {fileID: 1795880768}
-  - {fileID: 364143739}
   - {fileID: 335714702}
+  - {fileID: 364143739}
