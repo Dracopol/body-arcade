@@ -1,0 +1,101 @@
+using System.Collections.Generic;
+using UnityEngine;
+using IMVR.BodyArcade.Neuromania.Signals;
+
+namespace IMVR.BodyArcade.Neuromania.VFX
+{
+    internal class VFXManager : MonoBehaviour
+    {
+        #region Entities
+
+        [System.Serializable]
+        private struct SignalEffects
+        {
+            public SignalType Type;
+            public bool IsProjectile;
+            public ParticleSystem Effect;
+        }
+
+        #endregion
+
+        #region Serialized fields
+
+        [SerializeField] private SignalSpawner _signalSpawner;
+        [SerializeField] private SignalEffects[] _effectsByType;
+
+        #endregion
+
+        #region Fields
+
+        private Dictionary<(SignalType, bool), ParticleSystem> _effectsMap;
+
+        #endregion
+
+        #region Setup
+
+        private void Awake()
+        {
+            _effectsMap = new Dictionary<(SignalType, bool), ParticleSystem>();
+            foreach (SignalEffects entry in _effectsByType)
+                _effectsMap[(entry.Type, entry.IsProjectile)] = entry.Effect;
+        }
+
+        private void OnEnable()
+        {
+            _signalSpawner.OnSignalSpawned += HandleSignalSpawned;
+        }
+
+        private void OnDisable()
+        {
+            _signalSpawner.OnSignalSpawned -= HandleSignalSpawned;
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        private void HandleSignalSpawned(Signal signal)
+        {
+            signal.OnTargetDestroy += HandleTargetDestroy;
+            signal.OnProjectileDestroy += HandleProjectileDestroy;
+            signal.OnIncorrectProjectile += HandleIncorrectProjectile;
+        }
+
+        private void HandleTargetDestroy(Vector3 position, SignalType type, bool isProjectile)
+        {
+            PlayMappedEffect(position, type, isProjectile);
+        }
+
+        private void HandleProjectileDestroy(Vector3 position, SignalType type, bool isProjectile)
+        {
+            PlayMappedEffect(position, type, isProjectile);
+        }
+
+        private void HandleIncorrectProjectile(Vector3 position, SignalType type, bool isProjectile)
+        {
+            PlayMappedEffect(position, type, isProjectile);
+        }
+
+        #endregion
+
+        #region Private
+
+        private void PlayMappedEffect(Vector3 position, SignalType type, bool isProjectile)
+        {
+            if (_effectsMap.TryGetValue((type, isProjectile), out ParticleSystem effect))
+                PlayEffect(effect, position);
+        }
+
+        private void PlayEffect(ParticleSystem effect, Vector3 position)
+        {
+            if (effect == null) return;
+
+            ParticleSystem instance = Instantiate(effect, position, Quaternion.identity);
+            instance.Play();
+
+            Destroy(instance.gameObject, instance.main.duration);
+        }
+
+        #endregion
+    }
+}

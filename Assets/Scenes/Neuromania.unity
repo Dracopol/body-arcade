@@ -518,6 +518,7 @@ GameObject:
   m_Component:
   - component: {fileID: 335714702}
   - component: {fileID: 335714701}
+  - component: {fileID: 335714703}
   m_Layer: 0
   m_Name: Signal Spawner
   m_TagString: Untagged
@@ -555,6 +556,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &335714703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335714700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a02698774e024ca429487e026ea432b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.VFX.VFXManager
+  _signalSpawner: {fileID: 335714701}
+  _effectsByType:
+  - Type: 0
+    IsProjectile: 0
+    Effect: {fileID: 717006053379501614, guid: 0f65f5b50b05f73499fbafcdc4e74a44, type: 3}
 --- !u!1 &342523816
 GameObject:
   m_ObjectHideFlags: 0

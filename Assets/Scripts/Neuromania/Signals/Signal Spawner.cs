@@ -9,6 +9,12 @@ namespace IMVR.BodyArcade.Neuromania.Signals
 {
     internal class SignalSpawner : MonoBehaviour
     {
+        #region Events
+
+        internal event Action<Signal> OnSignalSpawned;
+
+        #endregion
+
         #region Serialized fields
 
         [SerializeField] private SplineContainer _splineContainer;
@@ -52,6 +58,8 @@ namespace IMVR.BodyArcade.Neuromania.Signals
 
                 GameObject instance = Instantiate(prefab, spawnPos, Quaternion.identity);
                 Signal instanceSignal = instance.GetComponent<Signal>();
+
+                OnSignalSpawned?.Invoke(instanceSignal);
 
                 await AnimateAsync(instanceSignal, targetSpline, speed, isReversed, ct);
             }

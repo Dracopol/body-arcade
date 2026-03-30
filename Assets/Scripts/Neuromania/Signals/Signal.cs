@@ -5,22 +5,11 @@ namespace IMVR.BodyArcade.Neuromania.Signals
 {
     internal class Signal : MonoBehaviour
     {
-        #region Entities
-
-        private enum SignalType
-        {
-            Cube,
-            Sphere,
-            Spiky
-        }
-
-        #endregion
-
         #region Events
 
-        internal event Action<Vector3> OnTargetDestroy;
-        internal event Action<Vector3> OnProjectileDestroy;
-        internal event Action<Vector3> OnIncorrectProjectile;
+        internal event Action<Vector3, SignalType, bool> OnTargetDestroy;
+        internal event Action<Vector3, SignalType, bool> OnProjectileDestroy;
+        internal event Action<Vector3, SignalType, bool> OnIncorrectProjectile;
 
         #endregion
 
@@ -47,6 +36,7 @@ namespace IMVR.BodyArcade.Neuromania.Signals
         internal float MovementSpeed => _movementSpeed;
         internal bool IsProjectile => _isProjectile;
         internal Rigidbody Rigidbody => _rigidbody;
+        internal SignalType Type => _signalType;
 
         #endregion
 
@@ -92,14 +82,14 @@ namespace IMVR.BodyArcade.Neuromania.Signals
             {
                 _isDead = true;
                 projectile._isDead = true;
-                OnTargetDestroy?.Invoke(transform.position);
+                OnTargetDestroy?.Invoke(transform.position, _signalType, false);
                 Destroy(projectile.gameObject);
                 Destroy(gameObject);
             }
             else
             {
                 projectile._isDead = true;
-                OnProjectileDestroy?.Invoke(projectile.transform.position);
+                OnProjectileDestroy?.Invoke(projectile.transform.position, projectile._signalType, projectile._isProjectile);
                 ScaleBasedOnHealth();
                 Destroy(projectile.gameObject);
             }
@@ -107,7 +97,7 @@ namespace IMVR.BodyArcade.Neuromania.Signals
 
         private void HandleIncorrectProjectile(Signal projectile)
         {
-            OnIncorrectProjectile?.Invoke(projectile.transform.position);
+            OnIncorrectProjectile?.Invoke(projectile.transform.position, projectile._signalType, projectile._isProjectile);
             Destroy(projectile.gameObject);
         }
 
