@@ -1920,7 +1920,7 @@ Transform:
   m_GameObject: {fileID: 545534170}
   serializedVersion: 2
   m_LocalRotation: {x: 0.83877766, y: -0.078179576, z: -0.13637245, w: 0.5212894}
-  m_LocalPosition: {x: 0, y: -0.28, z: 0.652}
+  m_LocalPosition: {x: 0.0010003, y: -0.16500002, z: 0.336}
   m_LocalScale: {x: 0.1, y: 0.6, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1972,8 +1972,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.1
+  m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &545534174
@@ -3761,7 +3761,7 @@ Transform:
   m_GameObject: {fileID: 1393405466}
   serializedVersion: 2
   m_LocalRotation: {x: 0.83877766, y: -0.0781796, z: -0.1363724, w: 0.52128947}
-  m_LocalPosition: {x: 0, y: -0.28, z: 0.65}
+  m_LocalPosition: {x: 0.001, y: -0.165, z: 0.334}
   m_LocalScale: {x: 0.10000002, y: 0.5999999, z: 0.09999996}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3813,8 +3813,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.1
+  m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1393405470
@@ -7529,7 +7529,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.008002133, y: 0.9997527, z: 0.020740466, w: -0.0005314796}
   m_LocalPosition: {x: 0, y: -0.063, z: 0.022}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8234757636465341478}
@@ -7921,6 +7921,7 @@ GameObject:
   - component: {fileID: 2979820194443949894}
   - component: {fileID: 6954004568312939738}
   - component: {fileID: 8158830391286830203}
+  - component: {fileID: 8158830391286830204}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: Untagged
@@ -8072,6 +8073,7 @@ GameObject:
   - component: {fileID: 7252980864545590668}
   - component: {fileID: 7252980864545590667}
   - component: {fileID: 7252980864545590666}
+  - component: {fileID: 7252980864545590669}
   m_Layer: 0
   m_Name: Red Neuron
   m_TagString: BadNeuron
@@ -8141,6 +8143,7 @@ GameObject:
   - component: {fileID: 4957689434142290824}
   - component: {fileID: 4957689434142290823}
   - component: {fileID: 4957689434142290822}
+  - component: {fileID: 4957689434142290825}
   m_Layer: 0
   m_Name: Yellow Neuron
   m_TagString: BadNeuron
@@ -8182,10 +8185,10 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 3
-  m_Center: {x: -0.75, y: -0.9751683, z: -0.22058915}
+  m_Radius: 1
+  m_Center: {x: 0.06, y: -0.1, z: -0.16}
 --- !u!54 &4957689434142290824
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8213,6 +8216,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!65 &4957689434142290825
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957689434142290821}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 1.5, z: 1.5}
+  m_Center: {x: 0.06, y: -0.1, z: -0.16}
 --- !u!4 &5274420334716879189
 Transform:
   m_ObjectHideFlags: 0
@@ -8785,7 +8809,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.008002134, y: 0.9997527, z: 0.020740472, w: -0.00053146476}
   m_LocalPosition: {x: 0, y: -0.062999606, z: 0.022008091}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3967414630679979672}
@@ -8831,7 +8855,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -8894,10 +8918,10 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 3
-  m_Center: {x: 0.09, y: -0.299903, z: -0.19350104}
+  m_Radius: 1
+  m_Center: {x: 0.09, y: 0.05, z: 0.04}
 --- !u!54 &7252980864545590668
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8925,6 +8949,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!65 &7252980864545590669
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4500796901358551610}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 1.5, z: 1.5}
+  m_Center: {x: 0.09, y: 0.05, z: 0.04}
 --- !u!1 &7323208554985071584
 GameObject:
   m_ObjectHideFlags: 0
@@ -9054,6 +9099,7 @@ GameObject:
   - component: {fileID: 7860985132115849334}
   - component: {fileID: 7860985132115849333}
   - component: {fileID: 7860985132115849332}
+  - component: {fileID: 7860985132115849335}
   m_Layer: 0
   m_Name: Blue Neuron
   m_TagString: BadNeuron
@@ -9095,10 +9141,10 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 3
-  m_Center: {x: -0.16, y: -0.29991058, z: -0.19350103}
+  m_Radius: 1
+  m_Center: {x: 0.08, y: 0.06, z: -0.39}
 --- !u!54 &7860985132115849334
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9126,6 +9172,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!65 &7860985132115849335
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7860985132115849331}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 1.5, z: 1.5}
+  m_Center: {x: 0.08, y: 0.06, z: -0.39}
 --- !u!1 &7979825071162103062
 GameObject:
   m_ObjectHideFlags: 0
@@ -9251,6 +9318,23 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+--- !u!114 &8158830391286830204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886284626067249174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: e97de2f2c3866934abe6ddea6bed3cda, type: 2}
 --- !u!4 &8234757636465341478
 Transform:
   m_ObjectHideFlags: 0
