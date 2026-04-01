@@ -595,11 +595,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffa9050b688b614e8123f0b1428a0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Input.SpringButton
-  _pressThreshold: -0.035
+  _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
-  _maxDepth: -0.05
-  _invertDirection: 0
+  _maxDepth: 0
+  _invertDirection: 1
 --- !u!54 &300830116
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -782,11 +782,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffa9050b688b614e8123f0b1428a0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Input.SpringButton
-  _pressThreshold: -0.035
+  _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
-  _maxDepth: -0.05
-  _invertDirection: 0
+  _maxDepth: 0
+  _invertDirection: 1
 --- !u!4 &334184842 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4862583591324200060, guid: cc21ce549ef04964db6f71dfd3b67c04, type: 3}
@@ -1476,7 +1476,22 @@ MonoBehaviour:
   _effectsByType:
   - _type: 0
     _isProjectile: 0
-    _effect: {fileID: 0}
+    _effect: {fileID: 717006053379501614, guid: 0f65f5b50b05f73499fbafcdc4e74a44, type: 3}
+  - _type: 1
+    _isProjectile: 0
+    _effect: {fileID: 1267230159966524351, guid: 952c6e7a384d58a47ba6b365387b5adb, type: 3}
+  - _type: 2
+    _isProjectile: 0
+    _effect: {fileID: 1267230159966524351, guid: 4d99f73bb9351b84b9404c761d4cf717, type: 3}
+  - _type: 0
+    _isProjectile: 1
+    _effect: {fileID: 1738792726549782847, guid: 703062a86b1d5124e82da09158a82bba, type: 3}
+  - _type: 1
+    _isProjectile: 1
+    _effect: {fileID: 3398879697373554938, guid: c788027fd235b2f4a883f90ccc238e9f, type: 3}
+  - _type: 2
+    _isProjectile: 1
+    _effect: {fileID: 3398879697373554938, guid: a60421a00b412fb4dacfad90aaf669a1, type: 3}
 --- !u!1 &470770774
 GameObject:
   m_ObjectHideFlags: 0
@@ -6963,9 +6978,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.SFX.SFXManager
   _signalSpawner: {fileID: 335714701}
+  _spawnClip: {fileID: 8300000, guid: fb6fcbf11e2d7614ea7390f2cb6c69b8, type: 3}
   _targetDestroyClip: {fileID: 8300000, guid: 870908489a0a37948a8ad97e3a857007, type: 3}
   _correctTargetHitClip: {fileID: 8300000, guid: 82c3f4c15a7a80847a3d14da511e252b, type: 3}
-  _incorrectTargetHitClip: {fileID: 0}
+  _incorrectTargetHitClip: {fileID: 8300000, guid: 7a5d8ff7390aa0744a9acf5f7e956b5a, type: 3}
   _correctHitMinPitch: 1
   _correctHitMaxPitch: 1.5
 --- !u!1 &1976790933 stripped
@@ -7148,11 +7164,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffa9050b688b614e8123f0b1428a0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Input.SpringButton
-  _pressThreshold: -0.035
+  _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
-  _maxDepth: -0.05
-  _invertDirection: 0
+  _maxDepth: 0
+  _invertDirection: 1
 --- !u!1 &2036494684
 GameObject:
   m_ObjectHideFlags: 0
