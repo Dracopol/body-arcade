@@ -81,7 +81,7 @@ namespace IMVR.BodyArcade.Neuromania.Input
 
         private void ClampDepth()
         {
-            if (_currentDepth >= _maxDepth)
+            if (_currentDepth <= _maxDepth)
             {
                 _rigidbody.MovePosition(_restWorldPosition + _pressAxis * _maxDepth);
                 _rigidbody.linearVelocity = Vector3.zero;

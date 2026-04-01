@@ -8,7 +8,7 @@ namespace IMVR.BodyArcade.Neuromania.Signals
         #region Events
 
         internal event Action<Vector3, SignalType, bool> OnTargetDestroy;
-        internal event Action<Vector3, SignalType, bool> OnCorrectTargetHit;
+        internal event Action<Vector3, SignalType, bool, float> OnCorrectTargetHit;
         internal event Action<Vector3, SignalType, bool> OnIncorrectTargetHit;
         internal event Action<Signal> OnDestroyed;
 
@@ -90,7 +90,8 @@ namespace IMVR.BodyArcade.Neuromania.Signals
             else
             {
                 projectile._isDead = true;
-                OnCorrectTargetHit?.Invoke(projectile.transform.position, projectile._signalType, projectile._isProjectile);
+                float healthRatio = _hitPoints / _initialHitPoints;
+                OnCorrectTargetHit?.Invoke(projectile.transform.position, projectile._signalType, projectile._isProjectile, healthRatio);
                 ScaleBasedOnHealth();
                 Destroy(projectile.gameObject);
             }
@@ -104,7 +105,7 @@ namespace IMVR.BodyArcade.Neuromania.Signals
 
         private void ScaleBasedOnHealth()
         {
-            float healthRatio = (float)_hitPoints / _initialHitPoints;
+            float healthRatio = _hitPoints / _initialHitPoints;
             transform.localScale = _initialScale * healthRatio;
         }
 

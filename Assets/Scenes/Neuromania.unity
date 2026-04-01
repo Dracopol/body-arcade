@@ -275,6 +275,40 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4630747812969223507, guid: dce854237e5c40b4f8aaf72583a2417b, type: 3}
   m_PrefabInstance: {fileID: 155208527}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &213969364
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 213969365}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &213969365
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213969364}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.27839, y: 0, z: -27.06651}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 335714702}
+  - {fileID: 1974761269}
+  - {fileID: 427827671}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &220157002
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,11 +802,10 @@ GameObject:
   m_Component:
   - component: {fileID: 335714702}
   - component: {fileID: 335714701}
-  - component: {fileID: 335714703}
   - component: {fileID: 335714704}
   - component: {fileID: 335714705}
   m_Layer: 0
-  m_Name: Signal Spawner
+  m_Name: Spawn Managers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -798,30 +831,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335714700}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -12.27839, y: 0, z: 27.06651}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 213969365}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &335714703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 335714700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a02698774e024ca429487e026ea432b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.VFX.VFXManager
-  _signalSpawner: {fileID: 335714701}
-  _effectsByType:
-  - _type: 0
-    _isProjectile: 0
-    _effect: {fileID: 0}
 --- !u!114 &335714704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1059,7 +1075,6 @@ GameObject:
   m_Component:
   - component: {fileID: 364143739}
   - component: {fileID: 364143738}
-  - component: {fileID: 364143740}
   m_Layer: 0
   m_Name: Spline Container
   m_TagString: Untagged
@@ -1362,18 +1377,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &364143740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 364143737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cf9b06ac7c73e9448c7c10fcc3a8196, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SplineSpawner
 --- !u!1 &422288121
 GameObject:
   m_ObjectHideFlags: 0
@@ -1425,6 +1428,55 @@ Transform:
   - {fileID: 1228660391}
   m_Father: {fileID: 1731188615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &427827670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 427827671}
+  - component: {fileID: 427827672}
+  m_Layer: 0
+  m_Name: VFX Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &427827671
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427827670}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 213969365}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &427827672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427827670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a02698774e024ca429487e026ea432b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.VFX.VFXManager
+  _signalSpawner: {fileID: 335714701}
+  _effectsByType:
+  - _type: 0
+    _isProjectile: 0
+    _effect: {fileID: 0}
 --- !u!1 &470770774
 GameObject:
   m_ObjectHideFlags: 0
@@ -6866,6 +6918,56 @@ MonoBehaviour:
   targetValue: 0
   badNeuronChance: 0
   splineContainer: {fileID: 1793971799}
+--- !u!1 &1974761268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1974761269}
+  - component: {fileID: 1974761270}
+  m_Layer: 0
+  m_Name: SFX Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1974761269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974761268}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -12.27839, y: 0, z: 27.06651}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 213969365}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1974761270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974761268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08d340cadcf9ab1419c5e5e715c8e12a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.SFX.SFXManager
+  _signalSpawner: {fileID: 335714701}
+  _targetDestroyClip: {fileID: 8300000, guid: 870908489a0a37948a8ad97e3a857007, type: 3}
+  _correctTargetHitClip: {fileID: 8300000, guid: 82c3f4c15a7a80847a3d14da511e252b, type: 3}
+  _incorrectTargetHitClip: {fileID: 0}
+  _correctHitMinPitch: 1
+  _correctHitMaxPitch: 1.5
 --- !u!1 &1976790933 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2802386011331482129, guid: dce854237e5c40b4f8aaf72583a2417b, type: 3}
@@ -8344,7 +8446,7 @@ MonoBehaviour:
   _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
-  _maxDepth: 1
+  _maxDepth: 0
   _invertDirection: 1
 --- !u!135 &4957689434142290823
 SphereCollider:
@@ -9056,7 +9158,7 @@ MonoBehaviour:
   _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
-  _maxDepth: 1
+  _maxDepth: 0
   _invertDirection: 1
 --- !u!135 &7252980864545590667
 SphereCollider:
@@ -9257,7 +9359,7 @@ MonoBehaviour:
   _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
-  _maxDepth: 1
+  _maxDepth: 0
   _invertDirection: 1
 --- !u!135 &7860985132115849333
 SphereCollider:
@@ -9593,6 +9695,6 @@ SceneRoots:
   - {fileID: 1731188615}
   - {fileID: 5777007383017799744}
   - {fileID: 1795880768}
-  - {fileID: 335714702}
   - {fileID: 364143739}
   - {fileID: 220157007}
+  - {fileID: 213969365}

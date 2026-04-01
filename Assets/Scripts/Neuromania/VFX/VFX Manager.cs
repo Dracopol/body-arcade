@@ -71,7 +71,7 @@ namespace IMVR.BodyArcade.Neuromania.VFX
             PlayMappedEffect(position, type, isProjectile);
         }
 
-        private void HandleCorrectTargetHit(Vector3 position, SignalType type, bool isProjectile)
+        private void HandleCorrectTargetHit(Vector3 position, SignalType type, bool isProjectile, float healthRatio)
         {
             PlayMappedEffect(position, type, isProjectile);
         }
