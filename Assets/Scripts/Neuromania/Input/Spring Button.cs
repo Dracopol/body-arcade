@@ -9,23 +9,26 @@ namespace IMVR.BodyArcade.Neuromania.Input
 
         internal event Action OnPressed;
         internal event Action OnReleased;
+        internal event Action OnHeld;
 
         #endregion
 
         #region Serialized fields
 
-        [SerializeField] private float _maxDepth = 0.05f;
         [SerializeField] private float _pressThreshold = 0.035f;
+        [SerializeField] private float _releaseThreshold = 0.025f;
         [SerializeField] private float _springStrength = 50f;
+        [SerializeField] private float _maxDepth = 0.05f;
+        [SerializeField] private bool _invertDirection = false;
 
         #endregion
 
         #region Fields
 
         private float _currentDepth;
-        private float _targetDepth;
         private bool _isPressed;
         private Vector3 _restWorldPosition;
+        private Vector3 _pressAxis;
         private Rigidbody _rigidbody;
 
         #endregion
@@ -42,6 +45,7 @@ namespace IMVR.BodyArcade.Neuromania.Input
         {
             _rigidbody = GetComponent<Rigidbody>();
             _restWorldPosition = transform.position;
+            _pressAxis = _invertDirection ? transform.up : -transform.up;
         }
 
         #endregion
@@ -51,25 +55,13 @@ namespace IMVR.BodyArcade.Neuromania.Input
         private void FixedUpdate()
         {
             ApplySpring();
-            _targetDepth = 0f;
         }
 
         private void Update()
         {
             UpdateDepth();
             EvaluatePress();
-        }
-
-        #endregion
-
-        #region Event handlers
-
-        private void OnTriggerStay(Collider other)
-        {
-            float fingerHeight = Vector3.Dot(other.ClosestPoint(transform.position), transform.up);
-            float surfaceHeight = Vector3.Dot(transform.position, transform.up);
-            float depth = surfaceHeight - fingerHeight;
-            _targetDepth = Mathf.Clamp(depth, 0f, _maxDepth);
+            ClampDepth();
         }
 
         #endregion
@@ -84,7 +76,16 @@ namespace IMVR.BodyArcade.Neuromania.Input
 
         private void UpdateDepth()
         {
-            _currentDepth = Vector3.Distance(transform.position, _restWorldPosition);
+            _currentDepth = Vector3.Dot(_restWorldPosition - transform.position, _pressAxis);
+        }
+
+        private void ClampDepth()
+        {
+            if (_currentDepth >= _maxDepth)
+            {
+                _rigidbody.MovePosition(_restWorldPosition + _pressAxis * _maxDepth);
+                _rigidbody.linearVelocity = Vector3.zero;
+            }
         }
 
         private void EvaluatePress()
@@ -94,10 +95,14 @@ namespace IMVR.BodyArcade.Neuromania.Input
                 _isPressed = true;
                 OnPressed?.Invoke();
             }
-            else if (_isPressed && _currentDepth < _pressThreshold)
+            else if (_isPressed && _currentDepth < _releaseThreshold)
             {
                 _isPressed = false;
                 OnReleased?.Invoke();
+            }
+            else if (_isPressed && _currentDepth >= _pressThreshold)
+            {
+                OnHeld?.Invoke();
             }
         }
 

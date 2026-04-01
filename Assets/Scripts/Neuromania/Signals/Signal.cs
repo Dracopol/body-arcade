@@ -17,7 +17,7 @@ namespace IMVR.BodyArcade.Neuromania.Signals
         #region Serialized fields
 
         [SerializeField] private SignalType _signalType;
-        [SerializeField] private int _hitPoints = 1;
+        [SerializeField] private float _hitPoints = 1;
         [SerializeField] private float _movementSpeed = 1f;
         [SerializeField] private bool _isProjectile = false;
 
@@ -25,7 +25,7 @@ namespace IMVR.BodyArcade.Neuromania.Signals
 
         #region Fields
 
-        private int _initialHitPoints;
+        private float _initialHitPoints;
         private Vector3 _initialScale;
         private bool _isDead;
         private Rigidbody _rigidbody;
