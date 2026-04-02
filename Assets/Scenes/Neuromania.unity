@@ -699,28 +699,45 @@ MonoBehaviour:
   - _splineContainer: {fileID: 364143738}
     _signalPrefab: {fileID: 8913656579928663160, guid: 4400e78f9566615439c666ebabed62db, type: 3}
     _button: {fileID: 7860985132115849332}
-    _spawnOnHeld: 1
+    _buttonEventType: 1
+    _spawnRate: 0.2
+    _minSpawnRate: 0.1
+    _maxSpawnRate: 1
   - _splineContainer: {fileID: 364143738}
     _signalPrefab: {fileID: 3927441870671959152, guid: 9904fb63c30202c43abf142c9af1b313, type: 3}
     _button: {fileID: 4957689434142290822}
-    _spawnOnHeld: 1
+    _buttonEventType: 1
+    _spawnRate: 0.2
+    _minSpawnRate: 0
+    _maxSpawnRate: 0
   - _splineContainer: {fileID: 364143738}
     _signalPrefab: {fileID: 951350382701708365, guid: 8ff9e1b654df6874c9c3ee1c377da66d, type: 3}
     _button: {fileID: 7252980864545590666}
-    _spawnOnHeld: 1
+    _buttonEventType: 1
+    _spawnRate: 0.2
+    _minSpawnRate: 0
+    _maxSpawnRate: 0
   - _splineContainer: {fileID: 364143738}
     _signalPrefab: {fileID: 8913656579928663160, guid: 17742242682cf2e44a3203e02d7888d2, type: 3}
     _button: {fileID: 1997229680}
-    _spawnOnHeld: 0
+    _buttonEventType: 0
+    _spawnRate: 0
+    _minSpawnRate: 1
+    _maxSpawnRate: 0.2
   - _splineContainer: {fileID: 364143738}
     _signalPrefab: {fileID: 3927441870671959152, guid: 44dadc178050f604aa06f70655558a67, type: 3}
     _button: {fileID: 325564955}
-    _spawnOnHeld: 0
+    _buttonEventType: 0
+    _spawnRate: 0.2
+    _minSpawnRate: 0
+    _maxSpawnRate: 0
   - _splineContainer: {fileID: 364143738}
     _signalPrefab: {fileID: 951350382701708365, guid: 333656eddd6f3cd42af8a61a7ef5a509, type: 3}
     _button: {fileID: 300830115}
-    _spawnOnHeld: 0
-  _spawnRate: 0.2
+    _buttonEventType: 0
+    _spawnRate: 0
+    _minSpawnRate: 1
+    _maxSpawnRate: 0.1
 --- !u!114 &335714705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8166,12 +8183,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffa9050b688b614e8123f0b1428a0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Input.SpringButton
-  _rigidbody: {fileID: 0}
+  _rigidbody: {fileID: 4957689434142290824}
   _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
-  _maxDepth: 0.05
-  _invertDirection: 1
+  _maxDepth: 0.5
+  _invertDirection: 0
 --- !u!135 &4957689434142290823
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8189,7 +8206,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0.06, y: -0.1, z: -0.16}
@@ -8237,7 +8254,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0.06, y: -0.1, z: -0.16}
@@ -8900,12 +8917,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffa9050b688b614e8123f0b1428a0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Input.SpringButton
-  _rigidbody: {fileID: 0}
+  _rigidbody: {fileID: 7252980864545590668}
   _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
-  _maxDepth: 0.05
-  _invertDirection: 1
+  _maxDepth: 0.5
+  _invertDirection: 0
 --- !u!135 &7252980864545590667
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8923,7 +8940,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0.09, y: 0.05, z: 0.04}
@@ -8971,7 +8988,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0.09, y: 0.05, z: 0.04}
@@ -9124,12 +9141,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffa9050b688b614e8123f0b1428a0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Input.SpringButton
-  _rigidbody: {fileID: 0}
+  _rigidbody: {fileID: 7860985132115849334}
   _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
-  _maxDepth: 0.05
-  _invertDirection: 1
+  _maxDepth: 0.5
+  _invertDirection: 0
 --- !u!135 &7860985132115849333
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -9147,7 +9164,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0.08, y: 0.06, z: -0.39}
@@ -9195,7 +9212,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0.08, y: 0.06, z: -0.39}

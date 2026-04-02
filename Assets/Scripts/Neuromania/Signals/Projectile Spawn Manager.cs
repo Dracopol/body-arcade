@@ -11,18 +11,24 @@ namespace IMVR.BodyArcade.Neuromania.Signals
     {
         #region Entities
 
-        [System.Serializable]
-        private struct Projectile
+        [Serializable]
+        internal struct Projectile
         {
             [SerializeField] private SplineContainer _splineContainer;
             [SerializeField] private GameObject _signalPrefab;
             [SerializeField] private SpringButton _button;
-            [SerializeField] private bool _spawnOnHeld;
+            [SerializeField] private ButtonEventType _buttonEventType;
+            [SerializeField] private float _spawnRate;
+            [SerializeField] private float _minSpawnRate;
+            [SerializeField] private float _maxSpawnRate;
 
             internal SplineContainer SplineContainer => _splineContainer;
             internal GameObject SignalPrefab => _signalPrefab;
             internal SpringButton Button => _button;
-            internal bool SpawnOnHeld => _spawnOnHeld;
+            internal ButtonEventType ButtonEventType => _buttonEventType;
+            internal float SpawnRate => _spawnRate;
+            internal float MinSpawnRate => _minSpawnRate;
+            internal float MaxSpawnRate => _maxSpawnRate;
         }
 
         #endregion
@@ -31,14 +37,13 @@ namespace IMVR.BodyArcade.Neuromania.Signals
 
         [SerializeField] private SignalSpawner _signalSpawner;
         [SerializeField] private Projectile[] _projectiles;
-        [SerializeField] private float _spawnRate = 0.2f;
 
         #endregion
 
         #region Fields
 
-        private Dictionary<SpringButton, (Action Listener, bool SpawnOnHeld)> _listeners;
-        private float _lastSpawnTime;
+        private Dictionary<SpringButton, (Action Listener, Action<float> ListenerWithPercentage, Projectile Projectile)> _listeners;
+        private Dictionary<SpringButton, float> _lastSpawnTimes;
 
         #endregion
 
@@ -46,13 +51,16 @@ namespace IMVR.BodyArcade.Neuromania.Signals
 
         private void Awake()
         {
-            _listeners = new Dictionary<SpringButton, (Action, bool)>();
+            _listeners = new Dictionary<SpringButton, (Action, Action<float>, Projectile)>();
+            _lastSpawnTimes = new Dictionary<SpringButton, float>();
 
             foreach (var projectile in _projectiles)
             {
                 var captured = projectile;
-                Action listener = () => HandleButtonPressed(captured);
-                _listeners[captured.Button] = (listener, captured.SpawnOnHeld);
+                Action listener = () => HandleButtonEvent(captured);
+                Action<float> listenerWithPercentage = percentage => HandleButtonEventWithPercentage(captured, percentage);
+                _listeners[captured.Button] = (listener, listenerWithPercentage, captured);
+                _lastSpawnTimes[captured.Button] = 0f;
             }
         }
 
@@ -60,10 +68,18 @@ namespace IMVR.BodyArcade.Neuromania.Signals
         {
             foreach (var (button, entry) in _listeners)
             {
-                if (entry.SpawnOnHeld)
-                    button.OnHeld += entry.Listener;
-                else
-                    button.OnPressed += entry.Listener;
+                switch (entry.Projectile.ButtonEventType)
+                {
+                    case ButtonEventType.OnPressed:
+                        button.OnPressed += entry.Listener;
+                        break;
+                    case ButtonEventType.OnHeld:
+                        button.OnHeld += entry.Listener;
+                        break;
+                    case ButtonEventType.OnHeldWithPercentage:
+                        button.OnHeldWithPercentage += entry.ListenerWithPercentage;
+                        break;
+                }
             }
         }
 
@@ -71,10 +87,18 @@ namespace IMVR.BodyArcade.Neuromania.Signals
         {
             foreach (var (button, entry) in _listeners)
             {
-                if (entry.SpawnOnHeld)
-                    button.OnHeld -= entry.Listener;
-                else
-                    button.OnPressed -= entry.Listener;
+                switch (entry.Projectile.ButtonEventType)
+                {
+                    case ButtonEventType.OnPressed:
+                        button.OnPressed -= entry.Listener;
+                        break;
+                    case ButtonEventType.OnHeld:
+                        button.OnHeld -= entry.Listener;
+                        break;
+                    case ButtonEventType.OnHeldWithPercentage:
+                        button.OnHeldWithPercentage -= entry.ListenerWithPercentage;
+                        break;
+                }
             }
         }
 
@@ -82,12 +106,39 @@ namespace IMVR.BodyArcade.Neuromania.Signals
 
         #region Event handlers
 
-        private void HandleButtonPressed(Projectile projectile)
+        private void HandleButtonEvent(Projectile projectile)
         {
-            if (Time.time - _lastSpawnTime < _spawnRate)
+            if (!CanSpawn(projectile.Button, projectile.SpawnRate))
                 return;
 
-            _lastSpawnTime = Time.time;
+            Spawn(projectile);
+        }
+
+        private void HandleButtonEventWithPercentage(Projectile projectile, float percentage)
+        {
+            float interval = Mathf.Lerp(projectile.MaxSpawnRate, projectile.MinSpawnRate, percentage);
+
+            if (!CanSpawn(projectile.Button, interval))
+                return;
+
+            Spawn(projectile);
+        }
+
+        #endregion
+
+        #region Private
+
+        private bool CanSpawn(SpringButton button, float interval)
+        {
+            if (Time.time - _lastSpawnTimes[button] < interval)
+                return false;
+
+            _lastSpawnTimes[button] = Time.time;
+            return true;
+        }
+
+        private void Spawn(Projectile projectile)
+        {
             _signalSpawner.SpawnAsync(projectile.SignalPrefab, projectile.SplineContainer, destroyCancellationToken).Forget();
         }
 
