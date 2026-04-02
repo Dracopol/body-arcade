@@ -437,6 +437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffa9050b688b614e8123f0b1428a0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Input.SpringButton
+  _rigidbody: {fileID: 0}
   _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
@@ -624,6 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffa9050b688b614e8123f0b1428a0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Input.SpringButton
+  _rigidbody: {fileID: 0}
   _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
@@ -6866,6 +6868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffa9050b688b614e8123f0b1428a0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Input.SpringButton
+  _rigidbody: {fileID: 0}
   _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
@@ -8163,10 +8166,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffa9050b688b614e8123f0b1428a0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Input.SpringButton
+  _rigidbody: {fileID: 0}
   _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
-  _maxDepth: 0
+  _maxDepth: 0.05
   _invertDirection: 1
 --- !u!135 &4957689434142290823
 SphereCollider:
@@ -8896,10 +8900,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffa9050b688b614e8123f0b1428a0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Input.SpringButton
+  _rigidbody: {fileID: 0}
   _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
-  _maxDepth: 0
+  _maxDepth: 0.05
   _invertDirection: 1
 --- !u!135 &7252980864545590667
 SphereCollider:
@@ -9119,10 +9124,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffa9050b688b614e8123f0b1428a0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Input.SpringButton
+  _rigidbody: {fileID: 0}
   _pressThreshold: 0.035
   _releaseThreshold: 0.025
   _springStrength: 100
-  _maxDepth: 0
+  _maxDepth: 0.05
   _invertDirection: 1
 --- !u!135 &7860985132115849333
 SphereCollider:
