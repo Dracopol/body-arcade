@@ -27,16 +27,11 @@ namespace IMVR.BodyArcade.AirSacShapes
         [SerializeField] private Collider _handCollider;
 
         [Header("Behaviour")]
-
-        [Tooltip("The radius of the SplineExtrude — must match the value set on the SplineExtrude component.")]
+        [SerializeField] private float _radiusTolerance = 1.5f;
         [SerializeField] private float _tubeRadius = 0.05f;
-
-        [Tooltip("When enabled, progress can only move forward.\n" +
-                 "When disabled, progress tracks the hand's exact position along the spline.")]
         [SerializeField] private bool _forwardOnly = true;
-
-        [Tooltip("When enabled, progress fills from end to start and collision range runs 1 to 0.")]
         [SerializeField] private bool _reverse = false;
+        [SerializeField] private float _fillSpeed = 5f;
 
         [Header("Debug")]
         [SerializeField, Range(0f, 1f)] private float _debugProgress = 0f;
@@ -47,8 +42,8 @@ namespace IMVR.BodyArcade.AirSacShapes
         #region Fields
 
         private static readonly int ProgressID = Shader.PropertyToID("_Progress");
-        private static readonly int UVMaxID    = Shader.PropertyToID("_UVMax");
-        private static readonly int ReverseID  = Shader.PropertyToID("_Reverse");
+        private static readonly int UVMaxID = Shader.PropertyToID("_UVMax");
+        private static readonly int ReverseID = Shader.PropertyToID("_Reverse");
 
         private float _progress = 0f;
         private Material _material;
@@ -87,11 +82,11 @@ namespace IMVR.BodyArcade.AirSacShapes
                 .InverseTransformPoint(_handTransform.position);
 
             SplineUtility.GetNearestPoint(
-                _splineContainer.Spline,
-                localPos,
-                out float3 nearestLocalPoint,
-                out float t);
-
+    _splineContainer.Spline,
+    localPos,
+    out float3 nearestLocalPoint,
+    out float t,
+    resolution: 64);
             if (_reverse)
                 t = 1f - t;
 
@@ -106,17 +101,17 @@ namespace IMVR.BodyArcade.AirSacShapes
 
             float distanceFromSpline = Vector3.Distance(nearestWorldPoint, closestPointOnHand);
 
-            bool handInside = distanceFromSpline <= _tubeRadius;
+            bool handInside = distanceFromSpline <= _tubeRadius * _radiusTolerance;
             _handInsideDebug = handInside;
 
             if (handInside)
             {
                 float newProgress = _forwardOnly ? Mathf.Max(_progress, t) : t;
-                SetProgress(newProgress);
+                SetProgress(newProgress); // instant, no lerp
             }
             else
             {
-                SetProgress(0f);
+                SetProgress(Mathf.Lerp(_progress, 0f, Time.deltaTime * _fillSpeed));
             }
         }
 
