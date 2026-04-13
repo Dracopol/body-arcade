@@ -7,7 +7,6 @@ Shader "Custom/SplineProgress"
         _Progress       ("Progress",       Range(0, 1))   = 0
         _EdgeSoftness   ("Edge Softness",  Range(0, 0.1)) = 0.02
         _UVMax          ("UV Max (auto-set by script)", Float) = 1.0
-        _Reverse        ("Reverse",        Float)         = 0
     }
 
     SubShader
@@ -58,7 +57,6 @@ Shader "Custom/SplineProgress"
                 float  _Progress;
                 float  _EdgeSoftness;
                 float  _UVMax;
-                float  _Reverse;
             CBUFFER_END
 
             Varyings vert(Attributes IN)
@@ -77,7 +75,6 @@ Shader "Custom/SplineProgress"
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
 
                 float t = IN.uv.y / max(_UVMax, 0.0001);
-                t = lerp(t, 1.0 - t, _Reverse);
 
                 float blend = smoothstep(
                     _Progress - _EdgeSoftness,
