@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Blue For Drawing
-  m_Shader: {fileID: 4800000, guid: 3695aed9a6afef84aa3d48a8ca17460b, type: 3}
+  m_Shader: {fileID: 4800000, guid: 46cf9141c55b3ae48bb0fac3a671f642, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -109,7 +109,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EdgeSoftness: 0.02
+    - _EdgeSoftness: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
