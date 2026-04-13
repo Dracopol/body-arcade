@@ -3,7 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace IMVR.BodyArcade.AirSacShapes
+namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
 {
     /// <summary>
     /// Tracks hand progress along a spline by checking the hand's collider against

@@ -1,6 +1,7 @@
 using UnityEngine;
+using IMVR.BodyArcade.AirSacShapes.ProgressTracker;
 
-namespace IMVR.BodyArcade.AirSacShapes
+namespace IMVR.BodyArcade.AirSacShapes.Visualizers
 {
     /// <summary>
     /// Drives the tube fill shader based on progress reported by a SplineProgressTracker.
@@ -85,11 +86,6 @@ namespace IMVR.BodyArcade.AirSacShapes
             if (maxV > 0f)
             {
                 _material.SetFloat(UvMaxId, maxV);
-                Debug.Log($"[TubeFillVisualizer] UV max detected: {maxV}", this);
-            }
-            else
-            {
-                Debug.LogWarning("[TubeFillVisualizer] Could not detect UV max — defaulting to 1.", this);
             }
         }
 
