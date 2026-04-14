@@ -2619,8 +2619,8 @@ MonoBehaviour:
   _handTransform: {fileID: 185321254}
   _handCollider: {fileID: 185321255}
   _radiusToleranceMultiplier: 1
-  _tubeRadiusMeters: 0.03
-  _isForwardOnly: 1
+  _tubeRadiusMeters: 0.05
+  _isForwardOnly: 0
   _isReversed: 0
   _drainSpeedPerSecond: 5
   _debugProgress: 0
@@ -2962,8 +2962,8 @@ MonoBehaviour:
   _handTransform: {fileID: 320369869}
   _handCollider: {fileID: 320369870}
   _radiusToleranceMultiplier: 1
-  _tubeRadiusMeters: 0.03
-  _isForwardOnly: 1
+  _tubeRadiusMeters: 0.015
+  _isForwardOnly: 0
   _isReversed: 0
   _drainSpeedPerSecond: 5
   _debugProgress: 0
