@@ -65,7 +65,8 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
                 localHandPosition,
                 out float3 nearestLocalPoint,
                 out float t,
-                resolution: 64);
+                resolution: 64,
+                iterations: 5);
 
             if (_reverse)
                 t = 1f - t;
@@ -93,6 +94,8 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
             {
                 SetProgress(Mathf.Lerp(_progress, 0f, Time.deltaTime * _drainSpeedPerSecond));
             }
+            Debug.DrawLine(nearestWorldPoint, closestPointOnHand,
+                    handInside ? Color.green : Color.red);
         }
 
         #endregion
