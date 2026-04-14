@@ -5,11 +5,6 @@ using UnityEngine.Splines;
 
 namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
 {
-    /// <summary>
-    /// Tracks hand progress along a spline by checking the hand's collider against
-    /// the nearest point on the spline. Exposes progress via event and property for
-    /// other systems (visuals, score, etc.) to consume independently.
-    /// </summary>
     internal class SplineProgressTracker : MonoBehaviour
     {
         #region Events
@@ -26,21 +21,27 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
         [SerializeField] private Collider _handCollider;
 
         [Header("Behaviour")]
-        [SerializeField] private float _radiusTolerance = 1.5f;
-        [SerializeField] private float _tubeRadius = 0.05f;
-        [SerializeField] private bool _forwardOnly = true;
-        [SerializeField] private bool _reverse = false;
+        [SerializeField] private float _radiusToleranceMultiplier = 1.5f;
+        [SerializeField] private float _tubeRadiusMeters = 0.05f;
+        [SerializeField] private bool _isForwardOnly = true;
+        [SerializeField] private bool _isReversed = false;
         [SerializeField] private float _drainSpeedPerSecond = 5f;
 
         [Header("Debug")]
-        [SerializeField, Range(0f, 1f)] private float _debugProgress = 0f;
-        [SerializeField] private bool _debugHandInside = false;
+        [SerializeField, Range(0f, 1f)] private float _debugProgress;
+        [SerializeField] private bool _debugIsHandInside;
 
         #endregion
 
         #region Fields
 
-        private float _progress = 0f;
+        private float _progress;
+
+        private Transform _splineTransform;
+        private Spline _spline;
+
+        private const int CoarseStepCount = 12;
+        private const int RefineStepCount = 6;
 
         #endregion
 
@@ -50,62 +51,132 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
 
         #endregion
 
+        #region Setup
+
+        private void Awake()
+        {
+            if (_splineContainer != null)
+            {
+                _splineTransform = _splineContainer.transform;
+                _spline = _splineContainer.Spline;
+            }
+        }
+
+        #endregion
+
         #region Update
 
         private void Update()
         {
-            if (_handTransform == null || _splineContainer == null || _handCollider == null)
+            if (_handTransform == null || _handCollider == null || _spline == null)
                 return;
 
-            float3 localHandPosition = _splineContainer.transform
-                .InverseTransformPoint(_handTransform.position);
+            float splineProgress = FindClosestSplineProgress(
+                out Vector3 closestSplinePoint,
+                out Vector3 closestColliderPoint);
 
-            SplineUtility.GetNearestPoint(
-                _splineContainer.Spline,
-                localHandPosition,
-                out float3 nearestLocalPoint,
-                out float t,
-                resolution: 64,
-                iterations: 5);
+            if (_isReversed)
+                splineProgress = 1f - splineProgress;
 
-            if (_reverse)
-                t = 1f - t;
+            float distanceToSplineMeters = (closestSplinePoint - closestColliderPoint).magnitude;
 
-            Vector3 nearestWorldPoint = _splineContainer.transform
-                .TransformPoint(nearestLocalPoint);
+            bool isHandInside = distanceToSplineMeters <=
+                                _tubeRadiusMeters * _radiusToleranceMultiplier;
 
-            Vector3 closestPointOnHand = Physics.ClosestPoint(
-                nearestWorldPoint,
-                _handCollider,
-                _handTransform.position,
-                _handTransform.rotation);
+            _debugIsHandInside = isHandInside;
 
-            float distanceFromSpline = Vector3.Distance(nearestWorldPoint, closestPointOnHand);
-
-            bool handInside = distanceFromSpline <= _tubeRadius * _radiusTolerance;
-            _debugHandInside = handInside;
-
-            if (handInside)
+            if (isHandInside)
             {
-                float newProgress = _forwardOnly ? Mathf.Max(_progress, t) : t;
+                float newProgress = _isForwardOnly
+                    ? Mathf.Max(_progress, splineProgress)
+                    : splineProgress;
+
                 SetProgress(newProgress);
             }
             else
             {
-                SetProgress(Mathf.Lerp(_progress, 0f, Time.deltaTime * _drainSpeedPerSecond));
+                float drainedProgress = Mathf.Lerp(
+                    _progress,
+                    0f,
+                    Time.deltaTime * _drainSpeedPerSecond);
+
+                SetProgress(drainedProgress);
             }
-            Debug.DrawLine(nearestWorldPoint, closestPointOnHand,
-                    handInside ? Color.green : Color.red);
+
+            Debug.DrawLine(
+                closestSplinePoint,
+                closestColliderPoint,
+                isHandInside ? Color.green : Color.red);
         }
 
         #endregion
 
         #region Private
 
-        private void SetProgress(float t)
+        private float FindClosestSplineProgress(
+            out Vector3 closestSplinePoint,
+            out Vector3 closestColliderPoint)
         {
-            _progress = t;
-            _debugProgress = t;
+            float bestProgress = 0f;
+            float smallestDistanceSquared = float.MaxValue;
+
+            float coarseStepSize = 1f / CoarseStepCount;
+
+            // --- Coarse search ---
+            for (int stepIndex = 0; stepIndex <= CoarseStepCount; stepIndex++)
+            {
+                float progress = stepIndex * coarseStepSize;
+
+                float distanceSquared = GetDistanceSquaredToCollider(progress);
+
+                if (distanceSquared < smallestDistanceSquared)
+                {
+                    smallestDistanceSquared = distanceSquared;
+                    bestProgress = progress;
+                }
+            }
+
+            // --- Refinement search ---
+            float searchRange = coarseStepSize;
+
+            for (int iterationIndex = 0; iterationIndex < RefineStepCount; iterationIndex++)
+            {
+                float leftProgress = Mathf.Clamp01(bestProgress - searchRange);
+                float rightProgress = Mathf.Clamp01(bestProgress + searchRange);
+
+                float progressA = Mathf.Lerp(leftProgress, rightProgress, 0.33f);
+                float progressB = Mathf.Lerp(leftProgress, rightProgress, 0.66f);
+
+                float distanceA = GetDistanceSquaredToCollider(progressA);
+                float distanceB = GetDistanceSquaredToCollider(progressB);
+
+                bestProgress = distanceA < distanceB ? progressA : progressB;
+
+                searchRange *= 0.5f;
+            }
+
+            float3 localPoint = SplineUtility.EvaluatePosition(_spline, bestProgress);
+            closestSplinePoint = _splineTransform.TransformPoint(localPoint);
+            closestColliderPoint = _handCollider.ClosestPoint(closestSplinePoint);
+
+            return bestProgress;
+        }
+
+        private float GetDistanceSquaredToCollider(float progress)
+        {
+            float3 localPoint = SplineUtility.EvaluatePosition(_spline, progress);
+            Vector3 worldPoint = _splineTransform.TransformPoint(localPoint);
+
+            Vector3 closestPointOnCollider = _handCollider.ClosestPoint(worldPoint);
+
+            return (worldPoint - closestPointOnCollider).sqrMagnitude;
+        }
+
+        private void SetProgress(float progress)
+        {
+            _progress = progress;
+            _debugProgress = progress;
+
             OnProgressChange?.Invoke(_progress);
         }
 

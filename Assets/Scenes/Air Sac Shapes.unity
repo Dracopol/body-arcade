@@ -653,7 +653,11 @@ PrefabInstance:
     - target: {fileID: 4835855583460680654, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
+    - target: {fileID: 5039186176661025358, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
+      propertyPath: _progressTracker
+      value: 
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7627807434018673209, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.020062
@@ -713,7 +717,7 @@ PrefabInstance:
     - target: {fileID: 8468534757522820783, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7450293233070091531, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
@@ -831,11 +835,11 @@ PrefabInstance:
     - target: {fileID: 4835855583460680654, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 5039186176661025358, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7627807434018673209, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.4
@@ -883,7 +887,7 @@ PrefabInstance:
     - target: {fileID: 8468534757522820783, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7450293233070091531, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
@@ -1375,13 +1379,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320369868}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.3, z: 0}
+  m_LocalRotation: {x: -0.7040687, y: 0.41974688, z: 0.2885763, w: 0.4947965}
+  m_LocalPosition: {x: 0.29299998, y: -0.15730208, z: 0.668702}
   m_LocalScale: {x: 0.03, y: 0.3, z: 0.03}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2103932343}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -108.332, y: 9.5, z: 41.037994}
 --- !u!136 &320369870
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1473,11 +1477,11 @@ PrefabInstance:
     - target: {fileID: 4835855583460680654, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 5039186176661025358, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7627807434018673209, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.1
@@ -1525,7 +1529,7 @@ PrefabInstance:
     - target: {fileID: 8468534757522820783, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7450293233070091531, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
@@ -1544,11 +1548,11 @@ PrefabInstance:
     - target: {fileID: 4835855583460680654, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 5039186176661025358, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7627807434018673209, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.6
@@ -1596,7 +1600,7 @@ PrefabInstance:
     - target: {fileID: 8468534757522820783, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7450293233070091531, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
@@ -1712,6 +1716,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7387794251414690369, guid: cf7d2efba70d5824eb5f59e43c5ebb3b, type: 3}
+      propertyPath: _progressTracker
+      value: 
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1737,19 +1745,19 @@ PrefabInstance:
     - target: {fileID: 420077471554753906, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1641308425992081542, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1722841742068426592, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 2905993771370950047, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4984298553160391720, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.020062
@@ -1943,18 +1951,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1570748026}
     m_Modifications:
+    - target: {fileID: 420077471554753906, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
+      propertyPath: _progressTracker
+      value: 
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1641308425992081542, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1722841742068426592, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 2905993771370950047, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4984298553160391720, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.4
@@ -2160,15 +2172,19 @@ PrefabInstance:
     - target: {fileID: 420077471554753906, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1641308425992081542, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
+    - target: {fileID: 1722841742068426592, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
+      propertyPath: _progressTracker
+      value: 
+      objectReference: {fileID: 534313081}
     - target: {fileID: 2905993771370950047, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4984298553160391720, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.77902997
@@ -2602,13 +2618,13 @@ MonoBehaviour:
   _splineContainer: {fileID: 524428763}
   _handTransform: {fileID: 185321254}
   _handCollider: {fileID: 185321255}
-  _radiusTolerance: 1
-  _tubeRadius: 0.03
-  _forwardOnly: 0
-  _reverse: 0
+  _radiusToleranceMultiplier: 1
+  _tubeRadiusMeters: 0.03
+  _isForwardOnly: 1
+  _isReversed: 0
   _drainSpeedPerSecond: 5
   _debugProgress: 0
-  _debugHandInside: 0
+  _debugIsHandInside: 0
 --- !u!1 &534313072
 GameObject:
   m_ObjectHideFlags: 0
@@ -2622,9 +2638,8 @@ GameObject:
   - component: {fileID: 534313076}
   - component: {fileID: 534313075}
   - component: {fileID: 534313074}
-  - component: {fileID: 534313079}
-  - component: {fileID: 534313081}
   - component: {fileID: 534313080}
+  - component: {fileID: 534313081}
   m_Layer: 0
   m_Name: Spline (1)
   m_TagString: Untagged
@@ -2916,28 +2931,6 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
---- !u!114 &534313079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534313072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ca42fbaf99a6b4438c87e933051fde4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.SplineProgressTracker
-  _splineContainer: {fileID: 534313077}
-  _handTransform: {fileID: 320369869}
-  _handCollider: {fileID: 320369870}
-  _radiusTolerance: 1
-  _tubeRadius: 0.03
-  _forwardOnly: 0
-  _reverse: 0
-  _drainSpeedPerSecond: 5
-  _debugProgress: 0
-  _debugHandInside: 0
 --- !u!114 &534313080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2950,7 +2943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da9ab35f1d17e44a83a965df353c0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.TubeFillVisualizer
-  _progressTracker: {fileID: 534313079}
+  _progressTracker: {fileID: 534313081}
   _meshFilter: {fileID: 534313076}
   _tubeRenderer: {fileID: 534313075}
 --- !u!114 &534313081
@@ -2964,17 +2957,17 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ca42fbaf99a6b4438c87e933051fde4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.SplineProgressTracker
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressTracker
   _splineContainer: {fileID: 534313077}
   _handTransform: {fileID: 320369869}
   _handCollider: {fileID: 320369870}
-  _radiusTolerance: 1
-  _tubeRadius: 0.05
-  _forwardOnly: 1
-  _reverse: 0
+  _radiusToleranceMultiplier: 1
+  _tubeRadiusMeters: 0.03
+  _isForwardOnly: 1
+  _isReversed: 0
   _drainSpeedPerSecond: 5
   _debugProgress: 0
-  _debugHandInside: 0
+  _debugIsHandInside: 0
 --- !u!1 &535684330
 GameObject:
   m_ObjectHideFlags: 0
@@ -3078,7 +3071,11 @@ PrefabInstance:
     - target: {fileID: 4835855583460680654, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
+    - target: {fileID: 5039186176661025358, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
+      propertyPath: _progressTracker
+      value: 
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7627807434018673209, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.0200619
@@ -3138,7 +3135,7 @@ PrefabInstance:
     - target: {fileID: 8468534757522820783, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7450293233070091531, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
@@ -3285,7 +3282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb947bc0fee1ca8468dc4f45985ee08c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressColorVisualizer
-  _progressTracker: {fileID: 534313079}
+  _progressTracker: {fileID: 534313081}
   _renderer: {fileID: 2018572538460569282}
   _colorGradient:
     serializedVersion: 2
@@ -3449,7 +3446,7 @@ PrefabInstance:
     - target: {fileID: 2012957921769816594, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 3621388180636186732, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.9
@@ -3493,15 +3490,15 @@ PrefabInstance:
     - target: {fileID: 3789121645297883779, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4978109942392398917, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7373167416401590081, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3650,7 +3647,7 @@ PrefabInstance:
     - target: {fileID: 2012957921769816594, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 3621388180636186732, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.1357998
@@ -3706,15 +3703,15 @@ PrefabInstance:
     - target: {fileID: 3789121645297883779, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4978109942392398917, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7373167416401590081, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3735,7 +3732,7 @@ PrefabInstance:
     - target: {fileID: 2012957921769816594, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 3621388180636186732, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.0200619
@@ -3791,15 +3788,15 @@ PrefabInstance:
     - target: {fileID: 3789121645297883779, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4978109942392398917, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7373167416401590081, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3881,11 +3878,11 @@ PrefabInstance:
     - target: {fileID: 4835855583460680654, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 5039186176661025358, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7627807434018673209, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.4
@@ -3933,7 +3930,7 @@ PrefabInstance:
     - target: {fileID: 8468534757522820783, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7450293233070091531, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
@@ -4094,11 +4091,11 @@ PrefabInstance:
     - target: {fileID: 4835855583460680654, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 5039186176661025358, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7627807434018673209, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.3094
@@ -4158,7 +4155,7 @@ PrefabInstance:
     - target: {fileID: 8468534757522820783, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7450293233070091531, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
@@ -4177,19 +4174,19 @@ PrefabInstance:
     - target: {fileID: 420077471554753906, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1641308425992081542, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1722841742068426592, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 2905993771370950047, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4984298553160391720, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.6
@@ -4381,7 +4378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb947bc0fee1ca8468dc4f45985ee08c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressColorVisualizer
-  _progressTracker: {fileID: 534313079}
+  _progressTracker: {fileID: 534313081}
   _renderer: {fileID: 7884991312091167638}
   _colorGradient:
     serializedVersion: 2
@@ -4512,15 +4509,19 @@ PrefabInstance:
     - target: {fileID: 420077471554753906, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1641308425992081542, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
+    - target: {fileID: 1722841742068426592, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
+      propertyPath: _progressTracker
+      value: 
+      objectReference: {fileID: 534313081}
     - target: {fileID: 2905993771370950047, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4984298553160391720, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.8
@@ -4704,19 +4705,19 @@ PrefabInstance:
     - target: {fileID: 420077471554753906, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1641308425992081542, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1722841742068426592, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 2905993771370950047, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4984298553160391720, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.0200619
@@ -4854,19 +4855,19 @@ PrefabInstance:
     - target: {fileID: 420077471554753906, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1641308425992081542, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1722841742068426592, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 2905993771370950047, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4984298553160391720, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.8
@@ -5014,19 +5015,19 @@ PrefabInstance:
     - target: {fileID: 420077471554753906, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1641308425992081542, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1722841742068426592, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 2905993771370950047, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4984298553160391720, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.77902997
@@ -5099,19 +5100,19 @@ PrefabInstance:
     - target: {fileID: 420077471554753906, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1641308425992081542, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1722841742068426592, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 2905993771370950047, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4984298553160391720, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.8
@@ -5263,7 +5264,7 @@ PrefabInstance:
     - target: {fileID: 2012957921769816594, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 3621388180636186732, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.1357998
@@ -5319,15 +5320,15 @@ PrefabInstance:
     - target: {fileID: 3789121645297883779, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4978109942392398917, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7373167416401590081, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5372,14 +5373,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1570748026}
     m_Modifications:
+    - target: {fileID: 420077471554753906, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
+      propertyPath: _progressTracker
+      value: 
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1641308425992081542, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
+    - target: {fileID: 1722841742068426592, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
+      propertyPath: _progressTracker
+      value: 
+      objectReference: {fileID: 534313081}
     - target: {fileID: 2905993771370950047, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4984298553160391720, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.695468
@@ -5582,11 +5591,11 @@ PrefabInstance:
     - target: {fileID: 4835855583460680654, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 5039186176661025358, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7627807434018673209, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.6
@@ -5634,7 +5643,7 @@ PrefabInstance:
     - target: {fileID: 8468534757522820783, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7450293233070091531, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
@@ -5785,7 +5794,7 @@ PrefabInstance:
     - target: {fileID: 2012957921769816594, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 3621388180636186732, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.77903014
@@ -5841,15 +5850,15 @@ PrefabInstance:
     - target: {fileID: 3789121645297883779, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4978109942392398917, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7373167416401590081, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6111,7 +6120,7 @@ PrefabInstance:
     - target: {fileID: 2012957921769816594, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 3621388180636186732, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.77902985
@@ -6167,7 +6176,7 @@ PrefabInstance:
     - target: {fileID: 3789121645297883779, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4318988225100048660, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: m_Name
       value: Target
@@ -6183,7 +6192,7 @@ PrefabInstance:
     - target: {fileID: 4978109942392398917, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 5421594575296718932, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: m_LocalScale.x
       value: 20
@@ -6208,6 +6217,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7373167416401590081, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
+      propertyPath: _progressTracker
+      value: 
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6233,11 +6246,11 @@ PrefabInstance:
     - target: {fileID: 4835855583460680654, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 5039186176661025358, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7627807434018673209, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.1
@@ -6285,7 +6298,7 @@ PrefabInstance:
     - target: {fileID: 8468534757522820783, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7450293233070091531, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
@@ -6562,19 +6575,19 @@ PrefabInstance:
     - target: {fileID: 420077471554753906, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1641308425992081542, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1722841742068426592, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 2905993771370950047, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4984298553160391720, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.5
@@ -6709,11 +6722,11 @@ PrefabInstance:
     - target: {fileID: 4835855583460680654, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 5039186176661025358, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7627807434018673209, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.0200615
@@ -6773,7 +6786,7 @@ PrefabInstance:
     - target: {fileID: 8468534757522820783, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7450293233070091531, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
@@ -6879,11 +6892,11 @@ PrefabInstance:
     - target: {fileID: 4835855583460680654, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 5039186176661025358, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7627807434018673209, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.0200619
@@ -6943,7 +6956,7 @@ PrefabInstance:
     - target: {fileID: 8468534757522820783, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7450293233070091531, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
@@ -7095,7 +7108,7 @@ PrefabInstance:
     - target: {fileID: 2012957921769816594, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 3621388180636186732, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.020062
@@ -7151,7 +7164,7 @@ PrefabInstance:
     - target: {fileID: 3789121645297883779, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4232602013044840082, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.88
@@ -7167,11 +7180,11 @@ PrefabInstance:
     - target: {fileID: 4978109942392398917, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7373167416401590081, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7188,19 +7201,19 @@ PrefabInstance:
     - target: {fileID: 420077471554753906, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1641308425992081542, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1722841742068426592, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 2905993771370950047, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4984298553160391720, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.020062
@@ -7323,15 +7336,19 @@ PrefabInstance:
     - target: {fileID: 420077471554753906, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
+    - target: {fileID: 1641308425992081542, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
+      propertyPath: _progressTracker
+      value: 
+      objectReference: {fileID: 534313081}
     - target: {fileID: 1722841742068426592, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 2905993771370950047, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4984298553160391720, guid: 13fd59668819e6c4cade36853635eb4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.8
@@ -7661,7 +7678,7 @@ PrefabInstance:
     - target: {fileID: 2012957921769816594, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 2078162801036747465, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -7709,7 +7726,7 @@ PrefabInstance:
     - target: {fileID: 3789121645297883779, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 4318988225100048660, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -7721,11 +7738,11 @@ PrefabInstance:
     - target: {fileID: 4978109942392398917, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7373167416401590081, guid: e2d0b2c349f57074c830f3f34e722b91, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7897,11 +7914,11 @@ PrefabInstance:
     - target: {fileID: 4835855583460680654, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 5039186176661025358, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     - target: {fileID: 7627807434018673209, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.3094
@@ -7961,7 +7978,7 @@ PrefabInstance:
     - target: {fileID: 8468534757522820783, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
       propertyPath: _progressTracker
       value: 
-      objectReference: {fileID: 534313079}
+      objectReference: {fileID: 534313081}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7450293233070091531, guid: c886a59ce2d967c4abeb58f98c26daf6, type: 3}
