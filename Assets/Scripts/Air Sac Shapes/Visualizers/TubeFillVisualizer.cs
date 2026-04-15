@@ -13,7 +13,6 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
         [SerializeField] private MeshRenderer _tubeRenderer;
 
         [Header("Win Appearance")]
-        [SerializeField] private bool _isWin;
         [SerializeField] private Color _winColor = Color.green;
 
         #endregion
@@ -49,12 +48,15 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
         {
             if (_progressTracker != null)
                 _progressTracker.OnProgressChange += HandleProgressChange;
+                _progressTracker.OnWinStateChange += HandleWinStateChange;
+
         }
 
         private void OnDisable()
         {
             if (_progressTracker != null)
                 _progressTracker.OnProgressChange -= HandleProgressChange;
+                _progressTracker.OnWinStateChange -= HandleWinStateChange;
         }
 
         private void OnDestroy()
@@ -73,8 +75,14 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
 
             _material.SetFloat(ProgressId, progress);
 
-            if (_isWin)
-                ApplyWinAppearance();
+        }
+
+        private void HandleWinStateChange()
+        {
+            if (_progressTracker == null)
+                return;
+
+            ApplyWinAppearance();
         }
 
         #endregion

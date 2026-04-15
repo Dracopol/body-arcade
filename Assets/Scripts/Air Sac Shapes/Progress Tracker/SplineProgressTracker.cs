@@ -11,6 +11,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
 
         internal event Action<float> OnProgressChange;
         internal event Action<float> OnMaxProgressChange;
+        internal event Action OnWinStateChange;
 
         #endregion
 
@@ -223,6 +224,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
                     _progress = 0f;
                     _maxProgress = 0f;
                     Debug.Log("Win condition reached!");
+                    OnWinStateChange?.Invoke();
                 }
             }
         }
