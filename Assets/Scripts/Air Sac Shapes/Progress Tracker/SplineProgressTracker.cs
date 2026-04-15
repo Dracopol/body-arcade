@@ -33,6 +33,8 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
         [SerializeField, Range(0f, 1f)] private float _debugProgress;
         [SerializeField] private bool _debugIsHandInside;
         [SerializeField, Range(0f, 1f)] private float _debugMaxProgress;
+        [SerializeField] private bool _debugOverrideEnabled;
+        [SerializeField, Range(0f, 1f)] private float _debugProgressOverride;
 
         #endregion
 
@@ -73,6 +75,13 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
 
         private void Update()
         {
+            if (_debugOverrideEnabled)
+            {
+                SetProgress(_debugProgressOverride);
+                SetMaxProgress(_debugProgressOverride);
+                return;
+            }
+
             if (_handTransform == null || _handCollider == null || _spline == null)
                 return;
 
@@ -182,8 +191,10 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
         private void SetProgress(float progress)
         {
             if (_progress >= _winThreshold)
+            {
                 progress = 1f;
-
+            }
+        
             _progress = progress;
             _debugProgress = progress;
 
