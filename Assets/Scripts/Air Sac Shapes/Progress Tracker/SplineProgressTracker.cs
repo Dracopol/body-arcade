@@ -27,6 +27,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
         [SerializeField] private bool _isForwardOnly = true;
         [SerializeField] private bool _isReversed = false;
         [SerializeField] private float _drainSpeedPerSecond = 5f;
+        [SerializeField] private float _fillUpPerSecond = 0.5f;
         [SerializeField, Range(0f, 1f)] private float _winThreshold = 0.98f;
 
         [Header("Debug visualization")]
@@ -58,6 +59,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
 
         internal float Progress => _progress;
         internal bool IsReversed => _isReversed;
+        internal bool IsWin => _isWin;
 
         #endregion
 
@@ -86,6 +88,13 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
 
             if (_handTransform == null || _handCollider == null || _spline == null)
                 return;
+
+            if (_isWin)
+            {
+                float drainedProgress = Mathf.MoveTowards(_progress, 1f, Time.deltaTime * _fillUpPerSecond);
+                SetProgress(drainedProgress, true);
+                return;
+            }
 
             float splineProgress = FindClosestSplineProgress(
                 out Vector3 closestSplinePoint,
@@ -211,6 +220,8 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
                 if (!_isWin && progress == 1f)
                 {
                     _isWin = true;
+                    _progress = 0f;
+                    _maxProgress = 0f;
                     Debug.Log("Win condition reached!");
                 }
             }
