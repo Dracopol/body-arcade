@@ -1860,7 +1860,7 @@ MonoBehaviour:
   _radiusToleranceMultiplier: 2
   _tubeRadiusMeters: 0.015
   _isForwardOnly: 0
-  _isReversed: 0
+  _isReversed: 1
   _drainSpeedPerSecond: 5
   _winThreshold: 0.98
   _debugProgress: 0
@@ -1903,69 +1903,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d1336b730d59c419739118c709b3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorGradient:
-    key0:
-      r: 1
-      g: 0.73333335
-      b: 0.59607846
-      a: 1
-    key1:
-      r: 0
-      g: 0
-      b: 0
-      a: 1
-    key2:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key3:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key4:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key5:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key6:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key7:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  value: 0
-  target: {fileID: 0}
 --- !u!135 &590518386
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2121,69 +2058,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d1336b730d59c419739118c709b3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorGradient:
-    key0:
-      r: 1
-      g: 0.73333335
-      b: 0.59607846
-      a: 1
-    key1:
-      r: 0
-      g: 0
-      b: 0
-      a: 1
-    key2:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key3:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key4:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key5:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key6:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key7:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  value: 0
-  target: {fileID: 0}
 --- !u!135 &726853310
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2345,69 +2219,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d1336b730d59c419739118c709b3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorGradient:
-    key0:
-      r: 1
-      g: 0.73333335
-      b: 0.59607846
-      a: 1
-    key1:
-      r: 0
-      g: 0
-      b: 0
-      a: 1
-    key2:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key3:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key4:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key5:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key6:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key7:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  value: 0
-  target: {fileID: 0}
 --- !u!135 &1075881619
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2620,69 +2431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d1336b730d59c419739118c709b3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorGradient:
-    key0:
-      r: 1
-      g: 0.73333335
-      b: 0.59607846
-      a: 1
-    key1:
-      r: 0
-      g: 0
-      b: 0
-      a: 1
-    key2:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key3:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key4:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key5:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key6:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key7:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  value: 0
-  target: {fileID: 0}
 --- !u!4 &1163960619 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1814460541099927702, guid: cf7d2efba70d5824eb5f59e43c5ebb3b, type: 3}
@@ -2730,69 +2478,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d1336b730d59c419739118c709b3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorGradient:
-    key0:
-      r: 1
-      g: 0.73333335
-      b: 0.59607846
-      a: 1
-    key1:
-      r: 0
-      g: 0
-      b: 0
-      a: 1
-    key2:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key3:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key4:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key5:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key6:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key7:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  value: 0
-  target: {fileID: 0}
 --- !u!135 &1295528555
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2851,69 +2536,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d1336b730d59c419739118c709b3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorGradient:
-    key0:
-      r: 1
-      g: 0.73333335
-      b: 0.59607846
-      a: 1
-    key1:
-      r: 0
-      g: 0
-      b: 0
-      a: 1
-    key2:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key3:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key4:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key5:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key6:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key7:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  value: 0
-  target: {fileID: 0}
 --- !u!135 &1412569689
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3471,69 +3093,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d1336b730d59c419739118c709b3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorGradient:
-    key0:
-      r: 1
-      g: 0.73333335
-      b: 0.59607846
-      a: 1
-    key1:
-      r: 0
-      g: 0
-      b: 0
-      a: 1
-    key2:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key3:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key4:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key5:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key6:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key7:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  value: 0
-  target: {fileID: 0}
 --- !u!135 &1713279626
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3597,69 +3156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d1336b730d59c419739118c709b3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorGradient:
-    key0:
-      r: 1
-      g: 0.73333335
-      b: 0.59607846
-      a: 1
-    key1:
-      r: 0
-      g: 0
-      b: 0
-      a: 1
-    key2:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key3:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key4:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key5:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key6:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key7:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  value: 0
-  target: {fileID: 0}
 --- !u!135 &1881802731
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3916,69 +3412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d1336b730d59c419739118c709b3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorGradient:
-    key0:
-      r: 1
-      g: 0.73333335
-      b: 0.59607846
-      a: 1
-    key1:
-      r: 0
-      g: 0
-      b: 0
-      a: 1
-    key2:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key3:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key4:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key5:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key6:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    key7:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  value: 0
-  target: {fileID: 0}
 --- !u!135 &2085363184
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4031,7 +3464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressFollower
   _splineContainer: {fileID: 534313077}
   _tracker: {fileID: 534313081}
-  _target: {fileID: 1143999337}
+  _target: {fileID: 2086658609}
   _alignRotationToSpline: 1
 --- !u!4 &2086658609
 Transform:

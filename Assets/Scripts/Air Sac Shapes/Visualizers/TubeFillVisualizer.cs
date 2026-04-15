@@ -22,6 +22,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
 
         private static readonly int ProgressId = Shader.PropertyToID("_Progress");
         private static readonly int UvMaxId = Shader.PropertyToID("_UVMax");
+        private static readonly int ReversedId = Shader.PropertyToID("_Reversed");
 
         private Material _material;
 
@@ -38,6 +39,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
         private void Start()
         {
             DetectUvMax();
+
+            if (_material != null && _progressTracker != null)
+                _material.SetFloat(ReversedId, _progressTracker.IsReversed ? 1f : 0f);
         }
 
         private void OnEnable()
@@ -84,9 +88,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
                 if (uv.y > maxV) maxV = uv.y;
 
             if (maxV > 0f)
-            {
                 _material.SetFloat(UvMaxId, maxV);
-            }
         }
 
         #endregion
