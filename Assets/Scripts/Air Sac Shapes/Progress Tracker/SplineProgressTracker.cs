@@ -10,6 +10,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
         #region Events
 
         internal event Action<float> OnProgressChange;
+        internal event Action<float> OnMaxProgressChange;
 
         #endregion
 
@@ -31,13 +32,14 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
         [Header("Debug")]
         [SerializeField, Range(0f, 1f)] private float _debugProgress;
         [SerializeField] private bool _debugIsHandInside;
+        [SerializeField, Range(0f, 1f)] private float _debugMaxProgress;
 
         #endregion
 
         #region Fields
 
         private float _progress;
-        [SerializeField]private float _maxProgress = 0f;
+        private float _maxProgress = 0f;
 
         private Transform _splineTransform;
         private Spline _spline;
@@ -50,6 +52,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
         #region Properties
 
         internal float Progress => _progress;
+        internal bool IsReversed => _isReversed;
 
         #endregion
 
@@ -94,7 +97,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
                     : splineProgress;
 
                 SetProgress(newProgress);
-                _maxProgress = Mathf.Max(_maxProgress, newProgress);
+                SetMaxProgress(Mathf.Max(_maxProgress, newProgress));
             }
             else
             {
@@ -104,7 +107,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
                     Time.deltaTime * _drainSpeedPerSecond);
 
                 SetProgress(drainedProgress);
-                _maxProgress = drainedProgress;
+                SetMaxProgress(drainedProgress);
             }
 
             Debug.DrawLine(
@@ -185,6 +188,17 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
             _debugProgress = progress;
 
             OnProgressChange?.Invoke(_progress);
+        }
+
+        private void SetMaxProgress(float maxProgress)
+        {
+            if (_progress >= _winThreshold)
+                maxProgress = 1f;
+
+            _maxProgress = maxProgress;
+            _debugMaxProgress = maxProgress;
+
+            OnMaxProgressChange?.Invoke(_maxProgress);
         }
 
         #endregion
