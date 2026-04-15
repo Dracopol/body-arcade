@@ -3,10 +3,6 @@ using IMVR.BodyArcade.AirSacShapes.ProgressTracker;
 
 namespace IMVR.BodyArcade.AirSacShapes.Visualizers
 {
-    /// <summary>
-    /// Evaluates a color gradient based on progress reported by a SplineProgressTracker
-    /// and applies the result to a material's color property.
-    /// </summary>
     internal class AirSacProgressVisualizer : MonoBehaviour
     {
         #region Serialized fields
@@ -45,13 +41,13 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
         private void OnEnable()
         {
             if (_progressTracker != null)
-                _progressTracker.OnProgressChange += HandleProgressChange;
+                _progressTracker.OnMaxProgressChange += HandleMaxProgressChange;
         }
 
         private void OnDisable()
         {
             if (_progressTracker != null)
-                _progressTracker.OnProgressChange -= HandleProgressChange;
+                _progressTracker.OnMaxProgressChange -= HandleMaxProgressChange;
         }
 
         private void OnDestroy()
@@ -64,10 +60,10 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
 
         #region Event handlers
 
-        private void HandleProgressChange(float progress)
+        private void HandleMaxProgressChange(float maxProgress)
         {
-            _debugProgress = progress;
-            ApplyColor(progress);
+            _debugProgress = maxProgress;
+            ApplyColor(maxProgress);
         }
 
         #endregion
