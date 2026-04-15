@@ -26,6 +26,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
         [SerializeField] private bool _isForwardOnly = true;
         [SerializeField] private bool _isReversed = false;
         [SerializeField] private float _drainSpeedPerSecond = 5f;
+        [SerializeField, Range(0f, 1f)] private float _winThreshold = 0.98f;
 
         [Header("Debug")]
         [SerializeField, Range(0f, 1f)] private float _debugProgress;
@@ -36,6 +37,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
         #region Fields
 
         private float _progress;
+        [SerializeField]private float _maxProgress = 0f;
 
         private Transform _splineTransform;
         private Spline _spline;
@@ -92,6 +94,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
                     : splineProgress;
 
                 SetProgress(newProgress);
+                _maxProgress = Mathf.Max(_maxProgress, newProgress);
             }
             else
             {
@@ -101,6 +104,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
                     Time.deltaTime * _drainSpeedPerSecond);
 
                 SetProgress(drainedProgress);
+                _maxProgress = drainedProgress;
             }
 
             Debug.DrawLine(
@@ -174,6 +178,9 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
 
         private void SetProgress(float progress)
         {
+            if (_progress >= _winThreshold)
+                progress = 1f;
+
             _progress = progress;
             _debugProgress = progress;
 
