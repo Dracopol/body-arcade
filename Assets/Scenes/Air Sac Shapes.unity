@@ -1521,6 +1521,8 @@ MonoBehaviour:
   _debugProgress: 0
   _debugIsHandInside: 0
   _debugMaxProgress: 0
+  _debugOverrideEnabled: 0
+  _debugProgressOverride: 0
 --- !u!1 &534313072
 GameObject:
   m_ObjectHideFlags: 0
@@ -1868,6 +1870,8 @@ MonoBehaviour:
   _debugProgress: 0
   _debugIsHandInside: 0
   _debugMaxProgress: 0
+  _debugOverrideEnabled: 0
+  _debugProgressOverride: 0
 --- !u!82 &534313082
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1980,6 +1984,7 @@ MonoBehaviour:
   _progressTracker: {fileID: 534313081}
   _audioSource: {fileID: 534313082}
   _clip: {fileID: 8300000, guid: eb88c7d243cc59a4f9ad2b0f3652e190, type: 3}
+  _winClip: {fileID: 8300000, guid: 870908489a0a37948a8ad97e3a857007, type: 3}
   _progressStepSize: 0.01
   _minPitch: 0.5
   _maxPitch: 1.3
