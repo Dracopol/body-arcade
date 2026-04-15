@@ -12,7 +12,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
         [SerializeField] private ParticleSystem _particleEffectPrefab;
 
         [Header("Behaviour")]
-        [SerializeField, Range(0.01f, 0.5f)] private float _progressStepSize = 0.05f;
+        [SerializeField, Range(0.01f, 1f)] private float _progressStepSize = 0.09f;
 
         [Header("Debug")]
         [SerializeField, Range(0f, 1f)] private float _debugProgress = 0f;
