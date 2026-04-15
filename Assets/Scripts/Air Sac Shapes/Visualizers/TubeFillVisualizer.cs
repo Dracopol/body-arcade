@@ -3,10 +3,6 @@ using IMVR.BodyArcade.AirSacShapes.ProgressTracker;
 
 namespace IMVR.BodyArcade.AirSacShapes.Visualizers
 {
-    /// <summary>
-    /// Drives the tube fill shader based on progress reported by a SplineProgressTracker.
-    /// Detects the mesh UV max at startup and keeps the material in sync with progress changes.
-    /// </summary>
     internal class TubeFillVisualizer : MonoBehaviour
     {
         #region Serialized fields
@@ -16,6 +12,10 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
         [SerializeField] private MeshFilter _meshFilter;
         [SerializeField] private MeshRenderer _tubeRenderer;
 
+        [Header("Win Appearance")]
+        [SerializeField] private bool _isWin;
+        [SerializeField] private Color _winColor = Color.green;
+
         #endregion
 
         #region Fields
@@ -23,6 +23,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
         private static readonly int ProgressId = Shader.PropertyToID("_Progress");
         private static readonly int UvMaxId = Shader.PropertyToID("_UVMax");
         private static readonly int ReversedId = Shader.PropertyToID("_Reversed");
+        private static readonly int ActiveColorId = Shader.PropertyToID("_ActiveColor");
 
         private Material _material;
 
@@ -68,8 +69,12 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
 
         private void HandleProgressChange(float progress)
         {
-            if (_material != null)
-                _material.SetFloat(ProgressId, progress);
+            if (_material == null) return;
+
+            _material.SetFloat(ProgressId, progress);
+
+            if (_isWin)
+                ApplyWinAppearance();
         }
 
         #endregion
@@ -89,6 +94,11 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
 
             if (maxV > 0f)
                 _material.SetFloat(UvMaxId, maxV);
+        }
+
+        private void ApplyWinAppearance()
+        {
+            _material.SetColor(ActiveColorId, _winColor);
         }
 
         #endregion
