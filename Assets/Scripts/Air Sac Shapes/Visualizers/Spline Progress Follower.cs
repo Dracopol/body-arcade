@@ -57,7 +57,9 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
             if (_spline == null || _target == null)
                 return;
 
-            SplineUtility.Evaluate(_spline, maxProgress, out float3 localPosition, out float3 localTangent, out float3 localUp);
+            float t = _tracker.IsReversed ? 1f - maxProgress : maxProgress;
+
+            SplineUtility.Evaluate(_spline, t, out float3 localPosition, out float3 localTangent, out float3 localUp);
 
             _target.position = _splineTransform.TransformPoint(localPosition);
 
