@@ -29,10 +29,12 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
         [SerializeField] private float _drainSpeedPerSecond = 5f;
         [SerializeField, Range(0f, 1f)] private float _winThreshold = 0.98f;
 
-        [Header("Debug")]
+        [Header("Debug visualization")]
         [SerializeField, Range(0f, 1f)] private float _debugProgress;
         [SerializeField] private bool _debugIsHandInside;
         [SerializeField, Range(0f, 1f)] private float _debugMaxProgress;
+
+        [Header("Debug override")]
         [SerializeField] private bool _debugOverrideEnabled;
         [SerializeField, Range(0f, 1f)] private float _debugProgressOverride;
 
@@ -42,6 +44,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
 
         private float _progress;
         private float _maxProgress = 0f;
+        private bool _isWin = false;
 
         private Transform _splineTransform;
         private Spline _spline;
@@ -77,8 +80,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
         {
             if (_debugOverrideEnabled)
             {
-                SetProgress(_debugProgressOverride);
-                SetMaxProgress(_debugProgressOverride);
+                SetProgress(_debugProgressOverride, false);
                 return;
             }
 
@@ -105,8 +107,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
                     ? Mathf.Max(_progress, splineProgress)
                     : splineProgress;
 
-                SetProgress(newProgress);
-                SetMaxProgress(Mathf.Max(_maxProgress, newProgress));
+                SetProgress(newProgress, false);
             }
             else
             {
@@ -115,8 +116,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
                     0f,
                     Time.deltaTime * _drainSpeedPerSecond);
 
-                SetProgress(drainedProgress);
-                SetMaxProgress(drainedProgress);
+                SetProgress(drainedProgress, true);
             }
 
             Debug.DrawLine(
@@ -188,13 +188,36 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
             return (worldPoint - closestPointOnCollider).sqrMagnitude;
         }
 
-        private void SetProgress(float progress)
+        private void SetProgress(float progress, bool drainOverride)
         {
+            if (drainOverride)
+            {
+                SetCurrentProgress(progress);
+                SetMaxProgress(progress);
+                return;
+            }
+
             if (_progress >= _winThreshold)
             {
                 progress = 1f;
             }
-        
+
+            SetCurrentProgress(progress);
+
+            if (progress > _maxProgress)
+            {
+                SetMaxProgress(progress);
+
+                if (!_isWin && progress == 1f)
+                {
+                    _isWin = true;
+                    Debug.Log("Win condition reached!");
+                }
+            }
+        }
+
+        private void SetCurrentProgress(float progress)
+        {
             _progress = progress;
             _debugProgress = progress;
 
@@ -203,9 +226,6 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
 
         private void SetMaxProgress(float maxProgress)
         {
-            if (_progress >= _winThreshold)
-                maxProgress = 1f;
-
             _maxProgress = maxProgress;
             _debugMaxProgress = maxProgress;
 
