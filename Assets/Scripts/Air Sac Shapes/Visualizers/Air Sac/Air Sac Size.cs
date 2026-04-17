@@ -3,7 +3,7 @@ using IMVR.BodyArcade.AirSacShapes.ProgressTracker;
 
 namespace IMVR.BodyArcade.AirSacShapes.Visualizers
 {
-    internal class AirSacProgressVisualizer : MonoBehaviour
+    internal class AirSacSize : MonoBehaviour
     {
         #region Serialized fields
 
@@ -12,7 +12,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
         [SerializeField] private Renderer _renderer;
 
         [Header("Behaviour")]
-        [SerializeField] private Gradient _colorGradient;
+        [SerializeField] private float _finalSizeMultiplier = 1.5f;
 
         [Header("Debug")]
         [SerializeField, Range(0f, 1f)] private float _debugProgress = 0f;
@@ -21,9 +21,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
 
         #region Fields
 
-        private static readonly int CellColorId = Shader.PropertyToID("_Cell_Color");
-
-        private Material _material;
+        private Vector3 _initialScale;
 
         #endregion
 
@@ -32,10 +30,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
         private void Awake()
         {
             if (_renderer != null)
-                _material = _renderer.material;
-
-            if (_colorGradient == null)
-                _colorGradient = CreateDefaultGradient();
+                _initialScale = _renderer.transform.localScale;
         }
 
         private void OnEnable()
@@ -50,12 +45,6 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
                 _progressTracker.OnMaxProgressChange -= HandleMaxProgressChange;
         }
 
-        private void OnDestroy()
-        {
-            if (_material != null)
-                Destroy(_material);
-        }
-
         #endregion
 
         #region Event handlers
@@ -63,38 +52,22 @@ namespace IMVR.BodyArcade.AirSacShapes.Visualizers
         private void HandleMaxProgressChange(float maxProgress)
         {
             _debugProgress = maxProgress;
-            ApplyColor(maxProgress);
+            if (_progressTracker.IsWin)
+                return;
+            ApplyScale(maxProgress);
         }
 
         #endregion
 
         #region Private
 
-        private void ApplyColor(float t)
+        private void ApplyScale(float progress)
         {
-            if (_material == null)
+            if (_renderer == null)
                 return;
 
-            _material.SetColor(CellColorId, _colorGradient.Evaluate(t));
-        }
-
-        private static Gradient CreateDefaultGradient()
-        {
-            var gradient = new Gradient();
-            gradient.SetKeys(
-                new GradientColorKey[]
-                {
-                    new(Color.red,    0.0f),
-                    new(Color.yellow, 0.5f),
-                    new(Color.green,  1.0f)
-                },
-                new GradientAlphaKey[]
-                {
-                    new(1f, 0f),
-                    new(1f, 1f)
-                }
-            );
-            return gradient;
+            float scaleFactor = Mathf.Lerp(1f, _finalSizeMultiplier, progress);
+            _renderer.transform.localScale = _initialScale * scaleFactor;
         }
 
         #endregion
