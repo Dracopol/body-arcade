@@ -15,6 +15,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
 
         [Header("Behaviour")]
         [SerializeField, Range(0.01f, 1f)] private float _progressStepSize = 0.05f;
+        [SerializeField, Range(0.01f, 1f)] private float _winStepSize = 0.10f;
         [SerializeField, Range(0, 1f)] private float _minPitch = 0.8f;
         [SerializeField, Range(1f, 2f)] private float _maxPitch = 2.0f;
 
@@ -25,9 +26,10 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
         #endregion
 
         #region Fields
-        
+
         private int _lastThresholdIndex = 0;
         private int _maxThresholdIndex;
+        private bool _isWinPhase = false;
 
         #endregion
 
@@ -38,31 +40,46 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
             _maxThresholdIndex = Mathf.FloorToInt(1f / _progressStepSize);
 
             if (_progressTracker != null)
+            {
                 _progressTracker.OnMaxProgressChange += HandleMaxProgressChange;
+                _progressTracker.OnWinStateChange += HandleWinStateChange;
+            }
         }
 
         private void OnDisable()
         {
             if (_progressTracker != null)
+            {
                 _progressTracker.OnMaxProgressChange -= HandleMaxProgressChange;
+                _progressTracker.OnWinStateChange -= HandleWinStateChange;
+            }
         }
 
         #endregion
 
         #region Event handlers
 
+        private void HandleWinStateChange()
+        {
+            _isWinPhase = true;
+            _lastThresholdIndex = 0;
+            _debugLastThreshold = 0;
+            _maxThresholdIndex = Mathf.FloorToInt(1f / _winStepSize);
+        }
+
         private void HandleMaxProgressChange(float maxProgress)
         {
             _debugProgress = maxProgress;
 
-            int currentThresholdIndex = Mathf.FloorToInt(maxProgress / _progressStepSize);
+            float activeStepSize = _isWinPhase ? _winStepSize : _progressStepSize;
+            int currentThresholdIndex = Mathf.FloorToInt(maxProgress / activeStepSize);
 
             if (currentThresholdIndex > _lastThresholdIndex)
             {
                 _lastThresholdIndex = currentThresholdIndex;
                 _debugLastThreshold = currentThresholdIndex;
 
-                if (currentThresholdIndex <100)
+                if (currentThresholdIndex < _maxThresholdIndex)
                 {
                     PlayAudio(currentThresholdIndex);
                 }
