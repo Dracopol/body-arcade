@@ -1497,6 +1497,7 @@ MonoBehaviour:
   _progressTracker: {fileID: 524428765}
   _meshFilter: {fileID: 524428762}
   _tubeRenderer: {fileID: 524428761}
+  _winColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &524428765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1517,6 +1518,7 @@ MonoBehaviour:
   _isForwardOnly: 0
   _isReversed: 0
   _drainSpeedPerSecond: 5
+  _fillUpPerSecond: 0.5
   _winThreshold: 0.98
   _debugProgress: 0
   _debugIsHandInside: 0
@@ -1846,6 +1848,7 @@ MonoBehaviour:
   _progressTracker: {fileID: 534313081}
   _meshFilter: {fileID: 534313076}
   _tubeRenderer: {fileID: 534313075}
+  _winColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &534313081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1866,6 +1869,7 @@ MonoBehaviour:
   _isForwardOnly: 0
   _isReversed: 0
   _drainSpeedPerSecond: 5
+  _fillUpPerSecond: 0.5
   _winThreshold: 0.98
   _debugProgress: 0
   _debugIsHandInside: 0
@@ -1985,7 +1989,8 @@ MonoBehaviour:
   _audioSource: {fileID: 534313082}
   _clip: {fileID: 8300000, guid: eb88c7d243cc59a4f9ad2b0f3652e190, type: 3}
   _winClip: {fileID: 8300000, guid: 870908489a0a37948a8ad97e3a857007, type: 3}
-  _progressStepSize: 0.01
+  _progressStepSize: 0.025
+  _winStepSize: 0.05
   _minPitch: 0.5
   _maxPitch: 1.3
   _debugProgress: 0
