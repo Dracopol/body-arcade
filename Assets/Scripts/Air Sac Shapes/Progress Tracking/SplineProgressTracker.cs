@@ -3,7 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
+namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 {
     internal class SplineProgressTracker : MonoBehaviour
     {

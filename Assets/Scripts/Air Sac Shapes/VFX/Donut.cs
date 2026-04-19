@@ -1,10 +1,11 @@
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
+using IMVR.BodyArcade.AirSacShapes.ProgressTrackering;
 
-namespace IMVR.BodyArcade.AirSacShapes.ProgressTracker
+namespace IMVR.BodyArcade.AirSacShapes.VFX
 {
-    internal class SplineProgressFollower : MonoBehaviour
+    internal class Donut : MonoBehaviour
     {
         #region Serialized fields
 

@@ -1,7 +1,7 @@
 using UnityEngine;
-using IMVR.BodyArcade.AirSacShapes.ProgressTracker;
+using IMVR.BodyArcade.AirSacShapes.ProgressTrackering;
 
-namespace IMVR.BodyArcade.AirSacShapes.Visualizers
+namespace IMVR.BodyArcade.AirSacShapes.VFX
 {
     internal class TubeFillVisualizer : MonoBehaviour
     {

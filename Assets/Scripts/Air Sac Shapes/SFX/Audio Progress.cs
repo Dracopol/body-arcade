@@ -1,7 +1,7 @@
 using UnityEngine;
-using IMVR.BodyArcade.AirSacShapes.ProgressTracker;
+using IMVR.BodyArcade.AirSacShapes.ProgressTrackering;
 
-namespace IMVR.BodyArcade.AirSacShapes.Sound
+namespace IMVR.BodyArcade.AirSacShapes.SFX
 {
     internal class AudioProgress : MonoBehaviour
     {

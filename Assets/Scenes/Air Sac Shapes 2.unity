@@ -2636,7 +2636,7 @@ MonoBehaviour:
   _ball: {fileID: 4374293267550634047}
   _camera: {fileID: 224017790}
   _smoothAlign: 1
-  _alignSpeedUnitsPerSecond: 5
+  _alignSpeedUnitsPerSecond: 2.5
 --- !u!4 &1096373137
 Transform:
   m_ObjectHideFlags: 0
