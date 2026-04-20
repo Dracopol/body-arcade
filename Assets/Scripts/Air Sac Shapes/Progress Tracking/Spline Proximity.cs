@@ -12,8 +12,8 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         private readonly Transform _splineTransform;
         private readonly Collider _handCollider;
 
-        private const int CoarseStepCount = 12;
-        private const int RefineStepCount = 6;
+        private const int CoarseStepCount = 24;
+        private const int RefineStepCount = 12;
 
         #endregion
 
@@ -34,39 +34,46 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
             out Vector3 closestSplinePoint,
             out Vector3 closestColliderPoint)
         {
-            float bestProgress = 0f;
-            float smallestDistanceSquared = float.MaxValue;
-
             float coarseStepSize = 1f / CoarseStepCount;
 
-            for (int stepIndex = 0; stepIndex <= CoarseStepCount; stepIndex++)
-            {
-                float progress = stepIndex * coarseStepSize;
-                float distanceSquared = GetDistanceSquaredToCollider(progress);
+            float[] distances = new float[CoarseStepCount + 1];
+            for (int i = 0; i <= CoarseStepCount; i++)
+                distances[i] = GetDistanceSquaredToCollider(i * coarseStepSize);
 
-                if (distanceSquared < smallestDistanceSquared)
+            float bestProgress = 0f;
+            float smallestDistance = float.MaxValue;
+
+            for (int i = 0; i <= CoarseStepCount; i++)
+            {
+                float prev = distances[i > 0 ? i - 1 : 0];
+                float next = distances[i < CoarseStepCount ? i + 1 : CoarseStepCount];
+
+                if (distances[i] > prev || distances[i] > next)
+                    continue;
+
+                float left = Mathf.Clamp01(i * coarseStepSize - coarseStepSize);
+                float right = Mathf.Clamp01(i * coarseStepSize + coarseStepSize);
+
+                for (int iter = 0; iter < RefineStepCount; iter++)
                 {
-                    smallestDistanceSquared = distanceSquared;
-                    bestProgress = progress;
+                    float range = right - left;
+                    float progressA = left + range / 3f;
+                    float progressB = right - range / 3f;
+
+                    if (GetDistanceSquaredToCollider(progressA) < GetDistanceSquaredToCollider(progressB))
+                        right = progressB;
+                    else
+                        left = progressA;
                 }
-            }
 
-            float searchRange = coarseStepSize;
+                float candidate = (left + right) * 0.5f;
+                float candidateDistance = GetDistanceSquaredToCollider(candidate);
 
-            for (int iterationIndex = 0; iterationIndex < RefineStepCount; iterationIndex++)
-            {
-                float leftProgress = Mathf.Clamp01(bestProgress - searchRange);
-                float rightProgress = Mathf.Clamp01(bestProgress + searchRange);
-
-                float progressA = Mathf.Lerp(leftProgress, rightProgress, 0.33f);
-                float progressB = Mathf.Lerp(leftProgress, rightProgress, 0.66f);
-
-                float distanceA = GetDistanceSquaredToCollider(progressA);
-                float distanceB = GetDistanceSquaredToCollider(progressB);
-
-                bestProgress = distanceA < distanceB ? progressA : progressB;
-
-                searchRange *= 0.5f;
+                if (candidateDistance < smallestDistance)
+                {
+                    smallestDistance = candidateDistance;
+                    bestProgress = candidate;
+                }
             }
 
             float3 localPoint = SplineUtility.EvaluatePosition(_spline, bestProgress);
@@ -84,9 +91,8 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         {
             float3 localPoint = SplineUtility.EvaluatePosition(_spline, progress);
             Vector3 worldPoint = _splineTransform.TransformPoint(localPoint);
-            Vector3 closestPointOnCollider = _handCollider.ClosestPoint(worldPoint);
 
-            return (worldPoint - closestPointOnCollider).sqrMagnitude;
+            return (worldPoint - _handCollider.bounds.center).sqrMagnitude;
         }
 
         #endregion
