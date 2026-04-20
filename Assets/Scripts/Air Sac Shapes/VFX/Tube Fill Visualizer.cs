@@ -3,7 +3,7 @@ using IMVR.BodyArcade.AirSacShapes.ProgressTrackering;
 
 namespace IMVR.BodyArcade.AirSacShapes.VFX
 {
-    internal class TubeFillVisualizer : MonoBehaviour
+    internal class TubeFillVFX : MonoBehaviour
     {
         #region Serialized fields
 
@@ -46,17 +46,20 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
 
         private void OnEnable()
         {
-            if (_progressTracker != null)
-                _progressTracker.OnProgressChange += HandleProgressChange;
-                _progressTracker.OnWinStateChange += HandleWinStateChange;
+            if (_progressTracker == null)
+                return;
 
+            _progressTracker.OnProgressChange += HandleProgressChange;
+            _progressTracker.OnWinStateChange += HandleWinStateChange;
         }
 
         private void OnDisable()
         {
-            if (_progressTracker != null)
-                _progressTracker.OnProgressChange -= HandleProgressChange;
-                _progressTracker.OnWinStateChange -= HandleWinStateChange;
+            if (_progressTracker == null)
+                return;
+
+            _progressTracker.OnProgressChange -= HandleProgressChange;
+            _progressTracker.OnWinStateChange -= HandleWinStateChange;
         }
 
         private void OnDestroy()
