@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -43,16 +44,20 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
         #region Fields
 
-        private ProgressState _progressState;
+        private float _progress;
+        private float _maxProgress;
+        private bool _isWin;
+
         private SplineProximity _splineProximity;
 
         #endregion
 
         #region Properties
 
-        internal float Progress => _progressState.Progress;
+        internal float Progress => _progress;
+        internal float MaxProgress => _maxProgress;
+        internal bool IsWin => _isWin;
         internal bool IsReversed => _isReversed;
-        internal bool IsWin => _progressState.IsWin;
 
         #endregion
 
@@ -60,11 +65,6 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
         private void Awake()
         {
-            _progressState = new ProgressState(_winThreshold);
-            _progressState.OnProgressChange += HandleProgressChange;
-            _progressState.OnMaxProgressChange += HandleMaxProgressChange;
-            _progressState.OnWinStateChange += HandleWinStateChange;
-
             if (_splineContainer != null && _handCollider != null)
             {
                 _splineProximity = new SplineProximity(
@@ -72,16 +72,6 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
                     _splineContainer.transform,
                     _handCollider);
             }
-        }
-
-        private void OnDestroy()
-        {
-            if (_progressState == null)
-                return;
-
-            _progressState.OnProgressChange -= HandleProgressChange;
-            _progressState.OnMaxProgressChange -= HandleMaxProgressChange;
-            _progressState.OnWinStateChange -= HandleWinStateChange;
         }
 
         #endregion
@@ -92,21 +82,18 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         {
             if (_debugOverrideEnabled)
             {
-                _progressState.SetProgress(_debugProgressOverride, false);
+                SetCurrentProgress(_debugProgressOverride);
                 return;
             }
 
             if (_handTransform == null || _splineProximity == null)
                 return;
 
-            if (_progressState.IsWin)
+            if (_isWin)
             {
-                float filledProgress = Mathf.MoveTowards(
-                    _progressState.Progress,
-                    1f,
-                    Time.deltaTime * _fillUpPerSecond);
-
-                _progressState.SetProgress(filledProgress, true);
+                float filledProgress = Mathf.MoveTowards(_progress, 1f, Time.deltaTime * _fillUpPerSecond);
+                SetCurrentProgress(filledProgress);
+                SetMaxProgress(filledProgress);
                 return;
             }
 
@@ -125,19 +112,22 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
             if (isHandInside)
             {
                 float newProgress = _isForwardOnly
-                    ? Mathf.Max(_progressState.Progress, splineProgress)
+                    ? Mathf.Max(_progress, splineProgress)
                     : splineProgress;
 
-                _progressState.SetProgress(newProgress, false);
+                if (_progress >= _winThreshold)
+                    newProgress = 1f;
+
+                SetCurrentProgress(newProgress);
+
+                if (newProgress > _maxProgress)
+                    SetMaxProgress(newProgress);
             }
             else
             {
-                float drainedProgress = Mathf.Lerp(
-                    _progressState.Progress,
-                    0f,
-                    Time.deltaTime * _drainSpeedPerSecond);
-
-                _progressState.SetProgress(drainedProgress, true);
+                float drainedProgress = Mathf.Lerp(_progress, 0f, Time.deltaTime * _drainSpeedPerSecond);
+                SetCurrentProgress(drainedProgress);
+                SetMaxProgress(drainedProgress);
             }
 
             Debug.DrawLine(
@@ -148,22 +138,28 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
         #endregion
 
-        #region Event handlers
+        #region Private
 
-        private void HandleProgressChange(float progress)
+        private void SetCurrentProgress(float progress)
         {
+            _progress = progress;
             _debugProgress = progress;
-            OnProgressChange?.Invoke(progress);
+            OnProgressChange?.Invoke(_progress);
         }
 
-        private void HandleMaxProgressChange(float maxProgress)
+        private void SetMaxProgress(float maxProgress)
         {
+            _maxProgress = maxProgress;
             _debugMaxProgress = maxProgress;
-            OnMaxProgressChange?.Invoke(maxProgress);
-        }
+            OnMaxProgressChange?.Invoke(_maxProgress);
 
-        private void HandleWinStateChange()
-        {
+            if (_isWin || _maxProgress < 1f)
+                return;
+
+            _isWin = true;
+            _progress = 0f;
+            _maxProgress = 0f;
+            Debug.Log("Win condition reached!");
             OnWinStateChange?.Invoke();
         }
 
