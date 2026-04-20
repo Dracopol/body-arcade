@@ -21,6 +21,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         [SerializeField] private SplineContainer _splineContainer;
         [SerializeField] private Transform _handTransform;
         [SerializeField] private Collider _handCollider;
+        [SerializeField] private Collider _donutCollider;
 
         [Header("Behaviour")]
         [SerializeField] private float _radiusToleranceMultiplier = 1.5f;
@@ -118,10 +119,21 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
                 if (_progress >= _winThreshold)
                     newProgress = 1f;
 
-                SetCurrentProgress(newProgress);
+                bool isHandInsideDonut = _donutCollider != null && Physics.ComputePenetration(
+                    _handCollider, _handCollider.transform.position, _handCollider.transform.rotation,
+                    _donutCollider, _donutCollider.transform.position, _donutCollider.transform.rotation,
+                    out _, out _);
 
-                if (newProgress > _maxProgress)
+                if (newProgress > _maxProgress && isHandInsideDonut)
+                {
                     SetMaxProgress(newProgress);
+                    SetCurrentProgress(newProgress);
+                }
+
+                if (newProgress < _maxProgress && !isHandInsideDonut)
+                {
+                    SetCurrentProgress(newProgress);
+                }
             }
             else
             {
