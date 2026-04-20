@@ -92,7 +92,36 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
             float3 localPoint = SplineUtility.EvaluatePosition(_spline, progress);
             Vector3 worldPoint = _splineTransform.TransformPoint(localPoint);
 
+            if (_handCollider is CapsuleCollider capsule)
+                return GetDistanceSquaredToCapsuleAxis(worldPoint, capsule);
+
             return (worldPoint - _handCollider.bounds.center).sqrMagnitude;
+        }
+
+        private static float GetDistanceSquaredToCapsuleAxis(Vector3 worldPoint, CapsuleCollider capsule)
+        {
+            float halfHeight = Mathf.Max(0f, capsule.height * 0.5f - capsule.radius);
+
+            Vector3 localAxis = capsule.direction switch
+            {
+                0 => Vector3.right,
+                1 => Vector3.up,
+                2 => Vector3.forward,
+                _ => Vector3.up
+            };
+
+            Transform t = capsule.transform;
+            Vector3 worldCenter = t.TransformPoint(capsule.center);
+            Vector3 worldAxis = t.TransformDirection(localAxis);
+
+            Vector3 point0 = worldCenter - worldAxis * halfHeight;
+            Vector3 point1 = worldCenter + worldAxis * halfHeight;
+
+            Vector3 seg = point1 - point0;
+            float projected = Mathf.Clamp01(Vector3.Dot(worldPoint - point0, seg) / seg.sqrMagnitude);
+            Vector3 closestOnAxis = point0 + projected * seg;
+
+            return (worldPoint - closestOnAxis).sqrMagnitude;
         }
 
         #endregion
