@@ -84,17 +84,13 @@ namespace IMVR.BodyArcade.Editor.SvgToSpline
 
             try
             {
-                string xml = System.IO.File.ReadAllText(_svgPath);
-                XDocument doc = XDocument.Parse(xml);
-                XNamespace ns = "http://www.w3.org/2000/svg";
+                XDocument doc = XDocument.Parse(System.IO.File.ReadAllText(_svgPath));
 
-                var paths = new List<XElement>();
-                paths.AddRange(doc.Descendants(ns + "path"));
-                paths.AddRange(doc.Descendants("path"));
+                List<string> pathDataList = SvgElementNormalizer.ExtractPathData(doc);
 
-                if (paths.Count == 0)
+                if (pathDataList.Count == 0)
                 {
-                    SetStatus("No <path> elements found in SVG.", true);
+                    SetStatus("No supported shape elements found in SVG.", true);
                     return;
                 }
 
@@ -103,12 +99,8 @@ namespace IMVR.BodyArcade.Editor.SvgToSpline
 
                 int splineCount = 0;
 
-                foreach (XElement pathEl in paths)
+                foreach (string d in pathDataList)
                 {
-                    string d = pathEl.Attribute("d")?.Value;
-                    if (string.IsNullOrWhiteSpace(d))
-                        continue;
-
                     List<List<BezierKnot>> subPaths = SvgPathParser.ParsePathData(d);
 
                     foreach (List<BezierKnot> knots in subPaths)
@@ -116,17 +108,26 @@ namespace IMVR.BodyArcade.Editor.SvgToSpline
                         if (knots.Count < 2)
                             continue;
 
-                        bool closed = false;
-                        if (knots.Count >= 2)
+                        bool   closed = false;
+                        float3 first  = knots[0].Position;
+
+                        if (math.distance(first, knots[knots.Count - 1].Position) < 0.001f)
                         {
-                            float3 first = knots[0].Position;
-                            float3 last  = knots[knots.Count - 1].Position;
-                            if (math.distance(first, last) < 0.001f)
-                            {
-                                knots.RemoveAt(knots.Count - 1);
-                                closed = true;
-                            }
+                            knots.RemoveAt(knots.Count - 1);
+                            closed = true;
                         }
+
+                        if (closed && knots.Count >= 2 &&
+                            math.distance(first, knots[knots.Count - 1].Position) < 0.001f)
+                        {
+                            BezierKnot arcEnd    = knots[knots.Count - 1];
+                            BezierKnot pathStart = knots[0];
+                            knots[0] = new BezierKnot(pathStart.Position, arcEnd.TangentIn, pathStart.TangentOut, pathStart.Rotation);
+                            knots.RemoveAt(knots.Count - 1);
+                        }
+
+                        if (knots.Count < 2)
+                            continue;
 
                         float yMul = _flipY ? -1f : 1f;
 
@@ -142,10 +143,10 @@ namespace IMVR.BodyArcade.Editor.SvgToSpline
                         var finalKnots = new BezierKnot[knots.Count];
                         for (int i = 0; i < knots.Count; i++)
                         {
-                            BezierKnot k = knots[i];
-                            float3 pos  = new float3(k.Position.x   * _scale, k.Position.y   * yMul * _scale, _zDepth);
-                            float3 tin  = new float3(k.TangentIn.x  * _scale, k.TangentIn.y  * yMul * _scale, 0f);
-                            float3 tout = new float3(k.TangentOut.x * _scale, k.TangentOut.y * yMul * _scale, 0f);
+                            BezierKnot k    = knots[i];
+                            float3     pos  = new float3(k.Position.x   * _scale, k.Position.y   * yMul * _scale, _zDepth);
+                            float3     tin  = new float3(k.TangentIn.x  * _scale, k.TangentIn.y  * yMul * _scale, 0f);
+                            float3     tout = new float3(k.TangentOut.x * _scale, k.TangentOut.y * yMul * _scale, 0f);
 
                             if (_centerPivot)
                             {
@@ -156,10 +157,10 @@ namespace IMVR.BodyArcade.Editor.SvgToSpline
                             finalKnots[i] = new BezierKnot(pos, tin, tout, quaternion.identity);
                         }
 
-                        var go = new GameObject($"Spline_{splineCount++}");
+                        var go        = new GameObject($"Spline_{splineCount++}");
                         go.transform.SetParent(root.transform, false);
-                        var container  = go.AddComponent<SplineContainer>();
-                        Spline spline  = container.Spline;
+                        var container = go.AddComponent<SplineContainer>();
+                        Spline spline = container.Spline;
 
                         spline.Clear();
                         foreach (BezierKnot k in finalKnots)

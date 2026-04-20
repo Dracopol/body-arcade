@@ -197,7 +197,7 @@ namespace IMVR.BodyArcade.Editor.SvgToSpline
                     List<BezierKnot> arcKnots = ArcToCubics(cursor, ep, rx, ry, xRot, largeArc, sweep);
                     if (arcKnots.Count >= 2)
                     {
-                        SetTangentOut(current, arcKnots[0].TangentOut.xy - float2.zero);
+                        SetTangentOut(current, arcKnots[0].TangentOut.xy);
                         for (int i = 1; i < arcKnots.Count; i++)
                             current.Add(arcKnots[i]);
                     }
@@ -272,11 +272,13 @@ namespace IMVR.BodyArcade.Editor.SvgToSpline
             float dt       = dTheta / segments;
             float alpha    = Mathf.Sin(dt) * (Mathf.Sqrt(4f + 3f * Mathf.Tan(dt * 0.5f) * Mathf.Tan(dt * 0.5f)) - 1f) / 3f;
 
-            float  t       = theta1;
-            float2 prevPt  = PointOnEllipse(t, cosPhi, sinPhi, rx, ry, center);
+            float  t      = theta1;
             float2 prevDer = DerivativeOnEllipse(t, cosPhi, sinPhi, rx, ry);
 
-            result.Add(MakeKnot(prevPt, float2.zero, alpha * prevDer));
+            result.Add(MakeKnot(
+                PointOnEllipse(t, cosPhi, sinPhi, rx, ry, center),
+                float2.zero,
+                alpha * prevDer));
 
             for (int i = 0; i < segments; i++)
             {
@@ -284,9 +286,8 @@ namespace IMVR.BodyArcade.Editor.SvgToSpline
                 float2 nextPt  = PointOnEllipse(t, cosPhi, sinPhi, rx, ry, center);
                 float2 nextDer = DerivativeOnEllipse(t, cosPhi, sinPhi, rx, ry);
 
-                result.Add(MakeKnot(nextPt, -alpha * prevDer, alpha * nextDer));
+                result.Add(MakeKnot(nextPt, -alpha * nextDer, alpha * nextDer));
 
-                prevPt  = nextPt;
                 prevDer = nextDer;
             }
 
