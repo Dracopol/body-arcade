@@ -124,13 +124,24 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
                     _donutCollider, _donutCollider.transform.position, _donutCollider.transform.rotation,
                     out _, out _);
 
-                if (newProgress > _maxProgress && isHandInsideDonut)
+                // if (newProgress > _maxProgress && isHandInsideDonut)
+                // {
+                //     SetMaxProgress(newProgress);
+                //     SetCurrentProgress(newProgress);
+                // }
+
+                // if (newProgress < _maxProgress && !isHandInsideDonut)
+                // {
+                //     SetCurrentProgress(newProgress);
+                // }
+
+                if (newProgress > _maxProgress)
                 {
                     SetMaxProgress(newProgress);
                     SetCurrentProgress(newProgress);
                 }
 
-                if (newProgress < _maxProgress && !isHandInsideDonut)
+                if (newProgress < _maxProgress)
                 {
                     SetCurrentProgress(newProgress);
                 }

@@ -3,7 +3,7 @@ using IMVR.BodyArcade.AirSacShapes.ProgressTrackering;
 
 namespace IMVR.BodyArcade.AirSacShapes.VFX
 {
-    internal class AirSacColorProgressVisualizer : MonoBehaviour
+    internal class AirSacColor : MonoBehaviour
     {
         #region Serialized fields
 
@@ -12,7 +12,8 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
         [SerializeField] private Renderer _renderer;
 
         [Header("Behaviour")]
-        [SerializeField] private Gradient _colorGradient;
+        [SerializeField] private Color _startCellColor = new Color32(0xC3, 0x29, 0x29, 0xFF);
+        [SerializeField] private Color _startLineColor = new Color32(0x95, 0x50, 0x50, 0xFF);
 
         [Header("Debug")]
         [SerializeField, Range(0f, 1f)] private float _debugProgress = 0f;
@@ -22,8 +23,11 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
         #region Fields
 
         private static readonly int CellColorId = Shader.PropertyToID("_Cell_Color");
+        private static readonly int LineColorId = Shader.PropertyToID("_Outside_LineColor");
 
         private Material _material;
+        private Color _baseCellColor;
+        private Color _baseLineColor;
 
         #endregion
 
@@ -32,10 +36,11 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
         private void Awake()
         {
             if (_renderer != null)
+            {
                 _material = _renderer.material;
-
-            if (_colorGradient == null)
-                _colorGradient = CreateDefaultGradient();
+                _baseCellColor = _material.GetColor(CellColorId);
+                _baseLineColor = _material.GetColor(LineColorId);
+            }
         }
 
         private void OnEnable()
@@ -75,26 +80,8 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
             if (_material == null)
                 return;
 
-            _material.SetColor(CellColorId, _colorGradient.Evaluate(t));
-        }
-
-        private static Gradient CreateDefaultGradient()
-        {
-            var gradient = new Gradient();
-            gradient.SetKeys(
-                new GradientColorKey[]
-                {
-                    new(Color.red,    0.0f),
-                    new(Color.yellow, 0.5f),
-                    new(Color.green,  1.0f)
-                },
-                new GradientAlphaKey[]
-                {
-                    new(1f, 0f),
-                    new(1f, 1f)
-                }
-            );
-            return gradient;
+            _material.SetColor(CellColorId, Color.Lerp(_startCellColor, _baseCellColor, t));
+            _material.SetColor(LineColorId, Color.Lerp(_startLineColor, _baseLineColor, t));
         }
 
         #endregion
