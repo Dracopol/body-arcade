@@ -16,7 +16,7 @@ namespace IMVR.BodyArcade.Neuromania
         [SerializeField] private SplineContainer _splineLeft;
         [SerializeField] private float _minInterval = 1f;
         [SerializeField] private float _maxInterval = 3f;
-        [SerializeField] private float _travelSpeed = 2f; // world units per second
+        [SerializeField] private float _travelSpeed = 2f; 
 
         #endregion
 

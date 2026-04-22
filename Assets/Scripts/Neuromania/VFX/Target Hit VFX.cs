@@ -14,6 +14,7 @@ namespace IMVR.BodyArcade.Neuromania
         [SerializeField] private float _flySpeedX = 0f;
         [SerializeField] private float _flySpeedZ = 0f;
         [SerializeField] private float _flyAcceleration = 2f;
+        [SerializeField] private AudioSource _flyAwaySound;
 
         [Header("Rotation")]
         [SerializeField] private float _rotationSpeed = 180f;
@@ -25,6 +26,7 @@ namespace IMVR.BodyArcade.Neuromania
         [Header("Glass")]
         [SerializeField] private GameObject _glass;
         [SerializeField] private ParticleSystem _glassBreakEffect;
+        [SerializeField] private AudioSource _glassBreakSound;
 
         [Header("Detection")]
         [SerializeField] private Collider _detectionCollider;
@@ -136,15 +138,29 @@ namespace IMVR.BodyArcade.Neuromania
             _rotationDirection = Random.value > 0.5f ? 1f : -1f;
 
             _target.SetActive(true);
+
+            if (_flyAwaySound != null)
+            {
+                _flyAwaySound.Play();
+            }
         }
 
         private void BreakGlass()
         {
             if (_glass != null)
+            {
                 _glass.SetActive(false);
+            }
 
             if (_glassBreakEffect != null)
+            {
                 _glassBreakEffect.Play();
+            }
+
+            if (_glassBreakSound != null)
+            {
+                _glassBreakSound.Play();
+            }
         }
 
         private void HandleGloveHit()

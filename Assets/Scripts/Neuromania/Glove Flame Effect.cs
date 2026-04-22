@@ -7,6 +7,7 @@ namespace IMVR.BodyArcade.Neuromania
         #region Serialized Fields
 
         [SerializeField] private ParticleSystem _gloveFlame;
+        [SerializeField] private AudioSource _wooshAudio;
         [SerializeField] private float _minimumSpeed = 0.5f;
         [SerializeField, Range(0f, 1f)] private float _forwardRatioThreshold = 0.7f;
 
@@ -44,11 +45,13 @@ namespace IMVR.BodyArcade.Neuromania
             if (isPunching && !_isPlaying)
             {
                 _gloveFlame.Play();
+                _wooshAudio.Play();
                 _isPlaying = true;
             }
             else if (!isPunching && _isPlaying)
             {
                 _gloveFlame.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+                _wooshAudio.Stop();
                 _isPlaying = false;
             }
         }
