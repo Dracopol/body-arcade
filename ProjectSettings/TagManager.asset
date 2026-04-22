@@ -12,6 +12,8 @@ TagManager:
   - Blue2
   - Yellow2
   - Hand
+  - Glove
+  - Target
   layers:
   - Default
   - TransparentFX
