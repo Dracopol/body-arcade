@@ -51,7 +51,6 @@ namespace IMVR.BodyArcade.Neuromania
             else if (!isPunching && _isPlaying)
             {
                 _gloveFlame.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-                _wooshAudio.Stop();
                 _isPlaying = false;
             }
         }

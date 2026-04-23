@@ -16,7 +16,8 @@ namespace IMVR.BodyArcade.Neuromania
         [SerializeField] private SplineContainer _splineLeft;
         [SerializeField] private float _minInterval = 1f;
         [SerializeField] private float _maxInterval = 3f;
-        [SerializeField] private float _travelSpeed = 2f; 
+        [SerializeField] private float _travelSpeed = 2f;
+        [SerializeField][Range(0f, 1f)] private float _tiltProbability = 0.5f;
 
         #endregion
 
@@ -25,7 +26,7 @@ namespace IMVR.BodyArcade.Neuromania
         private void Start()
         {
             RunSideAsync(_targetPrefabRight, _splineRight, destroyCancellationToken).Forget();
-            RunSideAsync(_targetPrefabLeft,  _splineLeft,  destroyCancellationToken).Forget();
+            RunSideAsync(_targetPrefabLeft, _splineLeft, destroyCancellationToken).Forget();
         }
 
         #endregion
@@ -52,7 +53,19 @@ namespace IMVR.BodyArcade.Neuromania
             }
 
             GameObject instance = Instantiate(prefab, transform);
+            ApplyChildTilt(instance);
             DriveAlongSplineAsync(instance, spline, ct).Forget();
+        }
+
+        private void ApplyChildTilt(GameObject instance)
+        {
+            if (instance.transform.childCount == 0)
+                return;
+
+            Transform child = instance.transform.GetChild(0);
+
+            if (UnityEngine.Random.value < _tiltProbability)
+                child.localRotation *= Quaternion.Euler(0f, 0f, -45f);
         }
 
         private async UniTaskVoid DriveAlongSplineAsync(GameObject instance, SplineContainer spline, CancellationToken ct)
