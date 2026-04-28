@@ -104,24 +104,24 @@ namespace IMVR.BodyArcade.Neuromania
             interactableLocal.y = _camera.transform.localPosition.y;
             interactable.localPosition = interactableLocal;
 
-            DriveAlongSplineAsync(instance, spline, ct).Forget();
+            DriveAlongSplineAsync(instance, interactable, spline, ct).Forget();
         }
 
-        private async UniTaskVoid DriveAlongSplineAsync(GameObject instance, SplineContainer spline, CancellationToken ct)
+        private async UniTaskVoid DriveAlongSplineAsync(GameObject instance, Transform interactable, SplineContainer spline, CancellationToken ct)
         {
             float totalLength = spline.CalculateLength();
             float curve0Length = spline.Spline.GetCurveLength(0);
             float tMid = curve0Length / totalLength;
 
-            await DriveSegmentAsync(instance, spline, 0f, tMid, _segment0Duration, ct);
+            await DriveSegmentAsync(instance, interactable, spline, 0f, tMid, _segment0Duration, ct);
 
             if (!ct.IsCancellationRequested)
-                await DriveSegmentAsync(instance, spline, tMid, 1f, _segment1Duration, ct);
+                await DriveSegmentAsync(instance, interactable, spline, tMid, 1f, _segment1Duration, ct);
 
             Destroy(instance);
         }
 
-        private async UniTask DriveSegmentAsync(GameObject instance, SplineContainer spline, float tStart, float tEnd, float duration, CancellationToken ct)
+        private async UniTask DriveSegmentAsync(GameObject instance, Transform interactable, SplineContainer spline, float tStart, float tEnd, float duration, CancellationToken ct)
         {
             float elapsed = 0f;
 
@@ -131,6 +131,11 @@ namespace IMVR.BodyArcade.Neuromania
                 spline.Evaluate(t, out float3 position, out _, out _);
 
                 instance.transform.position = (Vector3)position;
+
+                Vector3 dir = _camera.transform.position - interactable.position;
+                Vector3 euler = Quaternion.LookRotation(dir).eulerAngles;
+                euler.z = 90f;
+                interactable.rotation = Quaternion.Euler(euler);
 
                 elapsed += Time.deltaTime;
                 await UniTask.Yield(PlayerLoopTiming.Update, ct);
