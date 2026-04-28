@@ -6,7 +6,7 @@ using UnityEngine.Splines;
 
 namespace IMVR.BodyArcade.Neuromania
 {
-    public class TargetSpawner : MonoBehaviour
+    public class TargetSpawnerOLD : MonoBehaviour
     {
         #region Serialized Fields
 
