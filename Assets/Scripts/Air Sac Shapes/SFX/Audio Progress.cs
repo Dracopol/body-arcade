@@ -10,6 +10,7 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
         [Header("References")]
         [SerializeField] private SplineProgressTracker _progressTracker;
         [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioSource _winAudioSource;
         [SerializeField] private AudioClip _clip;
         [SerializeField] private AudioClip _winClip;
 
@@ -43,6 +44,7 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
             {
                 _progressTracker.OnMaxProgressChange += HandleMaxProgressChange;
                 _progressTracker.OnWinStateChange += HandleWinStateChange;
+                _progressTracker.OnFirstFillComplete += HandleFirstFillComplete;
             }
         }
 
@@ -52,6 +54,7 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
             {
                 _progressTracker.OnMaxProgressChange -= HandleMaxProgressChange;
                 _progressTracker.OnWinStateChange -= HandleWinStateChange;
+                _progressTracker.OnFirstFillComplete -= HandleFirstFillComplete;
             }
         }
 
@@ -83,19 +86,17 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
                 {
                     PlayAudio(currentThresholdIndex);
                 }
-                else
-                {
-                    if (_progressTracker.IsWin)
-                    {
-                        _audioSource.PlayOneShot(_winClip);
-                    }
-                }
             }
             else if (currentThresholdIndex < _lastThresholdIndex)
             {
                 _lastThresholdIndex = currentThresholdIndex;
                 _debugLastThreshold = currentThresholdIndex;
             }
+        }
+
+        private void HandleFirstFillComplete()
+        {
+            _winAudioSource.PlayOneShot(_winClip);
         }
 
         #endregion

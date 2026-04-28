@@ -12,6 +12,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         internal event Action<float> OnProgressChange;
         internal event Action<float> OnMaxProgressChange;
         internal event Action OnWinStateChange;
+        internal event Action OnFirstFillComplete;
 
         #endregion
 
@@ -48,6 +49,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         private float _progress;
         private float _maxProgress;
         private bool _isWin;
+        private int _winFillsRemaining;
 
         private SplineProximity _splineProximity;
 
@@ -93,6 +95,15 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
             if (_isWin)
             {
                 float filledProgress = Mathf.MoveTowards(_progress, 1f, Time.deltaTime * _fillUpPerSecond);
+
+                if (filledProgress >= 1f && _winFillsRemaining > 0)
+                {
+                    _winFillsRemaining--;
+                    filledProgress = 0f;
+                    OnFirstFillComplete?.Invoke();
+                    Debug.Log("First fill complete!");
+                }
+
                 SetCurrentProgress(filledProgress);
                 SetMaxProgress(filledProgress);
                 return;
@@ -170,6 +181,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
             _progress = 0f;
             _maxProgress = 0f;
+            _winFillsRemaining = 1;
             _isWin = true;
             Debug.Log("Win condition reached!");
             OnWinStateChange?.Invoke();

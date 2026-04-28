@@ -31,13 +31,19 @@ namespace IMVR.BodyArcade.AirSacShapes
         private void OnEnable()
         {
             if (_progressTracker != null)
+            {
                 _progressTracker.OnProgressChange += HandleProgressChange;
+                _progressTracker.OnFirstFillComplete += HandleFirstFillComplete;
+            }
         }
 
         private void OnDisable()
         {
             if (_progressTracker != null)
+            {
                 _progressTracker.OnProgressChange -= HandleProgressChange;
+                _progressTracker.OnFirstFillComplete -= HandleFirstFillComplete;
+            }
         }
 
         #endregion
@@ -55,7 +61,6 @@ namespace IMVR.BodyArcade.AirSacShapes
                 _lastThresholdIndex = currentThresholdIndex;
                 _debugLastThreshold = currentThresholdIndex;
 
-                SpawnParticleEffect();
             }
             else if (currentThresholdIndex < _lastThresholdIndex)
             {
@@ -64,22 +69,28 @@ namespace IMVR.BodyArcade.AirSacShapes
             }
         }
 
+        private void HandleFirstFillComplete()
+        {
+            SpawnParticleEffect();
+        }
+
         #endregion
 
         #region Private
 
         private void SpawnParticleEffect()
         {
-            if (_particleEffectPrefab == null)
-                return;
-            if (!_progressTracker.IsWin)
-                return;
+            if (_particleEffectPrefab == null) return;
+            if (!_progressTracker.IsWin) return;
+
             ParticleSystem instance = Instantiate(
                 _particleEffectPrefab,
                 transform.position,
                 transform.rotation);
 
-            Destroy(instance.gameObject, instance.main.duration + instance.main.startLifetime.constantMax);
+            var main = instance.main;
+            float lifetime = main.duration + Mathf.Max(main.startLifetime.constantMax, main.startLifetime.constant, 2f);
+            Destroy(instance.gameObject, lifetime);
         }
 
         #endregion
