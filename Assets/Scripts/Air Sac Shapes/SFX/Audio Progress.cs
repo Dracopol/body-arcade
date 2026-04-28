@@ -85,7 +85,10 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
                 }
                 else
                 {
-                    _audioSource.PlayOneShot(_winClip);
+                    if (_progressTracker.IsWin)
+                    {
+                        _audioSource.PlayOneShot(_winClip);
+                    }
                 }
             }
             else if (currentThresholdIndex < _lastThresholdIndex)
