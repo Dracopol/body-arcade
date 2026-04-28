@@ -2,18 +2,22 @@ using UnityEngine;
 
 namespace IMVR.BodyArcade.Neuromania
 {
-    public class GloveFlameEffect : MonoBehaviour
+    internal class GloveFlameEffect : MonoBehaviour
     {
         #region Serialized Fields
 
         [SerializeField] private ParticleSystem _gloveFlame;
         [SerializeField] private AudioSource _wooshAudio;
+        [SerializeField] private GameObject _tagTarget;
         [SerializeField] private float _minimumSpeed = 0.5f;
         [SerializeField, Range(0f, 1f)] private float _forwardRatioThreshold = 0.7f;
 
         #endregion
 
         #region Fields
+
+        private const string GloveTag = "Glove";
+        private const string DefaultTag = "Untagged";
 
         private Vector3 _previousPosition;
         private bool _isPlaying;
@@ -46,11 +50,13 @@ namespace IMVR.BodyArcade.Neuromania
             {
                 _gloveFlame.Play();
                 _wooshAudio.Play();
+                _tagTarget.tag = GloveTag;
                 _isPlaying = true;
             }
             else if (!isPunching && _isPlaying)
             {
                 _gloveFlame.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+                _tagTarget.tag = DefaultTag;
                 _isPlaying = false;
             }
         }

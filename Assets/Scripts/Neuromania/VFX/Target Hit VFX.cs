@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace IMVR.BodyArcade.Neuromania
 {
-    public class TargetHitVFX : MonoBehaviour
+    internal class TargetHitVFX : MonoBehaviour
     {
         #region Serialized Fields
 
@@ -19,9 +19,6 @@ namespace IMVR.BodyArcade.Neuromania
         [Header("Rotation")]
         [SerializeField] private float _rotationSpeed = 180f;
         [SerializeField] private float _rotationAcceleration = 3f;
-
-        [Header("Scale")]
-        [SerializeField] private float _shrinkDuration = 2f;
 
         [Header("Glass")]
         [SerializeField] private GameObject _glass;
@@ -42,6 +39,7 @@ namespace IMVR.BodyArcade.Neuromania
         private float _currentRotationSpeed;
         private float _rotationDirection;
         private float _shrinkElapsed;
+        private float _soundDuration;
         private Vector3 _initialScale;
 
         #endregion
@@ -63,6 +61,9 @@ namespace IMVR.BodyArcade.Neuromania
                 Debug.LogError($"[TargetHitVFX] _detectionCollider is not assigned on {gameObject.name}");
             else if (!_detectionCollider.isTrigger)
                 Debug.LogWarning($"[TargetHitVFX] _detectionCollider is NOT set as a trigger — OnTriggerEnter will not fire!");
+
+            if (_target != null)
+                _initialScale = _target.transform.localScale;
         }
 
         #endregion
@@ -99,11 +100,11 @@ namespace IMVR.BodyArcade.Neuromania
             );
 
             _shrinkElapsed += dt;
-            float t = Mathf.Clamp01(_shrinkElapsed / _shrinkDuration);
-            float scaleFactor = Mathf.Lerp(1f, 0f, t * t);
+            float t = Mathf.Clamp01(_shrinkElapsed / _soundDuration);
+            float scaleFactor = Mathf.Lerp(1f, 0f, t);
             _target.transform.localScale = _initialScale * scaleFactor;
 
-            if (t >= 1f)
+            if (!_flyAwaySound.isPlaying)
             {
                 _isAnimating = false;
                 _target.SetActive(false);
@@ -117,6 +118,7 @@ namespace IMVR.BodyArcade.Neuromania
         public void NotifyGloveHit(Collider other)
         {
             if (!other.CompareTag("Glove")) return;
+            if (_isAnimating) return;
             HandleGloveHit();
         }
 
@@ -128,39 +130,37 @@ namespace IMVR.BodyArcade.Neuromania
         {
             if (_target == null) return;
 
+            if (_flyAwaySound == null || _flyAwaySound.clip == null)
+            {
+                _target.SetActive(false);
+                return;
+            }
+
+            _soundDuration = _flyAwaySound.clip.length;
             _isAnimating = true;
             _currentFlySpeedY = 0f;
             _currentFlySpeedX = 0f;
             _currentFlySpeedZ = 0f;
             _currentRotationSpeed = 0f;
             _shrinkElapsed = 0f;
-            _initialScale = _target.transform.localScale;
             _rotationDirection = Random.value > 0.5f ? 1f : -1f;
 
+            _target.transform.localScale = _initialScale;
             _target.SetActive(true);
 
-            if (_flyAwaySound != null)
-            {
-                _flyAwaySound.Play();
-            }
+            _flyAwaySound.Play();
         }
 
         private void BreakGlass()
         {
             if (_glass != null)
-            {
                 _glass.SetActive(false);
-            }
 
             if (_glassBreakEffect != null)
-            {
                 _glassBreakEffect.Play();
-            }
 
             if (_glassBreakSound != null)
-            {
                 _glassBreakSound.Play();
-            }
         }
 
         private void HandleGloveHit()

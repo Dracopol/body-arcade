@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &4279861081210802407
+--- !u!1001 &3419617671624199093
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1893220339269599230, guid: 57fbfba3e25c5774cbbd35ceb1157766, type: 3}
+      propertyPath: _flySpeedX
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2811078261161836499, guid: 57fbfba3e25c5774cbbd35ceb1157766, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -16,17 +20,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Electron Target Left Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3549142345223702206, guid: 57fbfba3e25c5774cbbd35ceb1157766, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: fe1353cb210af4e45a00b5994ab3df5b, type: 2}
     - target: {fileID: 4433453931383901339, guid: 57fbfba3e25c5774cbbd35ceb1157766, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.9880408
       objectReference: {fileID: 0}
     - target: {fileID: 4433453931383901339, guid: 57fbfba3e25c5774cbbd35ceb1157766, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.1082532
       objectReference: {fileID: 0}
     - target: {fileID: 4433453931383901339, guid: 57fbfba3e25c5774cbbd35ceb1157766, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.117231
       objectReference: {fileID: 0}
     - target: {fileID: 4433453931383901339, guid: 57fbfba3e25c5774cbbd35ceb1157766, type: 3}
       propertyPath: m_LocalRotation.w
@@ -55,10 +63,6 @@ PrefabInstance:
     - target: {fileID: 4433453931383901339, guid: 57fbfba3e25c5774cbbd35ceb1157766, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4459845355386699190, guid: 57fbfba3e25c5774cbbd35ceb1157766, type: 3}
-      propertyPath: m_VersionIndex
-      value: 1779
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

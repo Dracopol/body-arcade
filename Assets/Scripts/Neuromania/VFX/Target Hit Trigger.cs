@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IMVR.BodyArcade.Neuromania
 {
-    public class TargetHitTrigger : MonoBehaviour
+    internal class TargetHitTrigger : MonoBehaviour
     {
         #region Serialized Fields
 
@@ -15,7 +15,7 @@ namespace IMVR.BodyArcade.Neuromania
         private void Start()
         {
             if (_animator == null)
-                Debug.LogError($"[FlyAwayTriggerRelay] _animator is not assigned on {gameObject.name}");
+                Debug.LogError($"[TargetHitTrigger] _animator is not assigned on {gameObject.name}");
         }
 
         #endregion
@@ -24,8 +24,9 @@ namespace IMVR.BodyArcade.Neuromania
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log($"[FlyAwayTriggerRelay] OnTriggerEnter hit by {other.gameObject.name} | tag: {other.tag}");
-
+            Debug.Log($"[TargetHitTrigger] OnTriggerEnter hit by {other.gameObject.name} | tag: {other.tag}");
+            if (!other.CompareTag("Glove"))
+                return;
             if (_animator == null) return;
 
             _animator.NotifyGloveHit(other);
