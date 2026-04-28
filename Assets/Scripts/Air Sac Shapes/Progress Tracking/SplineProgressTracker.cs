@@ -126,8 +126,8 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
                 if (newProgress > _maxProgress && isHandInsideDonut)
                 {
-                    SetMaxProgress(newProgress);
                     SetCurrentProgress(newProgress);
+                    SetMaxProgress(newProgress);
                 }
 
                 if (newProgress < _maxProgress && !isHandInsideDonut)
@@ -168,9 +168,9 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
             if (_isWin || _maxProgress < 1f)
                 return;
 
-            _isWin = true;
             _progress = 0f;
             _maxProgress = 0f;
+            _isWin = true;
             Debug.Log("Win condition reached!");
             OnWinStateChange?.Invoke();
         }
