@@ -9,6 +9,12 @@ namespace IMVR.BodyArcade.Neuromania
 {
     internal class TargetSpawner : MonoBehaviour
     {
+        #region Entities
+
+        private enum SpawnMode { Left, Right, Both }
+
+        #endregion
+
         #region Serialized Fields
 
         [SerializeField] private GameObject _targetPrefabRight;
@@ -20,6 +26,10 @@ namespace IMVR.BodyArcade.Neuromania
         [SerializeField] private float _maxInterval = 3f;
         [SerializeField] private float _segment0Duration = 1f;
         [SerializeField] private float _segment1Duration = 3f;
+        [SerializeField] private float _minXOffset = -0.5f;
+        [SerializeField] private float _maxXOffset = 0.5f;
+        [SerializeField] private float _minYOffset = -0.5f;
+        [SerializeField] private float _maxYOffset = 0.5f;
 
         #endregion
 
@@ -40,8 +50,7 @@ namespace IMVR.BodyArcade.Neuromania
 
         private void Start()
         {
-            RunSideAsync(_targetPrefabRight, _splinesRight, destroyCancellationToken).Forget();
-            RunSideAsync(_targetPrefabLeft, _splinesLeft, destroyCancellationToken).Forget();
+            RunAsync(destroyCancellationToken).Forget();
         }
 
         #endregion
@@ -70,18 +79,35 @@ namespace IMVR.BodyArcade.Neuromania
             return list;
         }
 
-        private async UniTaskVoid RunSideAsync(GameObject prefab, List<SplineContainer> splines, CancellationToken ct)
+        private async UniTaskVoid RunAsync(CancellationToken ct)
         {
             while (!ct.IsCancellationRequested)
             {
                 float delay = UnityEngine.Random.Range(_minInterval, _maxInterval);
                 await UniTask.WaitForSeconds(delay, cancellationToken: ct);
 
-                SpawnOnSpline(prefab, splines, ct);
+                SpawnMode mode = (SpawnMode)UnityEngine.Random.Range(0, 3);
+
+                float xOffset = UnityEngine.Random.Range(_minXOffset, _maxXOffset);
+                float yOffset = UnityEngine.Random.Range(_minYOffset, _maxYOffset);
+
+                switch (mode)
+                {
+                    case SpawnMode.Left:
+                        SpawnOnSpline(_targetPrefabLeft, _splinesLeft, xOffset, yOffset, ct);
+                        break;
+                    case SpawnMode.Right:
+                        SpawnOnSpline(_targetPrefabRight, _splinesRight, -xOffset, yOffset, ct);
+                        break;
+                    case SpawnMode.Both:
+                        SpawnOnSpline(_targetPrefabLeft, _splinesLeft, xOffset, yOffset, ct);
+                        SpawnOnSpline(_targetPrefabRight, _splinesRight, -xOffset, yOffset, ct);
+                        break;
+                }
             }
         }
 
-        private void SpawnOnSpline(GameObject prefab, List<SplineContainer> splines, CancellationToken ct)
+        private void SpawnOnSpline(GameObject prefab, List<SplineContainer> splines, float xOffset, float yOffset, CancellationToken ct)
         {
             if (prefab == null || splines == null || splines.Count == 0)
             {
@@ -101,7 +127,8 @@ namespace IMVR.BodyArcade.Neuromania
             Transform interactable = instance.transform.GetChild(0);
 
             Vector3 interactableLocal = interactable.localPosition;
-            interactableLocal.y = _camera.transform.localPosition.y;
+            interactableLocal.x += xOffset;
+            interactableLocal.y = _camera.transform.localPosition.y + yOffset;
             interactable.localPosition = interactableLocal;
 
             DriveAlongSplineAsync(instance, interactable, spline, ct).Forget();
