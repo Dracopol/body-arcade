@@ -15,6 +15,7 @@ namespace IMVR.BodyArcade.Neuromania
         [SerializeField] private GameObject _targetPrefabLeft;
         [SerializeField] private GameObject _splinesRightParent;
         [SerializeField] private GameObject _splinesLeftParent;
+        [SerializeField] private Camera _camera;
         [SerializeField] private float _minInterval = 1f;
         [SerializeField] private float _maxInterval = 3f;
         [SerializeField] private float _segment0Duration = 1f;
@@ -97,6 +98,12 @@ namespace IMVR.BodyArcade.Neuromania
             }
 
             GameObject instance = Instantiate(prefab, transform);
+            Transform interactable = instance.transform.GetChild(0);
+
+            Vector3 interactableLocal = interactable.localPosition;
+            interactableLocal.y = _camera.transform.localPosition.y;
+            interactable.localPosition = interactableLocal;
+
             DriveAlongSplineAsync(instance, spline, ct).Forget();
         }
 
