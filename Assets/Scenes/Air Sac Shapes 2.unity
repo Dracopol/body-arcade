@@ -1658,12 +1658,12 @@ MeshRenderer:
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &524428762
 MeshFilter:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 8
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 524428758}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: 36915e014f181db479734acbc7bff0fd, type: 2}
 --- !u!114 &524428763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2188,12 +2188,12 @@ MeshRenderer:
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &534313076
 MeshFilter:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 8
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534313072}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: c32da5a7e6aa81b46a8801b939d9ef50, type: 2}
 --- !u!114 &534313077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22528,7 +22528,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &869198799
 Transform:
   m_ObjectHideFlags: 0
