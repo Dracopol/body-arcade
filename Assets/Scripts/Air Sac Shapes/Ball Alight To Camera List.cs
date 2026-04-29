@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using IMVR.BodyArcade.AirSacShapes;
 using IMVR.BodyArcade.AirSacShapes.ProgressTrackering;
+using IMVR.BodyArcade.AirSacShapes.VFX;
 
 namespace IMVR.CorpusVR.Core.Alignment
 {
@@ -11,7 +13,7 @@ namespace IMVR.CorpusVR.Core.Alignment
 
         [Header("References")]
         [SerializeField] private Transform _pivot;
-        [SerializeField] private List<Transform> _balls;
+        [SerializeField] private List<GameObject> _balls;
         [SerializeField] private Transform _camera;
 
         [Header("Extra")]
@@ -38,7 +40,7 @@ namespace IMVR.CorpusVR.Core.Alignment
 
         #region Properties
 
-        private Transform CurrentBall => _balls != null && _balls.Count > 0
+        private GameObject CurrentBall => _balls != null && _balls.Count > 0
             ? _balls[_currentBallIndex]
             : null;
 
@@ -84,11 +86,11 @@ namespace IMVR.CorpusVR.Core.Alignment
 
             var cameraPos = _camera != null ? _camera.position : Vector3.zero;
 
-            float ballYAbovePivot = CurrentBall.position.y - _pivot.position.y;
+            float ballYAbovePivot = CurrentBall.transform.position.y - _pivot.position.y;
             _targetPosition   = _pivotOrigin;
             _targetPosition.y = cameraPos.y - ballYAbovePivot;
 
-            Vector3 ballInPivotLocal = _pivot.InverseTransformPoint(CurrentBall.position);
+            Vector3 ballInPivotLocal = _pivot.InverseTransformPoint(CurrentBall.transform.position);
             var localXZ = new Vector2(ballInPivotLocal.x, ballInPivotLocal.z);
 
             if (localXZ.sqrMagnitude > 0.0001f)
@@ -127,17 +129,28 @@ namespace IMVR.CorpusVR.Core.Alignment
             bool isLeft  = spawned.CompareTag("Left");
             bool isRight = spawned.CompareTag("Right");
 
-            if (!isLeft && !isRight) return;
+            if (isLeft || isRight)
+            {
+                GameObject handObject = isLeft ? _leftHand : _rightHand;
 
-            GameObject handObject = isLeft ? _leftHand : _rightHand;
+                if (handObject != null)
+                {
+                    SplineProgressTracker tracker = spawned.GetComponent<SplineProgressTracker>();
 
-            if (handObject == null) return;
+                    if (tracker != null)
+                        tracker.SetHand(handObject.transform, handObject.GetComponent<Collider>());
+                }
+            }
 
-            SplineProgressTracker tracker = spawned.GetComponent<SplineProgressTracker>();
+            if (CurrentBall == null) return;
 
-            if (tracker == null) return;
+            SplineProgressTracker ballTracker = spawned.GetComponent<SplineProgressTracker>();
 
-            tracker.SetHand(handObject.transform, handObject.GetComponent<Collider>());
+            if (ballTracker == null) return;
+
+            CurrentBall.GetComponent<AirSacColor>()?.SetProgressTracker(ballTracker);
+            CurrentBall.GetComponent<AirSacSize>()?.SetProgressTracker(ballTracker);
+            CurrentBall.GetComponent<AirSacProgressParticleVisualizer>()?.SetProgressTracker(ballTracker);
         }
 
         private void ApplyInstant()

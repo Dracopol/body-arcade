@@ -47,13 +47,27 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
 
         #endregion
 
+        #region Internal
+
+        internal void SetProgressTracker(SplineProgressTracker tracker)
+        {
+            if (_progressTracker != null)
+                _progressTracker.OnMaxProgressChange -= HandleMaxProgressChange;
+
+            _progressTracker = tracker;
+
+            if (_progressTracker != null)
+                _progressTracker.OnMaxProgressChange += HandleMaxProgressChange;
+        }
+
+        #endregion
+
         #region Event handlers
 
         private void HandleMaxProgressChange(float maxProgress)
         {
             _debugProgress = maxProgress;
-            if (_progressTracker.IsWin)
-                return;
+            if (_progressTracker.IsWin) return;
             ApplyScale(maxProgress);
         }
 
@@ -63,8 +77,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
 
         private void ApplyScale(float progress)
         {
-            if (_renderer == null)
-                return;
+            if (_renderer == null) return;
 
             float scaleFactor = Mathf.Lerp(1f, _finalSizeMultiplier, progress);
             _renderer.transform.localScale = _initialScale * scaleFactor;

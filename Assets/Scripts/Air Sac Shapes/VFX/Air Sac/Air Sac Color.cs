@@ -23,7 +23,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
         #region Fields
 
         private static readonly int CellColorId = Shader.PropertyToID("_Cell_Color");
-        private static readonly int LineColorId = Shader.PropertyToID("_Outside_LineColor");
+        private static readonly int LineColorId  = Shader.PropertyToID("_Outside_LineColor");
 
         private Material _material;
         private Color _baseCellColor;
@@ -37,7 +37,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
         {
             if (_renderer != null)
             {
-                _material = _renderer.material;
+                _material      = _renderer.material;
                 _baseCellColor = _material.GetColor(CellColorId);
                 _baseLineColor = _material.GetColor(LineColorId);
             }
@@ -63,6 +63,21 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
 
         #endregion
 
+        #region Internal
+
+        internal void SetProgressTracker(SplineProgressTracker tracker)
+        {
+            if (_progressTracker != null)
+                _progressTracker.OnMaxProgressChange -= HandleMaxProgressChange;
+
+            _progressTracker = tracker;
+
+            if (_progressTracker != null)
+                _progressTracker.OnMaxProgressChange += HandleMaxProgressChange;
+        }
+
+        #endregion
+
         #region Event handlers
 
         private void HandleMaxProgressChange(float maxProgress)
@@ -77,8 +92,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
 
         private void ApplyColor(float t)
         {
-            if (_material == null)
-                return;
+            if (_material == null) return;
 
             _material.SetColor(CellColorId, Color.Lerp(_startCellColor, _baseCellColor, t));
             _material.SetColor(LineColorId, Color.Lerp(_startLineColor, _baseLineColor, t));

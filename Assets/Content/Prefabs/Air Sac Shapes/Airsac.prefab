@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2071320697040299891}
   - component: {fileID: 4495437648748164367}
   - component: {fileID: 2963558882812849330}
+  - component: {fileID: 8006994257403903540}
   m_Layer: 0
   m_Name: Airsac
   m_TagString: Untagged
@@ -224,3 +225,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8006994257403903540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5788881781468919290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a24ee330b691554ab5b56e7906b3c64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.VFX.AirSacSize
+  _progressTracker: {fileID: 0}
+  _renderer: {fileID: 1357520862598228299}
+  _finalSizeMultiplier: 1.5
+  _debugProgress: 0
