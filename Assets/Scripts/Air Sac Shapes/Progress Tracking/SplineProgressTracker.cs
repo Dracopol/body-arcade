@@ -31,6 +31,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         [SerializeField] private bool _isReversed = false;
         [SerializeField] private float _drainSpeedPerSecond = 5f;
         [SerializeField] private float _fillUpPerSecond = 0.5f;
+        [SerializeField] private float _disappearPerSecond = 3.5f;
         [SerializeField, Range(0f, 1f)] private float _winThreshold = 0.98f;
 
         [Header("Debug visualization")]
@@ -102,6 +103,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
                     filledProgress = 0f;
                     OnFirstFillComplete?.Invoke();
                     Debug.Log("First fill complete!");
+                    _fillUpPerSecond = _disappearPerSecond;
                 }
 
                 SetCurrentProgress(filledProgress);

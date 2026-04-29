@@ -13,16 +13,19 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
         [SerializeField] private MeshRenderer _tubeRenderer;
 
         [Header("Win Appearance")]
-        [SerializeField] private Color _winColor = Color.green;
+        [SerializeField] private Color _winColor = new Color(0f, 255f, 13f, 255f);
 
         #endregion
 
         #region Fields
 
+
+        private Color _transparent = new Color(0f, 0f, 0f, 0f); // how do i make this alpha 0? does this work?
         private static readonly int ProgressId = Shader.PropertyToID("_Progress");
         private static readonly int UvMaxId = Shader.PropertyToID("_UVMax");
         private static readonly int ReversedId = Shader.PropertyToID("_Reversed");
         private static readonly int ActiveColorId = Shader.PropertyToID("_ActiveColor");
+        private static readonly int InactiveColorId = Shader.PropertyToID("_InactiveColor");
 
         private Material _material;
 
@@ -51,6 +54,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
 
             _progressTracker.OnProgressChange += HandleProgressChange;
             _progressTracker.OnWinStateChange += HandleWinStateChange;
+            _progressTracker.OnFirstFillComplete += HandleFirstFillComplete;
         }
 
         private void OnDisable()
@@ -60,6 +64,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
 
             _progressTracker.OnProgressChange -= HandleProgressChange;
             _progressTracker.OnWinStateChange -= HandleWinStateChange;
+            _progressTracker.OnFirstFillComplete -= HandleFirstFillComplete;
         }
 
         private void OnDestroy()
@@ -88,6 +93,11 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
             ApplyWinAppearance();
         }
 
+        private void HandleFirstFillComplete()
+        {
+            ApplySecondFillAppearance();
+        }
+
         #endregion
 
         #region Private
@@ -110,6 +120,12 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
         private void ApplyWinAppearance()
         {
             _material.SetColor(ActiveColorId, _winColor);
+        }
+
+        private void ApplySecondFillAppearance()
+        {
+            _material.SetColor(ActiveColorId, _transparent);
+            _material.SetColor(InactiveColorId, _winColor);
         }
 
         #endregion
