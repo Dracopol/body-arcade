@@ -13,14 +13,14 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
         [SerializeField] private MeshRenderer _tubeRenderer;
 
         [Header("Win Appearance")]
-        [SerializeField] private Color _winColor = new Color(0f, 255f, 13f, 255f);
+        [SerializeField] private Color _winColor = Color.green;
 
         #endregion
 
         #region Fields
 
 
-        private Color _transparent = new Color(0f, 0f, 0f, 0f); // how do i make this alpha 0? does this work?
+        private Color _transparent = new Color(0f, 0f, 0f, 0f); 
         private static readonly int ProgressId = Shader.PropertyToID("_Progress");
         private static readonly int UvMaxId = Shader.PropertyToID("_UVMax");
         private static readonly int ReversedId = Shader.PropertyToID("_Reversed");
