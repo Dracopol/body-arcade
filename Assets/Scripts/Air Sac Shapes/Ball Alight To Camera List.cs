@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using IMVR.BodyArcade.AirSacShapes.ProgressTrackering;
 
 namespace IMVR.CorpusVR.Core.Alignment
 {
@@ -12,6 +13,12 @@ namespace IMVR.CorpusVR.Core.Alignment
         [SerializeField] private Transform _pivot;
         [SerializeField] private List<Transform> _balls;
         [SerializeField] private Transform _camera;
+
+        [Header("Extra")]
+        [SerializeField] private List<GameObject> _shapes;
+        [SerializeField] private GameObject _shapeParent;
+        [SerializeField] private GameObject _leftHand;
+        [SerializeField] private GameObject _rightHand;
 
         [Header("Settings")]
         [SerializeField] private bool _smoothAlign;
@@ -54,6 +61,7 @@ namespace IMVR.CorpusVR.Core.Alignment
             {
                 AdvanceBall();
                 CalculateAlignment();
+                SpawnRandomShape();
             }
 
             if (_smoothAlign && _isAligning)
@@ -103,6 +111,33 @@ namespace IMVR.CorpusVR.Core.Alignment
                 _isAligning = true;
             else
                 ApplyInstant();
+        }
+
+        private void SpawnRandomShape()
+        {
+            if (_shapes == null || _shapes.Count == 0 || _shapeParent == null) return;
+
+            int index = Random.Range(0, _shapes.Count);
+            GameObject prefab = _shapes[index];
+
+            if (prefab == null) return;
+
+            GameObject spawned = Instantiate(prefab, _shapeParent.transform.position, Quaternion.identity, _shapeParent.transform);
+
+            bool isLeft  = spawned.CompareTag("Left");
+            bool isRight = spawned.CompareTag("Right");
+
+            if (!isLeft && !isRight) return;
+
+            GameObject handObject = isLeft ? _leftHand : _rightHand;
+
+            if (handObject == null) return;
+
+            SplineProgressTracker tracker = spawned.GetComponent<SplineProgressTracker>();
+
+            if (tracker == null) return;
+
+            tracker.SetHand(handObject.transform, handObject.GetComponent<Collider>());
         }
 
         private void ApplyInstant()

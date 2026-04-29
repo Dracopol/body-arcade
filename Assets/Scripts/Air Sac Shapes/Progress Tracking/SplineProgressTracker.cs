@@ -69,13 +69,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
         private void Awake()
         {
-            if (_splineContainer != null && _handCollider != null)
-            {
-                _splineProximity = new SplineProximity(
-                    _splineContainer.Spline,
-                    _splineContainer.transform,
-                    _handCollider);
-            }
+            InitSplineProximity();
         }
 
         #endregion
@@ -163,7 +157,29 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
         #endregion
 
+        #region Internal
+
+        internal void SetHand(Transform handTransform, Collider handCollider)
+        {
+            _handTransform = handTransform;
+            _handCollider  = handCollider;
+            InitSplineProximity();
+        }
+
+        #endregion
+
         #region Private
+
+        private void InitSplineProximity()
+        {
+            if (_splineContainer != null && _handCollider != null)
+            {
+                _splineProximity = new SplineProximity(
+                    _splineContainer.Spline,
+                    _splineContainer.transform,
+                    _handCollider);
+            }
+        }
 
         private void SetCurrentProgress(float progress)
         {
