@@ -35,6 +35,8 @@ namespace IMVR.CorpusVR.Core.Alignment
         private bool _isAligning;
         private int _currentBallIndex;
         private Vector3 _pivotOrigin;
+        private GameObject _currentShape;
+        private bool _hasSpawned;
 
         #endregion
 
@@ -53,13 +55,20 @@ namespace IMVR.CorpusVR.Core.Alignment
             _pivotOrigin = _pivot.position;
         }
 
+        private void Start()
+        {
+            AdvanceBall();
+            CalculateAlignment();
+            SpawnRandomShape();
+        }
+
         #endregion
 
         #region Update
 
         private void Update()
         {
-            if (Keyboard.current.gKey.wasPressedThisFrame)
+            if (_hasSpawned && _currentShape == null)
             {
                 AdvanceBall();
                 CalculateAlignment();
@@ -124,10 +133,11 @@ namespace IMVR.CorpusVR.Core.Alignment
 
             if (prefab == null) return;
 
-            GameObject spawned = Instantiate(prefab, _shapeParent.transform.position, Quaternion.identity, _shapeParent.transform);
+            _currentShape = Instantiate(prefab, _shapeParent.transform.position, Quaternion.identity, _shapeParent.transform);
+            _hasSpawned   = true;
 
-            bool isLeft  = spawned.CompareTag("Left");
-            bool isRight = spawned.CompareTag("Right");
+            bool isLeft  = _currentShape.CompareTag("Left");
+            bool isRight = _currentShape.CompareTag("Right");
 
             if (isLeft || isRight)
             {
@@ -135,7 +145,7 @@ namespace IMVR.CorpusVR.Core.Alignment
 
                 if (handObject != null)
                 {
-                    SplineProgressTracker tracker = spawned.GetComponent<SplineProgressTracker>();
+                    SplineProgressTracker tracker = _currentShape.GetComponent<SplineProgressTracker>();
 
                     if (tracker != null)
                         tracker.SetHand(handObject.transform, handObject.GetComponent<Collider>());
@@ -144,7 +154,7 @@ namespace IMVR.CorpusVR.Core.Alignment
 
             if (CurrentBall == null) return;
 
-            SplineProgressTracker ballTracker = spawned.GetComponent<SplineProgressTracker>();
+            SplineProgressTracker ballTracker = _currentShape.GetComponent<SplineProgressTracker>();
 
             if (ballTracker == null) return;
 

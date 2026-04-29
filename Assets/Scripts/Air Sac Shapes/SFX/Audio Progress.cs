@@ -44,7 +44,7 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
             if (_progressTracker != null)
             {
                 _progressTracker.OnMaxProgressChange += HandleMaxProgressChange;
-                _progressTracker.OnWinStateChange += HandleWinStateChange;
+                _progressTracker.OnWinStateChange    += HandleWinStateChange;
                 _progressTracker.OnFirstFillComplete += HandleFirstFillComplete;
             }
         }
@@ -54,7 +54,7 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
             if (_progressTracker != null)
             {
                 _progressTracker.OnMaxProgressChange -= HandleMaxProgressChange;
-                _progressTracker.OnWinStateChange -= HandleWinStateChange;
+                _progressTracker.OnWinStateChange    -= HandleWinStateChange;
                 _progressTracker.OnFirstFillComplete -= HandleFirstFillComplete;
             }
         }
@@ -65,20 +65,19 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
 
         private void HandleWinStateChange()
         {
-            _isWinPhase = true;
+            _isWinPhase         = true;
             _lastThresholdIndex = 0;
             _debugLastThreshold = 0;
-            _maxThresholdIndex = Mathf.FloorToInt(1f / _winStepSize);
+            _maxThresholdIndex  = Mathf.FloorToInt(1f / _winStepSize);
         }
 
         private void HandleMaxProgressChange(float maxProgress)
-        {   
+        {
             _debugProgress = maxProgress;
-            if (_isFirstFillComplete)
-            {
-                return;
-            }
-            float activeStepSize = _isWinPhase ? _winStepSize : _progressStepSize;
+
+            if (_isFirstFillComplete) return;
+
+            float activeStepSize      = _isWinPhase ? _winStepSize : _progressStepSize;
             int currentThresholdIndex = Mathf.FloorToInt(maxProgress / activeStepSize);
 
             if (currentThresholdIndex > _lastThresholdIndex)
@@ -87,9 +86,7 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
                 _debugLastThreshold = currentThresholdIndex;
 
                 if (currentThresholdIndex < _maxThresholdIndex)
-                {
                     PlayAudio(currentThresholdIndex);
-                }
             }
             else if (currentThresholdIndex < _lastThresholdIndex)
             {
@@ -102,6 +99,9 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
         {
             _winAudioSource.PlayOneShot(_winClip);
             _isFirstFillComplete = true;
+
+            if (_winClip != null)
+                _progressTracker.RegisterDestroyDelay(_winClip.length);
         }
 
         #endregion
@@ -110,8 +110,7 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
 
         private void PlayAudio(int thresholdIndex)
         {
-            if (_audioSource == null || _clip == null)
-                return;
+            if (_audioSource == null || _clip == null) return;
 
             float t = _maxThresholdIndex > 0
                 ? Mathf.Clamp01((float)thresholdIndex / _maxThresholdIndex)

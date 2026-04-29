@@ -655,6 +655,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca42fbaf99a6b4438c87e933051fde4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressTracker
+  _tube: {fileID: 7332545071284314318}
+  _donut1: {fileID: 7234716329772049687}
+  _donut2: {fileID: 7193262977651968732}
   _splineContainer: {fileID: 2126448809909022023}
   _handTransform: {fileID: 0}
   _handCollider: {fileID: 0}

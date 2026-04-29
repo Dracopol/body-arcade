@@ -1,5 +1,6 @@
 using System;
-using Unity.Mathematics;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -17,6 +18,11 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         #endregion
 
         #region Serialized fields
+
+        [Header("Extra")]
+        [SerializeField] private MeshRenderer _tube;
+        [SerializeField] private MeshRenderer _donut1;
+        [SerializeField] private MeshRenderer _donut2;
 
         [Header("References")]
         [SerializeField] private SplineContainer _splineContainer;
@@ -51,8 +57,10 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         private float _maxProgress;
         private bool _isWin;
         private int _winFillsRemaining;
+        private float _destroyDelay;
 
         private SplineProximity _splineProximity;
+        private CancellationTokenSource _cts;
 
         #endregion
 
@@ -69,7 +77,14 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
         private void Awake()
         {
+            _cts = new CancellationTokenSource();
             InitSplineProximity();
+        }
+
+        private void OnDestroy()
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
         }
 
         #endregion
@@ -91,13 +106,25 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
             {
                 float filledProgress = Mathf.MoveTowards(_progress, 1f, Time.deltaTime * _fillUpPerSecond);
 
-                if (filledProgress >= 1f && _winFillsRemaining > 0)
+                if (filledProgress >= 1f)
                 {
-                    _winFillsRemaining--;
-                    filledProgress = 0f;
-                    OnFirstFillComplete?.Invoke();
-                    Debug.Log("First fill complete!");
-                    _fillUpPerSecond = _disappearPerSecond;
+                    if (_winFillsRemaining > 0)
+                    {
+                        _winFillsRemaining--;
+                        filledProgress = 0f;
+                        OnFirstFillComplete?.Invoke();
+                        Debug.Log("First fill complete!");
+                        _fillUpPerSecond = _disappearPerSecond;
+                    }
+                    else
+                    {
+                        Debug.Log("Second fill complete — destroying after delay.");
+                        _donut1.enabled = false;
+                        _donut2.enabled = false;
+                        _tube.enabled = false;
+                        DestroyAfterDelayAsync(_destroyDelay, _cts.Token).Forget();
+                        return;
+                    }
                 }
 
                 SetCurrentProgress(filledProgress);
@@ -166,6 +193,11 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
             InitSplineProximity();
         }
 
+        internal void RegisterDestroyDelay(float seconds)
+        {
+            _destroyDelay = Mathf.Max(_destroyDelay, seconds);
+        }
+
         #endregion
 
         #region Private
@@ -183,26 +215,35 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
         private void SetCurrentProgress(float progress)
         {
-            _progress = progress;
+            _progress      = progress;
             _debugProgress = progress;
             OnProgressChange?.Invoke(_progress);
         }
 
         private void SetMaxProgress(float maxProgress)
         {
-            _maxProgress = maxProgress;
+            _maxProgress      = maxProgress;
             _debugMaxProgress = maxProgress;
             OnMaxProgressChange?.Invoke(_maxProgress);
 
             if (_isWin || _maxProgress < 1f)
                 return;
 
-            _progress = 0f;
-            _maxProgress = 0f;
+            _progress          = 0f;
+            _maxProgress       = 0f;
             _winFillsRemaining = 1;
-            _isWin = true;
+            _isWin             = true;
             Debug.Log("Win condition reached!");
             OnWinStateChange?.Invoke();
+        }
+
+        private async UniTaskVoid DestroyAfterDelayAsync(float delay, CancellationToken ct)
+        {
+            if (delay > 0f)
+                await UniTask.WaitForSeconds(delay, cancellationToken: ct);
+
+            if (!ct.IsCancellationRequested)
+                Destroy(gameObject);
         }
 
         #endregion

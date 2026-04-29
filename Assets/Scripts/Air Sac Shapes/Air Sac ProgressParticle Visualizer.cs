@@ -32,8 +32,8 @@ namespace IMVR.BodyArcade.AirSacShapes
         {
             if (_progressTracker != null)
             {
-                _progressTracker.OnProgressChange      += HandleProgressChange;
-                _progressTracker.OnFirstFillComplete   += HandleFirstFillComplete;
+                _progressTracker.OnProgressChange    += HandleProgressChange;
+                _progressTracker.OnFirstFillComplete += HandleFirstFillComplete;
             }
         }
 
@@ -41,8 +41,8 @@ namespace IMVR.BodyArcade.AirSacShapes
         {
             if (_progressTracker != null)
             {
-                _progressTracker.OnProgressChange      -= HandleProgressChange;
-                _progressTracker.OnFirstFillComplete   -= HandleFirstFillComplete;
+                _progressTracker.OnProgressChange    -= HandleProgressChange;
+                _progressTracker.OnFirstFillComplete -= HandleFirstFillComplete;
             }
         }
 
@@ -77,7 +77,7 @@ namespace IMVR.BodyArcade.AirSacShapes
 
             int currentThresholdIndex = Mathf.FloorToInt(progress / _progressStepSize);
 
-            if (currentThresholdIndex > _lastThresholdIndex || currentThresholdIndex < _lastThresholdIndex)
+            if (currentThresholdIndex != _lastThresholdIndex)
             {
                 _lastThresholdIndex = currentThresholdIndex;
                 _debugLastThreshold = currentThresholdIndex;
@@ -103,9 +103,11 @@ namespace IMVR.BodyArcade.AirSacShapes
                 transform.position,
                 transform.rotation);
 
-            var main     = instance.main;
+            var main      = instance.main;
             float lifetime = main.duration + Mathf.Max(main.startLifetime.constantMax, main.startLifetime.constant, 2f);
             Destroy(instance.gameObject, lifetime);
+
+            _progressTracker.RegisterDestroyDelay(lifetime);
         }
 
         #endregion
