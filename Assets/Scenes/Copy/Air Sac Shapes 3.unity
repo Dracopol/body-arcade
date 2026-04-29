@@ -29382,6 +29382,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GLetterL Reverse
       objectReference: {fileID: 0}
+    - target: {fileID: 3628128942024683711, guid: 32b715c74412d0a4dbe7ab6f9a9012ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7508540095979709351, guid: 32b715c74412d0a4dbe7ab6f9a9012ce, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -29421,6 +29425,10 @@ PrefabInstance:
     - target: {fileID: 7508540095979709351, guid: 32b715c74412d0a4dbe7ab6f9a9012ce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7592395996471416535, guid: 32b715c74412d0a4dbe7ab6f9a9012ce, type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -40112,6 +40120,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GLetterR
       objectReference: {fileID: 0}
+    - target: {fileID: 5701251747544760372, guid: cd0b8280ef18c024da5687a1f35188e4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5960483473123063009, guid: cd0b8280ef18c024da5687a1f35188e4, type: 3}
       propertyPath: _handCollider
       value: 
@@ -40120,6 +40132,10 @@ PrefabInstance:
       propertyPath: _handTransform
       value: 
       objectReference: {fileID: 320369869}
+    - target: {fileID: 8430996335503585124, guid: cd0b8280ef18c024da5687a1f35188e4, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8532129563101319123, guid: cd0b8280ef18c024da5687a1f35188e4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
