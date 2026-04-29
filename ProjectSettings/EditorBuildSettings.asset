@@ -6,8 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Clean up/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/Level Selector.unity
+    guid: 91601a83a9af05c43b0eea4c90a60d73
+  - enabled: 1
+    path: Assets/Scenes/Play Air Sac Shapes.unity
+    guid: 2290c44d7f9c3344f861fc72eef5f093
+  - enabled: 1
+    path: Assets/Scenes/Play V2 Neuromania.unity
+    guid: a5920ec30262a5043b720757c0bda4de
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4716bfd1f6852a845bca5e46947cefe2, type: 2}
