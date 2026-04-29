@@ -10,6 +10,12 @@ namespace IMVR.BodyArcade.Neuromania
 
         #endregion
 
+        #region Fields
+
+        private bool _hasBeenHit = false;
+
+        #endregion
+
         #region Setup
 
         private void Start()
@@ -28,7 +34,9 @@ namespace IMVR.BodyArcade.Neuromania
             if (!other.CompareTag("Glove"))
                 return;
             if (_animator == null) return;
+            if (_hasBeenHit) return;
 
+            _hasBeenHit = true;
             _animator.NotifyGloveHit(other);
         }
 

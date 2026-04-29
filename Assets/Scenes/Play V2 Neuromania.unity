@@ -155,8 +155,8 @@ MonoBehaviour:
   _camera: {fileID: 1163365399668632815}
   _minInterval: 1
   _maxInterval: 2
-  _segment0Duration: 5
-  _segment1Duration: 3
+  _segment0Duration: 3
+  _segment1Duration: 6
   _minXOffset: 0.1
   _maxXOffset: 0.3
   _minYOffset: -0.05
@@ -1353,7 +1353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f4f2a738909f5c94b957cc78e35ce8c0, type: 3}
       propertyPath: m_TagString
-      value: Glove
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1523,7 +1523,7 @@ MonoBehaviour:
     - Position:
         x: 0
         y: 1
-        z: 0
+        z: 5
       TangentIn:
         x: 0
         y: 0
@@ -2024,7 +2024,7 @@ MonoBehaviour:
     - Position:
         x: 0
         y: 1
-        z: 0
+        z: 5
       TangentIn:
         x: 0
         y: 0
@@ -2708,7 +2708,7 @@ MonoBehaviour:
     - Position:
         x: 0
         y: 1
-        z: 0
+        z: 5
       TangentIn:
         x: 0
         y: 0
@@ -2832,7 +2832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 51b36819353901043b6eb5644e6eda48, type: 3}
       propertyPath: m_TagString
-      value: Glove
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3509,7 +3509,7 @@ MonoBehaviour:
     - Position:
         x: 0
         y: 1
-        z: 0
+        z: 5
       TangentIn:
         x: 0
         y: 0
@@ -3758,7 +3758,7 @@ MonoBehaviour:
     - Position:
         x: 0
         y: 1
-        z: 0
+        z: 5
       TangentIn:
         x: 0
         y: 0
@@ -5136,7 +5136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.GloveFlameEffect
   _gloveFlame: {fileID: 606187882}
   _wooshAudio: {fileID: 1622202139}
-  _tagTarget: {fileID: 0}
+  _tagTarget: {fileID: 521349822}
   _minimumSpeed: 1
   _forwardRatioThreshold: 0.7
 --- !u!114 &1622202137
@@ -5153,7 +5153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.GloveFlameEffect
   _gloveFlame: {fileID: 1814497720}
   _wooshAudio: {fileID: 1622202141}
-  _tagTarget: {fileID: 0}
+  _tagTarget: {fileID: 1228113328}
   _minimumSpeed: 1
   _forwardRatioThreshold: 0.7
 --- !u!82 &1622202139
@@ -6308,7 +6308,7 @@ MonoBehaviour:
     - Position:
         x: 0
         y: 1
-        z: 0
+        z: 5
       TangentIn:
         x: 0
         y: 0
