@@ -22,7 +22,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         [Header("Extra")]
         [SerializeField] private MeshRenderer _tube;
         [SerializeField] private MeshRenderer _donut1;
-        [SerializeField] private MeshRenderer _donut2;
+        //[SerializeField] private MeshRenderer _donut2;
 
         [Header("References")]
         [SerializeField] private SplineContainer _splineContainer;
@@ -120,7 +120,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
                     {
                         Debug.Log("Second fill complete — destroying after delay.");
                         _donut1.enabled = false;
-                        _donut2.enabled = false;
+                        //_donut2.enabled = false;
                         _tube.enabled = false;
                         DestroyAfterDelayAsync(_destroyDelay, _cts.Token).Forget();
                         return;

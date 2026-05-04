@@ -1342,7 +1342,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: f4f2a738909f5c94b957cc78e35ce8c0, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: fe1353cb210af4e45a00b5994ab3df5b, type: 2}
+      objectReference: {fileID: 2100000, guid: ae043ba97d5d557419ae4e3ad655012c, type: 2}
     - target: {fileID: 919132149155446097, guid: f4f2a738909f5c94b957cc78e35ce8c0, type: 3}
       propertyPath: m_Name
       value: PlayerGloveR
@@ -2821,7 +2821,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 51b36819353901043b6eb5644e6eda48, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: ae043ba97d5d557419ae4e3ad655012c, type: 2}
+      objectReference: {fileID: 2100000, guid: fe1353cb210af4e45a00b5994ab3df5b, type: 2}
     - target: {fileID: 919132149155446097, guid: 51b36819353901043b6eb5644e6eda48, type: 3}
       propertyPath: m_Name
       value: PlayerGloveL
