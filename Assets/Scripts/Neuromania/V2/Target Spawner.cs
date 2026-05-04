@@ -128,9 +128,6 @@ namespace IMVR.BodyArcade.Neuromania
 
             Vector3 interactableLocal = interactable.localPosition;
             interactableLocal.x += xOffset;
-            Debug.Log($"cameraY local {_camera.transform.localPosition.y}");
-            Debug.Log($"cameraY {_camera.transform.position.y}");
-            Debug.Log($"Applying Y offset: {yOffset}");
             interactableLocal.y = _camera.transform.localPosition.y -1 + yOffset;
             //interactableLocal.y = yOffset;
             interactable.localPosition = interactableLocal;

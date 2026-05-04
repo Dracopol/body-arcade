@@ -48,6 +48,7 @@ namespace IMVR.BodyArcade.Neuromania
 
             if (isPunching && !_isPlaying)
             {
+                Debug.Log($"Punch detected! Speed: {speed:F2}, Forward Ratio: {forwardRatio:F2}");
                 _gloveFlame.Play();
                 _wooshAudio.Play();
                 _tagTarget.tag = GloveTag;
@@ -55,6 +56,7 @@ namespace IMVR.BodyArcade.Neuromania
             }
             else if (!isPunching && _isPlaying)
             {
+                Debug.Log($"Punch ended. Speed: {speed:F2}, Forward Ratio: {forwardRatio:F2}");
                 _gloveFlame.Stop(true, ParticleSystemStopBehavior.StopEmitting);
                 _tagTarget.tag = DefaultTag;
                 _isPlaying = false;

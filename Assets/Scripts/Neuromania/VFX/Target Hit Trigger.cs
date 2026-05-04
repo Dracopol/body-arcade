@@ -30,7 +30,6 @@ namespace IMVR.BodyArcade.Neuromania
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log($"[TargetHitTrigger] OnTriggerEnter hit by {other.gameObject.name} | tag: {other.tag}");
             if (!other.CompareTag("Glove"))
                 return;
             if (_animator == null) return;
