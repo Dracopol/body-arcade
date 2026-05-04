@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace IMVR.BodyArcade.Neuromania.Signals
+namespace IMVR.BodyArcade.NeuromaniaV1.Signals
 {
     internal class Signal : MonoBehaviour
     {
