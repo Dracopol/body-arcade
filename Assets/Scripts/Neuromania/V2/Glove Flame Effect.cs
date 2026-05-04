@@ -41,7 +41,7 @@ namespace IMVR.BodyArcade.Neuromania
             _previousPosition = transform.position;
 
             float speed = worldDelta.magnitude / Time.deltaTime;
-            float forwardVelocity = Vector3.Dot(worldDelta / Time.deltaTime, -transform.up);
+            float forwardVelocity = Vector3.Dot(worldDelta / Time.deltaTime, transform.forward);
             float forwardRatio = speed > 0.01f ? forwardVelocity / speed : 0f;
 
             bool isPunching = speed >= _minimumSpeed && forwardRatio >= _forwardRatioThreshold;
