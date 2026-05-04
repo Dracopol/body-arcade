@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using IMVR.BodyArcade.Neuromania.Signals;
+using IMVR.BodyArcade.NeuromaniaV1.Signals;
 
-namespace IMVR.BodyArcade.Neuromania.VFX
+namespace IMVR.BodyArcade.NeuromaniaV1.VFX
 {
     internal class VFXManager : MonoBehaviour
     {

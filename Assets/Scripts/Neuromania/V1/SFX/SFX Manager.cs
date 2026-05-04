@@ -1,7 +1,7 @@
 using UnityEngine;
-using IMVR.BodyArcade.Neuromania.Signals;
+using IMVR.BodyArcade.NeuromaniaV1.Signals;
 
-namespace IMVR.BodyArcade.Neuromania.SFX
+namespace IMVR.BodyArcade.NeuromaniaV1.SFX
 {
     internal class SFXManager : MonoBehaviour
     {

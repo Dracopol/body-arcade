@@ -1,4 +1,4 @@
-namespace IMVR.BodyArcade.Neuromania.Signals
+namespace IMVR.BodyArcade.NeuromaniaV1.Signals
 {
     internal enum SignalType
     {

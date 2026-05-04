@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Splines;
-using IMVR.BodyArcade.Neuromania.Input;
+using IMVR.BodyArcade.NeuromaniaV1.Input;
 
-namespace IMVR.BodyArcade.Neuromania.Signals
+namespace IMVR.BodyArcade.NeuromaniaV1.Signals
 {
     internal class ProjectileSpawnManager : MonoBehaviour
     {

@@ -1,4 +1,4 @@
-namespace IMVR.BodyArcade.Neuromania.Input
+namespace IMVR.BodyArcade.NeuromaniaV1.Input
 {
     internal enum ButtonEventType
     {

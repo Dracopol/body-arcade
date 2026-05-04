@@ -4,7 +4,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace IMVR.BodyArcade.Neuromania
+namespace IMVR.BodyArcade.NeuromaniaV1
 {
     public class TargetSpawnerOLD : MonoBehaviour
     {

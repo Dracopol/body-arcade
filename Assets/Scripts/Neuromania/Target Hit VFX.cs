@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace IMVR.BodyArcade.Neuromania
-{
+// namespace IMVR.BodyArcade.Neuromania
+// {
     internal class TargetHitVFX : MonoBehaviour
     {
         #region Serialized Fields
@@ -171,4 +171,4 @@ namespace IMVR.BodyArcade.Neuromania
 
         #endregion
     }
-}
+// }

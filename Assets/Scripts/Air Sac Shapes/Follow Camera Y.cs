@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace IMVR.BodyArcade.Neuromania
+namespace IMVR.BodyArcade.NeuromaniaV1
 {
     internal class FollowCameraY : MonoBehaviour
     {

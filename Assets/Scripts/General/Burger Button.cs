@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-namespace IMVR.BodyArcade.Neuromania.Input
+namespace IMVR.BodyArcade.NeuromaniaV1.Input
 {
     internal class BurgerButton : MonoBehaviour
     {

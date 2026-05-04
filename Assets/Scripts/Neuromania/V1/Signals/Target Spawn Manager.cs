@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace IMVR.BodyArcade.Neuromania.Signals
+namespace IMVR.BodyArcade.NeuromaniaV1.Signals
 {
     internal class TargetSpawnManager : MonoBehaviour
     {

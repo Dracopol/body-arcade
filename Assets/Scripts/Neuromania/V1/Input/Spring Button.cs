@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace IMVR.BodyArcade.Neuromania.Input
+namespace IMVR.BodyArcade.NeuromaniaV1.Input
 {
     internal class SpringButton : MonoBehaviour
     {
