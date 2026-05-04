@@ -5,7 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace IMVR.BodyArcade.Neuromania
+namespace IMVR.BodyArcade.Neuromania.Scripts
 {
     internal class TargetSpawner : MonoBehaviour
     {

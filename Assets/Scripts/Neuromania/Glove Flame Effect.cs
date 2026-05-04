@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace IMVR.BodyArcade.Neuromania
+namespace IMVR.BodyArcade.Neuromania.Scripts
 {
     internal class GloveFlameEffect : MonoBehaviour
     {
