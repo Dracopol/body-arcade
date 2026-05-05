@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IMVR.BodyArcade.Neuromania.Scripts
 {
-    internal class TargetHitTrigger : MonoBehaviour
+    internal class ElectronCollider : MonoBehaviour
     {
         #region Serialized Fields
 
@@ -21,7 +21,7 @@ namespace IMVR.BodyArcade.Neuromania.Scripts
         private void Start()
         {
             if (_animator == null)
-                Debug.LogError($"[TargetHitTrigger] _animator is not assigned on {gameObject.name}");
+                Debug.LogError($"[ElectronCollider] _animator is not assigned on {gameObject.name}");
         }
 
         #endregion

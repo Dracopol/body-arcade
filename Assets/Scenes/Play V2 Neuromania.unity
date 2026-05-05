@@ -1378,6 +1378,78 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 2449114461725939232, guid: 244f9f1fed19d8f4eb04418681ea12ce, type: 3}
   m_PrefabInstance: {fileID: 606187880}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &627394109
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 627394111}
+  - component: {fileID: 627394110}
+  - component: {fileID: 627394112}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &627394110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627394109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bb9c7fe3a34e6e4a9f807a83ccee0d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Electron.ElectronSpawner
+  _electronPrefabRight: {fileID: 2072034214}
+  _electronPrefabLeft: {fileID: 0}
+  _splinesRightParent: {fileID: 627394109}
+  _splinesLeftParent: {fileID: 0}
+  _camera: {fileID: 1163365399668632815}
+  _segment0Duration: 3
+  _segment1Duration: 3
+--- !u!4 &627394111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627394109}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.95112, y: 0, z: -13.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1254067537}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &627394112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627394109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dcd5fd8e7010264a9dad9bf26436135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Electron.ElectronSpawnController
+  _spawner: {fileID: 627394110}
+  _minInterval: 1
+  _maxInterval: 3
+  _minXOffset: -0.5
+  _maxXOffset: 0.5
+  _minYOffset: -0.5
+  _maxYOffset: 0.5
 --- !u!1001 &631816864
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2751,6 +2823,138 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1972205769}
   m_SourcePrefab: {fileID: 100100000, guid: cc21ce549ef04964db6f71dfd3b67c04, type: 3}
+--- !u!1 &1254067536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1254067537}
+  - component: {fileID: 1254067538}
+  m_Layer: 0
+  m_Name: Spline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1254067537
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254067536}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.08, y: 0.49, z: 6.36}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 627394111}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1254067538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254067536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Splines::UnityEngine.Splines.SplineContainer
+  m_Spline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Splines:
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 0
+        y: 0
+        z: 0
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0.5892301
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.5892301
+      Rotation:
+        value:
+          x: 0.000000009557003
+          y: -0.1923082
+          z: 0.0000000018728485
+          w: 0.9813346
+    - Position:
+        x: -2.2239747
+        y: -0.00000011476766
+        z: 5.4564776
+      TangentIn:
+        x: -0
+        y: -0
+        z: -1.2562536
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.6847337
+      Rotation:
+        value:
+          x: 0.0000000014197635
+          y: 0.024380721
+          z: 0.0000000014972257
+          w: 0.99970275
+    - Position:
+        x: -1.4085369
+        y: -0.00000008944916
+        z: 7.0055013
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0.17505465
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.17505465
+      Rotation:
+        value:
+          x: -0.0000000070203896
+          y: 0.23991661
+          z: 0.00000000173498
+          w: 0.9707935
+    m_MetaData:
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Knots:
+    m_KnotsLink: []
 --- !u!1001 &1265175748
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6697,6 +6901,11 @@ MonoBehaviour:
   targetValue: 0
   badNeuronChance: 0
   splineContainer: {fileID: 1308435428}
+--- !u!1 &2072034214 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5986577005237082120, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
+  m_PrefabInstance: {fileID: 6135808724029251935}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2087217977
 GameObject:
   m_ObjectHideFlags: 0
@@ -7553,6 +7762,63 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
+--- !u!1001 &6135808724029251935
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 775861921383430416, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.21449
+      objectReference: {fileID: 0}
+    - target: {fileID: 775861921383430416, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 775861921383430416, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.23303
+      objectReference: {fileID: 0}
+    - target: {fileID: 775861921383430416, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 775861921383430416, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 775861921383430416, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 775861921383430416, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 775861921383430416, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 775861921383430416, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 775861921383430416, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5986577005237082120, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
+      propertyPath: m_Name
+      value: Cube
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
 --- !u!114 &6671206091588497518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7741,3 +8007,5 @@ SceneRoots:
   - {fileID: 1716290152}
   - {fileID: 9688648}
   - {fileID: 1767737144}
+  - {fileID: 627394111}
+  - {fileID: 6135808724029251935}
