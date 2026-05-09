@@ -3,6 +3,8 @@
     padding: 24px;
     gap: 16px;
     background-color: #ffffff;
+    width: 1000px;        /* fixed width */
+    min-height: 0;       /* let height be driven by content */
 }
 
 /* Header */
