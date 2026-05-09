@@ -47,7 +47,7 @@ namespace IMVR.BodyArcade.UI
 
         #region Setup
 
-        private void Awake()
+        private void Start()
         {
             _root = _document.rootVisualElement;
 
