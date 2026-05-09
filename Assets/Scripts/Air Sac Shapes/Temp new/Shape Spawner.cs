@@ -12,7 +12,9 @@ namespace IMVR.CorpusVR.Core
 
         [Header("References")]
         [SerializeField] private BallSequencer _sequencer;
-        [SerializeField] private List<GameObject> _shapes;
+        [SerializeField] private List<GameObject> _LeftShapes;
+        [SerializeField] private List<GameObject> _RightShapes;
+        [SerializeField] private List<GameObject> _BothShapes;
         [SerializeField] private GameObject _shapeParent;
         [SerializeField] private GameObject _leftHand;
         [SerializeField] private GameObject _rightHand;
@@ -65,10 +67,10 @@ namespace IMVR.CorpusVR.Core
 
         private void SpawnShape()
         {
-            if (_shapes == null || _shapes.Count == 0 || _shapeParent == null) return;
+            if (_LeftShapes == null || _LeftShapes.Count == 0 || _shapeParent == null) return;
 
-            int index = Random.Range(0, _shapes.Count);
-            GameObject prefab = _shapes[index];
+            int index = Random.Range(0, _LeftShapes.Count);
+            GameObject prefab = _LeftShapes[index];
             if (prefab == null) return;
 
             _currentShape = Instantiate(

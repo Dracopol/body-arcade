@@ -1915,11 +1915,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed3135462fc7d1445a611b8e4b16ef9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.CorpusVR.Core.ShapeSpawner
-  _sequencer: {fileID: 0}
-  _shapes: []
-  _shapeParent: {fileID: 0}
-  _leftHand: {fileID: 0}
-  _rightHand: {fileID: 0}
+  _sequencer: {fileID: 1096373140}
+  _LeftShapes: []
+  _RightShapes: []
+  _BothShapes: []
+  _shapeParent: {fileID: 839052462}
+  _leftHand: {fileID: 185321253}
+  _rightHand: {fileID: 320369868}
 --- !u!114 &1096373140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1933,8 +1935,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.CorpusVR.Core.BallSequencer
   _balls:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1836556952}
+  - {fileID: 1196729504}
+  - {fileID: 219979518}
 --- !u!114 &1096373141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1947,15 +1950,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e704386c0cbea3c449d4a232fc3770e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.CorpusVR.Core.BallAlignToCamera
-  _pivot: {fileID: 0}
-  _camera: {fileID: 0}
-  _sequencer: {fileID: 0}
+  _pivot: {fileID: 1741708740}
+  _camera: {fileID: 224017790}
+  _sequencer: {fileID: 1096373140}
   _smoothAlign: 1
   _alignSpeedUnitsPerSecond: 5
 --- !u!1 &1160397936 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8009817150309909430, guid: ea4c1c28223afe74198388cbcfa94819, type: 3}
   m_PrefabInstance: {fileID: 1409427485}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1196729504 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7916994056466676384, guid: 2c087139b7052d142a01c09f93f54017, type: 3}
+  m_PrefabInstance: {fileID: 1779568631}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1203512648 stripped
 GameObject:
@@ -2877,6 +2885,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea4c1c28223afe74198388cbcfa94819, type: 3}
+--- !u!1 &1836556952 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5340379726178338088, guid: 2c087139b7052d142a01c09f93f54017, type: 3}
+  m_PrefabInstance: {fileID: 94357397}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1879902326 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5340379726178338088, guid: 2c087139b7052d142a01c09f93f54017, type: 3}

@@ -1,0 +1,181 @@
+.config-root {
+    flex-direction: column;
+    padding: 24px;
+    gap: 16px;
+    background-color: #ffffff;
+}
+
+/* Header */
+.config-header {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.config-header__icon {
+    width: 24px;
+    height: 24px;
+    background-image: url('/Icons/icon-settings.png');
+}
+
+.config-header__text {
+    flex-direction: column;
+    gap: 2px;
+}
+
+.config-header__title {
+    font-size: 22px;
+    -unity-font-style: bold;
+    color: #111111;
+}
+
+.config-header__subtitle {
+    font-size: 13px;
+    color: #888888;
+}
+
+/* Section card */
+.section-card {
+    background-color: #ffffff;
+    border-color: #e0e0e0;
+    border-width: 1px;
+    border-radius: 12px;
+    padding: 20px;
+    gap: 10px;
+}
+
+.section-header {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.section-header__icon {
+    width: 18px;
+    height: 18px;
+    background-image: url('/Icons/icon-hand.png');
+}
+
+.section-header__label {
+    font-size: 15px;
+    -unity-font-style: bold;
+    color: #111111;
+}
+
+/* Option rows */
+.option-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: #dddddd;
+    background-color: #ffffff;
+    transition: background-color 0.1s;
+}
+
+.option-row:hover {
+    background-color: #f5f5f5;
+}
+
+.option-row.selected {
+    background-color: #f0f0f0;
+    border-color: #222222;
+    border-width: 2px;
+}
+
+/* Radio button */
+.radio-outer {
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    border-width: 2px;
+    border-color: #555555;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.radio-inner {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+.option-row.selected .radio-inner {
+    background-color: #222222;
+}
+
+/* Option text */
+.option-text {
+    flex-direction: column;
+    gap: 2px;
+}
+
+.option-text__label {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: #111111;
+}
+
+.option-text__desc {
+    font-size: 13px;
+    color: #888888;
+}
+
+/* Both Hands Options panel */
+.options-panel {
+    display: none;
+}
+
+.options-panel.visible {
+    display: flex;
+}
+
+/* Mirror buttons row */
+.mirror-row {
+    flex-direction: row;
+    gap: 12px;
+}
+
+.mirror-btn {
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 12px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: #dddddd;
+    background-color: #ffffff;
+    gap: 4px;
+    transition: background-color 0.1s;
+}
+
+.mirror-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.mirror-btn.selected {
+    background-color: #f0f0f0;
+    border-color: #222222;
+    border-width: 2px;
+}
+
+.mirror-btn__label {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: #111111;
+    -unity-text-align: middle-center;
+}
+
+.mirror-btn__desc {
+    font-size: 12px;
+    color: #888888;
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
