@@ -41,7 +41,7 @@
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="both-hands-options" class="section-card options-panel">
+        <ui:VisualElement name="both-hands-options" class="section-card options-panel" style="display: none;">
             <ui:VisualElement class="section-header">
                 <ui:VisualElement class="section-header__icon"/>
                 <ui:Label text="Both Hands Options" class="section-header__label"/>
