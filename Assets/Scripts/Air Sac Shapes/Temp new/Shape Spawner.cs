@@ -15,8 +15,11 @@ namespace IMVR.CorpusVR.Core
         [SerializeField] private BallSequencer _sequencer;
         [SerializeField] private List<GameObject> _shapes;
         [SerializeField] private GameObject _shapeParent;
-        [SerializeField] private GameObject _leftHand;
-        [SerializeField] private GameObject _rightHand;
+        [SerializeField] private MirrorHands _mirrorHands;
+
+        [Header("Debug")]
+        [SerializeField] private GameObject _debugActiveLeft;
+        [SerializeField] private GameObject _debugActiveRight;
 
         #endregion
 
@@ -96,7 +99,13 @@ namespace IMVR.CorpusVR.Core
             bool isRight = shape.CompareTag("Right");
             if (!isLeft && !isRight) return;
 
-            GameObject handObject = isLeft ? _leftHand : _rightHand;
+            _debugActiveLeft = _mirrorHands.ActiveLeft;
+            _debugActiveRight = _mirrorHands.ActiveRight;
+
+            GameObject handObject = isLeft
+                ? _mirrorHands.ActiveLeft
+                : _mirrorHands.ActiveRight;
+
             if (handObject == null) return;
 
             SplineProgressTracker tracker = shape.GetComponent<SplineProgressTracker>();

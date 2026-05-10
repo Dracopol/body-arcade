@@ -2000,8 +2000,9 @@ MonoBehaviour:
   _shapes:
   - {fileID: 3628128942024683711, guid: 0e89528c4baf38d46ba6a5038215cfac, type: 3}
   _shapeParent: {fileID: 839052462}
-  _leftHand: {fileID: 185321253}
-  _rightHand: {fileID: 320369868}
+  _mirrorHands: {fileID: 210590404}
+  _debugActiveLeft: {fileID: 0}
+  _debugActiveRight: {fileID: 0}
 --- !u!114 &1096373140
 MonoBehaviour:
   m_ObjectHideFlags: 0
