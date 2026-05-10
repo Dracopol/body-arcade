@@ -3,6 +3,7 @@ using UnityEngine;
 using IMVR.BodyArcade.AirSacShapes;
 using IMVR.BodyArcade.AirSacShapes.ProgressTrackering;
 using IMVR.BodyArcade.AirSacShapes.VFX;
+using IMVR.BodyArcade.UI;
 
 namespace IMVR.CorpusVR.Core
 {
@@ -28,6 +29,12 @@ namespace IMVR.CorpusVR.Core
         #endregion
 
         #region Setup
+
+        private void Start()
+        {
+            if (SessionConfig.Instance != null && SessionConfig.Instance.SelectedShapes.Count > 0)
+                _shapes = SessionConfig.Instance.SelectedShapes;
+        }
 
         private void OnEnable()
         {
@@ -85,7 +92,7 @@ namespace IMVR.CorpusVR.Core
 
         private void AssignHand(GameObject shape)
         {
-            bool isLeft  = shape.CompareTag("Left");
+            bool isLeft = shape.CompareTag("Left");
             bool isRight = shape.CompareTag("Right");
             if (!isLeft && !isRight) return;
 

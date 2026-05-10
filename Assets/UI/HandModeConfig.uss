@@ -3,8 +3,7 @@
     padding: 24px;
     gap: 16px;
     background-color: #ffffff;
-    width: 1000px;        /* fixed width */
-    min-height: 0;       /* let height be driven by content */
+    width: 600px;
 }
 
 /* Header */
@@ -18,7 +17,6 @@
 .config-header__icon {
     width: 24px;
     height: 24px;
-    background-image: url('/Icons/icon-settings.png');
 }
 
 .config-header__text {
@@ -57,7 +55,6 @@
 .section-header__icon {
     width: 18px;
     height: 18px;
-    background-image: url('/Icons/icon-hand.png');
 }
 
 .section-header__label {
@@ -180,4 +177,25 @@
     color: #888888;
     -unity-text-align: middle-center;
     white-space: normal;
+}
+
+/* Start button */
+.start-btn {
+    background-color: #111111;
+    border-radius: 8px;
+    padding: 14px 24px;
+    align-items: center;
+    align-self: flex-end;
+    margin-top: 8px;
+    transition: background-color 0.1s;
+}
+
+.start-btn:hover {
+    background-color: #333333;
+}
+
+.start-btn__label {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: #ffffff;
 }

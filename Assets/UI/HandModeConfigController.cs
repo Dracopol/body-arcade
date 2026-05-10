@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace IMVR.BodyArcade.UI
@@ -23,6 +24,7 @@ namespace IMVR.BodyArcade.UI
         #region Serialized fields
 
         [SerializeField] private UIDocument _document;
+        [SerializeField] private string _gameplaySceneName = "GameplayScene";
 
         #endregion
 
@@ -32,6 +34,7 @@ namespace IMVR.BodyArcade.UI
         private List<VisualElement> _handOptionRows;
         private List<VisualElement> _mirrorBtns;
         private VisualElement _bothHandsPanel;
+        private VisualElement _startBtn;
 
         private HandMode _selectedHandMode = HandMode.BothSimultaneously;
         private MirrorMode _selectedMirrorMode = MirrorMode.Unmirrored;
@@ -66,9 +69,11 @@ namespace IMVR.BodyArcade.UI
             };
 
             _bothHandsPanel = _root.Q<VisualElement>("both-hands-options");
+            _startBtn = _root.Q<VisualElement>("start-btn");
 
             RegisterHandModeCallbacks();
             RegisterMirrorCallbacks();
+            RegisterStartCallback();
             ApplyInitialState();
         }
 
@@ -86,6 +91,11 @@ namespace IMVR.BodyArcade.UI
             _mirrorBtns[2].RegisterCallback<ClickEvent>(_ => SelectMirrorMode(MirrorMode.MirrorRight));
         }
 
+        private void RegisterStartCallback()
+        {
+            _startBtn?.RegisterCallback<ClickEvent>(_ => HandleStartSession());
+        }
+
         private void ApplyInitialState()
         {
             SelectHandMode(_selectedHandMode);
@@ -94,7 +104,29 @@ namespace IMVR.BodyArcade.UI
 
         #endregion
 
+        #region Event handlers
+
+        private void HandleStartSession()
+        {
+            if (SessionConfig.Instance == null) return;
+
+            SessionConfig.Instance.MirrorMode = ResolveMirrorMode();
+            SessionConfig.Instance.ApplyHandMode(_selectedHandMode);
+
+            SceneManager.LoadScene(_gameplaySceneName);
+        }
+
+        #endregion
+
         #region Private
+
+        private MirrorMode ResolveMirrorMode()
+        {
+            if (_selectedHandMode == HandMode.LeftOnly || _selectedHandMode == HandMode.RightOnly)
+                return MirrorMode.Unmirrored;
+
+            return _selectedMirrorMode;
+        }
 
         private void SelectHandMode(HandMode mode)
         {

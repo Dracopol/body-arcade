@@ -1916,9 +1916,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.CorpusVR.Core.ShapeSpawner
   _sequencer: {fileID: 1096373140}
-  _LeftShapes: []
-  _RightShapes: []
-  _BothShapes: []
+  _shapes:
+  - {fileID: 5880088321177205229, guid: bfcf7f9e9a85e0f4c9ef9f261aa3e0da, type: 3}
   _shapeParent: {fileID: 839052462}
   _leftHand: {fileID: 185321253}
   _rightHand: {fileID: 320369868}
@@ -2974,6 +2973,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8011394741974623945, guid: aefea303f49e7bb46b8c3f04c90ef68f, type: 3}
   m_PrefabInstance: {fileID: 1923446035}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1978007332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1978007334}
+  - component: {fileID: 1978007333}
+  m_Layer: 0
+  m_Name: Session Config Debugger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1978007333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978007332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e2a086e9a8d23e48aeb4ede6f6088a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.UI.SessionConfigDebugger
+--- !u!4 &1978007334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978007332}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.52149, y: -0, z: 1.19435}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2027260495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4646,3 +4689,4 @@ SceneRoots:
   - {fileID: 1096373137}
   - {fileID: 1741708740}
   - {fileID: 576924787}
+  - {fileID: 1978007334}
