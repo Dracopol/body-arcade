@@ -22,13 +22,17 @@ namespace IMVR.CorpusVR.Core
 
         #region Properties
 
-        internal GameObject ActiveLeft => _mirrorMode == MirrorMode.MirrorLeft
-            ? _copyLeft.transform.GetChild(0).gameObject
-            : _left.transform.GetChild(0).gameObject;
+        internal GameObject ActiveLeft => _mirrorMode switch
+        {
+            MirrorMode.MirrorRight => _copyRight.transform.GetChild(0).gameObject,
+            _ => _left.transform.GetChild(0).gameObject
+        };
 
-        internal GameObject ActiveRight => _mirrorMode == MirrorMode.MirrorRight
-            ? _copyRight.transform.GetChild(0).gameObject
-            : _right.transform.GetChild(0).gameObject;
+        internal GameObject ActiveRight => _mirrorMode switch
+        {
+            MirrorMode.MirrorLeft => _copyLeft.transform.GetChild(0).gameObject,
+            _ => _right.transform.GetChild(0).gameObject
+        };
 
         #endregion
 

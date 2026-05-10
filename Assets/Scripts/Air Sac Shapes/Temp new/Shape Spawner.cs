@@ -95,12 +95,29 @@ namespace IMVR.CorpusVR.Core
 
         private void AssignHand(GameObject shape)
         {
-            bool isLeft = shape.CompareTag("Left");
-            bool isRight = shape.CompareTag("Right");
-            if (!isLeft && !isRight) return;
-
             _debugActiveLeft = _mirrorHands.ActiveLeft;
             _debugActiveRight = _mirrorHands.ActiveRight;
+
+            if (shape.CompareTag("Left") || shape.CompareTag("Right"))
+            {
+                Debug.Log($"[ShapeSpawner] Single-handed shape: {shape.name} tag: {shape.tag}");
+                AssignHandToObject(shape);
+                return;
+            }
+
+            Debug.Log($"[ShapeSpawner] Both-handed shape: {shape.name} children: {shape.transform.childCount}");
+            foreach (Transform child in shape.transform)
+            {
+                Debug.Log($"[ShapeSpawner] Child: {child.name} tag: {child.tag}");
+                AssignHandToObject(child.gameObject);
+            }
+        }
+
+        private void AssignHandToObject(GameObject obj)
+        {
+            bool isLeft = obj.CompareTag("Left");
+            bool isRight = obj.CompareTag("Right");
+            if (!isLeft && !isRight) return;
 
             GameObject handObject = isLeft
                 ? _mirrorHands.ActiveLeft
@@ -108,7 +125,7 @@ namespace IMVR.CorpusVR.Core
 
             if (handObject == null) return;
 
-            SplineProgressTracker tracker = shape.GetComponent<SplineProgressTracker>();
+            SplineProgressTracker tracker = obj.GetComponent<SplineProgressTracker>();
             tracker?.SetHand(handObject.transform, handObject.GetComponent<Collider>());
         }
 
