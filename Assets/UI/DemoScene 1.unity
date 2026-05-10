@@ -148,6 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c22e4d66ebb5c4c9a3d75c6efc5633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.UI.SessionConfig
+  _leftHandShapes: []
+  _rightHandShapes: []
+  _bothHandsShapes:
+  - {fileID: 3628128942024683711, guid: 0e89528c4baf38d46ba6a5038215cfac, type: 3}
 --- !u!4 &33224839
 Transform:
   m_ObjectHideFlags: 0
