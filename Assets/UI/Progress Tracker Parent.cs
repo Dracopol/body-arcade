@@ -27,6 +27,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         private float _minMax;
         private int _winCount;
         private int _firstFillCount;
+        private int _winReadyCount;
 
         #endregion
 
@@ -49,6 +50,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
                 tracker.OnMaxProgressChange += HandleMaxProgressChange;
                 tracker.OnWinStateChange    += HandleWinStateChange;
                 tracker.OnFirstFillComplete += HandleFirstFillComplete;
+                tracker.OnWinReady          += HandleWinReady;
             }
         }
 
@@ -60,6 +62,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
                 tracker.OnMaxProgressChange -= HandleMaxProgressChange;
                 tracker.OnWinStateChange    -= HandleWinStateChange;
                 tracker.OnFirstFillComplete -= HandleFirstFillComplete;
+                tracker.OnWinReady          -= HandleWinReady;
             }
         }
 
@@ -97,6 +100,18 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
             _minMax = newMinMax;
             OnMinMaxChanged?.Invoke(_minMax);
+        }
+
+        private void HandleWinReady()
+        {
+            _winReadyCount++;
+
+            if (_winReadyCount < _trackers.Count)
+                return;
+
+            // All trackers have reached max progress — trigger win on all simultaneously
+            foreach (SplineProgressTracker tracker in _trackers)
+                tracker.TriggerWin();
         }
 
         private void HandleWinStateChange()

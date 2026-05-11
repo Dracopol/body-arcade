@@ -14,6 +14,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         internal event Action<float> OnMaxProgressChange;
         internal event Action OnWinStateChange;
         internal event Action OnFirstFillComplete;
+        internal event Action OnWinReady;
 
         #endregion
 
@@ -198,6 +199,16 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
             _destroyDelay = Mathf.Max(_destroyDelay, seconds);
         }
 
+        internal void TriggerWin()
+        {
+            _progress          = 0f;
+            _maxProgress       = 0f;
+            _winFillsRemaining = 1;
+            _isWin             = true;
+            Debug.Log("Win condition reached!");
+            OnWinStateChange?.Invoke();
+        }
+
         #endregion
 
         #region Private
@@ -229,12 +240,8 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
             if (_isWin || _maxProgress < 1f)
                 return;
 
-            _progress          = 0f;
-            _maxProgress       = 0f;
-            _winFillsRemaining = 1;
-            _isWin             = true;
-            Debug.Log("Win condition reached!");
-            OnWinStateChange?.Invoke();
+            // Signal readiness to ProgressTracker — win is triggered externally
+            OnWinReady?.Invoke();
         }
 
         private async UniTaskVoid DestroyAfterDelayAsync(float delay, CancellationToken ct)
