@@ -11,6 +11,10 @@ namespace IMVR.CorpusVR.Core
         [SerializeField] private GameObject _right;
         [SerializeField] private GameObject _copyRight;
         [SerializeField] private GameObject _copyLeft;
+        [SerializeField] private Camera _camera;
+
+        [Header("Debug")]
+        [SerializeField] private float _debugCameraX;
 
         #endregion
 
@@ -53,6 +57,9 @@ namespace IMVR.CorpusVR.Core
 
         private void Update()
         {
+            if (_camera != null)
+                Debug.Log($"[MirrorHands] Camera X: {_camera.transform.position.x:F3} | Right X: {_right?.transform.position.x:F3} | CopyRight X: {_copyRight?.transform.position.x:F3}");
+
             if (_mirrorMode == MirrorMode.MirrorRight)
                 CopyTransform(_right, _copyRight);
             else if (_mirrorMode == MirrorMode.MirrorLeft)
@@ -91,17 +98,19 @@ namespace IMVR.CorpusVR.Core
         }
 
         private void CopyTransform(GameObject source, GameObject target)
-        {
-            if (source == null || target == null) return;
+{
+    if (source == null || target == null) return;
 
-            Vector3 mirroredPosition = source.transform.position;
-            mirroredPosition.x *= -1;
-            target.transform.position = mirroredPosition;
+    float cameraX = _camera != null ? _camera.transform.position.x : 0f;
 
-            Vector3 mirroredRotation = source.transform.eulerAngles;
-            mirroredRotation.y *= -1;
-            target.transform.eulerAngles = mirroredRotation;
-        }
+    Vector3 mirroredPosition = source.transform.position;
+    mirroredPosition.x = 2f * cameraX - source.transform.position.x;
+    target.transform.position = mirroredPosition;
+
+    Vector3 mirroredRotation = source.transform.eulerAngles;
+    mirroredRotation.y *= -1;
+    target.transform.eulerAngles = mirroredRotation;
+}
 
         #endregion
     }

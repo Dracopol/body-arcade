@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IMVR.BodyArcade.NeuromaniaV1
 {
-    internal class FollowCameraY : MonoBehaviour
+    internal class FollowCameraXY : MonoBehaviour
     {
         #region Serialized fields
 
@@ -20,6 +20,7 @@ namespace IMVR.BodyArcade.NeuromaniaV1
                 return;
 
             Vector3 position = _target.transform.position;
+            position.x = Mathf.Lerp(position.x, _camera.transform.position.x, _smoothSpeed * Time.deltaTime);
             position.y = Mathf.Lerp(position.y, _camera.transform.position.y, _smoothSpeed * Time.deltaTime);
             _target.transform.position = position;
         }

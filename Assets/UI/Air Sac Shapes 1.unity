@@ -611,6 +611,7 @@ MonoBehaviour:
   _right: {fileID: 2103932342}
   _copyRight: {fileID: 40502263}
   _copyLeft: {fileID: 1130532714}
+  _camera: {fileID: 224017794}
 --- !u!4 &210590405
 Transform:
   m_ObjectHideFlags: 0

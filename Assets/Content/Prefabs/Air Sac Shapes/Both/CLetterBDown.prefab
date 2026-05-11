@@ -553,7 +553,7 @@ MonoBehaviour:
           z: -0.27059808
           w: 0.6532815
     - Position:
-        x: -0.4
+        x: -0.45
         y: 1.6
         z: 0.8
       TangentIn:
@@ -571,7 +571,7 @@ MonoBehaviour:
           z: -0.27059805
           w: -0.6532815
     - Position:
-        x: -0.4
+        x: -0.45
         y: 0.8
         z: 0.8
       TangentIn:
