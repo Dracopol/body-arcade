@@ -612,6 +612,7 @@ MonoBehaviour:
   _copyRight: {fileID: 40502263}
   _copyLeft: {fileID: 1130532714}
   _camera: {fileID: 224017794}
+  _debugCameraX: 0
 --- !u!4 &210590405
 Transform:
   m_ObjectHideFlags: 0
@@ -1545,7 +1546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Input.BurgerButton
   _menuButton: {fileID: 2375853261554316106, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  _sceneName: Level Selector
+  _sceneName: Air Sac Shapes 1
 --- !u!4 &576924787
 Transform:
   m_ObjectHideFlags: 0
@@ -4475,7 +4476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de947fdb99f01ce44959d30b62bfd572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.SFX.AudioProgress
-  _progressTracker: {fileID: 5459692674964593038}
+  _progressTracker: {fileID: 0}
   _audioSource: {fileID: 6394638258059981153}
   _winAudioSource: {fileID: 324684226158425211}
   _clip: {fileID: 8300000, guid: eb88c7d243cc59a4f9ad2b0f3652e190, type: 3}

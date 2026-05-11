@@ -28,6 +28,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         private int _winCount;
         private int _firstFillCount;
         private int _winReadyCount;
+        private int _completeCount;
 
         #endregion
 
@@ -51,6 +52,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
                 tracker.OnWinStateChange    += HandleWinStateChange;
                 tracker.OnFirstFillComplete += HandleFirstFillComplete;
                 tracker.OnWinReady          += HandleWinReady;
+                tracker.OnComplete          += HandleComplete;
             }
         }
 
@@ -63,6 +65,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
                 tracker.OnWinStateChange    -= HandleWinStateChange;
                 tracker.OnFirstFillComplete -= HandleFirstFillComplete;
                 tracker.OnWinReady          -= HandleWinReady;
+                tracker.OnComplete          -= HandleComplete;
             }
         }
 
@@ -128,6 +131,17 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
             if (_firstFillCount >= _trackers.Count)
                 OnFirstFillComplete?.Invoke();
+        }
+
+        private void HandleComplete()
+        {
+            _completeCount++;
+
+            if (_completeCount < _trackers.Count)
+                return;
+
+            // All child trackers have finished their animation — destroy the parent shape
+            Destroy(gameObject);
         }
 
         #endregion

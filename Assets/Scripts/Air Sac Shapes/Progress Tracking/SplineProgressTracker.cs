@@ -15,6 +15,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         internal event Action OnWinStateChange;
         internal event Action OnFirstFillComplete;
         internal event Action OnWinReady;
+        internal event Action OnComplete;
 
         #endregion
 
@@ -250,7 +251,11 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
                 await UniTask.WaitForSeconds(delay, cancellationToken: ct);
 
             if (!ct.IsCancellationRequested)
+            {
+                // Fire before destroying so ProgressTracker can react
+                OnComplete?.Invoke();
                 Destroy(gameObject);
+            }
         }
 
         #endregion
