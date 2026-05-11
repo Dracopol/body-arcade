@@ -1392,7 +1392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de947fdb99f01ce44959d30b62bfd572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.SFX.AudioProgress
-  _progressTracker: {fileID: 0}
+  _progressTracker: {fileID: 1008639161607394685}
   _audioSource: {fileID: 8370038626844683122}
   _winAudioSource: {fileID: 3807099560585166628}
   _clip: {fileID: 8300000, guid: eb88c7d243cc59a4f9ad2b0f3652e190, type: 3}
