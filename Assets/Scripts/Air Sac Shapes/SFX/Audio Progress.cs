@@ -8,7 +8,7 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private SplineProgressTracker _progressTracker;
+        [SerializeField] private ProgressTracker _progressTracker;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioSource _winAudioSource;
         [SerializeField] private AudioClip _clip;
@@ -43,8 +43,8 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
 
             if (_progressTracker != null)
             {
-                _progressTracker.OnMaxProgressChange += HandleMaxProgressChange;
-                _progressTracker.OnWinStateChange    += HandleWinStateChange;
+                _progressTracker.OnMinMaxChanged    += HandleMaxProgressChange;
+                _progressTracker.OnWinStateChange   += HandleWinStateChange;
                 _progressTracker.OnFirstFillComplete += HandleFirstFillComplete;
             }
         }
@@ -53,8 +53,8 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
         {
             if (_progressTracker != null)
             {
-                _progressTracker.OnMaxProgressChange -= HandleMaxProgressChange;
-                _progressTracker.OnWinStateChange    -= HandleWinStateChange;
+                _progressTracker.OnMinMaxChanged    -= HandleMaxProgressChange;
+                _progressTracker.OnWinStateChange   -= HandleWinStateChange;
                 _progressTracker.OnFirstFillComplete -= HandleFirstFillComplete;
             }
         }
@@ -99,9 +99,6 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
         {
             _winAudioSource.PlayOneShot(_winClip);
             _isFirstFillComplete = true;
-
-            if (_winClip != null)
-                _progressTracker.RegisterDestroyDelay(_winClip.length);
         }
 
         #endregion

@@ -57,8 +57,8 @@ namespace IMVR.CorpusVR.Core
 
         private void Update()
         {
-            if (_camera != null)
-                Debug.Log($"[MirrorHands] Camera X: {_camera.transform.position.x:F3} | Right X: {_right?.transform.position.x:F3} | CopyRight X: {_copyRight?.transform.position.x:F3}");
+            // if (_camera != null)
+            //     Debug.Log($"[MirrorHands] Camera X: {_camera.transform.position.x:F3} | Right X: {_right?.transform.position.x:F3} | CopyRight X: {_copyRight?.transform.position.x:F3}");
 
             if (_mirrorMode == MirrorMode.MirrorRight)
                 CopyTransform(_right, _copyRight);
