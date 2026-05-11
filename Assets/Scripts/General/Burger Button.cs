@@ -8,26 +8,41 @@ namespace IMVR.BodyArcade.NeuromaniaV1.Input
     {
         #region Serialized Fields
 
-        [SerializeField] private InputActionReference _menuButton;
-
         [SerializeField] private string _sceneName;
+
+        #endregion
+
+        #region Fields
+
+        private InputAction _menuAction;
 
         #endregion
 
         #region Setup
 
+        private void Awake()
+        {
+            _menuAction = new InputAction(
+                name: "MenuButton",
+                type: InputActionType.Button,
+                binding: "<XRController>{RightHand}/secondaryButton");
+        }
+
         private void OnEnable()
         {
-            if (_menuButton == null) return;
-            _menuButton.action.Enable();
-            _menuButton.action.performed += HandleMenuButtonPressed;
+            _menuAction.performed += HandleMenuButtonPressed;
+            _menuAction.Enable();
         }
 
         private void OnDisable()
         {
-            if (_menuButton == null) return;
-            _menuButton.action.performed -= HandleMenuButtonPressed;
-            _menuButton.action.Disable();
+            _menuAction.performed -= HandleMenuButtonPressed;
+            _menuAction.Disable();
+        }
+
+        private void OnDestroy()
+        {
+            _menuAction.Dispose();
         }
 
         #endregion
@@ -43,9 +58,9 @@ namespace IMVR.BodyArcade.NeuromaniaV1.Input
 
         #region Private
 
-        public void SwitchScene(string _sceneName)
+        public void SwitchScene(string sceneName)
         {
-            SceneManager.LoadScene(_sceneName);
+            SceneManager.LoadScene(sceneName);
         }
 
         #endregion
