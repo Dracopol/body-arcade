@@ -8,6 +8,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
     {
         #region Events
 
+        internal event Action<float> OnMinProgressChanged;
         internal event Action<float> OnMinMaxChanged;
         internal event Action OnWinStateChange;
         internal event Action OnFirstFillComplete;
@@ -22,6 +23,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
         #region Fields
 
+        private float _minProgress;
         private float _minMax;
         private int _winCount;
         private int _firstFillCount;
@@ -30,7 +32,9 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
         #region Properties
 
+        internal float MinProgress => _minProgress;
         internal float MinMax => _minMax;
+        internal bool IsWin => _winCount >= _trackers.Count;
         internal IReadOnlyList<SplineProgressTracker> Trackers => _trackers;
 
         #endregion
@@ -41,6 +45,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         {
             foreach (SplineProgressTracker tracker in _trackers)
             {
+                tracker.OnProgressChange    += HandleProgressChange;
                 tracker.OnMaxProgressChange += HandleMaxProgressChange;
                 tracker.OnWinStateChange    += HandleWinStateChange;
                 tracker.OnFirstFillComplete += HandleFirstFillComplete;
@@ -51,6 +56,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
         {
             foreach (SplineProgressTracker tracker in _trackers)
             {
+                tracker.OnProgressChange    -= HandleProgressChange;
                 tracker.OnMaxProgressChange -= HandleMaxProgressChange;
                 tracker.OnWinStateChange    -= HandleWinStateChange;
                 tracker.OnFirstFillComplete -= HandleFirstFillComplete;
@@ -59,11 +65,32 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
         #endregion
 
+        #region Internal
+
+        internal void RegisterDestroyDelay(float seconds)
+        {
+            foreach (SplineProgressTracker tracker in _trackers)
+                tracker.RegisterDestroyDelay(seconds);
+        }
+
+        #endregion
+
         #region Event handlers
+
+        private void HandleProgressChange(float _)
+        {
+            float newMin = ComputeMin(t => t.Progress);
+
+            if (Mathf.Approximately(newMin, _minProgress))
+                return;
+
+            _minProgress = newMin;
+            OnMinProgressChanged?.Invoke(_minProgress);
+        }
 
         private void HandleMaxProgressChange(float _)
         {
-            float newMinMax = ComputeMinMax();
+            float newMinMax = ComputeMin(t => t.MaxProgress);
 
             if (Mathf.Approximately(newMinMax, _minMax))
                 return;
@@ -92,7 +119,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
         #region Private
 
-        private float ComputeMinMax()
+        private float ComputeMin(Func<SplineProgressTracker, float> selector)
         {
             if (_trackers.Count == 0)
                 return 0f;
@@ -101,9 +128,9 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
 
             for (int i = 0; i < _trackers.Count; i++)
             {
-                float max = _trackers[i] != null ? _trackers[i].MaxProgress : 0f;
-                if (max < min)
-                    min = max;
+                float value = _trackers[i] != null ? selector(_trackers[i]) : 0f;
+                if (value < min)
+                    min = value;
             }
 
             return min;

@@ -8,7 +8,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private SplineProgressTracker _progressTracker;
+        [SerializeField] private ProgressTracker _progressTracker;
         [SerializeField] private Renderer _renderer;
 
         [Header("Behaviour")]
@@ -46,13 +46,13 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
         private void OnEnable()
         {
             if (_progressTracker != null)
-                _progressTracker.OnMaxProgressChange += HandleMaxProgressChange;
+                _progressTracker.OnMinMaxChanged += HandleMinMaxChanged;
         }
 
         private void OnDisable()
         {
             if (_progressTracker != null)
-                _progressTracker.OnMaxProgressChange -= HandleMaxProgressChange;
+                _progressTracker.OnMinMaxChanged -= HandleMinMaxChanged;
         }
 
         private void OnDestroy()
@@ -65,25 +65,25 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX
 
         #region Internal
 
-        internal void SetProgressTracker(SplineProgressTracker tracker)
+        internal void SetProgressTracker(ProgressTracker tracker)
         {
             if (_progressTracker != null)
-                _progressTracker.OnMaxProgressChange -= HandleMaxProgressChange;
+                _progressTracker.OnMinMaxChanged -= HandleMinMaxChanged;
 
             _progressTracker = tracker;
 
             if (_progressTracker != null)
-                _progressTracker.OnMaxProgressChange += HandleMaxProgressChange;
+                _progressTracker.OnMinMaxChanged += HandleMinMaxChanged;
         }
 
         #endregion
 
         #region Event handlers
 
-        private void HandleMaxProgressChange(float maxProgress)
+        private void HandleMinMaxChanged(float minMax)
         {
-            _debugProgress = maxProgress;
-            ApplyColor(maxProgress);
+            _debugProgress = minMax;
+            ApplyColor(minMax);
         }
 
         #endregion

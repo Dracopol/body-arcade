@@ -95,7 +95,7 @@ namespace IMVR.CorpusVR.Core
 
         private void AssignHand(GameObject shape)
         {
-            _debugActiveLeft = _mirrorHands.ActiveLeft;
+            _debugActiveLeft  = _mirrorHands.ActiveLeft;
             _debugActiveRight = _mirrorHands.ActiveRight;
 
             if (shape.CompareTag("Left") || shape.CompareTag("Right"))
@@ -115,7 +115,7 @@ namespace IMVR.CorpusVR.Core
 
         private void AssignHandToObject(GameObject obj)
         {
-            bool isLeft = obj.CompareTag("Left");
+            bool isLeft  = obj.CompareTag("Left");
             bool isRight = obj.CompareTag("Right");
             if (!isLeft && !isRight) return;
 
@@ -133,7 +133,7 @@ namespace IMVR.CorpusVR.Core
         {
             if (ball == null) return;
 
-            SplineProgressTracker tracker = shape.GetComponent<SplineProgressTracker>();
+            ProgressTracker tracker = shape.GetComponent<ProgressTracker>();
             if (tracker == null) return;
 
             ball.GetComponent<AirSacColor>()?.SetProgressTracker(tracker);

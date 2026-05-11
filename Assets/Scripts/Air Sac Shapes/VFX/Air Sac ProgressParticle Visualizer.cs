@@ -8,7 +8,7 @@ namespace IMVR.BodyArcade.AirSacShapes
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private SplineProgressTracker _progressTracker;
+        [SerializeField] private ProgressTracker _progressTracker;
         [SerializeField] private ParticleSystem _particleEffectPrefab;
 
         [Header("Behaviour")]
@@ -32,8 +32,8 @@ namespace IMVR.BodyArcade.AirSacShapes
         {
             if (_progressTracker != null)
             {
-                _progressTracker.OnProgressChange    += HandleProgressChange;
-                _progressTracker.OnFirstFillComplete += HandleFirstFillComplete;
+                _progressTracker.OnMinProgressChanged += HandleMinProgressChanged;
+                _progressTracker.OnFirstFillComplete  += HandleFirstFillComplete;
             }
         }
 
@@ -41,8 +41,8 @@ namespace IMVR.BodyArcade.AirSacShapes
         {
             if (_progressTracker != null)
             {
-                _progressTracker.OnProgressChange    -= HandleProgressChange;
-                _progressTracker.OnFirstFillComplete -= HandleFirstFillComplete;
+                _progressTracker.OnMinProgressChanged -= HandleMinProgressChanged;
+                _progressTracker.OnFirstFillComplete  -= HandleFirstFillComplete;
             }
         }
 
@@ -50,20 +50,20 @@ namespace IMVR.BodyArcade.AirSacShapes
 
         #region Internal
 
-        internal void SetProgressTracker(SplineProgressTracker tracker)
+        internal void SetProgressTracker(ProgressTracker tracker)
         {
             if (_progressTracker != null)
             {
-                _progressTracker.OnProgressChange    -= HandleProgressChange;
-                _progressTracker.OnFirstFillComplete -= HandleFirstFillComplete;
+                _progressTracker.OnMinProgressChanged -= HandleMinProgressChanged;
+                _progressTracker.OnFirstFillComplete  -= HandleFirstFillComplete;
             }
 
             _progressTracker = tracker;
 
             if (_progressTracker != null)
             {
-                _progressTracker.OnProgressChange    += HandleProgressChange;
-                _progressTracker.OnFirstFillComplete += HandleFirstFillComplete;
+                _progressTracker.OnMinProgressChanged += HandleMinProgressChanged;
+                _progressTracker.OnFirstFillComplete  += HandleFirstFillComplete;
             }
         }
 
@@ -71,11 +71,11 @@ namespace IMVR.BodyArcade.AirSacShapes
 
         #region Event handlers
 
-        private void HandleProgressChange(float progress)
+        private void HandleMinProgressChanged(float minProgress)
         {
-            _debugProgress = progress;
+            _debugProgress = minProgress;
 
-            int currentThresholdIndex = Mathf.FloorToInt(progress / _progressStepSize);
+            int currentThresholdIndex = Mathf.FloorToInt(minProgress / _progressStepSize);
 
             if (currentThresholdIndex != _lastThresholdIndex)
             {
@@ -103,7 +103,7 @@ namespace IMVR.BodyArcade.AirSacShapes
                 transform.position,
                 transform.rotation);
 
-            var main      = instance.main;
+            ParticleSystem.MainModule main = instance.main;
             float lifetime = main.duration + Mathf.Max(main.startLifetime.constantMax, main.startLifetime.constant, 2f);
             Destroy(instance.gameObject, lifetime);
 
