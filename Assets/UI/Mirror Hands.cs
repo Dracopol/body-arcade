@@ -28,14 +28,14 @@ namespace IMVR.CorpusVR.Core
 
         internal GameObject ActiveLeft => _mirrorMode switch
         {
-            MirrorMode.MirrorRight => _copyRight.transform.GetChild(0).gameObject,
-            _ => _left.transform.GetChild(0).gameObject
+            MirrorMode.MirrorRight => _copyRight.transform.GetChild(0).GetChild(0).gameObject,
+            _ => _left.transform.GetChild(0).GetChild(0).gameObject
         };
 
         internal GameObject ActiveRight => _mirrorMode switch
         {
-            MirrorMode.MirrorLeft => _copyLeft.transform.GetChild(0).gameObject,
-            _ => _right.transform.GetChild(0).gameObject
+            MirrorMode.MirrorLeft => _copyLeft.transform.GetChild(0).GetChild(0).gameObject,
+            _ => _right.transform.GetChild(0).GetChild(0).gameObject
         };
 
         #endregion
@@ -98,19 +98,18 @@ namespace IMVR.CorpusVR.Core
         }
 
         private void CopyTransform(GameObject source, GameObject target)
-{
-    if (source == null || target == null) return;
+        {
+            if (source == null || target == null) return;
 
-    float cameraX = _camera != null ? _camera.transform.position.x : 0f;
+            float cameraX = _camera != null ? _camera.transform.position.x : 0f;
 
-    Vector3 mirroredPosition = source.transform.position;
-    mirroredPosition.x = 2f * cameraX - source.transform.position.x;
-    target.transform.position = mirroredPosition;
+            Vector3 mirroredPosition = source.transform.position;
+            mirroredPosition.x = 2f * cameraX - source.transform.position.x;
+            target.transform.position = mirroredPosition;
 
-    Vector3 mirroredRotation = source.transform.eulerAngles;
-    mirroredRotation.y *= -1;
-    target.transform.eulerAngles = mirroredRotation;
-}
+            Quaternion q = source.transform.rotation;
+            target.transform.rotation = new Quaternion(q.x, -q.y, -q.z, q.w);
+        }
 
         #endregion
     }

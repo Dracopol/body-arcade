@@ -807,7 +807,7 @@ MonoBehaviour:
   _tubeRadiusMeters: 0.02
   _isForwardOnly: 0
   _isReversed: 1
-  _drainSpeedPerSecond: 5
+  _drainSpeedPerSecond: 0.1
   _fillUpPerSecond: 0.5
   _disappearPerSecond: 3.5
   _winThreshold: 0.98
@@ -1339,7 +1339,7 @@ MonoBehaviour:
   _tubeRadiusMeters: 0.02
   _isForwardOnly: 0
   _isReversed: 1
-  _drainSpeedPerSecond: 5
+  _drainSpeedPerSecond: 0.1
   _fillUpPerSecond: 0.5
   _disappearPerSecond: 3.5
   _winThreshold: 0.98

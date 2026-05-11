@@ -202,7 +202,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2522444978800881995}
-  m_Mesh: {fileID: 4300000, guid: 9d9cf9f7d94d6e149a0599fe4037a921, type: 2}
+  m_Mesh: {fileID: 0}
 --- !u!23 &2754290727358480224
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -423,6 +423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7508540095979709351}
   - component: {fileID: 982840438216781096}
+  - component: {fileID: 5383792579024512426}
   m_Layer: 0
   m_Name: GLetterL Reverse
   m_TagString: Left
@@ -465,7 +466,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressTracker
   _tube: {fileID: 2754290727358480224}
   _donut1: {fileID: 8897608253449949819}
-  _donut2: {fileID: 0}
   _splineContainer: {fileID: 8313020297899544163}
   _handTransform: {fileID: 0}
   _handCollider: {fileID: 0}
@@ -483,6 +483,20 @@ MonoBehaviour:
   _debugMaxProgress: 0
   _debugOverrideEnabled: 0
   _debugProgressOverride: 0
+--- !u!114 &5383792579024512426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3628128942024683711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 993c38a911adfa84c9c63147aab6cebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTrackering.ProgressTracker
+  _trackers:
+  - {fileID: 982840438216781096}
 --- !u!1 &4310219301240496187
 GameObject:
   m_ObjectHideFlags: 0
@@ -865,7 +879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de947fdb99f01ce44959d30b62bfd572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.SFX.AudioProgress
-  _progressTracker: {fileID: 982840438216781096}
+  _progressTracker: {fileID: 5383792579024512426}
   _audioSource: {fileID: 490782261076492907}
   _winAudioSource: {fileID: 5859854515459963090}
   _clip: {fileID: 8300000, guid: eb88c7d243cc59a4f9ad2b0f3652e190, type: 3}

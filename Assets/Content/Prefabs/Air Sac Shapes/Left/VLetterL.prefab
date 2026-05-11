@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de947fdb99f01ce44959d30b62bfd572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.SFX.AudioProgress
-  _progressTracker: {fileID: 1242849145664463410}
+  _progressTracker: {fileID: 8098952252394217743}
   _audioSource: {fileID: 4581209923420273191}
   _winAudioSource: {fileID: 8443117705018863308}
   _clip: {fileID: 8300000, guid: eb88c7d243cc59a4f9ad2b0f3652e190, type: 3}
@@ -438,7 +438,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4493950224378759754}
-  m_Mesh: {fileID: 4300000, guid: 9d9cf9f7d94d6e149a0599fe4037a921, type: 2}
+  m_Mesh: {fileID: 0}
 --- !u!23 &2146257991077584701
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -530,6 +530,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7573763606144559515}
   - component: {fileID: 1242849145664463410}
+  - component: {fileID: 8098952252394217743}
   m_Layer: 0
   m_Name: VLetterL
   m_TagString: Left
@@ -572,7 +573,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressTracker
   _tube: {fileID: 2146257991077584701}
   _donut1: {fileID: 8401638552412179532}
-  _donut2: {fileID: 0}
   _splineContainer: {fileID: 3213118525656606148}
   _handTransform: {fileID: 0}
   _handCollider: {fileID: 0}
@@ -590,6 +590,20 @@ MonoBehaviour:
   _debugMaxProgress: 0
   _debugOverrideEnabled: 0
   _debugProgressOverride: 0
+--- !u!114 &8098952252394217743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5828098501820365991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 993c38a911adfa84c9c63147aab6cebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTrackering.ProgressTracker
+  _trackers:
+  - {fileID: 1242849145664463410}
 --- !u!1 &5888534591176278210
 GameObject:
   m_ObjectHideFlags: 0
