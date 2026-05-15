@@ -6,6 +6,78 @@
     width: 600px;
 }
 
+/* Game switcher */
+.game-switcher {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border-width: 1px;
+    border-color: #dddddd;
+    background-color: #ffffff;
+    align-self: flex-start;
+    transition: background-color 0.1s;
+}
+
+.game-switcher:hover {
+    background-color: #f5f5f5;
+}
+
+.game-switcher__label {
+    font-size: 18px;
+    -unity-font-style: bold;
+    color: #111111;
+}
+
+.game-switcher__arrow {
+    font-size: 12px;
+    color: #555555;
+}
+
+/* Dropdown menu */
+.game-dropdown {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    border-width: 1px;
+    border-color: #dddddd;
+    border-radius: 8px;
+    padding: 4px;
+    min-width: 180px;
+}
+
+.game-dropdown.open {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-item {
+    padding: 10px 14px;
+    border-radius: 6px;
+    transition: background-color 0.1s;
+}
+
+.dropdown-item:hover {
+    background-color: #f5f5f5;
+}
+
+.dropdown-item__label {
+    font-size: 14px;
+    color: #111111;
+}
+
+/* Game content panels */
+.game-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.game-content.hidden {
+    display: none;
+}
+
 /* Header */
 .config-header {
     flex-direction: row;

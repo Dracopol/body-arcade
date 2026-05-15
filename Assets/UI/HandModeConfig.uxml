@@ -1,68 +1,135 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/HandModeConfig.uss?fileID=7433441132597879392&amp;guid=42ac2fc5a8f3f5944a1364409102cd34&amp;type=3#HandModeConfig"/>
     <ui:VisualElement class="config-root">
+
+        <!-- Header -->
         <ui:VisualElement class="config-header">
-            <ui:VisualElement class="config-header__icon"/>
+            <ui:VisualElement class="config-header__icon" />
             <ui:VisualElement class="config-header__text">
-                <ui:Label text="Air Sac Shapes Configuration" class="config-header__title"/>
-                <ui:Label text="Configure your therapy session settings before starting" class="config-header__subtitle"/>
+
+                <!-- Game Switcher -->
+                <ui:VisualElement name="game-switcher" class="game-switcher">
+                    <ui:Label name="game-switcher__label" class="game-switcher__label" text="Air Sac Shapes" picking-mode="Ignore" />
+                    <ui:Label class="game-switcher__arrow" text="∨" picking-mode="Ignore" />
+                </ui:VisualElement>
+
+                <ui:Label text="Configure your therapy session settings before starting" class="config-header__subtitle" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement class="section-card">
-            <ui:VisualElement class="section-header">
-                <ui:VisualElement class="section-header__icon"/>
-                <ui:Label text="Hand Mode Selection" class="section-header__label"/>
+
+        <!-- Air Sac Shapes Content -->
+        <ui:VisualElement name="content-airsac" class="game-content">
+
+            <ui:VisualElement class="section-card">
+                <ui:VisualElement class="section-header">
+                    <ui:VisualElement class="section-header__icon" />
+                    <ui:Label text="Hand Mode Selection" class="section-header__label" />
+                </ui:VisualElement>
+                <ui:VisualElement name="option-left-hand" class="option-row">
+                    <ui:VisualElement picking-mode="Ignore" class="radio-outer">
+                        <ui:VisualElement picking-mode="Ignore" class="radio-inner" />
+                    </ui:VisualElement>
+                    <ui:VisualElement picking-mode="Ignore" class="option-text">
+                        <ui:Label text="Left Hand Only" picking-mode="Ignore" class="option-text__label" />
+                        <ui:Label text="Exercise using only the left hand" picking-mode="Ignore" class="option-text__desc" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="option-right-hand" class="option-row">
+                    <ui:VisualElement picking-mode="Ignore" class="radio-outer">
+                        <ui:VisualElement picking-mode="Ignore" class="radio-inner" />
+                    </ui:VisualElement>
+                    <ui:VisualElement picking-mode="Ignore" class="option-text">
+                        <ui:Label text="Right Hand Only" picking-mode="Ignore" class="option-text__label" />
+                        <ui:Label text="Exercise using only the right hand" picking-mode="Ignore" class="option-text__desc" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="option-both-hands" class="option-row">
+                    <ui:VisualElement picking-mode="Ignore" class="radio-outer">
+                        <ui:VisualElement picking-mode="Ignore" class="radio-inner" />
+                    </ui:VisualElement>
+                    <ui:VisualElement picking-mode="Ignore" class="option-text">
+                        <ui:Label text="Both Hands Simultaneously" picking-mode="Ignore" class="option-text__label" />
+                        <ui:Label text="Exercise using both hands together" picking-mode="Ignore" class="option-text__desc" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="option-left-hand" class="option-row">
-                <ui:VisualElement picking-mode="Ignore" class="radio-outer">
-                    <ui:VisualElement picking-mode="Ignore" class="radio-inner"/>
+
+            <ui:VisualElement name="both-hands-options" class="section-card options-panel">
+                <ui:VisualElement class="section-header">
+                    <ui:VisualElement class="section-header__icon" />
+                    <ui:Label text="Both Hands Options" class="section-header__label" />
                 </ui:VisualElement>
-                <ui:VisualElement picking-mode="Ignore" class="option-text">
-                    <ui:Label text="Left Hand Only" picking-mode="Ignore" class="option-text__label"/>
-                    <ui:Label text="Exercise using only the left hand" picking-mode="Ignore" class="option-text__desc"/>
-                </ui:VisualElement>
-            </ui:VisualElement>
-            <ui:VisualElement name="option-right-hand" class="option-row">
-                <ui:VisualElement picking-mode="Ignore" class="radio-outer">
-                    <ui:VisualElement picking-mode="Ignore" class="radio-inner"/>
-                </ui:VisualElement>
-                <ui:VisualElement picking-mode="Ignore" class="option-text">
-                    <ui:Label text="Right Hand Only" picking-mode="Ignore" class="option-text__label"/>
-                    <ui:Label text="Exercise using only the right hand" picking-mode="Ignore" class="option-text__desc"/>
-                </ui:VisualElement>
-            </ui:VisualElement>
-            <ui:VisualElement name="option-both-hands" class="option-row">
-                <ui:VisualElement picking-mode="Ignore" class="radio-outer">
-                    <ui:VisualElement picking-mode="Ignore" class="radio-inner"/>
-                </ui:VisualElement>
-                <ui:VisualElement picking-mode="Ignore" class="option-text">
-                    <ui:Label text="Both Hands Simultaneously" picking-mode="Ignore" class="option-text__label"/>
-                    <ui:Label text="Exercise using both hands together" picking-mode="Ignore" class="option-text__desc"/>
+                <ui:VisualElement class="mirror-row">
+                    <ui:VisualElement name="mirror-unmirrored" class="mirror-btn">
+                        <ui:Label text="Unmirrored" picking-mode="Ignore" class="mirror-btn__label" />
+                        <ui:Label text="Each hand moves independently" picking-mode="Ignore" class="mirror-btn__desc" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="mirror-left" class="mirror-btn">
+                        <ui:Label text="Mirror Left Hand" picking-mode="Ignore" class="mirror-btn__label" />
+                        <ui:Label text="Right hand mirrors left hand movements" picking-mode="Ignore" class="mirror-btn__desc" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="mirror-right" class="mirror-btn">
+                        <ui:Label text="Mirror Right Hand" picking-mode="Ignore" class="mirror-btn__label" />
+                        <ui:Label text="Left hand mirrors right hand movements" picking-mode="Ignore" class="mirror-btn__desc" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
+
         </ui:VisualElement>
-        <ui:VisualElement name="both-hands-options" class="section-card options-panel">
-            <ui:VisualElement class="section-header">
-                <ui:VisualElement class="section-header__icon"/>
-                <ui:Label text="Both Hands Options" class="section-header__label"/>
+
+        <!-- NeuroMania Content -->
+        <ui:VisualElement name="content-neuromania" class="game-content hidden">
+
+            <ui:VisualElement class="section-card">
+                <ui:VisualElement class="section-header">
+                    <ui:VisualElement class="section-header__icon" />
+                    <ui:Label text="Focus Mode" class="section-header__label" />
+                </ui:VisualElement>
+                <ui:VisualElement name="option-normal" class="option-row">
+                    <ui:VisualElement picking-mode="Ignore" class="radio-outer">
+                        <ui:VisualElement picking-mode="Ignore" class="radio-inner" />
+                    </ui:VisualElement>
+                    <ui:VisualElement picking-mode="Ignore" class="option-text">
+                        <ui:Label text="Normal / Unfocused" picking-mode="Ignore" class="option-text__label" />
+                        <ui:Label text="Balanced gameplay for both hands equally" picking-mode="Ignore" class="option-text__desc" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="option-left-focused" class="option-row">
+                    <ui:VisualElement picking-mode="Ignore" class="radio-outer">
+                        <ui:VisualElement picking-mode="Ignore" class="radio-inner" />
+                    </ui:VisualElement>
+                    <ui:VisualElement picking-mode="Ignore" class="option-text">
+                        <ui:Label text="Left Hand Focused" picking-mode="Ignore" class="option-text__label" />
+                        <ui:Label text="Emphasize left hand training and exercises" picking-mode="Ignore" class="option-text__desc" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="option-right-focused" class="option-row">
+                    <ui:VisualElement picking-mode="Ignore" class="radio-outer">
+                        <ui:VisualElement picking-mode="Ignore" class="radio-inner" />
+                    </ui:VisualElement>
+                    <ui:VisualElement picking-mode="Ignore" class="option-text">
+                        <ui:Label text="Right Hand Focused" picking-mode="Ignore" class="option-text__label" />
+                        <ui:Label text="Emphasize right hand training and exercises" picking-mode="Ignore" class="option-text__desc" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement class="mirror-row">
-                <ui:VisualElement name="mirror-unmirrored" class="mirror-btn">
-                    <ui:Label text="Unmirrored" picking-mode="Ignore" class="mirror-btn__label"/>
-                    <ui:Label text="Each hand moves independently" picking-mode="Ignore" class="mirror-btn__desc"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="mirror-left" class="mirror-btn">
-                    <ui:Label text="Mirror Left Hand" picking-mode="Ignore" class="mirror-btn__label"/>
-                    <ui:Label text="Right hand mirrors left hand movements" picking-mode="Ignore" class="mirror-btn__desc"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="mirror-right" class="mirror-btn">
-                    <ui:Label text="Mirror Right Hand" picking-mode="Ignore" class="mirror-btn__label"/>
-                    <ui:Label text="Left hand mirrors right hand movements" picking-mode="Ignore" class="mirror-btn__desc"/>
-                </ui:VisualElement>
-            </ui:VisualElement>
+
         </ui:VisualElement>
+
+        <!-- Start Button -->
         <ui:VisualElement name="start-btn" class="start-btn">
-            <ui:Label text="Start VR Session" picking-mode="Ignore" class="start-btn__label"/>
+            <ui:Label text="Start VR Session" picking-mode="Ignore" class="start-btn__label" />
         </ui:VisualElement>
+
+        <!-- Dropdown — last child so it renders on top of everything -->
+        <ui:VisualElement name="game-dropdown" class="game-dropdown">
+            <ui:VisualElement name="dropdown-airsac" class="dropdown-item">
+                <ui:Label text="Air Sac Shapes" picking-mode="Ignore" class="dropdown-item__label" />
+            </ui:VisualElement>
+            <ui:VisualElement name="dropdown-neuromania" class="dropdown-item">
+                <ui:Label text="NeuroMania" picking-mode="Ignore" class="dropdown-item__label" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
     </ui:VisualElement>
 </ui:UXML>
