@@ -30,7 +30,8 @@ namespace IMVR.BodyArcade.UI
         #region Serialized fields
 
         [SerializeField] private UIDocument _document;
-        [SerializeField] private string _gameplaySceneName = "GameplayScene";
+        [SerializeField] private string _airSacShapesSceneName = "AirSacShapesScene";
+        [SerializeField] private string _neuromaniaSsceneName  = "NeuromaniScene";
 
         #endregion
 
@@ -39,6 +40,7 @@ namespace IMVR.BodyArcade.UI
         private VisualElement _root;
         private List<VisualElement> _handOptionRows;
         private List<VisualElement> _mirrorBtns;
+        private List<VisualElement> _focusModeRows;
         private VisualElement _bothHandsPanel;
         private VisualElement _startBtn;
 
@@ -49,9 +51,10 @@ namespace IMVR.BodyArcade.UI
         private Label _switcherLabel;
         private bool _dropdownOpen;
 
-        private HandMode _selectedHandMode = HandMode.BothSimultaneously;
+        private HandMode _selectedHandMode   = HandMode.BothSimultaneously;
         private MirrorMode _selectedMirrorMode = MirrorMode.Unmirrored;
-        private ActiveGame _activeGame = ActiveGame.AirSacShapes;
+        private FocusMode _selectedFocusMode   = FocusMode.Unfocused;
+        private ActiveGame _activeGame         = ActiveGame.AirSacShapes;
 
         #endregion
 
@@ -83,6 +86,13 @@ namespace IMVR.BodyArcade.UI
                 _root.Q<VisualElement>("mirror-right")
             };
 
+            _focusModeRows = new List<VisualElement>
+            {
+                _root.Q<VisualElement>("option-normal"),
+                _root.Q<VisualElement>("option-left-focused"),
+                _root.Q<VisualElement>("option-right-focused")
+            };
+
             _bothHandsPanel    = _root.Q<VisualElement>("both-hands-options");
             _startBtn          = _root.Q<VisualElement>("start-btn");
             _gameSwitcher      = _root.Q<VisualElement>("game-switcher");
@@ -93,6 +103,7 @@ namespace IMVR.BodyArcade.UI
 
             RegisterHandModeCallbacks();
             RegisterMirrorCallbacks();
+            RegisterFocusModeCallbacks();
             RegisterStartCallback();
             RegisterDropdownCallbacks();
             ApplyInitialState();
@@ -112,6 +123,13 @@ namespace IMVR.BodyArcade.UI
             _mirrorBtns[2].RegisterCallback<ClickEvent>(_ => SelectMirrorMode(MirrorMode.MirrorRight));
         }
 
+        private void RegisterFocusModeCallbacks()
+        {
+            _focusModeRows[0].RegisterCallback<ClickEvent>(_ => SelectFocusMode(FocusMode.Unfocused));
+            _focusModeRows[1].RegisterCallback<ClickEvent>(_ => SelectFocusMode(FocusMode.LeftFocused));
+            _focusModeRows[2].RegisterCallback<ClickEvent>(_ => SelectFocusMode(FocusMode.RightFocused));
+        }
+
         private void RegisterStartCallback()
         {
             _startBtn?.RegisterCallback<ClickEvent>(_ => HandleStartSession());
@@ -129,6 +147,7 @@ namespace IMVR.BodyArcade.UI
         {
             SelectHandMode(_selectedHandMode);
             SelectMirrorMode(_selectedMirrorMode);
+            SelectFocusMode(_selectedFocusMode);
             SelectGame(_activeGame);
         }
 
@@ -138,12 +157,19 @@ namespace IMVR.BodyArcade.UI
 
         private void HandleStartSession()
         {
-            if (SessionConfig.Instance == null) return;
-
-            SessionConfig.Instance.MirrorMode = ResolveMirrorMode();
-            SessionConfig.Instance.ApplyHandMode(_selectedHandMode);
-
-            SceneManager.LoadScene(_gameplaySceneName);
+            if (_activeGame == ActiveGame.AirSacShapes)
+            {
+                if (SessionConfigAirSacShapes.Instance == null) return;
+                SessionConfigAirSacShapes.Instance.MirrorMode = ResolveMirrorMode();
+                SessionConfigAirSacShapes.Instance.ApplyHandMode(_selectedHandMode);
+                SceneManager.LoadScene(_airSacShapesSceneName);
+            }
+            else
+            {
+                if (SessionConfigNeuromania.Instance == null) return;
+                SessionConfigNeuromania.Instance.FocusMode = _selectedFocusMode;
+                SceneManager.LoadScene(_neuromaniaSsceneName);
+            }
         }
 
         private void HandleSwitcherClick(ClickEvent e)
@@ -201,6 +227,16 @@ namespace IMVR.BodyArcade.UI
             OnMirrorModeChanged?.Invoke(mode);
         }
 
+        private void SelectFocusMode(FocusMode mode)
+        {
+            _selectedFocusMode = mode;
+
+            foreach (var row in _focusModeRows)
+                row.RemoveFromClassList("selected");
+
+            _focusModeRows[(int)mode].AddToClassList("selected");
+        }
+
         private void SelectGame(ActiveGame game)
         {
             _activeGame = game;
@@ -215,7 +251,7 @@ namespace IMVR.BodyArcade.UI
         private void PositionDropdownBelowSwitcher()
         {
             var switcherRect = _gameSwitcher.worldBound;
-            var rootRect = _root.worldBound;
+            var rootRect     = _root.worldBound;
 
             _gameDropdown.style.top  = switcherRect.yMax - rootRect.yMin + 4f;
             _gameDropdown.style.left = switcherRect.xMin - rootRect.xMin;

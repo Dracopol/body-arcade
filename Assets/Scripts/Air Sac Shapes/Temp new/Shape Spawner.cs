@@ -35,8 +35,8 @@ namespace IMVR.CorpusVR.Core
 
         private void Start()
         {
-            if (SessionConfig.Instance != null && SessionConfig.Instance.SelectedShapes.Count > 0)
-                _shapes = SessionConfig.Instance.SelectedShapes;
+            if (SessionConfigAirSacShapes.Instance != null && SessionConfigAirSacShapes.Instance.SelectedShapes.Count > 0)
+                _shapes = SessionConfigAirSacShapes.Instance.SelectedShapes;
         }
 
         private void OnEnable()

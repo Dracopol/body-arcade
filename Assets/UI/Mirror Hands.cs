@@ -44,8 +44,8 @@ namespace IMVR.CorpusVR.Core
 
         private void Start()
         {
-            _mirrorMode = SessionConfig.Instance != null
-                ? SessionConfig.Instance.MirrorMode
+            _mirrorMode = SessionConfigAirSacShapes.Instance != null
+                ? SessionConfigAirSacShapes.Instance.MirrorMode
                 : MirrorMode.Unmirrored;
 
             ApplyMirrorMode();

@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace IMVR.BodyArcade.UI
 {
-    internal class SessionConfig : MonoBehaviour
+    internal class SessionConfigAirSacShapes : MonoBehaviour
     {
-        internal static SessionConfig Instance { get; private set; }
+        internal static SessionConfigAirSacShapes Instance { get; private set; }
 
         internal MirrorMode MirrorMode;
         internal List<GameObject> SelectedShapes = new();

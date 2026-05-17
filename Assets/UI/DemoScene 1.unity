@@ -1138,7 +1138,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.UI.HandModeConfigController
   _document: {fileID: 1656794764}
-  _gameplaySceneName: Air Sac Shapes 1
+  _airSacShapesSceneName: Air Sac Shapes 1
+  _neuromaniaSsceneName: NeuromaniScene
 --- !u!224 &1889445360 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747907326224632397, guid: 0cbc0856f0fb8d84a81be5dea463c369, type: 3}
