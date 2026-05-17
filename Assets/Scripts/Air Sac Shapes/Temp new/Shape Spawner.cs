@@ -4,6 +4,7 @@ using IMVR.BodyArcade.AirSacShapes;
 using IMVR.BodyArcade.AirSacShapes.ProgressTrackering;
 using IMVR.BodyArcade.AirSacShapes.VFX;
 using IMVR.BodyArcade.UI;
+using IMVR.BodyArcade;
 
 namespace IMVR.CorpusVR.Core
 {
@@ -13,7 +14,7 @@ namespace IMVR.CorpusVR.Core
 
         [Header("References")]
         [SerializeField] private BallSequencer _sequencer;
-        [SerializeField] private List<GameObject> _shapes;
+        [SerializeField] private List<ShapeConfig> _shapes;
         [SerializeField] private GameObject _shapeParent;
         [SerializeField] private MirrorHands _mirrorHands;
 
@@ -77,12 +78,12 @@ namespace IMVR.CorpusVR.Core
         {
             if (_shapes == null || _shapes.Count == 0 || _shapeParent == null) return;
 
-            int index = Random.Range(0, _shapes.Count);
-            GameObject prefab = _shapes[index];
-            if (prefab == null) return;
+            int index          = Random.Range(0, _shapes.Count);
+            ShapeConfig config = _shapes[index];
+            if (config == null || config.Prefab == null) return;
 
             _currentShape = Instantiate(
-                prefab,
+                config.Prefab,
                 _shapeParent.transform.position,
                 Quaternion.identity,
                 _shapeParent.transform);

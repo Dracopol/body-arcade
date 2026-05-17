@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using IMVR.BodyArcade;
 
 namespace IMVR.BodyArcade.UI
 {
@@ -35,34 +36,70 @@ namespace IMVR.BodyArcade.UI
 
         #endregion
 
+        #region Events
+
+        internal System.Action<HandMode>   OnHandModeChanged;
+        internal System.Action<MirrorMode> OnMirrorModeChanged;
+        internal System.Action<ActiveGame> OnActiveGameChanged;
+
+        #endregion
+
         #region Fields
 
+        // Root
         private VisualElement _root;
-        private List<VisualElement> _handOptionRows;
-        private List<VisualElement> _mirrorBtns;
-        private List<VisualElement> _focusModeRows;
-        private VisualElement _bothHandsPanel;
-        private VisualElement _startBtn;
 
+        // Game switcher
         private VisualElement _gameSwitcher;
         private VisualElement _gameDropdown;
         private VisualElement _contentAirsac;
         private VisualElement _contentNeuromania;
-        private Label _switcherLabel;
-        private bool _dropdownOpen;
+        private Label         _switcherLabel;
+        private bool          _dropdownOpen;
 
-        private HandMode _selectedHandMode   = HandMode.BothSimultaneously;
+        // Hand mode
+        private List<VisualElement> _handOptionRows;
+        private VisualElement       _bothHandsPanel;
+
+        // Mirror
+        private List<VisualElement> _mirrorBtns;
+
+        // Focus mode (NeuroMania)
+        private List<VisualElement> _focusModeRows;
+
+        // Shape grid
+        private VisualElement                       _shapeGrid;
+        private Label                               _shapeCountLabel;
+        private VisualElement                       _selectAllBtn;
+        private VisualElement                       _clearBtn;
+        private List<ShapeConfig>                   _availableShapes = new();
+        private HashSet<ShapeConfig>                _selectedShapes  = new();
+        private Dictionary<ShapeConfig, VisualElement> _shapeCardMap = new();
+
+        // Strike stepper
+        private VisualElement _strikeDecreaseBtn;
+        private VisualElement _strikeIncreaseBtn;
+        private VisualElement _strikeUnlimitedBtn;
+        private Label         _strikeValueLabel;
+        private Label         _strikeInfoLabel;
+
+        // Timer stepper
+        private VisualElement _timerDecreaseBtn;
+        private VisualElement _timerIncreaseBtn;
+        private VisualElement _timerDisableBtn;
+        private Label         _timerValueLabel;
+        private Label         _timerInfoLabel;
+
+        // Start
+        private VisualElement _startBtn;
+
+        // State
+        private HandMode   _selectedHandMode   = HandMode.BothSimultaneously;
         private MirrorMode _selectedMirrorMode = MirrorMode.Unmirrored;
-        private FocusMode _selectedFocusMode   = FocusMode.Unfocused;
+        private FocusMode  _selectedFocusMode  = FocusMode.Unfocused;
         private ActiveGame _activeGame         = ActiveGame.AirSacShapes;
-
-        #endregion
-
-        #region Events
-
-        internal System.Action<HandMode> OnHandModeChanged;
-        internal System.Action<MirrorMode> OnMirrorModeChanged;
-        internal System.Action<ActiveGame> OnActiveGameChanged;
+        private int?       _strikeAmount       = 10;
+        private int?       _timerSeconds       = 60;
 
         #endregion
 
@@ -93,17 +130,37 @@ namespace IMVR.BodyArcade.UI
                 _root.Q<VisualElement>("option-right-focused")
             };
 
-            _bothHandsPanel    = _root.Q<VisualElement>("both-hands-options");
-            _startBtn          = _root.Q<VisualElement>("start-btn");
-            _gameSwitcher      = _root.Q<VisualElement>("game-switcher");
-            _gameDropdown      = _root.Q<VisualElement>("game-dropdown");
-            _contentAirsac     = _root.Q<VisualElement>("content-airsac");
+            _bothHandsPanel  = _root.Q<VisualElement>("both-hands-options");
+            _gameSwitcher    = _root.Q<VisualElement>("game-switcher");
+            _gameDropdown    = _root.Q<VisualElement>("game-dropdown");
+            _contentAirsac   = _root.Q<VisualElement>("content-airsac");
             _contentNeuromania = _root.Q<VisualElement>("content-neuromania");
-            _switcherLabel     = _root.Q<Label>("game-switcher__label");
+            _switcherLabel   = _root.Q<Label>("game-switcher__label");
+            _startBtn        = _root.Q<VisualElement>("start-btn");
+
+            _shapeGrid       = _root.Q<VisualElement>("shape-grid");
+            _shapeCountLabel = _root.Q<Label>("shape-count-label");
+            _selectAllBtn    = _root.Q<VisualElement>("select-all-btn");
+            _clearBtn        = _root.Q<VisualElement>("clear-btn");
+
+            _strikeDecreaseBtn  = _root.Q<VisualElement>("strike-decrease-btn");
+            _strikeIncreaseBtn  = _root.Q<VisualElement>("strike-increase-btn");
+            _strikeUnlimitedBtn = _root.Q<VisualElement>("strike-unlimited-btn");
+            _strikeValueLabel   = _root.Q<Label>("strike-value-label");
+            _strikeInfoLabel    = _root.Q<Label>("strike-info-label");
+
+            _timerDecreaseBtn = _root.Q<VisualElement>("timer-decrease-btn");
+            _timerIncreaseBtn = _root.Q<VisualElement>("timer-increase-btn");
+            _timerDisableBtn  = _root.Q<VisualElement>("timer-disable-btn");
+            _timerValueLabel  = _root.Q<Label>("timer-value-label");
+            _timerInfoLabel   = _root.Q<Label>("timer-info-label");
 
             RegisterHandModeCallbacks();
             RegisterMirrorCallbacks();
             RegisterFocusModeCallbacks();
+            RegisterShapeCallbacks();
+            RegisterStrikeCallbacks();
+            RegisterTimerCallbacks();
             RegisterStartCallback();
             RegisterDropdownCallbacks();
             ApplyInitialState();
@@ -130,6 +187,26 @@ namespace IMVR.BodyArcade.UI
             _focusModeRows[2].RegisterCallback<ClickEvent>(_ => SelectFocusMode(FocusMode.RightFocused));
         }
 
+        private void RegisterShapeCallbacks()
+        {
+            _selectAllBtn.RegisterCallback<ClickEvent>(_ => HandleSelectAll());
+            _clearBtn.RegisterCallback<ClickEvent>(_ => HandleClearShapes());
+        }
+
+        private void RegisterStrikeCallbacks()
+        {
+            _strikeDecreaseBtn.RegisterCallback<ClickEvent>(_ => AdjustStrikeAmount(-1));
+            _strikeIncreaseBtn.RegisterCallback<ClickEvent>(_ => AdjustStrikeAmount(1));
+            _strikeUnlimitedBtn.RegisterCallback<ClickEvent>(_ => ToggleUnlimitedStrikes());
+        }
+
+        private void RegisterTimerCallbacks()
+        {
+            _timerDecreaseBtn.RegisterCallback<ClickEvent>(_ => AdjustTimer(-5));
+            _timerIncreaseBtn.RegisterCallback<ClickEvent>(_ => AdjustTimer(5));
+            _timerDisableBtn.RegisterCallback<ClickEvent>(_ => ToggleDisableTimer());
+        }
+
         private void RegisterStartCallback()
         {
             _startBtn?.RegisterCallback<ClickEvent>(_ => HandleStartSession());
@@ -149,6 +226,8 @@ namespace IMVR.BodyArcade.UI
             SelectMirrorMode(_selectedMirrorMode);
             SelectFocusMode(_selectedFocusMode);
             SelectGame(_activeGame);
+            UpdateStrikeDisplay();
+            UpdateTimerDisplay();
         }
 
         #endregion
@@ -160,8 +239,17 @@ namespace IMVR.BodyArcade.UI
             if (_activeGame == ActiveGame.AirSacShapes)
             {
                 if (SessionConfigAirSacShapes.Instance == null) return;
-                SessionConfigAirSacShapes.Instance.MirrorMode = ResolveMirrorMode();
-                SessionConfigAirSacShapes.Instance.ApplyHandMode(_selectedHandMode);
+
+                var orderedSelection = new List<ShapeConfig>();
+                foreach (var shape in _availableShapes)
+                    if (_selectedShapes.Contains(shape))
+                        orderedSelection.Add(shape);
+
+                SessionConfigAirSacShapes.Instance.MirrorMode     = ResolveMirrorMode();
+                SessionConfigAirSacShapes.Instance.HandMode        = _selectedHandMode;
+                SessionConfigAirSacShapes.Instance.SelectedShapes  = orderedSelection;
+                SessionConfigAirSacShapes.Instance.StrikeAmount    = _strikeAmount;
+                SessionConfigAirSacShapes.Instance.TimerSeconds    = _timerSeconds;
                 SceneManager.LoadScene(_airSacShapesSceneName);
             }
             else
@@ -189,6 +277,24 @@ namespace IMVR.BodyArcade.UI
                 CloseDropdown();
         }
 
+        private void HandleSelectAll()
+        {
+            foreach (var (shape, card) in _shapeCardMap)
+            {
+                _selectedShapes.Add(shape);
+                card.AddToClassList("selected");
+            }
+            UpdateShapeCountLabel();
+        }
+
+        private void HandleClearShapes()
+        {
+            _selectedShapes.Clear();
+            foreach (var card in _shapeCardMap.Values)
+                card.RemoveFromClassList("selected");
+            UpdateShapeCountLabel();
+        }
+
         #endregion
 
         #region Private
@@ -197,7 +303,6 @@ namespace IMVR.BodyArcade.UI
         {
             if (_selectedHandMode == HandMode.LeftOnly || _selectedHandMode == HandMode.RightOnly)
                 return MirrorMode.Unmirrored;
-
             return _selectedMirrorMode;
         }
 
@@ -209,9 +314,9 @@ namespace IMVR.BodyArcade.UI
                 row.RemoveFromClassList("selected");
 
             _handOptionRows[(int)mode].AddToClassList("selected");
-
             _bothHandsPanel.EnableInClassList("visible", mode == HandMode.BothSimultaneously);
 
+            UpdateAvailableShapes(mode);
             OnHandModeChanged?.Invoke(mode);
         }
 
@@ -223,7 +328,6 @@ namespace IMVR.BodyArcade.UI
                 btn.RemoveFromClassList("selected");
 
             _mirrorBtns[(int)mode].AddToClassList("selected");
-
             OnMirrorModeChanged?.Invoke(mode);
         }
 
@@ -244,15 +348,157 @@ namespace IMVR.BodyArcade.UI
             _contentAirsac.EnableInClassList("hidden", game != ActiveGame.AirSacShapes);
             _contentNeuromania.EnableInClassList("hidden", game != ActiveGame.NeuroMania);
             CloseDropdown();
-
             OnActiveGameChanged?.Invoke(game);
+        }
+
+        private void UpdateAvailableShapes(HandMode mode)
+        {
+            if (SessionConfigAirSacShapes.Instance == null) return;
+            _availableShapes = SessionConfigAirSacShapes.Instance.GetShapesForMode(mode);
+            RebuildShapeGrid();
+        }
+
+        private void RebuildShapeGrid()
+        {
+            _shapeGrid.Clear();
+            _shapeCardMap.Clear();
+            _selectedShapes.Clear();
+
+            foreach (var shape in _availableShapes)
+            {
+                var card = CreateShapeCard(shape);
+                _shapeCardMap[shape] = card;
+                _shapeGrid.Add(card);
+            }
+
+            UpdateShapeCountLabel();
+        }
+
+        private VisualElement CreateShapeCard(ShapeConfig shape)
+        {
+            var card = new VisualElement();
+            card.AddToClassList("shape-card");
+
+            var thumbnail = new VisualElement();
+            thumbnail.AddToClassList("shape-card__thumbnail");
+            thumbnail.pickingMode = PickingMode.Ignore;
+
+            if (shape.ThumbnailSprite != null)
+            {
+                thumbnail.style.backgroundImage       = new StyleBackground(shape.ThumbnailSprite);
+                thumbnail.style.unityBackgroundScaleMode = ScaleMode.ScaleAndCrop;
+            }
+            else
+            {
+                thumbnail.style.backgroundColor = new StyleColor(shape.ThumbnailColor);
+                var fallbackLabel = new Label(shape.ShapeName);
+                fallbackLabel.AddToClassList("shape-card__thumbnail-label");
+                fallbackLabel.pickingMode = PickingMode.Ignore;
+                thumbnail.Add(fallbackLabel);
+            }
+
+            var info = new VisualElement();
+            info.AddToClassList("shape-card__info");
+            info.pickingMode = PickingMode.Ignore;
+
+            var nameLabel = new Label(shape.ShapeName);
+            nameLabel.AddToClassList("shape-card__name");
+            nameLabel.pickingMode = PickingMode.Ignore;
+
+            var diffLabel = new Label(shape.DifficultyLabel);
+            diffLabel.AddToClassList("shape-card__difficulty");
+            diffLabel.pickingMode = PickingMode.Ignore;
+
+            info.Add(nameLabel);
+            info.Add(diffLabel);
+            card.Add(thumbnail);
+            card.Add(info);
+
+            card.RegisterCallback<ClickEvent>(_ => ToggleShape(card, shape));
+            return card;
+        }
+
+        private void ToggleShape(VisualElement card, ShapeConfig shape)
+        {
+            if (_selectedShapes.Contains(shape))
+            {
+                _selectedShapes.Remove(shape);
+                card.RemoveFromClassList("selected");
+            }
+            else
+            {
+                _selectedShapes.Add(shape);
+                card.AddToClassList("selected");
+            }
+            UpdateShapeCountLabel();
+        }
+
+        private void UpdateShapeCountLabel()
+        {
+            var count = _selectedShapes.Count;
+            _shapeCountLabel.text = count == 1 ? "1 shape selected" : $"{count} shapes selected";
+        }
+
+        private void AdjustStrikeAmount(int delta)
+        {
+            if (_strikeAmount == null) return;
+            _strikeAmount = Mathf.Max(1, _strikeAmount.Value + delta);
+            UpdateStrikeDisplay();
+        }
+
+        private void ToggleUnlimitedStrikes()
+        {
+            _strikeAmount = _strikeAmount == null ? 10 : (int?)null;
+            UpdateStrikeDisplay();
+        }
+
+        private void UpdateStrikeDisplay()
+        {
+            var isUnlimited = _strikeAmount == null;
+            _strikeValueLabel.text = isUnlimited ? "∞" : _strikeAmount.Value.ToString();
+            _strikeUnlimitedBtn.EnableInClassList("active", isUnlimited);
+            _strikeDecreaseBtn.EnableInClassList("disabled", isUnlimited);
+            _strikeIncreaseBtn.EnableInClassList("disabled", isUnlimited);
+            _strikeInfoLabel.text = isUnlimited ? "No strike limit" : $"Target: {_strikeAmount} strikes";
+        }
+
+        private void AdjustTimer(int delta)
+        {
+            if (_timerSeconds == null) return;
+            _timerSeconds = Mathf.Max(5, _timerSeconds.Value + delta);
+            UpdateTimerDisplay();
+        }
+
+        private void ToggleDisableTimer()
+        {
+            _timerSeconds = _timerSeconds == null ? 60 : (int?)null;
+            UpdateTimerDisplay();
+        }
+
+        private void UpdateTimerDisplay()
+        {
+            var isDisabled = _timerSeconds == null;
+            _timerValueLabel.text = isDisabled ? "—" : _timerSeconds.Value.ToString();
+            _timerDisableBtn.EnableInClassList("active", isDisabled);
+            _timerDecreaseBtn.EnableInClassList("disabled", isDisabled);
+            _timerIncreaseBtn.EnableInClassList("disabled", isDisabled);
+            _timerInfoLabel.text = isDisabled ? "No time limit" : FormatDuration(_timerSeconds.Value);
+        }
+
+        private static string FormatDuration(int seconds)
+        {
+            if (seconds < 60) return $"Session duration: {seconds}s";
+            var minutes = seconds / 60;
+            var remainder = seconds % 60;
+            return remainder == 0
+                ? $"Session duration: {minutes}m"
+                : $"Session duration: {minutes}m {remainder}s";
         }
 
         private void PositionDropdownBelowSwitcher()
         {
             var switcherRect = _gameSwitcher.worldBound;
             var rootRect     = _root.worldBound;
-
             _gameDropdown.style.top  = switcherRect.yMax - rootRect.yMin + 4f;
             _gameDropdown.style.left = switcherRect.xMin - rootRect.xMin;
         }

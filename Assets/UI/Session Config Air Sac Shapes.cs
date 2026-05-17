@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using IMVR.BodyArcade;
 
 namespace IMVR.BodyArcade.UI
 {
@@ -8,11 +9,14 @@ namespace IMVR.BodyArcade.UI
         internal static SessionConfigAirSacShapes Instance { get; private set; }
 
         internal MirrorMode MirrorMode;
-        internal List<GameObject> SelectedShapes = new();
+        internal HandMode HandMode;
+        internal List<ShapeConfig> SelectedShapes = new();
+        internal int? StrikeAmount = 10;
+        internal int? TimerSeconds = 60;
 
-        [SerializeField] private List<GameObject> _leftHandShapes = new();
-        [SerializeField] private List<GameObject> _rightHandShapes = new();
-        [SerializeField] private List<GameObject> _bothHandsShapes = new();
+        [SerializeField] private List<ShapeConfig> _leftHandShapes  = new();
+        [SerializeField] private List<ShapeConfig> _rightHandShapes = new();
+        [SerializeField] private List<ShapeConfig> _bothHandsShapes = new();
 
         private void Awake()
         {
@@ -26,14 +30,14 @@ namespace IMVR.BodyArcade.UI
             DontDestroyOnLoad(gameObject);
         }
 
-        internal void ApplyHandMode(HandMode mode)
+        internal List<ShapeConfig> GetShapesForMode(HandMode mode)
         {
-            SelectedShapes = mode switch
+            return mode switch
             {
-                HandMode.LeftOnly => _leftHandShapes,
-                HandMode.RightOnly => _rightHandShapes,
+                HandMode.LeftOnly          => _leftHandShapes,
+                HandMode.RightOnly         => _rightHandShapes,
                 HandMode.BothSimultaneously => _bothHandsShapes,
-                _ => _bothHandsShapes
+                _                          => _bothHandsShapes
             };
         }
     }
