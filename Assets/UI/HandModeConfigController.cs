@@ -98,7 +98,7 @@ namespace IMVR.BodyArcade.UI
         private MirrorMode _selectedMirrorMode = MirrorMode.Unmirrored;
         private FocusMode  _selectedFocusMode  = FocusMode.Unfocused;
         private ActiveGame _activeGame         = ActiveGame.AirSacShapes;
-        private int?       _strikeAmount       = 10;
+        private int?       _strikeAmount       = 5;
         private int?       _timerSeconds       = 60;
 
         #endregion
@@ -391,10 +391,10 @@ namespace IMVR.BodyArcade.UI
             else
             {
                 thumbnail.style.backgroundColor = new StyleColor(shape.ThumbnailColor);
-                var fallbackLabel = new Label(shape.ShapeName);
-                fallbackLabel.AddToClassList("shape-card__thumbnail-label");
-                fallbackLabel.pickingMode = PickingMode.Ignore;
-                thumbnail.Add(fallbackLabel);
+                // var fallbackLabel = new Label(shape.ShapeName);
+                // fallbackLabel.AddToClassList("shape-card__thumbnail-label");
+                // fallbackLabel.pickingMode = PickingMode.Ignore;
+                // thumbnail.Add(fallbackLabel);
             }
 
             var info = new VisualElement();

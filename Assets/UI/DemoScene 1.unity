@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 33224839}
   - component: {fileID: 33224838}
   m_Layer: 0
-  m_Name: Session Config
+  m_Name: Air Sac Shapes Session Config
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,10 +149,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.UI.SessionConfig
   _leftHandShapes:
-  - {fileID: 5880088321177205229, guid: bfcf7f9e9a85e0f4c9ef9f261aa3e0da, type: 3}
-  - {fileID: 3628128942024683711, guid: 32b715c74412d0a4dbe7ab6f9a9012ce, type: 3}
-  - {fileID: 7020333988780075389, guid: cab0369bdb3384041a9d8e86d5c6c7db, type: 3}
-  - {fileID: 5828098501820365991, guid: 1f4a30bb70f2e714d9b7df4ead4f885a, type: 3}
+  - {fileID: 11400000, guid: 756647716a260cf48ae21572233de050, type: 2}
+  - {fileID: 11400000, guid: 16775b698eab9ff4e893c1d14a305b2f, type: 2}
+  - {fileID: 11400000, guid: 3e2d24d1ba2725048ae0bca556b6c721, type: 2}
+  - {fileID: 11400000, guid: e061c469ea2982c41a26aded9d001a84, type: 2}
   _rightHandShapes:
   - {fileID: 5701251747544760372, guid: cd0b8280ef18c024da5687a1f35188e4, type: 3}
   - {fileID: 7398764168842524663, guid: d08af958e9bc1e84eba5b4b89434e6ed, type: 3}
@@ -1119,7 +1119,7 @@ Transform:
   m_GameObject: {fileID: 1656794760}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.46, y: 1.85, z: 1.21}
+  m_LocalPosition: {x: -0.46, y: 2.499, z: 1.21}
   m_LocalScale: {x: 0.19999999, y: 0.19999999, z: 0.19999999}
   m_ConstrainProportionsScale: 1
   m_Children: []

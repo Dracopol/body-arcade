@@ -10,10 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a450de356361d3d488c40adad530674d, type: 3}
-  m_Name: G Left
+  m_Name: G Right
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ShapeConfig
-  ShapeName: G Left
   DifficultyLabel: 
-  ThumbnailColor: {r: 0.5, g: 0.65, b: 0.85, a: 1}
   ThumbnailSprite: {fileID: 0}
-  Prefab: {fileID: 5880088321177205229, guid: bfcf7f9e9a85e0f4c9ef9f261aa3e0da, type: 3}
+  Prefab: {fileID: 7398764168842524663, guid: d08af958e9bc1e84eba5b4b89434e6ed, type: 3}

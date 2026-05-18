@@ -105,7 +105,7 @@
                             <ui:Label text="−" picking-mode="Ignore" class="stepper-btn__label" />
                         </ui:VisualElement>
                         <ui:VisualElement class="stepper-value-box">
-                            <ui:Label name="strike-value-label" text="10" class="stepper-value" />
+                            <ui:Label name="strike-value-label" text="5" class="stepper-value" />
                         </ui:VisualElement>
                         <ui:VisualElement name="strike-increase-btn" class="stepper-btn">
                             <ui:Label text="+" picking-mode="Ignore" class="stepper-btn__label" />
@@ -114,7 +114,7 @@
                     <ui:VisualElement name="strike-unlimited-btn" class="toggle-btn">
                         <ui:Label text="∞  Set to Unlimited" picking-mode="Ignore" class="toggle-btn__label" />
                     </ui:VisualElement>
-                    <ui:Label name="strike-info-label" text="Target: 10 strikes" class="info-label" />
+                    <ui:Label name="strike-info-label" text="Target: 5 strikes" class="info-label" />
                 </ui:VisualElement>
 
                 <!-- Timer Settings -->
