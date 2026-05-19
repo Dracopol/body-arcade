@@ -1,17 +1,31 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LifeDiamond : MonoBehaviour
+namespace IMVR.BodyArcade
 {
-    #region Serialized Fields
+    public class LifeDiamond : MonoBehaviour
+    {
+        #region Serialized Fields
 
-    [SerializeField] private Image _fillImage;
+        [SerializeField] private Image _fillImage;
+        [SerializeField] private Image _outlineImage;
 
-    #endregion
+        #endregion
 
-    #region Public
+        #region Public
 
-    public void SetFilled(bool filled) => _fillImage.enabled = filled;
+        public void SetSlotEnabled(bool enabled)
+        {
+            _fillImage.enabled    = enabled;
+            _outlineImage.enabled = enabled;
+        }
 
-    #endregion
+        public void SetFilled(bool filled)
+        {
+            _outlineImage.enabled = true;
+            _fillImage.enabled    = filled;
+        }
+
+        #endregion
+    }
 }
