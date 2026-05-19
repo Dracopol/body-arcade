@@ -9779,7 +9779,6 @@ MonoBehaviour:
   _flyAwaySound: {fileID: 2706505168102126366}
   _rotationSpeed: 180
   _rotationAcceleration: 3
-  _shrinkDuration: 2
   _glass: {fileID: 6873374101739816960}
   _glassBreakEffect: {fileID: 885442677495057033}
   _glassBreakSound: {fileID: 2901416564177091864}
