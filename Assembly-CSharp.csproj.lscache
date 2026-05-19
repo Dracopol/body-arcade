@@ -218,6 +218,11 @@ Assets/
    Target Collider.cs
    Target Hit VFX.cs
    Target Spawner.cs
+ UI/game ui/
+  Life Diamonds.cs
+  Lives Ui.cs
+  Timer Ui.cs
+  Ui Tester.cs
  UI/
   HandModeConfigController.cs
   Mirror Hands.cs
