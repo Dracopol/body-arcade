@@ -219,6 +219,7 @@ Assets/
    Target Hit VFX.cs
    Target Spawner.cs
  UI/game ui/
+  Game Ui Visibility.cs
   Life Diamonds.cs
   Lives Ui.cs
   Timer Ui.cs
