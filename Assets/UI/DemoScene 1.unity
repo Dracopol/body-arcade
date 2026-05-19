@@ -1139,7 +1139,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.UI.HandModeConfigController
   _document: {fileID: 1656794764}
   _airSacShapesSceneName: Air Sac Shapes 1
-  _neuromaniaSsceneName: NeuromaniScene
+  _neuromaniaSsceneName: Neuromania
+--- !u!1 &1836416747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1836416749}
+  - component: {fileID: 1836416748}
+  m_Layer: 0
+  m_Name: Neuromania config
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1836416748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836416747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b525f19501b562c48bcdf072b2e9cbb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.UI.SessionConfigNeuromania
+--- !u!4 &1836416749
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836416747}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.43313, y: 0, z: 6.93363}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1889445360 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8747907326224632397, guid: 0cbc0856f0fb8d84a81be5dea463c369, type: 3}
@@ -23764,3 +23808,4 @@ SceneRoots:
   - {fileID: 1190301840}
   - {fileID: 33224839}
   - {fileID: 62081609}
+  - {fileID: 1836416749}
