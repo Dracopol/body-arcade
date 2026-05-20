@@ -16,8 +16,8 @@ namespace IMVR.BodyArcade.Neuromania.Scripts
 
         #region Fields
 
-        private const string GloveTag = "Glove";
-        private const string DefaultTag = "Untagged";
+        // private const string GloveTag = "Glove";
+        // private const string DefaultTag = "Untagged";
 
         private Vector3 _previousPosition;
         private bool _isPlaying;
@@ -51,14 +51,14 @@ namespace IMVR.BodyArcade.Neuromania.Scripts
                 Debug.Log($"Punch detected! Speed: {speed:F2}, Forward Ratio: {forwardRatio:F2}");
                 _gloveFlame.Play();
                 _wooshAudio.Play();
-                _tagTarget.tag = GloveTag;
+                // _tagTarget.tag = GloveTag;
                 _isPlaying = true;
             }
             else if (!isPunching && _isPlaying)
             {
                 Debug.Log($"Punch ended. Speed: {speed:F2}, Forward Ratio: {forwardRatio:F2}");
                 _gloveFlame.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-                _tagTarget.tag = DefaultTag;
+                // _tagTarget.tag = DefaultTag;
                 _isPlaying = false;
             }
         }
