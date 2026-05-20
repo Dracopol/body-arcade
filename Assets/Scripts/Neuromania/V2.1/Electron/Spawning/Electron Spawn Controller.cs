@@ -1,6 +1,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using IMVR.BodyArcade.UI;
 
 namespace IMVR.BodyArcade.Neuromania.Electron.Spawning
 {
@@ -24,13 +25,21 @@ namespace IMVR.BodyArcade.Neuromania.Electron.Spawning
 
         #endregion
 
+        #region Fields
+
+        private float _chanceLeft;
+        private float _chanceRight;
+        // _chanceLeft + _chanceRight + chancesBoth = 1; Both is the remainder.
+
+        #endregion
+
         #region Properties
 
         internal float MinInterval { get => _minInterval; set => _minInterval = value; }
         internal float MaxInterval { get => _maxInterval; set => _maxInterval = value; }
         internal float MinXOffset { get => _minXOffset; set => _minXOffset = value; }
         internal float MaxXOffset { get => _maxXOffset; set => _maxXOffset = value; }
-        internal float MinYOffset { get => _minYOffset; set => _maxYOffset = value; }
+        internal float MinYOffset { get => _minYOffset; set => _minYOffset = value; }
         internal float MaxYOffset { get => _maxYOffset; set => _maxYOffset = value; }
 
         #endregion
@@ -39,12 +48,43 @@ namespace IMVR.BodyArcade.Neuromania.Electron.Spawning
 
         private void Start()
         {
+            ApplyFocusMode(SessionConfigNeuromania.Instance != null
+                ? SessionConfigNeuromania.Instance.FocusMode
+                : FocusMode.Unfocused);
+
             RunAsync(destroyCancellationToken).Forget();
         }
 
         #endregion
 
         #region Private
+
+        private void ApplyFocusMode(FocusMode mode)
+        {
+            switch (mode)
+            {
+                case FocusMode.LeftFocused:
+                    _chanceLeft  = 0.55f;
+                    _chanceRight = 0.11f;
+                    break;
+                case FocusMode.RightFocused:
+                    _chanceLeft  = 0.11f;
+                    _chanceRight = 0.55f;
+                    break;
+                default: // Unfocused
+                    _chanceLeft  = 0.33f;
+                    _chanceRight = 0.33f;
+                    break;
+            }
+        }
+
+        private SpawnMode RollSpawnMode()
+        {
+            float roll = Random.value;
+            if (roll < _chanceLeft)  return SpawnMode.Left;
+            if (roll < _chanceLeft + _chanceRight) return SpawnMode.Right;
+            return SpawnMode.Both;
+        }
 
         private async UniTaskVoid RunAsync(CancellationToken ct)
         {
@@ -53,7 +93,7 @@ namespace IMVR.BodyArcade.Neuromania.Electron.Spawning
                 float delay = Random.Range(_minInterval, _maxInterval);
                 await UniTask.WaitForSeconds(delay, cancellationToken: ct);
 
-                SpawnMode mode = (SpawnMode)Random.Range(0, 3);
+                SpawnMode mode = RollSpawnMode();
                 float xOffset = Random.Range(_minXOffset, _maxXOffset);
                 float yOffset = Random.Range(_minYOffset, _maxYOffset);
 
