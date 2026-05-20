@@ -6,7 +6,7 @@ namespace IMVR.BodyArcade
     internal class ShapeConfig : ScriptableObject
     {
         internal string ShapeName => name;
-        [SerializeField] internal string DifficultyLabel;
+        [SerializeField] internal string DifficultyLabel = "Easy";
         internal Color ThumbnailColor;
         [SerializeField] internal Sprite ThumbnailSprite;
         [SerializeField] internal GameObject Prefab;

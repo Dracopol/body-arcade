@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a450de356361d3d488c40adad530674d, type: 3}
   m_Name: V Left
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ShapeConfig
-  ShapeName: V Left
-  DifficultyLabel: 
-  ThumbnailColor: {r: 0.5, g: 0.65, b: 0.85, a: 1}
-  ThumbnailSprite: {fileID: 291636875, guid: 5933ca2d38efd9342850cd063e5973ce, type: 3}
+  DifficultyLabel: Easy
+  ThumbnailSprite: {fileID: 0}
   Prefab: {fileID: 5828098501820365991, guid: 1f4a30bb70f2e714d9b7df4ead4f885a, type: 3}
