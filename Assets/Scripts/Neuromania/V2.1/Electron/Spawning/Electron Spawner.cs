@@ -15,6 +15,7 @@ namespace IMVR.BodyArcade.Neuromania.Electron.Spawning
         [SerializeField] private Camera _camera;
         [SerializeField] private float _segment0Duration = 1f;
         [SerializeField] private float _segment1Duration = 3f;
+        [SerializeField] private bool _destroyOnEnd = true;
 
         #endregion
 
@@ -87,7 +88,7 @@ namespace IMVR.BodyArcade.Neuromania.Electron.Spawning
                 return;
             }
 
-            electron.Launch(_camera, xOffset, yOffset, spline, _segment0Duration, _segment1Duration);
+            electron.Launch(_camera, xOffset, yOffset, spline, _segment0Duration, _segment1Duration, _destroyOnEnd);
         }
 
         #endregion

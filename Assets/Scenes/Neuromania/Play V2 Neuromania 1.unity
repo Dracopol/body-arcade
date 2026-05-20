@@ -161,17 +161,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 9688646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e61190fa5435204d963d1d9ca2478ee, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bb9c7fe3a34e6e4a9f807a83ccee0d6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Spawning.SplineRegistry
-  _splinesRight:
-  - {fileID: 1394187320}
-  - {fileID: 573604949}
-  - {fileID: 1152577694}
-  _splinesLeft:
-  - {fileID: 1321583181}
-  - {fileID: 1870765747}
-  - {fileID: 1021624227}
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Electron.Spawning.ElectronSpawner
+  _electronPrefabRight: {fileID: 5986577005237082120, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
+  _electronPrefabLeft: {fileID: 5986577005237082120, guid: f1d9214f436ef2044a0a404e94ba9f59, type: 3}
+  _splinesRightParent: {fileID: 1716290151}
+  _splinesLeftParent: {fileID: 1052335531}
+  _camera: {fileID: 1163365399668632815}
+  _segment0Duration: 1
+  _segment1Duration: 3
 --- !u!114 &9688650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,13 +180,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9688646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2127405a653c42745a3c3624eb550b74, type: 3}
+  m_Script: {fileID: 11500000, guid: 0dcd5fd8e7010264a9dad9bf26436135, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Spawning.TargetSpawner
-  _splineRegistry: {fileID: 9688649}
-  _targetPrefabRight: {fileID: 4672271251202287624, guid: 66cd7f91a52c1224fb3df77cd1a44b02, type: 3}
-  _targetPrefabLeft: {fileID: 3439998864731001720, guid: f73ecbecbb53af041a05ea7fa15a41cc, type: 3}
-  _camera: {fileID: 1163365399668632815}
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Electron.Spawning.ElectronSpawnController
+  _spawner: {fileID: 9688649}
   _minInterval: 1
   _maxInterval: 3
   _minXOffset: -0.5
@@ -5453,7 +5449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a74cd104814174799715f83ebb2de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.Input.BurgerButton
-  _menuButton: {fileID: 2375853261554316106, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   _sceneName: Level Selector
 --- !u!4 &1767737144
 Transform:

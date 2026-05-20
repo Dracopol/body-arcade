@@ -22,19 +22,21 @@ namespace IMVR.BodyArcade.Neuromania.Electron
         private float _yOffset;
         private float _segment0Duration;
         private float _segment1Duration;
+        private bool _destroyOnEnd;
         private CancellationTokenSource _animationCts;
 
         #endregion
 
         #region Internal
 
-        internal void Launch(Camera camera, float xOffset, float yOffset, SplineContainer spline, float segment0Duration, float segment1Duration)
+        internal void Launch(Camera camera, float xOffset, float yOffset, SplineContainer spline, float segment0Duration, float segment1Duration, bool destroyOnEnd)
         {
             _camera = camera;
             _xOffset = xOffset;
             _yOffset = yOffset;
             _segment0Duration = segment0Duration;
             _segment1Duration = segment1Duration;
+            _destroyOnEnd = destroyOnEnd;
             AnimateAsync(spline, destroyCancellationToken).Forget();
         }
 
@@ -62,8 +64,13 @@ namespace IMVR.BodyArcade.Neuromania.Electron
                 _segment1Duration,
                 _animationCts.Token);
 
-            if (!_animationCts.Token.IsCancellationRequested)
-                OnReachedEnd?.Invoke();
+            if (_animationCts.Token.IsCancellationRequested)
+                return;
+
+            OnReachedEnd?.Invoke();
+
+            if (_destroyOnEnd)
+                Destroy(gameObject);
         }
 
         #endregion
