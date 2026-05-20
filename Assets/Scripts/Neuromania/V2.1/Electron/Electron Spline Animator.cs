@@ -55,15 +55,18 @@ namespace IMVR.BodyArcade.Neuromania.Electron
         }
 
         private static void ApplyTransform(
-            Transform target,
-            SplineContainer spline,
-            Camera camera,
-            float xOffset,
-            float yOffset,
-            float t)
+    Transform target,
+    SplineContainer spline,
+    Camera camera,
+    float xOffset,
+    float yOffset,
+    float t)
         {
             spline.Evaluate(t, out float3 position, out _, out _);
-            target.position = (Vector3)position + new Vector3(xOffset, yOffset, 0f);
+            Vector3 pos = (Vector3)position;
+            pos.x += xOffset;
+            pos.y = yOffset;
+            target.position = pos;
 
             Vector3 dir = camera.transform.position - target.position;
             Vector3 euler = Quaternion.LookRotation(dir).eulerAngles;

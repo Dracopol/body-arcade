@@ -88,7 +88,8 @@ namespace IMVR.BodyArcade.Neuromania.Electron.Spawning
                 return;
             }
 
-            electron.Launch(_camera, xOffset, yOffset, spline, _segment0Duration, _segment1Duration, _destroyOnEnd);
+            float bakedY = _camera.transform.position.y + yOffset;
+            electron.Launch(_camera, xOffset, bakedY, spline, _segment0Duration, _segment1Duration, _destroyOnEnd);
         }
 
         #endregion
