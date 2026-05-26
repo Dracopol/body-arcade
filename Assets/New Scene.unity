@@ -151,8 +151,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ba20b0477b67b4ab45d16b637f07e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ColliderGizmo
-  _gizmoColor: {r: 0.17874454, g: 1, b: 0.015686274, a: 1}
+  _gizmoColor:
+    r: 0.17874454
+    g: 1
+    b: 0.015686274
+    a: 1
   _drawOnlyWhenSelected: 0
+  _boxCollider: {fileID: 0}
+  _sphereCollider: {fileID: 0}
+  _capsuleCollider: {fileID: 0}
 --- !u!135 &24048693
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -723,8 +730,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ba20b0477b67b4ab45d16b637f07e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ColliderGizmo
-  _gizmoColor: {r: 1, g: 0.118158676, b: 0.015686274, a: 1}
+  _gizmoColor:
+    r: 1
+    g: 0.118158676
+    b: 0.015686274
+    a: 1
   _drawOnlyWhenSelected: 0
+  _boxCollider: {fileID: 0}
+  _sphereCollider: {fileID: 0}
+  _capsuleCollider: {fileID: 0}
 --- !u!135 &434893391
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1083,8 +1097,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ba20b0477b67b4ab45d16b637f07e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ColliderGizmo
-  _gizmoColor: {r: 1, g: 0.891069, b: 0.015686274, a: 1}
+  _gizmoColor:
+    r: 1
+    g: 0.891069
+    b: 0.015686274
+    a: 1
   _drawOnlyWhenSelected: 0
+  _boxCollider: {fileID: 0}
+  _sphereCollider: {fileID: 0}
+  _capsuleCollider: {fileID: 0}
 --- !u!135 &660236152
 SphereCollider:
   m_ObjectHideFlags: 0
