@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -67,14 +68,12 @@ namespace IMVR.BodyArcade.UiRobot
         // Focus mode (NeuroMania)
         private List<VisualElement> _focusModeRows;
 
-        // Shape grid
-        private VisualElement                       _shapeGrid;
-        private Label                               _shapeCountLabel;
-        private VisualElement                       _selectAllBtn;
-        private VisualElement                       _clearBtn;
-        private List<ShapeConfig>                   _availableShapes = new();
-        private HashSet<ShapeConfig>                _selectedShapes  = new();
-        private Dictionary<ShapeConfig, VisualElement> _shapeCardMap = new();
+        // Shape availability
+        private List<ShapeConfig> _availableShapes = new();
+
+        // Difficulty
+        private List<VisualElement> _difficultyBtns;
+        private string              _selectedDifficulty = "Easy";
 
         // Strike stepper
         private VisualElement _strikeDecreaseBtn;
@@ -138,10 +137,12 @@ namespace IMVR.BodyArcade.UiRobot
             _switcherLabel   = _root.Q<Label>("game-switcher__label");
             _startBtn        = _root.Q<VisualElement>("start-btn");
 
-            _shapeGrid       = _root.Q<VisualElement>("shape-grid");
-            _shapeCountLabel = _root.Q<Label>("shape-count-label");
-            _selectAllBtn    = _root.Q<VisualElement>("select-all-btn");
-            _clearBtn        = _root.Q<VisualElement>("clear-btn");
+            _difficultyBtns = new List<VisualElement>
+            {
+                _root.Q<VisualElement>("difficulty-easy"),
+                _root.Q<VisualElement>("difficulty-medium"),
+                _root.Q<VisualElement>("difficulty-hard")
+            };
 
             _strikeDecreaseBtn  = _root.Q<VisualElement>("strike-decrease-btn");
             _strikeIncreaseBtn  = _root.Q<VisualElement>("strike-increase-btn");
@@ -158,7 +159,7 @@ namespace IMVR.BodyArcade.UiRobot
             RegisterHandModeCallbacks();
             RegisterMirrorCallbacks();
             RegisterFocusModeCallbacks();
-            RegisterShapeCallbacks();
+            RegisterDifficultyCallbacks();
             RegisterStrikeCallbacks();
             RegisterTimerCallbacks();
             RegisterStartCallback();
@@ -187,10 +188,11 @@ namespace IMVR.BodyArcade.UiRobot
             _focusModeRows[2].RegisterCallback<ClickEvent>(_ => SelectFocusMode(FocusMode.RightFocused));
         }
 
-        private void RegisterShapeCallbacks()
+        private void RegisterDifficultyCallbacks()
         {
-            _selectAllBtn.RegisterCallback<ClickEvent>(_ => HandleSelectAll());
-            _clearBtn.RegisterCallback<ClickEvent>(_ => HandleClearShapes());
+            _difficultyBtns[0].RegisterCallback<ClickEvent>(_ => SelectDifficulty("Easy"));
+            _difficultyBtns[1].RegisterCallback<ClickEvent>(_ => SelectDifficulty("Medium"));
+            _difficultyBtns[2].RegisterCallback<ClickEvent>(_ => SelectDifficulty("Hard"));
         }
 
         private void RegisterStrikeCallbacks()
@@ -225,6 +227,7 @@ namespace IMVR.BodyArcade.UiRobot
             SelectHandMode(_selectedHandMode);
             SelectMirrorMode(_selectedMirrorMode);
             SelectFocusMode(_selectedFocusMode);
+            SelectDifficulty(_selectedDifficulty);
             SelectGame(_activeGame);
             UpdateStrikeDisplay();
             UpdateTimerDisplay();
@@ -240,10 +243,9 @@ namespace IMVR.BodyArcade.UiRobot
             {
                 if (SessionConfigAirSacShapes.Instance == null) return;
 
-                var orderedSelection = new List<ShapeConfig>();
-                foreach (var shape in _availableShapes)
-                    if (_selectedShapes.Contains(shape))
-                        orderedSelection.Add(shape);
+                var orderedSelection = _availableShapes
+                    .Where(s => s.DifficultyLabel == _selectedDifficulty)
+                    .ToList();
 
                 SessionConfigAirSacShapes.Instance.MirrorMode     = ResolveMirrorMode();
                 SessionConfigAirSacShapes.Instance.HandMode        = _selectedHandMode;
@@ -277,23 +279,6 @@ namespace IMVR.BodyArcade.UiRobot
                 CloseDropdown();
         }
 
-        private void HandleSelectAll()
-        {
-            foreach (var (shape, card) in _shapeCardMap)
-            {
-                _selectedShapes.Add(shape);
-                card.AddToClassList("selected");
-            }
-            UpdateShapeCountLabel();
-        }
-
-        private void HandleClearShapes()
-        {
-            _selectedShapes.Clear();
-            foreach (var card in _shapeCardMap.Values)
-                card.RemoveFromClassList("selected");
-            UpdateShapeCountLabel();
-        }
 
         #endregion
 
@@ -355,88 +340,14 @@ namespace IMVR.BodyArcade.UiRobot
         {
             if (SessionConfigAirSacShapes.Instance == null) return;
             _availableShapes = SessionConfigAirSacShapes.Instance.GetShapesForMode(mode);
-            RebuildShapeGrid();
         }
 
-        private void RebuildShapeGrid()
+        private void SelectDifficulty(string difficulty)
         {
-            _shapeGrid.Clear();
-            _shapeCardMap.Clear();
-            _selectedShapes.Clear();
-
-            foreach (var shape in _availableShapes)
-            {
-                var card = CreateShapeCard(shape);
-                _shapeCardMap[shape] = card;
-                _shapeGrid.Add(card);
-            }
-
-            UpdateShapeCountLabel();
-        }
-
-        private VisualElement CreateShapeCard(ShapeConfig shape)
-        {
-            var card = new VisualElement();
-            card.AddToClassList("shape-card");
-
-            var thumbnail = new VisualElement();
-            thumbnail.AddToClassList("shape-card__thumbnail");
-            thumbnail.pickingMode = PickingMode.Ignore;
-
-            if (shape.ThumbnailSprite != null)
-            {
-                thumbnail.style.backgroundImage       = new StyleBackground(shape.ThumbnailSprite);
-                thumbnail.style.unityBackgroundScaleMode = ScaleMode.ScaleAndCrop;
-            }
-            else
-            {
-                thumbnail.style.backgroundColor = new StyleColor(shape.ThumbnailColor);
-                // var fallbackLabel = new Label(shape.ShapeName);
-                // fallbackLabel.AddToClassList("shape-card__thumbnail-label");
-                // fallbackLabel.pickingMode = PickingMode.Ignore;
-                // thumbnail.Add(fallbackLabel);
-            }
-
-            var info = new VisualElement();
-            info.AddToClassList("shape-card__info");
-            info.pickingMode = PickingMode.Ignore;
-
-            var nameLabel = new Label(shape.ShapeName);
-            nameLabel.AddToClassList("shape-card__name");
-            nameLabel.pickingMode = PickingMode.Ignore;
-
-            var diffLabel = new Label(shape.DifficultyLabel);
-            diffLabel.AddToClassList("shape-card__difficulty");
-            diffLabel.pickingMode = PickingMode.Ignore;
-
-            info.Add(nameLabel);
-            info.Add(diffLabel);
-            card.Add(thumbnail);
-            card.Add(info);
-
-            card.RegisterCallback<ClickEvent>(_ => ToggleShape(card, shape));
-            return card;
-        }
-
-        private void ToggleShape(VisualElement card, ShapeConfig shape)
-        {
-            if (_selectedShapes.Contains(shape))
-            {
-                _selectedShapes.Remove(shape);
-                card.RemoveFromClassList("selected");
-            }
-            else
-            {
-                _selectedShapes.Add(shape);
-                card.AddToClassList("selected");
-            }
-            UpdateShapeCountLabel();
-        }
-
-        private void UpdateShapeCountLabel()
-        {
-            var count = _selectedShapes.Count;
-            _shapeCountLabel.text = count == 1 ? "1 shape selected" : $"{count} shapes selected";
+            _selectedDifficulty = difficulty;
+            var labels = new[] { "Easy", "Medium", "Hard" };
+            for (int i = 0; i < _difficultyBtns.Count; i++)
+                _difficultyBtns[i].EnableInClassList("selected", labels[i] == difficulty);
         }
 
         private void AdjustStrikeAmount(int delta)

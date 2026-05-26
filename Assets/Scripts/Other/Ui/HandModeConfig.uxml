@@ -74,21 +74,23 @@
                 </ui:VisualElement>
             </ui:VisualElement>
 
-            <!-- Shape Selection -->
+            <!-- Difficulty Selection -->
             <ui:VisualElement class="section-card">
                 <ui:VisualElement class="section-header">
                     <ui:VisualElement class="section-header__icon" />
-                    <ui:Label text="Shape Selection" class="section-header__label" />
-                    <ui:VisualElement class="section-header__spacer" />
-                    <ui:VisualElement name="select-all-btn" class="action-btn">
-                        <ui:Label text="Select All" picking-mode="Ignore" class="action-btn__label" />
+                    <ui:Label text="Difficulty" class="section-header__label" />
+                </ui:VisualElement>
+                <ui:VisualElement class="mirror-row">
+                    <ui:VisualElement name="difficulty-easy" class="mirror-btn">
+                        <ui:Label text="Easy" picking-mode="Ignore" class="mirror-btn__label" />
                     </ui:VisualElement>
-                    <ui:VisualElement name="clear-btn" class="action-btn action-btn--ghost">
-                        <ui:Label text="Clear" picking-mode="Ignore" class="action-btn__label" />
+                    <ui:VisualElement name="difficulty-medium" class="mirror-btn">
+                        <ui:Label text="Medium" picking-mode="Ignore" class="mirror-btn__label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="difficulty-hard" class="mirror-btn">
+                        <ui:Label text="Hard" picking-mode="Ignore" class="mirror-btn__label" />
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="shape-grid" class="shape-grid" />
-                <ui:Label name="shape-count-label" text="0 shapes selected" class="shape-count-label" />
             </ui:VisualElement>
 
             <!-- Strike Amount + Timer Settings -->
