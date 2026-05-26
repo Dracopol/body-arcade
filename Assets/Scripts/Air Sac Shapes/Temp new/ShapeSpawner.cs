@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using IMVR.BodyArcade.AirSacShapes;
-using IMVR.BodyArcade.AirSacShapes.ProgressTrackering;
+using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 using IMVR.BodyArcade.AirSacShapes.VFX;
 using IMVR.BodyArcade.UiRobot;
 using IMVR.BodyArcade;
 
-namespace IMVR.CorpusVR.Core
+namespace IMVR.BodyArcade.AirSacShapes
 {
     internal class ShapeSpawner : MonoBehaviour
     {
@@ -134,12 +133,12 @@ namespace IMVR.CorpusVR.Core
         {
             if (ball == null) return;
 
-            ProgressTracker tracker = shape.GetComponent<ProgressTracker>();
+            ProgressTrackerParent tracker = shape.GetComponent<ProgressTrackerParent>();
             if (tracker == null) return;
 
-            ball.GetComponent<AirSacColor>()?.SetProgressTracker(tracker);
-            ball.GetComponent<AirSacSize>()?.SetProgressTracker(tracker);
-            ball.GetComponent<AirSacProgressParticleVisualizer>()?.SetProgressTracker(tracker);
+            ball.GetComponent<AirSacColor>()?.SetProgressTrackerParent(tracker);
+            ball.GetComponent<AirSacSize>()?.SetProgressTrackerParent(tracker);
+            ball.GetComponent<AirSacProgressParticleVisualizer>()?.SetProgressTrackerParent(tracker);
         }
 
         #endregion

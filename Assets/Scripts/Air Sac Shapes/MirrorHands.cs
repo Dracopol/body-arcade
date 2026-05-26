@@ -1,7 +1,7 @@
 using UnityEngine;
 using IMVR.BodyArcade.UiRobot;
 
-namespace IMVR.CorpusVR.Core
+namespace IMVR.BodyArcade.AirSacShapes
 {
     internal class MirrorHands : MonoBehaviour
     {

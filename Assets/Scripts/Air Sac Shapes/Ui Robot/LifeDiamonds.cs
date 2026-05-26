@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace IMVR.BodyArcade
+namespace IMVR.BodyArcade.UiRobot
 {
-    public class LifeDiamond : MonoBehaviour
+    public class LifeDiamonds : MonoBehaviour
     {
         #region Serialized Fields
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IMVR.BodyArcade.UiRobot
 {
-    public class LivesUI : MonoBehaviour
+    public class LivesUi : MonoBehaviour
     {
         #region Events
 
@@ -13,7 +13,7 @@ namespace IMVR.BodyArcade.UiRobot
 
         #region Serialized Fields
 
-        [SerializeField] private LifeDiamond[] _diamonds;
+        [SerializeField] private LifeDiamonds[] _diamonds;
         [SerializeField] private int _editorStartingLives = 7;
 
         #endregion

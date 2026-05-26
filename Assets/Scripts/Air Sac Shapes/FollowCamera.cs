@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace IMVR.BodyArcade.NeuromaniaV1
+namespace IMVR.BodyArcade.AirSacShapes
 {
     internal class FollowCamera : MonoBehaviour
     {

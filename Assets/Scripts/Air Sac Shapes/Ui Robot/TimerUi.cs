@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace IMVR.BodyArcade.UiRobot
 {
-    public class TimerUI : MonoBehaviour
+    public class TimerUi : MonoBehaviour
     {
         #region Events
 

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
+namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 {
-    internal class ProgressTracker : MonoBehaviour
+    internal class ProgressTrackerParent : MonoBehaviour
     {
         #region Events
 

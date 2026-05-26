@@ -1,14 +1,14 @@
 using UnityEngine;
-using IMVR.BodyArcade.AirSacShapes.ProgressTrackering;
+using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 
-namespace IMVR.BodyArcade.AirSacShapes
+namespace IMVR.BodyArcade.AirSacShapes.VFX
 {
     internal class AirSacProgressParticleVisualizer : MonoBehaviour
     {
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private ProgressTracker _progressTracker;
+        [SerializeField] private ProgressTrackerParent _progressTracker;
         [SerializeField] private ParticleSystem _particleEffectPrefab;
 
         [Header("Behaviour")]
@@ -50,7 +50,7 @@ namespace IMVR.BodyArcade.AirSacShapes
 
         #region Internal
 
-        internal void SetProgressTracker(ProgressTracker tracker)
+        internal void SetProgressTrackerParent(ProgressTrackerParent tracker)
         {
             if (_progressTracker != null)
             {

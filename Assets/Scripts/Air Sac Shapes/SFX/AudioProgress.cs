@@ -1,5 +1,5 @@
 using UnityEngine;
-using IMVR.BodyArcade.AirSacShapes.ProgressTrackering;
+using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 
 namespace IMVR.BodyArcade.AirSacShapes.SFX
 {
@@ -8,7 +8,7 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private ProgressTracker _progressTracker;
+        [SerializeField] private ProgressTrackerParent _progressTracker;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioSource _winAudioSource;
         [SerializeField] private AudioClip _clip;

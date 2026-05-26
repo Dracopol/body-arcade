@@ -4,7 +4,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace IMVR.BodyArcade.AirSacShapes.ProgressTrackering
+namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 {
     internal class SplineProgressTracker : MonoBehaviour
     {

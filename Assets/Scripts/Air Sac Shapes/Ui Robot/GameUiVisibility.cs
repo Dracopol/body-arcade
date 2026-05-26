@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IMVR.BodyArcade.UiRobot
 {
-    public class GameUIVisibility : MonoBehaviour
+    internal class GameUiVisibility : MonoBehaviour
     {
         #region Serialized Fields
 
