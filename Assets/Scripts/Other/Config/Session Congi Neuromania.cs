@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace IMVR.BodyArcade.UI
+namespace IMVR.BodyArcade.UiRobot
 {
     internal enum FocusMode
     {

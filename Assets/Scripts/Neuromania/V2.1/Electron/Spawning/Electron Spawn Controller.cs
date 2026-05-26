@@ -1,7 +1,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using IMVR.BodyArcade.UI;
+using IMVR.BodyArcade.UiRobot;
 
 namespace IMVR.BodyArcade.Neuromania.Electron.Spawning
 {

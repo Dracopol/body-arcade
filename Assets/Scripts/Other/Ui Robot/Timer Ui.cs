@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace IMVR.BodyArcade.UI
+namespace IMVR.BodyArcade.UiRobot
 {
     public class TimerUI : MonoBehaviour
     {

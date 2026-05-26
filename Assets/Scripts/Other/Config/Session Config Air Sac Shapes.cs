@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using IMVR.BodyArcade;
 
-namespace IMVR.BodyArcade.UI
+namespace IMVR.BodyArcade.UiRobot
 {
     internal class SessionConfigAirSacShapes : MonoBehaviour
     {

@@ -1,5 +1,5 @@
 using UnityEngine;
-using IMVR.BodyArcade.UI;
+using IMVR.BodyArcade.UiRobot;
 
 namespace IMVR.CorpusVR.Core
 {

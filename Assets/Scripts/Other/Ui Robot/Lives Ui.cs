@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace IMVR.BodyArcade.UI
+namespace IMVR.BodyArcade.UiRobot
 {
     public class LivesUI : MonoBehaviour
     {

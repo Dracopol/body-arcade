@@ -3,7 +3,7 @@ using UnityEngine;
 using IMVR.BodyArcade.AirSacShapes;
 using IMVR.BodyArcade.AirSacShapes.ProgressTrackering;
 using IMVR.BodyArcade.AirSacShapes.VFX;
-using IMVR.BodyArcade.UI;
+using IMVR.BodyArcade.UiRobot;
 using IMVR.BodyArcade;
 
 namespace IMVR.CorpusVR.Core

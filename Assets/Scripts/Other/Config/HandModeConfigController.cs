@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using IMVR.BodyArcade;
 
-namespace IMVR.BodyArcade.UI
+namespace IMVR.BodyArcade.UiRobot
 {
     internal enum HandMode
     {
