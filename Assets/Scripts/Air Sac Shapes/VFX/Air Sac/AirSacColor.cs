@@ -1,7 +1,7 @@
 using UnityEngine;
 using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 
-namespace IMVR.BodyArcade.AirSacShapes.VFX
+namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
 {
     internal class AirSacColor : MonoBehaviour
     {

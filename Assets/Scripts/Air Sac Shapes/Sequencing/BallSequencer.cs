@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IMVR.BodyArcade.AirSacShapes
+namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 {
     internal class BallSequencer : MonoBehaviour
     {

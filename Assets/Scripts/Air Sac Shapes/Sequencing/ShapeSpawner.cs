@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using IMVR.BodyArcade.AirSacShapes;
 using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
-using IMVR.BodyArcade.AirSacShapes.VFX;
+using IMVR.BodyArcade.AirSacShapes.VFX.AirSac;
 using IMVR.BodyArcade.UiRobot;
-using IMVR.BodyArcade;
 
-namespace IMVR.BodyArcade.AirSacShapes
+namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 {
     internal class ShapeSpawner : MonoBehaviour
     {

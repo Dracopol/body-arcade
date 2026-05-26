@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace IMVR.BodyArcade.AirSacShapes
+namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 {
     internal class BallAlignToCamera : MonoBehaviour
     {

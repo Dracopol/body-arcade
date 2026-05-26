@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Splines;
 using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 
-namespace IMVR.BodyArcade.AirSacShapes.VFX
+namespace IMVR.BodyArcade.AirSacShapes.VFX.Shape
 {
     internal class Donut : MonoBehaviour
     {
