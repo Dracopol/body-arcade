@@ -6,15 +6,24 @@ namespace IMVR.BodyArcade
     internal class ShapeConfig : ScriptableObject
     {
         internal string ShapeName => name;
+
         [SerializeField] internal string DifficultyLabel = "Easy";
-        internal Color ThumbnailColor;
+        [SerializeField] internal Color ThumbnailColor;
         [SerializeField] internal Sprite ThumbnailSprite;
         [SerializeField] internal GameObject Prefab;
 
+        [SerializeField] private bool _thumbnailColorInitialized;
+
         private void OnEnable()
         {
-            if (ThumbnailColor == Color.white)
-                ThumbnailColor = Random.ColorHSV();
+            if (_thumbnailColorInitialized) return;
+
+            ThumbnailColor = Random.ColorHSV(0f, 1f, 0.6f, 1f, 0.8f, 1f);
+            _thumbnailColorInitialized = true;
+
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(this);
+#endif
         }
     }
 }

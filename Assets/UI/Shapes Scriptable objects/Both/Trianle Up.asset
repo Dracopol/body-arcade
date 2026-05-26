@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Trianle Up
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ShapeConfig
   DifficultyLabel: Easy
+  ThumbnailColor: {r: 0.60586685, g: 0.24474381, b: 0.8833891, a: 1}
   ThumbnailSprite: {fileID: 0}
   Prefab: {fileID: 3628128942024683711, guid: 1a664c4414438dc48a34f57a56465289, type: 3}
+  _thumbnailColorInitialized: 1

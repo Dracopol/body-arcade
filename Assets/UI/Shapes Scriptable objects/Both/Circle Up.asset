@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Circle Up
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ShapeConfig
   DifficultyLabel: Easy
+  ThumbnailColor: {r: 0.91337055, g: 0.32226452, b: 0.5008022, a: 1}
   ThumbnailSprite: {fileID: 0}
   Prefab: {fileID: 3628128942024683711, guid: f88f54431032e1140b03fb2a6449bfc8, type: 3}
+  _thumbnailColorInitialized: 1

@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Square Up
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ShapeConfig
   DifficultyLabel: Easy
+  ThumbnailColor: {r: 0.8760084, g: 0.23441367, b: 0.97069216, a: 1}
   ThumbnailSprite: {fileID: 0}
   Prefab: {fileID: 3628128942024683711, guid: 0e89528c4baf38d46ba6a5038215cfac, type: 3}
+  _thumbnailColorInitialized: 1

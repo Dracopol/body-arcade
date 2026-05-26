@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: G Left Reverse
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ShapeConfig
   DifficultyLabel: Easy
+  ThumbnailColor: {r: 0.5217451, g: 0.96090305, b: 0.055141963, a: 1}
   ThumbnailSprite: {fileID: 0}
   Prefab: {fileID: 3628128942024683711, guid: 32b715c74412d0a4dbe7ab6f9a9012ce, type: 3}
+  _thumbnailColorInitialized: 1
