@@ -1,9 +1,8 @@
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
-using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 
-namespace IMVR.BodyArcade.AirSacShapes.VFX.Shape
+namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 {
     internal class Donut : MonoBehaviour
     {

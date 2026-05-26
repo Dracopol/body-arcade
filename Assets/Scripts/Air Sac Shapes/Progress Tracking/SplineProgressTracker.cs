@@ -234,7 +234,6 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
             if (_isWin || _maxProgress < 1f)
                 return;
 
-            // Signal readiness to ProgressTracker — win is triggered externally
             OnWinReady?.Invoke();
         }
 

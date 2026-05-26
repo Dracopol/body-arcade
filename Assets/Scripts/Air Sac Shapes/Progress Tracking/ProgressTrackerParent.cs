@@ -27,7 +27,6 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         private float _minMaxProgress;
         private int _winCount;
         private int _firstFillCount;
-        private int _winReadyCount;
         private int _completeCount;
 
         #endregion
@@ -91,7 +90,8 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         private void HandleWinReady()
         {
-            if (!AllReached(ref _winReadyCount)) return;
+            foreach (SplineProgressTracker tracker in _trackers)
+                if (tracker.MaxProgress < 1f) return;
 
             foreach (SplineProgressTracker tracker in _trackers)
                 tracker.TriggerWin();
