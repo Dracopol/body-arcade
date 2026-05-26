@@ -6,13 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/UI/DemoScene 1.unity
+    path: Assets/Scenes/Config.unity
     guid: fb18efcdd279a814c9630f44e4883127
   - enabled: 1
-    path: Assets/UI/Air Sac Shapes 1.unity
+    path: Assets/Scenes/Air Sac Shapes.unity
     guid: c988eb3f37baf4140a77582f8b7c1e60
   - enabled: 1
-    path: Assets/UI/Demo day.unity
+    path: Assets/Scenes/Neuromania.unity
     guid: 9529c7192cfd11340aabf537802d67e7
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 9779fe8257d93fa42bb53b6a19954f3d, type: 2}
