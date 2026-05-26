@@ -23,8 +23,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         [Header("Extra")]
         [SerializeField] private MeshRenderer _tube;
-        [SerializeField] private MeshRenderer _donut1;
-        //[SerializeField] private MeshRenderer _donut2;
+        [SerializeField] private MeshRenderer _donut;
 
         [Header("References")]
         [SerializeField] private SplineContainer _splineContainer;
@@ -38,8 +37,8 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         [SerializeField] private bool _isForwardOnly = true;
         [SerializeField] private bool _isReversed = false;
         [SerializeField] private float _drainSpeedPerSecond = 5f;
-        [SerializeField] private float _fillUpPerSecond = 0.5f;
-        [SerializeField] private float _disappearPerSecond = 3.5f;
+        [SerializeField] private float _fillSpeedPerSecond = 0.5f;
+        [SerializeField] private float _disappearSpeedPerSecond = 3.5f;
         [SerializeField, Range(0f, 1f)] private float _winThreshold = 0.98f;
 
         [Header("Debug visualization")]
@@ -57,12 +56,13 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         private float _progress;
         private float _maxProgress;
+        private float _activeFillSpeed;
         private bool _isWin;
         private int _winFillsRemaining;
         private float _destroyDelay;
 
         private SplineProximity _splineProximity;
-        private CancellationTokenSource _cts;
+        private CancellationTokenSource _cancellationTokenSource;
 
         #endregion
 
@@ -79,14 +79,15 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         private void Awake()
         {
-            _cts = new CancellationTokenSource();
+            _cancellationTokenSource = new CancellationTokenSource();
+            _activeFillSpeed = _fillSpeedPerSecond;
             InitSplineProximity();
         }
 
         private void OnDestroy()
         {
-            _cts?.Cancel();
-            _cts?.Dispose();
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
         }
 
         #endregion
@@ -106,7 +107,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
             if (_isWin)
             {
-                float filledProgress = Mathf.MoveTowards(_progress, 1f, Time.deltaTime * _fillUpPerSecond);
+                float filledProgress = Mathf.MoveTowards(_progress, 1f, Time.deltaTime * _activeFillSpeed);
 
                 if (filledProgress >= 1f)
                 {
@@ -115,16 +116,13 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                         _winFillsRemaining--;
                         filledProgress = 0f;
                         OnFirstFillComplete?.Invoke();
-                        Debug.Log("First fill complete!");
-                        _fillUpPerSecond = _disappearPerSecond;
+                        _activeFillSpeed = _disappearSpeedPerSecond;
                     }
                     else
                     {
-                        Debug.Log("Second fill complete — destroying after delay.");
-                        _donut1.enabled = false;
-                        //_donut2.enabled = false;
+                        _donut.enabled = false;
                         _tube.enabled = false;
-                        DestroyAfterDelayAsync(_destroyDelay, _cts.Token).Forget();
+                        DestroyAfterDelayAsync(_destroyDelay, _cancellationTokenSource.Token).Forget();
                         return;
                     }
                 }
@@ -178,10 +176,6 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 SetMaxProgress(drainedProgress);
             }
 
-            Debug.DrawLine(
-                closestSplinePoint,
-                closestColliderPoint,
-                isHandInside ? Color.green : Color.red);
         }
 
         #endregion
@@ -206,7 +200,6 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
             _maxProgress       = 0f;
             _winFillsRemaining = 1;
             _isWin             = true;
-            Debug.Log("Win condition reached!");
             OnWinStateChange?.Invoke();
         }
 

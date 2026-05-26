@@ -8,8 +8,8 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
     {
         #region Events
 
-        internal event Action<float> OnMinProgressChanged;
-        internal event Action<float> OnMinMaxChanged;
+        internal event Action<float> OnMinProgressChange;
+        internal event Action<float> OnMinMaxChange;
         internal event Action OnWinStateChange;
         internal event Action OnFirstFillComplete;
 
@@ -24,7 +24,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         #region Fields
 
         private float _minProgress;
-        private float _minMax;
+        private float _minMaxProgress;
         private int _winCount;
         private int _firstFillCount;
         private int _winReadyCount;
@@ -34,9 +34,9 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         #region Properties
 
-        internal float MinProgress => _minProgress;
-        internal float MinMax => _minMax;
-        internal bool IsWin => _winCount >= _trackers.Count;
+        internal float MinProgress    => _minProgress;
+        internal float MinMaxProgress => _minMaxProgress;
+        internal bool IsWin           => _winCount >= _trackers.Count;
         internal IReadOnlyList<SplineProgressTracker> Trackers => _trackers;
 
         #endregion
@@ -83,70 +83,51 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         #region Event handlers
 
-        private void HandleProgressChange(float _)
-        {
-            float newMin = ComputeMin(t => t.Progress);
+        private void HandleProgressChange(float _) =>
+            UpdateMinTracked(ref _minProgress, t => t.Progress, OnMinProgressChange);
 
-            if (Mathf.Approximately(newMin, _minProgress))
-                return;
-
-            _minProgress = newMin;
-            OnMinProgressChanged?.Invoke(_minProgress);
-        }
-
-        private void HandleMaxProgressChange(float _)
-        {
-            float newMinMax = ComputeMin(t => t.MaxProgress);
-
-            if (Mathf.Approximately(newMinMax, _minMax))
-                return;
-
-            _minMax = newMinMax;
-            OnMinMaxChanged?.Invoke(_minMax);
-        }
+        private void HandleMaxProgressChange(float _) =>
+            UpdateMinTracked(ref _minMaxProgress, t => t.MaxProgress, OnMinMaxChange);
 
         private void HandleWinReady()
         {
-            _winReadyCount++;
+            if (!AllReached(ref _winReadyCount)) return;
 
-            if (_winReadyCount < _trackers.Count)
-                return;
-
-            // All trackers have reached max progress — trigger win on all simultaneously
             foreach (SplineProgressTracker tracker in _trackers)
                 tracker.TriggerWin();
         }
 
         private void HandleWinStateChange()
         {
-            _winCount++;
-
-            if (_winCount >= _trackers.Count)
+            if (AllReached(ref _winCount))
                 OnWinStateChange?.Invoke();
         }
 
         private void HandleFirstFillComplete()
         {
-            _firstFillCount++;
-
-            if (_firstFillCount >= _trackers.Count)
+            if (AllReached(ref _firstFillCount))
                 OnFirstFillComplete?.Invoke();
         }
 
         private void HandleComplete()
         {
-            _completeCount++;
-
-            if (_completeCount < _trackers.Count)
-                return;
-
-            // All child trackers have finished their animation — destroy the parent shape
-            Destroy(gameObject);
+            if (AllReached(ref _completeCount))
+                Destroy(gameObject);
         }
 
         #endregion
 
         #region Private
+
+        private bool AllReached(ref int count) => ++count >= _trackers.Count;
+
+        private void UpdateMinTracked(ref float stored, Func<SplineProgressTracker, float> selector, Action<float> notify)
+        {
+            float newMin = ComputeMin(selector);
+            if (Mathf.Approximately(newMin, stored)) return;
+            stored = newMin;
+            notify?.Invoke(stored);
+        }
 
         private float ComputeMin(Func<SplineProgressTracker, float> selector)
         {

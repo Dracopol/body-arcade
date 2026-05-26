@@ -32,7 +32,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         {
             if (_progressTracker != null)
             {
-                _progressTracker.OnMinProgressChanged += HandleMinProgressChanged;
+                _progressTracker.OnMinProgressChange += HandleMinProgressChanged;
                 _progressTracker.OnFirstFillComplete  += HandleFirstFillComplete;
             }
         }
@@ -41,7 +41,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         {
             if (_progressTracker != null)
             {
-                _progressTracker.OnMinProgressChanged -= HandleMinProgressChanged;
+                _progressTracker.OnMinProgressChange -= HandleMinProgressChanged;
                 _progressTracker.OnFirstFillComplete  -= HandleFirstFillComplete;
             }
         }
@@ -54,7 +54,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         {
             if (_progressTracker != null)
             {
-                _progressTracker.OnMinProgressChanged -= HandleMinProgressChanged;
+                _progressTracker.OnMinProgressChange -= HandleMinProgressChanged;
                 _progressTracker.OnFirstFillComplete  -= HandleFirstFillComplete;
             }
 
@@ -62,7 +62,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
 
             if (_progressTracker != null)
             {
-                _progressTracker.OnMinProgressChanged += HandleMinProgressChanged;
+                _progressTracker.OnMinProgressChange += HandleMinProgressChanged;
                 _progressTracker.OnFirstFillComplete  += HandleFirstFillComplete;
             }
         }

@@ -36,13 +36,13 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         private void OnEnable()
         {
             if (_progressTracker != null)
-                _progressTracker.OnMinMaxChanged += HandleMinMaxChanged;
+                _progressTracker.OnMinMaxChange += HandleMinMaxChanged;
         }
 
         private void OnDisable()
         {
             if (_progressTracker != null)
-                _progressTracker.OnMinMaxChanged -= HandleMinMaxChanged;
+                _progressTracker.OnMinMaxChange -= HandleMinMaxChanged;
         }
 
         #endregion
@@ -52,12 +52,12 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         internal void SetProgressTrackerParent(ProgressTrackerParent tracker)
         {
             if (_progressTracker != null)
-                _progressTracker.OnMinMaxChanged -= HandleMinMaxChanged;
+                _progressTracker.OnMinMaxChange -= HandleMinMaxChanged;
 
             _progressTracker = tracker;
 
             if (_progressTracker != null)
-                _progressTracker.OnMinMaxChanged += HandleMinMaxChanged;
+                _progressTracker.OnMinMaxChange += HandleMinMaxChanged;
         }
 
         #endregion

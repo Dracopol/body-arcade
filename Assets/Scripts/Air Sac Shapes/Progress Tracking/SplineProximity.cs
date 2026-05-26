@@ -1,3 +1,4 @@
+using System;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -107,7 +108,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 0 => Vector3.right,
                 1 => Vector3.up,
                 2 => Vector3.forward,
-                _ => Vector3.up
+                _ => throw new ArgumentOutOfRangeException(nameof(capsule.direction))
             };
 
             Transform t = capsule.transform;
