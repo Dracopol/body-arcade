@@ -7813,7 +7813,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &528064255469233916
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8372,7 +8372,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5262213087129125720
 MeshFilter:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 8
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -8391,7 +8391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressTracker
   _tube: {fileID: 91756246294088942}
-  _donut1: {fileID: 63460644791175479}
+  _donut: {fileID: 0}
   _splineContainer: {fileID: 8720443153638015335}
   _handTransform: {fileID: 185321254}
   _handCollider: {fileID: 185321255}
@@ -8401,8 +8401,8 @@ MonoBehaviour:
   _isForwardOnly: 0
   _isReversed: 0
   _drainSpeedPerSecond: 5
-  _fillUpPerSecond: 0.5
-  _disappearPerSecond: 3.5
+  _fillSpeedPerSecond: 0.5
+  _disappearSpeedPerSecond: 3.5
   _winThreshold: 0.98
   _debugProgress: 0
   _debugIsHandInside: 0

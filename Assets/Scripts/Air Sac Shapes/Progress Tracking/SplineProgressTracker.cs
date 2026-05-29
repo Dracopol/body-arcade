@@ -144,36 +144,36 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
             _debugIsHandInside = isHandInside;
 
-            if (isHandInside)
+            if (!isHandInside)
             {
-                float newProgress = _isForwardOnly
-                    ? Mathf.Max(_progress, splineProgress)
-                    : splineProgress;
+                float drained = Mathf.Lerp(_progress, 0f, Time.deltaTime * _drainSpeedPerSecond);
+                SetCurrentProgress(drained);
+                SetMaxProgress(drained);
+                return;
+            }
 
-                if (_progress >= _winThreshold)
+            bool isHandInsideDonut = _donutCollider != null && Physics.ComputePenetration(
+                _handCollider, _handCollider.transform.position, _handCollider.transform.rotation,
+                _donutCollider, _donutCollider.transform.position, _donutCollider.transform.rotation,
+                out _, out _);
+
+            if (isHandInsideDonut)
+            {
+                float newProgress = Mathf.Max(_maxProgress, splineProgress);
+                if (newProgress >= _winThreshold)
                     newProgress = 1f;
-
-                bool isHandInsideDonut = _donutCollider != null && Physics.ComputePenetration(
-                    _handCollider, _handCollider.transform.position, _handCollider.transform.rotation,
-                    _donutCollider, _donutCollider.transform.position, _donutCollider.transform.rotation,
-                    out _, out _);
-
-                if (newProgress > _maxProgress && isHandInsideDonut)
-                {
-                    SetCurrentProgress(newProgress);
-                    SetMaxProgress(newProgress);
-                }
-
-                if (newProgress < _maxProgress && !isHandInsideDonut)
-                {
-                    SetCurrentProgress(newProgress);
-                }
+                SetCurrentProgress(newProgress);
+                SetMaxProgress(newProgress);
+            }
+            else if (splineProgress < _maxProgress)
+            {
+                SetCurrentProgress(splineProgress);
             }
             else
             {
-                float drainedProgress = Mathf.Lerp(_progress, 0f, Time.deltaTime * _drainSpeedPerSecond);
-                SetCurrentProgress(drainedProgress);
-                SetMaxProgress(drainedProgress);
+                float drained = Mathf.Lerp(_progress, 0f, Time.deltaTime * _drainSpeedPerSecond);
+                SetCurrentProgress(drained);
+                SetMaxProgress(drained);
             }
 
         }
