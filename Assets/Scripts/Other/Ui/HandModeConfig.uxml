@@ -206,8 +206,14 @@
                 </ui:VisualElement>
                 <ui:VisualElement class="bias-snap-group">
                     <ui:VisualElement class="bias-snap-row">
+                        <ui:VisualElement name="snap-left-abduction" class="bias-snap-btn">
+                            <ui:Label text="L. Abduction" picking-mode="Ignore" class="bias-snap-btn__label" />
+                        </ui:VisualElement>
                         <ui:VisualElement name="snap-abduction" class="bias-snap-btn">
                             <ui:Label text="Abduction" picking-mode="Ignore" class="bias-snap-btn__label" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="snap-right-abduction" class="bias-snap-btn">
+                            <ui:Label text="R. Abduction" picking-mode="Ignore" class="bias-snap-btn__label" />
                         </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement class="bias-snap-row">
@@ -222,8 +228,14 @@
                         </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement class="bias-snap-row">
+                        <ui:VisualElement name="snap-left-adduction" class="bias-snap-btn">
+                            <ui:Label text="L. Adduction" picking-mode="Ignore" class="bias-snap-btn__label" />
+                        </ui:VisualElement>
                         <ui:VisualElement name="snap-adduction" class="bias-snap-btn">
                             <ui:Label text="Adduction" picking-mode="Ignore" class="bias-snap-btn__label" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="snap-right-adduction" class="bias-snap-btn">
+                            <ui:Label text="R. Adduction" picking-mode="Ignore" class="bias-snap-btn__label" />
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>

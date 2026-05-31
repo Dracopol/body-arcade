@@ -438,11 +438,15 @@ namespace IMVR.BodyArcade.UiRobot
             _biasGrid.RegisterCallback<PointerMoveEvent>(OnBiasPointerMove);
             _biasGrid.RegisterCallback<PointerUpEvent>(OnBiasPointerUp);
 
-            _root.Q<VisualElement>("snap-abduction").RegisterCallback<ClickEvent>(_ => SnapBias( 0f,  1f));
-            _root.Q<VisualElement>("snap-left")     .RegisterCallback<ClickEvent>(_ => SnapBias(-1f,  0f));
-            _root.Q<VisualElement>("snap-default")  .RegisterCallback<ClickEvent>(_ => SnapBias( 0f,  0f));
-            _root.Q<VisualElement>("snap-right")    .RegisterCallback<ClickEvent>(_ => SnapBias( 1f,  0f));
-            _root.Q<VisualElement>("snap-adduction").RegisterCallback<ClickEvent>(_ => SnapBias( 0f, -1f));
+            _root.Q<VisualElement>("snap-left-abduction") .RegisterCallback<ClickEvent>(_ => SnapBias(-1f,  1f));
+            _root.Q<VisualElement>("snap-abduction")      .RegisterCallback<ClickEvent>(_ => SnapBias( 0f,  1f));
+            _root.Q<VisualElement>("snap-right-abduction").RegisterCallback<ClickEvent>(_ => SnapBias( 1f,  1f));
+            _root.Q<VisualElement>("snap-left")           .RegisterCallback<ClickEvent>(_ => SnapBias(-1f,  0f));
+            _root.Q<VisualElement>("snap-default")        .RegisterCallback<ClickEvent>(_ => SnapBias( 0f,  0f));
+            _root.Q<VisualElement>("snap-right")          .RegisterCallback<ClickEvent>(_ => SnapBias( 1f,  0f));
+            _root.Q<VisualElement>("snap-left-adduction") .RegisterCallback<ClickEvent>(_ => SnapBias(-1f, -1f));
+            _root.Q<VisualElement>("snap-adduction")      .RegisterCallback<ClickEvent>(_ => SnapBias( 0f, -1f));
+            _root.Q<VisualElement>("snap-right-adduction").RegisterCallback<ClickEvent>(_ => SnapBias( 1f, -1f));
         }
 
         private void OnBiasPointerDown(PointerDownEvent e)
