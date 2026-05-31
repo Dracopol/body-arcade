@@ -13,7 +13,9 @@ namespace IMVR.BodyArcade.UiRobot
     {
         internal static SessionConfigNeuromania Instance { get; private set; }
 
-        internal FocusMode FocusMode = FocusMode.Unfocused;
+        internal FocusMode FocusMode   = FocusMode.Unfocused;
+        internal float     HandBias    = 0f;
+        internal float     HeightBias  = 0f;
 
         private void Awake()
         {

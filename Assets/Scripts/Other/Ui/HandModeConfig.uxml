@@ -182,6 +182,52 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
+
+            <!-- Target Bias -->
+            <ui:VisualElement class="section-card">
+                <ui:VisualElement class="section-header">
+                    <ui:VisualElement class="section-header__icon" />
+                    <ui:Label text="Target Bias" class="section-header__label" />
+                </ui:VisualElement>
+                <ui:Label text="Left–Right sets which hand targets favour. Up–Down sets punch height — eye level to overhead." class="bias-description" />
+                <ui:VisualElement class="bias-wrapper">
+                    <ui:Label text="Abduction" class="bias-axis-label" />
+                    <ui:VisualElement class="bias-middle-row">
+                        <ui:Label text="Left Hand" class="bias-axis-left" />
+                        <ui:VisualElement name="bias-grid" class="bias-grid">
+                            <ui:VisualElement picking-mode="Ignore" class="bias-grid__hline" />
+                            <ui:VisualElement picking-mode="Ignore" class="bias-grid__vline" />
+                            <ui:VisualElement name="bias-dot-ghost" picking-mode="Ignore" class="bias-dot bias-dot--ghost" />
+                            <ui:VisualElement name="bias-dot-active" picking-mode="Ignore" class="bias-dot bias-dot--active" />
+                        </ui:VisualElement>
+                        <ui:Label text="Right Hand" class="bias-axis-right" />
+                    </ui:VisualElement>
+                    <ui:Label text="Adduction" class="bias-axis-label" />
+                </ui:VisualElement>
+                <ui:VisualElement class="bias-snap-group">
+                    <ui:VisualElement class="bias-snap-row">
+                        <ui:VisualElement name="snap-abduction" class="bias-snap-btn">
+                            <ui:Label text="Abduction" picking-mode="Ignore" class="bias-snap-btn__label" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="bias-snap-row">
+                        <ui:VisualElement name="snap-left" class="bias-snap-btn">
+                            <ui:Label text="Left Hand" picking-mode="Ignore" class="bias-snap-btn__label" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="snap-default" class="bias-snap-btn bias-snap-btn--primary">
+                            <ui:Label text="⊕  Default" picking-mode="Ignore" class="bias-snap-btn__label" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="snap-right" class="bias-snap-btn">
+                            <ui:Label text="Right Hand" picking-mode="Ignore" class="bias-snap-btn__label" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="bias-snap-row">
+                        <ui:VisualElement name="snap-adduction" class="bias-snap-btn">
+                            <ui:Label text="Adduction" picking-mode="Ignore" class="bias-snap-btn__label" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
         </ui:VisualElement>
 
         <!-- Start Button -->

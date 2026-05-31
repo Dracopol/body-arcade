@@ -89,6 +89,13 @@ namespace IMVR.BodyArcade.UiRobot
         private Label         _timerValueLabel;
         private Label         _timerInfoLabel;
 
+        // Bias picker
+        private VisualElement _biasGrid;
+        private VisualElement _biasActiveDot;
+        private bool          _isDraggingBias;
+        private float         _handBias   = 0f;
+        private float         _heightBias = 0f;
+
         // Start
         private VisualElement _startBtn;
 
@@ -136,6 +143,8 @@ namespace IMVR.BodyArcade.UiRobot
             _contentNeuromania = _root.Q<VisualElement>("content-neuromania");
             _switcherLabel   = _root.Q<Label>("game-switcher__label");
             _startBtn        = _root.Q<VisualElement>("start-btn");
+            _biasGrid        = _root.Q<VisualElement>("bias-grid");
+            _biasActiveDot   = _root.Q<VisualElement>("bias-dot-active");
 
             _difficultyBtns = new List<VisualElement>
             {
@@ -164,6 +173,7 @@ namespace IMVR.BodyArcade.UiRobot
             RegisterTimerCallbacks();
             RegisterStartCallback();
             RegisterDropdownCallbacks();
+            RegisterBiasPickerCallbacks();
             ApplyInitialState();
         }
 
@@ -257,7 +267,9 @@ namespace IMVR.BodyArcade.UiRobot
             else
             {
                 if (SessionConfigNeuromania.Instance == null) return;
-                SessionConfigNeuromania.Instance.FocusMode = _selectedFocusMode;
+                SessionConfigNeuromania.Instance.FocusMode  = _selectedFocusMode;
+                SessionConfigNeuromania.Instance.HandBias   = _handBias;
+                SessionConfigNeuromania.Instance.HeightBias = _heightBias;
                 SceneManager.LoadScene(_neuromaniaSsceneName);
             }
         }
@@ -418,6 +430,70 @@ namespace IMVR.BodyArcade.UiRobot
         {
             _dropdownOpen = false;
             _gameDropdown.RemoveFromClassList("open");
+        }
+
+        private void RegisterBiasPickerCallbacks()
+        {
+            _biasGrid.RegisterCallback<PointerDownEvent>(OnBiasPointerDown);
+            _biasGrid.RegisterCallback<PointerMoveEvent>(OnBiasPointerMove);
+            _biasGrid.RegisterCallback<PointerUpEvent>(OnBiasPointerUp);
+
+            _root.Q<VisualElement>("snap-abduction").RegisterCallback<ClickEvent>(_ => SnapBias( 0f,  1f));
+            _root.Q<VisualElement>("snap-left")     .RegisterCallback<ClickEvent>(_ => SnapBias(-1f,  0f));
+            _root.Q<VisualElement>("snap-default")  .RegisterCallback<ClickEvent>(_ => SnapBias( 0f,  0f));
+            _root.Q<VisualElement>("snap-right")    .RegisterCallback<ClickEvent>(_ => SnapBias( 1f,  0f));
+            _root.Q<VisualElement>("snap-adduction").RegisterCallback<ClickEvent>(_ => SnapBias( 0f, -1f));
+        }
+
+        private void OnBiasPointerDown(PointerDownEvent e)
+        {
+            _isDraggingBias = true;
+            _biasGrid.CapturePointer(e.pointerId);
+            UpdateBiasFromLocal(e.localPosition);
+            e.StopPropagation();
+        }
+
+        private void OnBiasPointerMove(PointerMoveEvent e)
+        {
+            if (!_isDraggingBias) return;
+            UpdateBiasFromLocal(e.localPosition);
+            e.StopPropagation();
+        }
+
+        private void OnBiasPointerUp(PointerUpEvent e)
+        {
+            if (!_isDraggingBias) return;
+            _isDraggingBias = false;
+            _biasGrid.ReleasePointer(e.pointerId);
+        }
+
+        private void UpdateBiasFromLocal(Vector2 localPos)
+        {
+            var w = _biasGrid.resolvedStyle.width;
+            var h = _biasGrid.resolvedStyle.height;
+            _handBias   = Mathf.Clamp(localPos.x / w * 2f - 1f, -1f, 1f);
+            _heightBias = Mathf.Clamp(1f - localPos.y / h * 2f, -1f, 1f);
+            PositionActiveDot();
+        }
+
+        private void SnapBias(float hand, float height)
+        {
+            _handBias   = hand;
+            _heightBias = height;
+            PositionActiveDot();
+        }
+
+        private void PositionActiveDot()
+        {
+            var w = _biasGrid.resolvedStyle.width;
+            var h = _biasGrid.resolvedStyle.height;
+            if (w <= 0f || h <= 0f) return;
+
+            const float dotRadius = 6f;
+            _biasActiveDot.style.left       = (_handBias + 1f) * 0.5f * w - dotRadius;
+            _biasActiveDot.style.top        = (1f - _heightBias) * 0.5f * h - dotRadius;
+            _biasActiveDot.style.marginLeft = 0;
+            _biasActiveDot.style.marginTop  = 0;
         }
 
         #endregion

@@ -480,3 +480,145 @@
     font-size: 12px;
     color: #888888;
 }
+
+/* ─── Bias picker ─── */
+.bias-description {
+    font-size: 12px;
+    color: #888888;
+    white-space: normal;
+    margin-bottom: 4px;
+}
+
+.bias-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.bias-middle-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.bias-axis-label {
+    font-size: 12px;
+    color: #888888;
+    -unity-text-align: middle-center;
+}
+
+.bias-axis-left {
+    width: 65px;
+    font-size: 11px;
+    color: #888888;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+.bias-axis-right {
+    width: 65px;
+    font-size: 11px;
+    color: #888888;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+.bias-grid {
+    width: 260px;
+    height: 260px;
+    background-color: #ebebf0;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: #dddddd;
+    overflow: hidden;
+}
+
+.bias-grid__hline {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #cccccc;
+}
+
+.bias-grid__vline {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background-color: #cccccc;
+}
+
+.bias-dot {
+    position: absolute;
+}
+
+.bias-dot--ghost {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.18);
+    left: 50%;
+    top: 50%;
+    margin-left: -5px;
+    margin-top: -5px;
+}
+
+.bias-dot--active {
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    background-color: #111111;
+    left: 50%;
+    top: 50%;
+    margin-left: -6px;
+    margin-top: -6px;
+}
+
+.bias-snap-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.bias-snap-row {
+    flex-direction: row;
+    gap: 8px;
+    justify-content: center;
+}
+
+.bias-snap-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border-width: 1px;
+    border-color: #dddddd;
+    background-color: #ffffff;
+    align-items: center;
+    transition: background-color 0.1s;
+}
+
+.bias-snap-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.bias-snap-btn--primary {
+    background-color: #111111;
+    border-color: #111111;
+}
+
+.bias-snap-btn--primary:hover {
+    background-color: #333333;
+}
+
+.bias-snap-btn__label {
+    font-size: 13px;
+    -unity-font-style: bold;
+    color: #111111;
+}
+
+.bias-snap-btn--primary .bias-snap-btn__label {
+    color: #ffffff;
+}
