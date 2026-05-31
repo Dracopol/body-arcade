@@ -94,6 +94,7 @@
 .config-header__text {
     flex-direction: column;
     gap: 2px;
+    flex: 1;
 }
 
 .config-header__title {
@@ -479,6 +480,69 @@
 .info-label {
     font-size: 12px;
     color: #888888;
+}
+
+/* ─── Advanced toggle ─── */
+.advanced-toggle {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+}
+
+.advanced-toggle__label {
+    font-size: 13px;
+    -unity-font-style: bold;
+    color: #111111;
+}
+
+.toggle-track {
+    width: 36px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #cccccc;
+    transition: background-color 0.15s;
+}
+
+.toggle-track:hover {
+    background-color: #bbbbbb;
+}
+
+.advanced-toggle.active .toggle-track {
+    background-color: #111111;
+}
+
+.advanced-toggle.active .toggle-track:hover {
+    background-color: #333333;
+}
+
+.toggle-knob {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    top: 2px;
+    left: 2px;
+    transition: left 0.15s;
+}
+
+.advanced-toggle.active .toggle-knob {
+    left: 18px;
+}
+
+/* ─── Section hidden utility ─── */
+.section-hidden {
+    display: none;
+}
+
+/* ─── Section description ─── */
+.section-description {
+    font-size: 12px;
+    color: #888888;
+    white-space: normal;
+    margin-bottom: 2px;
 }
 
 /* ─── Bias picker ─── */

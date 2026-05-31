@@ -57,6 +57,13 @@ namespace IMVR.BodyArcade.UiRobot
         private VisualElement _contentNeuromania;
         private Label         _switcherLabel;
         private bool          _dropdownOpen;
+        private VisualElement _advancedToggle;
+
+        // NeuroMania sections
+        private VisualElement _neuroHandModeSection;
+        private VisualElement _neuroHeightSection;
+        private VisualElement _neuroTargetBiasSection;
+        private bool          _isAdvancedMode;
 
         // Hand mode
         private List<VisualElement> _handOptionRows;
@@ -67,6 +74,9 @@ namespace IMVR.BodyArcade.UiRobot
 
         // Focus mode (NeuroMania)
         private List<VisualElement> _focusModeRows;
+
+        // Height mode (NeuroMania)
+        private List<VisualElement> _heightModeRows;
 
         // Shape availability
         private List<ShapeConfig> _availableShapes = new();
@@ -103,6 +113,7 @@ namespace IMVR.BodyArcade.UiRobot
         private HandMode   _selectedHandMode   = HandMode.BothSimultaneously;
         private MirrorMode _selectedMirrorMode = MirrorMode.Unmirrored;
         private FocusMode  _selectedFocusMode  = FocusMode.Unfocused;
+        private HeightMode _selectedHeightMode = HeightMode.EyeLevel;
         private ActiveGame _activeGame         = ActiveGame.AirSacShapes;
         private int?       _strikeAmount       = 5;
         private int?       _timerSeconds       = 60;
@@ -136,15 +147,26 @@ namespace IMVR.BodyArcade.UiRobot
                 _root.Q<VisualElement>("option-right-focused")
             };
 
+            _heightModeRows = new List<VisualElement>
+            {
+                _root.Q<VisualElement>("option-eye-level"),
+                _root.Q<VisualElement>("option-height-high"),
+                _root.Q<VisualElement>("option-height-mixed")
+            };
+
             _bothHandsPanel  = _root.Q<VisualElement>("both-hands-options");
             _gameSwitcher    = _root.Q<VisualElement>("game-switcher");
             _gameDropdown    = _root.Q<VisualElement>("game-dropdown");
             _contentAirsac   = _root.Q<VisualElement>("content-airsac");
             _contentNeuromania = _root.Q<VisualElement>("content-neuromania");
             _switcherLabel   = _root.Q<Label>("game-switcher__label");
-            _startBtn        = _root.Q<VisualElement>("start-btn");
-            _biasGrid        = _root.Q<VisualElement>("bias-grid");
-            _biasActiveDot   = _root.Q<VisualElement>("bias-dot-active");
+            _startBtn               = _root.Q<VisualElement>("start-btn");
+            _biasGrid               = _root.Q<VisualElement>("bias-grid");
+            _biasActiveDot          = _root.Q<VisualElement>("bias-dot-active");
+            _advancedToggle         = _root.Q<VisualElement>("advanced-toggle");
+            _neuroHandModeSection   = _root.Q<VisualElement>("neuro-hand-mode");
+            _neuroHeightSection     = _root.Q<VisualElement>("neuro-height");
+            _neuroTargetBiasSection = _root.Q<VisualElement>("neuro-target-bias");
 
             _difficultyBtns = new List<VisualElement>
             {
@@ -168,6 +190,7 @@ namespace IMVR.BodyArcade.UiRobot
             RegisterHandModeCallbacks();
             RegisterMirrorCallbacks();
             RegisterFocusModeCallbacks();
+            RegisterHeightModeCallbacks();
             RegisterDifficultyCallbacks();
             RegisterStrikeCallbacks();
             RegisterTimerCallbacks();
@@ -230,6 +253,7 @@ namespace IMVR.BodyArcade.UiRobot
             _root.Q<VisualElement>("dropdown-airsac").RegisterCallback<ClickEvent>(_ => SelectGame(ActiveGame.AirSacShapes));
             _root.Q<VisualElement>("dropdown-neuromania").RegisterCallback<ClickEvent>(_ => SelectGame(ActiveGame.NeuroMania));
             _root.RegisterCallback<ClickEvent>(HandleRootClick);
+            _advancedToggle.RegisterCallback<ClickEvent>(_ => SetAdvancedMode(!_isAdvancedMode));
         }
 
         private void ApplyInitialState()
@@ -237,6 +261,7 @@ namespace IMVR.BodyArcade.UiRobot
             SelectHandMode(_selectedHandMode);
             SelectMirrorMode(_selectedMirrorMode);
             SelectFocusMode(_selectedFocusMode);
+            SelectHeightMode(_selectedHeightMode);
             SelectDifficulty(_selectedDifficulty);
             SelectGame(_activeGame);
             UpdateStrikeDisplay();
@@ -267,7 +292,8 @@ namespace IMVR.BodyArcade.UiRobot
             else
             {
                 if (SessionConfigNeuromania.Instance == null) return;
-                SessionConfigNeuromania.Instance.FocusMode  = _selectedFocusMode;
+                SessionConfigNeuromania.Instance.FocusMode   = _selectedFocusMode;
+                SessionConfigNeuromania.Instance.HeightMode  = _selectedHeightMode;
                 SessionConfigNeuromania.Instance.HandBias   = _handBias;
                 SessionConfigNeuromania.Instance.HeightBias = _heightBias;
                 SceneManager.LoadScene(_neuromaniaSsceneName);
@@ -338,12 +364,34 @@ namespace IMVR.BodyArcade.UiRobot
             _focusModeRows[(int)mode].AddToClassList("selected");
         }
 
+        private void RegisterHeightModeCallbacks()
+        {
+            _heightModeRows[0].RegisterCallback<ClickEvent>(_ => SelectHeightMode(HeightMode.EyeLevel));
+            _heightModeRows[1].RegisterCallback<ClickEvent>(_ => SelectHeightMode(HeightMode.High));
+            _heightModeRows[2].RegisterCallback<ClickEvent>(_ => SelectHeightMode(HeightMode.Mixed));
+        }
+
+        private void SelectHeightMode(HeightMode mode)
+        {
+            _selectedHeightMode = mode;
+
+            foreach (var row in _heightModeRows)
+                row.RemoveFromClassList("selected");
+
+            _heightModeRows[(int)mode].AddToClassList("selected");
+        }
+
         private void SelectGame(ActiveGame game)
         {
             _activeGame = game;
             _switcherLabel.text = game == ActiveGame.AirSacShapes ? "Air Sac Shapes" : "NeuroMania";
             _contentAirsac.EnableInClassList("hidden", game != ActiveGame.AirSacShapes);
             _contentNeuromania.EnableInClassList("hidden", game != ActiveGame.NeuroMania);
+
+            var isNeuro = game == ActiveGame.NeuroMania;
+            _advancedToggle.style.display = isNeuro ? DisplayStyle.Flex : DisplayStyle.None;
+            if (isNeuro) SetAdvancedMode(false);
+
             CloseDropdown();
             OnActiveGameChanged?.Invoke(game);
         }
@@ -424,6 +472,15 @@ namespace IMVR.BodyArcade.UiRobot
             var rootRect     = _root.worldBound;
             _gameDropdown.style.top  = switcherRect.yMax - rootRect.yMin + 4f;
             _gameDropdown.style.left = switcherRect.xMin - rootRect.xMin;
+        }
+
+        private void SetAdvancedMode(bool on)
+        {
+            _isAdvancedMode = on;
+            _advancedToggle.EnableInClassList("active", on);
+            _neuroHandModeSection.EnableInClassList("section-hidden", on);
+            _neuroHeightSection.EnableInClassList("section-hidden", on);
+            _neuroTargetBiasSection.EnableInClassList("section-hidden", !on);
         }
 
         private void CloseDropdown()

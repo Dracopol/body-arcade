@@ -12,6 +12,12 @@
                 </ui:VisualElement>
                 <ui:Label text="Configure your therapy session settings before starting" class="config-header__subtitle" />
             </ui:VisualElement>
+            <ui:VisualElement name="advanced-toggle" class="advanced-toggle">
+                <ui:Label text="Advanced Settings" picking-mode="Ignore" class="advanced-toggle__label" />
+                <ui:VisualElement picking-mode="Ignore" class="toggle-track">
+                    <ui:VisualElement picking-mode="Ignore" class="toggle-knob" />
+                </ui:VisualElement>
+            </ui:VisualElement>
         </ui:VisualElement>
 
         <!-- Air Sac Shapes Content -->
@@ -149,11 +155,12 @@
 
         <!-- NeuroMania Content -->
         <ui:VisualElement name="content-neuromania" class="game-content hidden">
-            <ui:VisualElement class="section-card">
+            <ui:VisualElement name="neuro-hand-mode" class="section-card">
                 <ui:VisualElement class="section-header">
                     <ui:VisualElement class="section-header__icon" />
-                    <ui:Label text="Focus Mode" class="section-header__label" />
+                    <ui:Label text="Hand Mode" class="section-header__label" />
                 </ui:VisualElement>
+                <ui:Label text="Sets which hand targets favour during the session." class="section-description" />
                 <ui:VisualElement name="option-normal" class="option-row">
                     <ui:VisualElement picking-mode="Ignore" class="radio-outer">
                         <ui:VisualElement picking-mode="Ignore" class="radio-inner" />
@@ -183,8 +190,44 @@
                 </ui:VisualElement>
             </ui:VisualElement>
 
+            <!-- Height -->
+            <ui:VisualElement name="neuro-height" class="section-card">
+                <ui:VisualElement class="section-header">
+                    <ui:VisualElement class="section-header__icon" />
+                    <ui:Label text="Height" class="section-header__label" />
+                </ui:VisualElement>
+                <ui:Label text="Sets the height at which targets spawn during the session." class="section-description" />
+                <ui:VisualElement name="option-eye-level" class="option-row">
+                    <ui:VisualElement picking-mode="Ignore" class="radio-outer">
+                        <ui:VisualElement picking-mode="Ignore" class="radio-inner" />
+                    </ui:VisualElement>
+                    <ui:VisualElement picking-mode="Ignore" class="option-text">
+                        <ui:Label text="Eye Level" picking-mode="Ignore" class="option-text__label" />
+                        <ui:Label text="Targets arrive at chest and face height" picking-mode="Ignore" class="option-text__desc" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="option-height-high" class="option-row">
+                    <ui:VisualElement picking-mode="Ignore" class="radio-outer">
+                        <ui:VisualElement picking-mode="Ignore" class="radio-inner" />
+                    </ui:VisualElement>
+                    <ui:VisualElement picking-mode="Ignore" class="option-text">
+                        <ui:Label text="High" picking-mode="Ignore" class="option-text__label" />
+                        <ui:Label text="Targets arrive at overhead and high-reach height" picking-mode="Ignore" class="option-text__desc" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="option-height-mixed" class="option-row">
+                    <ui:VisualElement picking-mode="Ignore" class="radio-outer">
+                        <ui:VisualElement picking-mode="Ignore" class="radio-inner" />
+                    </ui:VisualElement>
+                    <ui:VisualElement picking-mode="Ignore" class="option-text">
+                        <ui:Label text="Mixed" picking-mode="Ignore" class="option-text__label" />
+                        <ui:Label text="A mix of eye level and high targets" picking-mode="Ignore" class="option-text__desc" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
             <!-- Target Bias -->
-            <ui:VisualElement class="section-card">
+            <ui:VisualElement name="neuro-target-bias" class="section-card section-hidden">
                 <ui:VisualElement class="section-header">
                     <ui:VisualElement class="section-header__icon" />
                     <ui:Label text="Target Bias" class="section-header__label" />

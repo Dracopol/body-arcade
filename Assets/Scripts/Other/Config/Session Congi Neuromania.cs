@@ -9,11 +9,19 @@ namespace IMVR.BodyArcade.UiRobot
         RightFocused
     }
 
+    internal enum HeightMode
+    {
+        EyeLevel,
+        High,
+        Mixed
+    }
+
     internal class SessionConfigNeuromania : MonoBehaviour
     {
         internal static SessionConfigNeuromania Instance { get; private set; }
 
-        internal FocusMode FocusMode   = FocusMode.Unfocused;
+        internal FocusMode FocusMode    = FocusMode.Unfocused;
+        internal HeightMode HeightMode  = HeightMode.EyeLevel;
         internal float     HandBias    = 0f;
         internal float     HeightBias  = 0f;
 
