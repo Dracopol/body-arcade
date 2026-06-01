@@ -58,6 +58,10 @@ namespace IMVR.BodyArcade.UiRobot
         private Label         _switcherLabel;
         private bool          _dropdownOpen;
         private VisualElement _advancedToggle;
+        private VisualElement _themeSwitcher;
+        private VisualElement _themeDropdown;
+        private Label         _themeSwitcherLabel;
+        private bool          _themeDropdownOpen;
 
         // NeuroMania sections
         private VisualElement _neuroHandModeSection;
@@ -164,6 +168,9 @@ namespace IMVR.BodyArcade.UiRobot
             _biasGrid               = _root.Q<VisualElement>("bias-grid");
             _biasActiveDot          = _root.Q<VisualElement>("bias-dot-active");
             _advancedToggle         = _root.Q<VisualElement>("advanced-toggle");
+            _themeSwitcher          = _root.Q<VisualElement>("theme-switcher");
+            _themeDropdown          = _root.Q<VisualElement>("theme-dropdown");
+            _themeSwitcherLabel     = _root.Q<Label>("theme-switcher__label");
             _neuroHandModeSection   = _root.Q<VisualElement>("neuro-hand-mode");
             _neuroHeightSection     = _root.Q<VisualElement>("neuro-height");
             _neuroTargetBiasSection = _root.Q<VisualElement>("neuro-target-bias");
@@ -254,6 +261,9 @@ namespace IMVR.BodyArcade.UiRobot
             _root.Q<VisualElement>("dropdown-neuromania").RegisterCallback<ClickEvent>(_ => SelectGame(ActiveGame.NeuroMania));
             _root.RegisterCallback<ClickEvent>(HandleRootClick);
             _advancedToggle.RegisterCallback<ClickEvent>(_ => SetAdvancedMode(!_isAdvancedMode));
+            _themeSwitcher.RegisterCallback<ClickEvent>(HandleThemeSwitcherClick);
+            _root.Q<VisualElement>("theme-dropdown-minimalist").RegisterCallback<ClickEvent>(_ => SelectTheme(false));
+            _root.Q<VisualElement>("theme-dropdown-sky")       .RegisterCallback<ClickEvent>(_ => SelectTheme(true));
         }
 
         private void ApplyInitialState()
@@ -264,6 +274,7 @@ namespace IMVR.BodyArcade.UiRobot
             SelectHeightMode(_selectedHeightMode);
             SelectDifficulty(_selectedDifficulty);
             SelectGame(_activeGame);
+            SelectTheme(false);
             UpdateStrikeDisplay();
             UpdateTimerDisplay();
         }
@@ -315,6 +326,8 @@ namespace IMVR.BodyArcade.UiRobot
         {
             if (_dropdownOpen)
                 CloseDropdown();
+            if (_themeDropdownOpen)
+                CloseThemeDropdown();
         }
 
 
@@ -472,6 +485,36 @@ namespace IMVR.BodyArcade.UiRobot
             var rootRect     = _root.worldBound;
             _gameDropdown.style.top  = switcherRect.yMax - rootRect.yMin + 4f;
             _gameDropdown.style.left = switcherRect.xMin - rootRect.xMin;
+        }
+
+        private void HandleThemeSwitcherClick(ClickEvent e)
+        {
+            e.StopPropagation();
+            _themeDropdownOpen = !_themeDropdownOpen;
+            if (_themeDropdownOpen)
+                PositionThemeDropdown();
+            _themeDropdown.EnableInClassList("open", _themeDropdownOpen);
+        }
+
+        private void SelectTheme(bool sky)
+        {
+            _themeSwitcherLabel.text = sky ? "Sky" : "Minimalist";
+            _root.EnableInClassList("theme-sky", sky);
+            CloseThemeDropdown();
+        }
+
+        private void PositionThemeDropdown()
+        {
+            var switcherRect = _themeSwitcher.worldBound;
+            var rootRect     = _root.worldBound;
+            _themeDropdown.style.top  = switcherRect.yMax - rootRect.yMin + 4f;
+            _themeDropdown.style.left = switcherRect.xMin - rootRect.xMin;
+        }
+
+        private void CloseThemeDropdown()
+        {
+            _themeDropdownOpen = false;
+            _themeDropdown.RemoveFromClassList("open");
         }
 
         private void SetAdvancedMode(bool on)
