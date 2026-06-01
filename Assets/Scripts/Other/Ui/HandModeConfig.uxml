@@ -262,6 +262,21 @@
                     <ui:VisualElement class="bias-middle-row">
                         <ui:Label text="Left Hand" class="bias-axis-left" />
                         <ui:VisualElement name="bias-grid" class="bias-grid">
+                            <!-- Minor lines (8×8) -->
+                            <ui:VisualElement picking-mode="Ignore" style="top: 12.5%;" class="bias-grid__hline grid-minor" />
+                            <ui:VisualElement picking-mode="Ignore" style="top: 37.5%;" class="bias-grid__hline grid-minor" />
+                            <ui:VisualElement picking-mode="Ignore" style="top: 62.5%;" class="bias-grid__hline grid-minor" />
+                            <ui:VisualElement picking-mode="Ignore" style="top: 87.5%;" class="bias-grid__hline grid-minor" />
+                            <ui:VisualElement picking-mode="Ignore" style="left: 12.5%;" class="bias-grid__vline grid-minor" />
+                            <ui:VisualElement picking-mode="Ignore" style="left: 37.5%;" class="bias-grid__vline grid-minor" />
+                            <ui:VisualElement picking-mode="Ignore" style="left: 62.5%;" class="bias-grid__vline grid-minor" />
+                            <ui:VisualElement picking-mode="Ignore" style="left: 87.5%;" class="bias-grid__vline grid-minor" />
+                            <!-- Mid lines (4×4) -->
+                            <ui:VisualElement picking-mode="Ignore" style="top: 25%;" class="bias-grid__hline grid-mid" />
+                            <ui:VisualElement picking-mode="Ignore" style="top: 75%;" class="bias-grid__hline grid-mid" />
+                            <ui:VisualElement picking-mode="Ignore" style="left: 25%;" class="bias-grid__vline grid-mid" />
+                            <ui:VisualElement picking-mode="Ignore" style="left: 75%;" class="bias-grid__vline grid-mid" />
+                            <!-- Major lines (2×2 centre) -->
                             <ui:VisualElement picking-mode="Ignore" class="bias-grid__hline" />
                             <ui:VisualElement picking-mode="Ignore" class="bias-grid__vline" />
                             <ui:VisualElement name="bias-dot-ghost" picking-mode="Ignore" class="bias-dot bias-dot--ghost" />
