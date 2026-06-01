@@ -604,6 +604,61 @@
     display: none;
 }
 
+/* ─── Section advanced button ─── */
+.section-adv-btn {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-adv-btn.active .toggle-track {
+    background-color: #111111;
+}
+
+.section-adv-btn.active .toggle-track:hover {
+    background-color: #333333;
+}
+
+.section-adv-btn.active .toggle-knob {
+    left: 18px;
+}
+
+/* ─── Hand focus slider ─── */
+.hfocus-slider {
+    flex-direction: column;
+    gap: 6px;
+    padding: 4px 0;
+}
+
+.hfocus-slider__labels {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.hfocus-slider__end-label {
+    font-size: 11px;
+    color: #888888;
+}
+
+.hfocus-track {
+    height: 20px;
+    border-radius: 10px;
+    background-color: #e8e8e8;
+    border-width: 1px;
+    border-color: #dddddd;
+}
+
+.hfocus-knob {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #111111;
+    top: 0;
+    left: 50%;
+    margin-left: -10px;
+}
+
 /* ─── Section description ─── */
 .section-description {
     font-size: 12px;

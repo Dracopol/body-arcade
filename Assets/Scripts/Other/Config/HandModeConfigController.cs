@@ -82,6 +82,16 @@ namespace IMVR.BodyArcade.UiRobot
         // Height mode (NeuroMania)
         private List<VisualElement> _heightModeRows;
 
+        // Hand focus slider
+        private VisualElement _handModeAdvBtn;
+        private VisualElement _handModeOptions;
+        private VisualElement _handFocusSlider;
+        private VisualElement _handFocusTrack;
+        private VisualElement _handFocusKnob;
+        private bool          _handModeIsAdvanced;
+        private bool          _isDraggingHandFocus;
+        private float         _handFocusBias = 0f;
+
         // Shape availability
         private List<ShapeConfig> _availableShapes = new();
 
@@ -165,6 +175,11 @@ namespace IMVR.BodyArcade.UiRobot
             _contentNeuromania = _root.Q<VisualElement>("content-neuromania");
             _switcherLabel   = _root.Q<Label>("game-switcher__label");
             _startBtn               = _root.Q<VisualElement>("start-btn");
+            _handModeAdvBtn  = _root.Q<VisualElement>("hand-mode-adv-btn");
+            _handModeOptions = _root.Q<VisualElement>("hand-mode-options");
+            _handFocusSlider = _root.Q<VisualElement>("hand-focus-slider");
+            _handFocusTrack  = _root.Q<VisualElement>("hfocus-track");
+            _handFocusKnob   = _root.Q<VisualElement>("hfocus-knob");
             _biasGrid               = _root.Q<VisualElement>("bias-grid");
             _biasActiveDot          = _root.Q<VisualElement>("bias-dot-active");
             _advancedToggle         = _root.Q<VisualElement>("advanced-toggle");
@@ -198,6 +213,7 @@ namespace IMVR.BodyArcade.UiRobot
             RegisterMirrorCallbacks();
             RegisterFocusModeCallbacks();
             RegisterHeightModeCallbacks();
+            RegisterHandFocusSliderCallbacks();
             RegisterDifficultyCallbacks();
             RegisterStrikeCallbacks();
             RegisterTimerCallbacks();
@@ -303,7 +319,10 @@ namespace IMVR.BodyArcade.UiRobot
             else
             {
                 if (SessionConfigNeuromania.Instance == null) return;
-                SessionConfigNeuromania.Instance.FocusMode   = _selectedFocusMode;
+                SessionConfigNeuromania.Instance.FocusMode     = _selectedFocusMode;
+                SessionConfigNeuromania.Instance.HandFocusBias = _handModeIsAdvanced
+                    ? _handFocusBias
+                    : (_selectedFocusMode == FocusMode.LeftFocused ? -1f : _selectedFocusMode == FocusMode.RightFocused ? 1f : 0f);
                 SessionConfigNeuromania.Instance.HeightMode  = _selectedHeightMode;
                 SessionConfigNeuromania.Instance.HandBias   = _handBias;
                 SessionConfigNeuromania.Instance.HeightBias = _heightBias;
@@ -375,6 +394,60 @@ namespace IMVR.BodyArcade.UiRobot
                 row.RemoveFromClassList("selected");
 
             _focusModeRows[(int)mode].AddToClassList("selected");
+        }
+
+        private void RegisterHandFocusSliderCallbacks()
+        {
+            _handModeAdvBtn.RegisterCallback<ClickEvent>(_ => ToggleHandModeAdvanced());
+            _handFocusTrack.RegisterCallback<PointerDownEvent>(OnHandFocusPointerDown);
+            _handFocusTrack.RegisterCallback<PointerMoveEvent>(OnHandFocusPointerMove);
+            _handFocusTrack.RegisterCallback<PointerUpEvent>(OnHandFocusPointerUp);
+        }
+
+        private void ToggleHandModeAdvanced()
+        {
+            _handModeIsAdvanced = !_handModeIsAdvanced;
+            _handModeAdvBtn.EnableInClassList("active", _handModeIsAdvanced);
+            _handModeOptions.EnableInClassList("section-hidden", _handModeIsAdvanced);
+            _handFocusSlider.EnableInClassList("section-hidden", !_handModeIsAdvanced);
+        }
+
+        private void OnHandFocusPointerDown(PointerDownEvent e)
+        {
+            _isDraggingHandFocus = true;
+            _handFocusTrack.CapturePointer(e.pointerId);
+            UpdateHandFocusFromLocal(e.localPosition);
+            e.StopPropagation();
+        }
+
+        private void OnHandFocusPointerMove(PointerMoveEvent e)
+        {
+            if (!_isDraggingHandFocus) return;
+            UpdateHandFocusFromLocal(e.localPosition);
+            e.StopPropagation();
+        }
+
+        private void OnHandFocusPointerUp(PointerUpEvent e)
+        {
+            if (!_isDraggingHandFocus) return;
+            _isDraggingHandFocus = false;
+            _handFocusTrack.ReleasePointer(e.pointerId);
+        }
+
+        private void UpdateHandFocusFromLocal(Vector2 localPos)
+        {
+            var w = _handFocusTrack.resolvedStyle.width;
+            _handFocusBias = Mathf.Clamp(localPos.x / w * 2f - 1f, -1f, 1f);
+            PositionHandFocusKnob();
+        }
+
+        private void PositionHandFocusKnob()
+        {
+            var w = _handFocusTrack.resolvedStyle.width;
+            if (w <= 0f) return;
+            const float knobRadius = 10f;
+            _handFocusKnob.style.left       = (_handFocusBias + 1f) * 0.5f * w - knobRadius;
+            _handFocusKnob.style.marginLeft = 0;
         }
 
         private void RegisterHeightModeCallbacks()

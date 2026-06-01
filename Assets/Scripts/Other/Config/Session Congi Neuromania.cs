@@ -22,8 +22,9 @@ namespace IMVR.BodyArcade.UiRobot
 
         internal FocusMode FocusMode    = FocusMode.Unfocused;
         internal HeightMode HeightMode  = HeightMode.EyeLevel;
-        internal float     HandBias    = 0f;
-        internal float     HeightBias  = 0f;
+        internal float     HandBias      = 0f;
+        internal float     HeightBias    = 0f;
+        internal float     HandFocusBias = 0f;
 
         private void Awake()
         {
