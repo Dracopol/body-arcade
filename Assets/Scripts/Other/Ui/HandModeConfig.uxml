@@ -18,7 +18,7 @@
                     <ui:Label class="theme-switcher__arrow" text="∨" picking-mode="Ignore" />
                 </ui:VisualElement>
                 <ui:VisualElement name="advanced-toggle" class="advanced-toggle">
-                    <ui:Label text="Advanced Settings" picking-mode="Ignore" class="advanced-toggle__label" />
+                    <ui:Label text="Graph Style" picking-mode="Ignore" class="advanced-toggle__label" />
                     <ui:VisualElement picking-mode="Ignore" class="toggle-track">
                         <ui:VisualElement picking-mode="Ignore" class="toggle-knob" />
                     </ui:VisualElement>

@@ -403,6 +403,7 @@ namespace IMVR.BodyArcade.UiRobot
 
             var isNeuro = game == ActiveGame.NeuroMania;
             _advancedToggle.style.display = isNeuro ? DisplayStyle.Flex : DisplayStyle.None;
+            _root.EnableInClassList("game-neuromania", isNeuro);
             if (isNeuro) SetAdvancedMode(false);
 
             CloseDropdown();
