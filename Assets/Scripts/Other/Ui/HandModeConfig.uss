@@ -939,4 +939,17 @@
 .hand-icon--small {
     width: 28px;
     height: 28px;
+    -unity-background-image-tint-color: #111111;
+}
+
+#content-neuromania .hand-icon {
+    -unity-background-image-tint-color: #B93400;
+}
+
+#content-neuromania .hand-icon--left {
+    -unity-background-image-tint-color: #FFB400;
+}
+
+#content-neuromania .hand-icon--small {
+    -unity-background-image-tint-color: #111111;
 }
