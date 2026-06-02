@@ -161,6 +161,68 @@
 
         <!-- NeuroMania Content -->
         <ui:VisualElement name="content-neuromania" class="game-content hidden">
+
+            <!-- Hand Mode Selection -->
+            <ui:VisualElement class="section-card">
+                <ui:VisualElement class="section-header">
+                    <ui:VisualElement class="section-header__icon" />
+                    <ui:Label text="Hand Mode" class="section-header__label" />
+                </ui:VisualElement>
+                <ui:VisualElement class="mirror-row hm-btns-row">
+                    <ui:VisualElement name="neuro-hm-btn-0" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="hand-icons-row">
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                                <ui:VisualElement picking-mode="Ignore" class="hand-icon hand-icon--left" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot" />
+                        </ui:VisualElement>
+                        <ui:Label text="Left Only" picking-mode="Ignore" class="mirror-btn__label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="neuro-hm-btn-1" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="hand-icons-row">
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                                <ui:VisualElement picking-mode="Ignore" class="hand-icon hand-icon--left" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                                <ui:VisualElement picking-mode="Ignore" class="hand-icon hand-icon--small" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label text="Left Mixed" picking-mode="Ignore" class="mirror-btn__label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="neuro-hm-btn-2" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="hand-icons-row">
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                                <ui:VisualElement picking-mode="Ignore" class="hand-icon hand-icon--left" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                                <ui:VisualElement picking-mode="Ignore" class="hand-icon" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label text="Mixed" picking-mode="Ignore" class="mirror-btn__label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="neuro-hm-btn-3" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="hand-icons-row">
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                                <ui:VisualElement picking-mode="Ignore" class="hand-icon hand-icon--left hand-icon--small" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                                <ui:VisualElement picking-mode="Ignore" class="hand-icon" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label text="Right Mixed" picking-mode="Ignore" class="mirror-btn__label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="neuro-hm-btn-4" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="hand-icons-row">
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot" />
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                                <ui:VisualElement picking-mode="Ignore" class="hand-icon" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label text="Right Only" picking-mode="Ignore" class="mirror-btn__label" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
             <ui:VisualElement name="neuro-hand-mode" class="section-card">
                 <ui:VisualElement class="section-header">
                     <ui:VisualElement class="section-header__icon" />
@@ -286,39 +348,36 @@
                     </ui:VisualElement>
                     <ui:Label text="Adduction" class="bias-axis-label" />
                 </ui:VisualElement>
-                <ui:VisualElement class="bias-snap-group">
-                    <ui:VisualElement class="bias-snap-row">
-                        <ui:VisualElement name="snap-left-abduction" class="bias-snap-btn">
-                            <ui:Label text="L. Abduction" picking-mode="Ignore" class="bias-snap-btn__label" />
-                        </ui:VisualElement>
-                        <ui:VisualElement name="snap-abduction" class="bias-snap-btn">
-                            <ui:Label text="Abduction" picking-mode="Ignore" class="bias-snap-btn__label" />
-                        </ui:VisualElement>
-                        <ui:VisualElement name="snap-right-abduction" class="bias-snap-btn">
-                            <ui:Label text="R. Abduction" picking-mode="Ignore" class="bias-snap-btn__label" />
-                        </ui:VisualElement>
+                <ui:VisualElement class="axis-slider">
+                    <ui:VisualElement class="axis-slider__labels">
+                        <ui:Label text="Left Hand" picking-mode="Ignore" class="axis-slider__label" />
+                        <ui:Label text="Right Hand" picking-mode="Ignore" class="axis-slider__label" />
                     </ui:VisualElement>
-                    <ui:VisualElement class="bias-snap-row">
-                        <ui:VisualElement name="snap-left" class="bias-snap-btn">
-                            <ui:Label text="Left Hand" picking-mode="Ignore" class="bias-snap-btn__label" />
-                        </ui:VisualElement>
-                        <ui:VisualElement name="snap-default" class="bias-snap-btn bias-snap-btn--primary">
-                            <ui:Label text="⊕  Default" picking-mode="Ignore" class="bias-snap-btn__label" />
-                        </ui:VisualElement>
-                        <ui:VisualElement name="snap-right" class="bias-snap-btn">
-                            <ui:Label text="Right Hand" picking-mode="Ignore" class="bias-snap-btn__label" />
-                        </ui:VisualElement>
+                    <ui:VisualElement name="bias-hslider" class="axis-slider__track">
+                        <ui:VisualElement picking-mode="Ignore" style="left: 12.5%;" class="axis-slider__tick" />
+                        <ui:VisualElement picking-mode="Ignore" style="left: 25%;" class="axis-slider__tick" />
+                        <ui:VisualElement picking-mode="Ignore" style="left: 37.5%;" class="axis-slider__tick" />
+                        <ui:VisualElement picking-mode="Ignore" style="left: 50%;" class="axis-slider__tick" />
+                        <ui:VisualElement picking-mode="Ignore" style="left: 62.5%;" class="axis-slider__tick" />
+                        <ui:VisualElement picking-mode="Ignore" style="left: 75%;" class="axis-slider__tick" />
+                        <ui:VisualElement picking-mode="Ignore" style="left: 87.5%;" class="axis-slider__tick" />
+                        <ui:VisualElement name="bias-hslider-knob" picking-mode="Ignore" class="axis-slider__knob" />
                     </ui:VisualElement>
-                    <ui:VisualElement class="bias-snap-row">
-                        <ui:VisualElement name="snap-left-adduction" class="bias-snap-btn">
-                            <ui:Label text="L. Adduction" picking-mode="Ignore" class="bias-snap-btn__label" />
-                        </ui:VisualElement>
-                        <ui:VisualElement name="snap-adduction" class="bias-snap-btn">
-                            <ui:Label text="Adduction" picking-mode="Ignore" class="bias-snap-btn__label" />
-                        </ui:VisualElement>
-                        <ui:VisualElement name="snap-right-adduction" class="bias-snap-btn">
-                            <ui:Label text="R. Adduction" picking-mode="Ignore" class="bias-snap-btn__label" />
-                        </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="axis-slider">
+                    <ui:VisualElement class="axis-slider__labels">
+                        <ui:Label text="Adduction" picking-mode="Ignore" class="axis-slider__label" />
+                        <ui:Label text="Abduction" picking-mode="Ignore" class="axis-slider__label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="bias-vslider" class="axis-slider__track">
+                        <ui:VisualElement picking-mode="Ignore" style="left: 12.5%;" class="axis-slider__tick" />
+                        <ui:VisualElement picking-mode="Ignore" style="left: 25%;" class="axis-slider__tick" />
+                        <ui:VisualElement picking-mode="Ignore" style="left: 37.5%;" class="axis-slider__tick" />
+                        <ui:VisualElement picking-mode="Ignore" style="left: 50%;" class="axis-slider__tick" />
+                        <ui:VisualElement picking-mode="Ignore" style="left: 62.5%;" class="axis-slider__tick" />
+                        <ui:VisualElement picking-mode="Ignore" style="left: 75%;" class="axis-slider__tick" />
+                        <ui:VisualElement picking-mode="Ignore" style="left: 87.5%;" class="axis-slider__tick" />
+                        <ui:VisualElement name="bias-vslider-knob" picking-mode="Ignore" class="axis-slider__knob" />
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>

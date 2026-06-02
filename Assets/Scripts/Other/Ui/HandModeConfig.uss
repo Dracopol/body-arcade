@@ -604,6 +604,53 @@
     display: none;
 }
 
+/* ─── Axis steppers ─── */
+.axis-slider {
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.axis-slider__labels {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.axis-slider__label {
+    font-size: 11px;
+    color: #888888;
+}
+
+.axis-slider__track {
+    height: 24px;
+    border-radius: 12px;
+    background-color: #e8e8e8;
+    border-width: 1px;
+    border-color: #dddddd;
+}
+
+.axis-slider__tick {
+    position: absolute;
+    width: 2px;
+    height: 12px;
+    background-color: #c8c8c8;
+    top: 50%;
+    margin-top: -6px;
+    margin-left: -1px;
+}
+
+.axis-slider__knob {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 11px;
+    background-color: #111111;
+    top: 50%;
+    margin-top: -11px;
+    left: 50%;
+    margin-left: -11px;
+}
+
 /* ─── Section advanced button ─── */
 .section-adv-btn {
     flex-direction: row;
@@ -815,4 +862,45 @@
 
 .bias-snap-btn--primary .bias-snap-btn__label {
     color: #ffffff;
+}
+
+/* ─── Hand mode buttons row ─── */
+.hm-btns-row {
+    gap: 8px;
+}
+
+.hm-btns-row > .mirror-btn {
+    padding: 10px 4px;
+}
+
+/* ─── Hand icons ─── */
+.hand-icons-row {
+    flex-direction: row;
+    width: 100%;
+}
+
+.hand-slot {
+    flex: 1;
+    height: 52px;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.hand-icon {
+    width: 44px;
+    height: 44px;
+    background-image: url("Right Hand.png");
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: #B93400;
+}
+
+.hand-icon--left {
+    scale: -1 1;
+    -unity-background-image-tint-color: #FFB400;
+}
+
+.hand-icon--small {
+    width: 28px;
+    height: 28px;
 }

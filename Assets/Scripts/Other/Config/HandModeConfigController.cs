@@ -120,6 +120,14 @@ namespace IMVR.BodyArcade.UiRobot
         private float         _handBias   = 0f;
         private float         _heightBias = 0f;
 
+        // Axis sliders
+        private VisualElement _biasHSlider;
+        private VisualElement _biasHSliderKnob;
+        private VisualElement _biasVSlider;
+        private VisualElement _biasVSliderKnob;
+        private bool          _isDraggingHSlider;
+        private bool          _isDraggingVSlider;
+
         // Start
         private VisualElement _startBtn;
 
@@ -182,6 +190,10 @@ namespace IMVR.BodyArcade.UiRobot
             _handFocusKnob   = _root.Q<VisualElement>("hfocus-knob");
             _biasGrid               = _root.Q<VisualElement>("bias-grid");
             _biasActiveDot          = _root.Q<VisualElement>("bias-dot-active");
+            _biasHSlider            = _root.Q<VisualElement>("bias-hslider");
+            _biasHSliderKnob        = _root.Q<VisualElement>("bias-hslider-knob");
+            _biasVSlider            = _root.Q<VisualElement>("bias-vslider");
+            _biasVSliderKnob        = _root.Q<VisualElement>("bias-vslider-knob");
             _advancedToggle         = _root.Q<VisualElement>("advanced-toggle");
             _themeSwitcher          = _root.Q<VisualElement>("theme-switcher");
             _themeDropdown          = _root.Q<VisualElement>("theme-dropdown");
@@ -612,15 +624,13 @@ namespace IMVR.BodyArcade.UiRobot
             _biasGrid.RegisterCallback<PointerMoveEvent>(OnBiasPointerMove);
             _biasGrid.RegisterCallback<PointerUpEvent>(OnBiasPointerUp);
 
-            _root.Q<VisualElement>("snap-left-abduction") .RegisterCallback<ClickEvent>(_ => SnapBias(-1f,  1f));
-            _root.Q<VisualElement>("snap-abduction")      .RegisterCallback<ClickEvent>(_ => SnapBias( 0f,  1f));
-            _root.Q<VisualElement>("snap-right-abduction").RegisterCallback<ClickEvent>(_ => SnapBias( 1f,  1f));
-            _root.Q<VisualElement>("snap-left")           .RegisterCallback<ClickEvent>(_ => SnapBias(-1f,  0f));
-            _root.Q<VisualElement>("snap-default")        .RegisterCallback<ClickEvent>(_ => SnapBias( 0f,  0f));
-            _root.Q<VisualElement>("snap-right")          .RegisterCallback<ClickEvent>(_ => SnapBias( 1f,  0f));
-            _root.Q<VisualElement>("snap-left-adduction") .RegisterCallback<ClickEvent>(_ => SnapBias(-1f, -1f));
-            _root.Q<VisualElement>("snap-adduction")      .RegisterCallback<ClickEvent>(_ => SnapBias( 0f, -1f));
-            _root.Q<VisualElement>("snap-right-adduction").RegisterCallback<ClickEvent>(_ => SnapBias( 1f, -1f));
+            _biasHSlider.RegisterCallback<PointerDownEvent>(OnHSliderPointerDown);
+            _biasHSlider.RegisterCallback<PointerMoveEvent>(OnHSliderPointerMove);
+            _biasHSlider.RegisterCallback<PointerUpEvent>(OnHSliderPointerUp);
+
+            _biasVSlider.RegisterCallback<PointerDownEvent>(OnVSliderPointerDown);
+            _biasVSlider.RegisterCallback<PointerMoveEvent>(OnVSliderPointerMove);
+            _biasVSlider.RegisterCallback<PointerUpEvent>(OnVSliderPointerUp);
         }
 
         private void OnBiasPointerDown(PointerDownEvent e)
@@ -649,9 +659,17 @@ namespace IMVR.BodyArcade.UiRobot
         {
             var w = _biasGrid.resolvedStyle.width;
             var h = _biasGrid.resolvedStyle.height;
-            _handBias   = Mathf.Clamp(localPos.x / w * 2f - 1f, -1f, 1f);
-            _heightBias = Mathf.Clamp(1f - localPos.y / h * 2f, -1f, 1f);
+            var nx = SnapToGrid(Mathf.Clamp01(localPos.x / w));
+            var ny = SnapToGrid(Mathf.Clamp01(localPos.y / h));
+            _handBias   = nx * 2f - 1f;
+            _heightBias = 1f - ny * 2f;
             PositionActiveDot();
+        }
+
+        private static float SnapToGrid(float t)
+        {
+            const float step = 1f / 8f;
+            return Mathf.Round(t / step) * step;
         }
 
         private void SnapBias(float hand, float height)
@@ -672,6 +690,76 @@ namespace IMVR.BodyArcade.UiRobot
             _biasActiveDot.style.top        = (1f - _heightBias) * 0.5f * h - dotRadius;
             _biasActiveDot.style.marginLeft = 0;
             _biasActiveDot.style.marginTop  = 0;
+
+            PositionSliderKnob(_biasHSliderKnob, _biasHSlider, (_handBias   + 1f) * 0.5f);
+            PositionSliderKnob(_biasVSliderKnob, _biasVSlider, (_heightBias + 1f) * 0.5f);
+        }
+
+        private void PositionSliderKnob(VisualElement knob, VisualElement track, float t)
+        {
+            var w = track.resolvedStyle.width;
+            if (w <= 0f) return;
+            const float knobRadius = 11f;
+            knob.style.left       = t * w - knobRadius;
+            knob.style.marginLeft = 0;
+        }
+
+        private void OnHSliderPointerDown(PointerDownEvent e)
+        {
+            _isDraggingHSlider = true;
+            _biasHSlider.CapturePointer(e.pointerId);
+            UpdateHSliderFromLocal(e.localPosition);
+            e.StopPropagation();
+        }
+
+        private void OnHSliderPointerMove(PointerMoveEvent e)
+        {
+            if (!_isDraggingHSlider) return;
+            UpdateHSliderFromLocal(e.localPosition);
+            e.StopPropagation();
+        }
+
+        private void OnHSliderPointerUp(PointerUpEvent e)
+        {
+            if (!_isDraggingHSlider) return;
+            _isDraggingHSlider = false;
+            _biasHSlider.ReleasePointer(e.pointerId);
+        }
+
+        private void OnVSliderPointerDown(PointerDownEvent e)
+        {
+            _isDraggingVSlider = true;
+            _biasVSlider.CapturePointer(e.pointerId);
+            UpdateVSliderFromLocal(e.localPosition);
+            e.StopPropagation();
+        }
+
+        private void OnVSliderPointerMove(PointerMoveEvent e)
+        {
+            if (!_isDraggingVSlider) return;
+            UpdateVSliderFromLocal(e.localPosition);
+            e.StopPropagation();
+        }
+
+        private void OnVSliderPointerUp(PointerUpEvent e)
+        {
+            if (!_isDraggingVSlider) return;
+            _isDraggingVSlider = false;
+            _biasVSlider.ReleasePointer(e.pointerId);
+        }
+
+        private void UpdateHSliderFromLocal(Vector2 localPos)
+        {
+            var w = _biasHSlider.resolvedStyle.width;
+            _handBias = SnapToGrid(Mathf.Clamp01(localPos.x / w)) * 2f - 1f;
+            PositionActiveDot();
+        }
+
+        private void UpdateVSliderFromLocal(Vector2 localPos)
+        {
+            var w = _biasVSlider.resolvedStyle.width;
+            _heightBias = SnapToGrid(Mathf.Clamp01(localPos.x / w)) * 2f - 1f;
+            PositionActiveDot();
         }
 
         #endregion
