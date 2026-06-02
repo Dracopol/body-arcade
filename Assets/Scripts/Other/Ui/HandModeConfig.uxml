@@ -170,24 +170,10 @@
                 </ui:VisualElement>
                 <ui:VisualElement class="mirror-row hm-btns-row">
                     <ui:VisualElement name="neuro-hm-btn-0" class="mirror-btn">
-                        <ui:VisualElement picking-mode="Ignore" class="hand-icons-row">
-                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
-                                <ui:VisualElement picking-mode="Ignore" class="hand-icon hand-icon--left" />
-                            </ui:VisualElement>
-                            <ui:VisualElement picking-mode="Ignore" class="hand-slot" />
+                        <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                            <ui:VisualElement picking-mode="Ignore" class="hand-icon hand-icon--left" />
                         </ui:VisualElement>
-                        <ui:Label text="Left Only" picking-mode="Ignore" class="mirror-btn__label" />
-                    </ui:VisualElement>
-                    <ui:VisualElement name="neuro-hm-btn-1" class="mirror-btn">
-                        <ui:VisualElement picking-mode="Ignore" class="hand-icons-row">
-                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
-                                <ui:VisualElement picking-mode="Ignore" class="hand-icon hand-icon--left" />
-                            </ui:VisualElement>
-                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
-                                <ui:VisualElement picking-mode="Ignore" class="hand-icon hand-icon--small" />
-                            </ui:VisualElement>
-                        </ui:VisualElement>
-                        <ui:Label text="Left Mixed" picking-mode="Ignore" class="mirror-btn__label" />
+                        <ui:Label text="Left" picking-mode="Ignore" class="mirror-btn__label" />
                     </ui:VisualElement>
                     <ui:VisualElement name="neuro-hm-btn-2" class="mirror-btn">
                         <ui:VisualElement picking-mode="Ignore" class="hand-icons-row">
@@ -200,25 +186,11 @@
                         </ui:VisualElement>
                         <ui:Label text="Mixed" picking-mode="Ignore" class="mirror-btn__label" />
                     </ui:VisualElement>
-                    <ui:VisualElement name="neuro-hm-btn-3" class="mirror-btn">
-                        <ui:VisualElement picking-mode="Ignore" class="hand-icons-row">
-                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
-                                <ui:VisualElement picking-mode="Ignore" class="hand-icon hand-icon--left hand-icon--small" />
-                            </ui:VisualElement>
-                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
-                                <ui:VisualElement picking-mode="Ignore" class="hand-icon" />
-                            </ui:VisualElement>
-                        </ui:VisualElement>
-                        <ui:Label text="Right Mixed" picking-mode="Ignore" class="mirror-btn__label" />
-                    </ui:VisualElement>
                     <ui:VisualElement name="neuro-hm-btn-4" class="mirror-btn">
-                        <ui:VisualElement picking-mode="Ignore" class="hand-icons-row">
-                            <ui:VisualElement picking-mode="Ignore" class="hand-slot" />
-                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
-                                <ui:VisualElement picking-mode="Ignore" class="hand-icon" />
-                            </ui:VisualElement>
+                        <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                            <ui:VisualElement picking-mode="Ignore" class="hand-icon" />
                         </ui:VisualElement>
-                        <ui:Label text="Right Only" picking-mode="Ignore" class="mirror-btn__label" />
+                        <ui:Label text="Right" picking-mode="Ignore" class="mirror-btn__label" />
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>

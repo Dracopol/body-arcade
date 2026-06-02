@@ -866,11 +866,7 @@
 
 /* ─── Hand mode buttons row ─── */
 .hm-btns-row {
-    gap: 8px;
-}
-
-.hm-btns-row > .mirror-btn {
-    padding: 10px 4px;
+    gap: 24px;
 }
 
 /* ─── Hand icons ─── */
@@ -890,7 +886,7 @@
 .hand-icon {
     width: 44px;
     height: 44px;
-    background-image: url("Right Hand.png");
+    background-image: url("Right Hand Outline.png");
     -unity-background-scale-mode: scale-to-fit;
     -unity-background-image-tint-color: #B93400;
 }
