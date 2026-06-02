@@ -86,6 +86,49 @@
                 </ui:VisualElement>
             </ui:VisualElement>
 
+            <!-- Hand Mode -->
+            <ui:VisualElement class="section-card">
+                <ui:VisualElement class="section-header">
+                    <ui:VisualElement class="section-header__icon" />
+                    <ui:Label text="Hand Mode" class="section-header__label" />
+                </ui:VisualElement>
+                <ui:VisualElement class="mirror-row hm-btns-row">
+                    <ui:VisualElement name="airsac-hm-btn-left-mixed" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="hand-icons-row">
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                                <ui:VisualElement picking-mode="Ignore" class="hand-icon hand-icon--left" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                                <ui:VisualElement picking-mode="Ignore" class="hand-icon hand-icon--small" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label text="Left" picking-mode="Ignore" class="mirror-btn__label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="airsac-hm-btn-mixed" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="hand-icons-row">
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                                <ui:VisualElement picking-mode="Ignore" class="hand-icon hand-icon--left" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                                <ui:VisualElement picking-mode="Ignore" class="hand-icon" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label text="Both" picking-mode="Ignore" class="mirror-btn__label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="airsac-hm-btn-right-mixed" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="hand-icons-row">
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                                <ui:VisualElement picking-mode="Ignore" class="hand-icon hand-icon--left hand-icon--small" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="hand-slot">
+                                <ui:VisualElement picking-mode="Ignore" class="hand-icon" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label text="Right" picking-mode="Ignore" class="mirror-btn__label" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
             <!-- Difficulty Selection -->
             <ui:VisualElement class="section-card">
                 <ui:VisualElement class="section-header">
@@ -94,12 +137,45 @@
                 </ui:VisualElement>
                 <ui:VisualElement class="mirror-row">
                     <ui:VisualElement name="difficulty-easy" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="star-row">
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon">
+                                <ui:VisualElement picking-mode="Ignore" class="star-fill-layer" />
+                                <ui:VisualElement picking-mode="Ignore" class="star-outline-layer" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon star-icon--outline" />
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon star-icon--outline" />
+                        </ui:VisualElement>
                         <ui:Label text="Easy" picking-mode="Ignore" class="mirror-btn__label" />
                     </ui:VisualElement>
                     <ui:VisualElement name="difficulty-medium" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="star-row">
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon">
+                                <ui:VisualElement picking-mode="Ignore" class="star-fill-layer" />
+                                <ui:VisualElement picking-mode="Ignore" class="star-outline-layer" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon">
+                                <ui:VisualElement picking-mode="Ignore" class="star-fill-layer" />
+                                <ui:VisualElement picking-mode="Ignore" class="star-outline-layer" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon star-icon--outline" />
+                        </ui:VisualElement>
                         <ui:Label text="Medium" picking-mode="Ignore" class="mirror-btn__label" />
                     </ui:VisualElement>
                     <ui:VisualElement name="difficulty-hard" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="star-row">
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon">
+                                <ui:VisualElement picking-mode="Ignore" class="star-fill-layer" />
+                                <ui:VisualElement picking-mode="Ignore" class="star-outline-layer" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon">
+                                <ui:VisualElement picking-mode="Ignore" class="star-fill-layer" />
+                                <ui:VisualElement picking-mode="Ignore" class="star-outline-layer" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon">
+                                <ui:VisualElement picking-mode="Ignore" class="star-fill-layer" />
+                                <ui:VisualElement picking-mode="Ignore" class="star-outline-layer" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
                         <ui:Label text="Hard" picking-mode="Ignore" class="mirror-btn__label" />
                     </ui:VisualElement>
                 </ui:VisualElement>
@@ -191,6 +267,58 @@
                             <ui:VisualElement picking-mode="Ignore" class="hand-icon" />
                         </ui:VisualElement>
                         <ui:Label text="Right" picking-mode="Ignore" class="mirror-btn__label" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Difficulty Selection -->
+            <ui:VisualElement class="section-card">
+                <ui:VisualElement class="section-header">
+                    <ui:VisualElement class="section-header__icon" />
+                    <ui:Label text="Difficulty" class="section-header__label" />
+                </ui:VisualElement>
+                <ui:VisualElement class="mirror-row">
+                    <ui:VisualElement name="neuro-difficulty-easy" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="star-row">
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon">
+                                <ui:VisualElement picking-mode="Ignore" class="star-fill-layer" />
+                                <ui:VisualElement picking-mode="Ignore" class="star-outline-layer" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon star-icon--outline" />
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon star-icon--outline" />
+                        </ui:VisualElement>
+                        <ui:Label text="Easy" picking-mode="Ignore" class="mirror-btn__label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="neuro-difficulty-medium" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="star-row">
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon">
+                                <ui:VisualElement picking-mode="Ignore" class="star-fill-layer" />
+                                <ui:VisualElement picking-mode="Ignore" class="star-outline-layer" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon">
+                                <ui:VisualElement picking-mode="Ignore" class="star-fill-layer" />
+                                <ui:VisualElement picking-mode="Ignore" class="star-outline-layer" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon star-icon--outline" />
+                        </ui:VisualElement>
+                        <ui:Label text="Medium" picking-mode="Ignore" class="mirror-btn__label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="neuro-difficulty-hard" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="star-row">
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon">
+                                <ui:VisualElement picking-mode="Ignore" class="star-fill-layer" />
+                                <ui:VisualElement picking-mode="Ignore" class="star-outline-layer" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon">
+                                <ui:VisualElement picking-mode="Ignore" class="star-fill-layer" />
+                                <ui:VisualElement picking-mode="Ignore" class="star-outline-layer" />
+                            </ui:VisualElement>
+                            <ui:VisualElement picking-mode="Ignore" class="star-icon">
+                                <ui:VisualElement picking-mode="Ignore" class="star-fill-layer" />
+                                <ui:VisualElement picking-mode="Ignore" class="star-outline-layer" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:Label text="Hard" picking-mode="Ignore" class="mirror-btn__label" />
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>

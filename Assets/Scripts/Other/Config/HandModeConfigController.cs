@@ -95,9 +95,21 @@ namespace IMVR.BodyArcade.UiRobot
         // Shape availability
         private List<ShapeConfig> _availableShapes = new();
 
+        // AirSac hand mode
+        private List<VisualElement> _airsacHandModeBtns;
+        private string              _selectedAirsacHandMode = "Both";
+
         // Difficulty
         private List<VisualElement> _difficultyBtns;
         private string              _selectedDifficulty = "Easy";
+
+        // NeuroMania hand mode (new section)
+        private List<VisualElement> _neuroHmBtns;
+        private string              _selectedNeuroHandMode = "Mixed";
+
+        // NeuroMania difficulty
+        private List<VisualElement> _neuroDifficultyBtns;
+        private string              _selectedNeuroDifficulty = "Easy";
 
         // Strike stepper
         private VisualElement _strikeDecreaseBtn;
@@ -202,11 +214,32 @@ namespace IMVR.BodyArcade.UiRobot
             _neuroHeightSection     = _root.Q<VisualElement>("neuro-height");
             _neuroTargetBiasSection = _root.Q<VisualElement>("neuro-target-bias");
 
+            _airsacHandModeBtns = new List<VisualElement>
+            {
+                _root.Q<VisualElement>("airsac-hm-btn-left-mixed"),
+                _root.Q<VisualElement>("airsac-hm-btn-mixed"),
+                _root.Q<VisualElement>("airsac-hm-btn-right-mixed")
+            };
+
             _difficultyBtns = new List<VisualElement>
             {
                 _root.Q<VisualElement>("difficulty-easy"),
                 _root.Q<VisualElement>("difficulty-medium"),
                 _root.Q<VisualElement>("difficulty-hard")
+            };
+
+            _neuroHmBtns = new List<VisualElement>
+            {
+                _root.Q<VisualElement>("neuro-hm-btn-0"),
+                _root.Q<VisualElement>("neuro-hm-btn-2"),
+                _root.Q<VisualElement>("neuro-hm-btn-4")
+            };
+
+            _neuroDifficultyBtns = new List<VisualElement>
+            {
+                _root.Q<VisualElement>("neuro-difficulty-easy"),
+                _root.Q<VisualElement>("neuro-difficulty-medium"),
+                _root.Q<VisualElement>("neuro-difficulty-hard")
             };
 
             _strikeDecreaseBtn  = _root.Q<VisualElement>("strike-decrease-btn");
@@ -226,7 +259,10 @@ namespace IMVR.BodyArcade.UiRobot
             RegisterFocusModeCallbacks();
             RegisterHeightModeCallbacks();
             RegisterHandFocusSliderCallbacks();
+            RegisterAirsacHandModeCallbacks();
             RegisterDifficultyCallbacks();
+            RegisterNeuroHandModeCallbacks();
+            RegisterNeuroDifficultyCallbacks();
             RegisterStrikeCallbacks();
             RegisterTimerCallbacks();
             RegisterStartCallback();
@@ -256,11 +292,32 @@ namespace IMVR.BodyArcade.UiRobot
             _focusModeRows[2].RegisterCallback<ClickEvent>(_ => SelectFocusMode(FocusMode.RightFocused));
         }
 
+        private void RegisterAirsacHandModeCallbacks()
+        {
+            _airsacHandModeBtns[0].RegisterCallback<ClickEvent>(_ => SelectAirsacHandMode("Left"));
+            _airsacHandModeBtns[1].RegisterCallback<ClickEvent>(_ => SelectAirsacHandMode("Both"));
+            _airsacHandModeBtns[2].RegisterCallback<ClickEvent>(_ => SelectAirsacHandMode("Right"));
+        }
+
         private void RegisterDifficultyCallbacks()
         {
             _difficultyBtns[0].RegisterCallback<ClickEvent>(_ => SelectDifficulty("Easy"));
             _difficultyBtns[1].RegisterCallback<ClickEvent>(_ => SelectDifficulty("Medium"));
             _difficultyBtns[2].RegisterCallback<ClickEvent>(_ => SelectDifficulty("Hard"));
+        }
+
+        private void RegisterNeuroHandModeCallbacks()
+        {
+            _neuroHmBtns[0].RegisterCallback<ClickEvent>(_ => SelectNeuroHandMode("Left"));
+            _neuroHmBtns[1].RegisterCallback<ClickEvent>(_ => SelectNeuroHandMode("Mixed"));
+            _neuroHmBtns[2].RegisterCallback<ClickEvent>(_ => SelectNeuroHandMode("Right"));
+        }
+
+        private void RegisterNeuroDifficultyCallbacks()
+        {
+            _neuroDifficultyBtns[0].RegisterCallback<ClickEvent>(_ => SelectNeuroDifficulty("Easy"));
+            _neuroDifficultyBtns[1].RegisterCallback<ClickEvent>(_ => SelectNeuroDifficulty("Medium"));
+            _neuroDifficultyBtns[2].RegisterCallback<ClickEvent>(_ => SelectNeuroDifficulty("Hard"));
         }
 
         private void RegisterStrikeCallbacks()
@@ -300,7 +357,10 @@ namespace IMVR.BodyArcade.UiRobot
             SelectMirrorMode(_selectedMirrorMode);
             SelectFocusMode(_selectedFocusMode);
             SelectHeightMode(_selectedHeightMode);
+            SelectAirsacHandMode(_selectedAirsacHandMode);
             SelectDifficulty(_selectedDifficulty);
+            SelectNeuroHandMode(_selectedNeuroHandMode);
+            SelectNeuroDifficulty(_selectedNeuroDifficulty);
             SelectGame(_activeGame);
             SelectTheme(false);
             UpdateStrikeDisplay();
@@ -501,12 +561,36 @@ namespace IMVR.BodyArcade.UiRobot
             _availableShapes = SessionConfigAirSacShapes.Instance.GetShapesForMode(mode);
         }
 
+        private void SelectAirsacHandMode(string mode)
+        {
+            _selectedAirsacHandMode = mode;
+            var labels = new[] { "Left", "Both", "Right" };
+            for (int i = 0; i < _airsacHandModeBtns.Count; i++)
+                _airsacHandModeBtns[i].EnableInClassList("selected", labels[i] == mode);
+        }
+
         private void SelectDifficulty(string difficulty)
         {
             _selectedDifficulty = difficulty;
             var labels = new[] { "Easy", "Medium", "Hard" };
             for (int i = 0; i < _difficultyBtns.Count; i++)
                 _difficultyBtns[i].EnableInClassList("selected", labels[i] == difficulty);
+        }
+
+        private void SelectNeuroHandMode(string mode)
+        {
+            _selectedNeuroHandMode = mode;
+            var labels = new[] { "Left", "Mixed", "Right" };
+            for (int i = 0; i < _neuroHmBtns.Count; i++)
+                _neuroHmBtns[i].EnableInClassList("selected", labels[i] == mode);
+        }
+
+        private void SelectNeuroDifficulty(string difficulty)
+        {
+            _selectedNeuroDifficulty = difficulty;
+            var labels = new[] { "Easy", "Medium", "Hard" };
+            for (int i = 0; i < _neuroDifficultyBtns.Count; i++)
+                _neuroDifficultyBtns[i].EnableInClassList("selected", labels[i] == difficulty);
         }
 
         private void AdjustStrikeAmount(int delta)

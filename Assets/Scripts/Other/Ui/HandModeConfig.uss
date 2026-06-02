@@ -864,6 +864,44 @@
     color: #ffffff;
 }
 
+/* ─── Star icons ─── */
+.star-row {
+    flex-direction: row;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+}
+
+.star-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.star-icon--outline {
+    background-image: url("StarOutline.png");
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: #111111;
+}
+
+.star-fill-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("StarFill.png");
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: #111111;
+    scale: 1.15;
+}
+
+.star-outline-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("StarOutline.png");
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: #111111;
+}
+
 /* ─── Hand mode buttons row ─── */
 .hm-btns-row {
     gap: 24px;
@@ -872,11 +910,13 @@
 /* ─── Hand icons ─── */
 .hand-icons-row {
     flex-direction: row;
-    width: 100%;
+    justify-content: center;
+    gap: 6px;
 }
 
 .hand-slot {
-    flex: 1;
+    flex: 0 0 auto;
+    min-width: 44px;
     height: 52px;
     align-items: center;
     justify-content: center;
@@ -888,12 +928,12 @@
     height: 44px;
     background-image: url("Right Hand Outline.png");
     -unity-background-scale-mode: scale-to-fit;
-    -unity-background-image-tint-color: #B93400;
+    -unity-background-image-tint-color: #0022FF;
 }
 
 .hand-icon--left {
     scale: -1 1;
-    -unity-background-image-tint-color: #FFB400;
+    -unity-background-image-tint-color: #FF0000;
 }
 
 .hand-icon--small {
