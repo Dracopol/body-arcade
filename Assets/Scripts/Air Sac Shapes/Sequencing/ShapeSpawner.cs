@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Splines;
 using IMVR.BodyArcade.AirSacShapes;
 using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 using IMVR.BodyArcade.AirSacShapes.VFX.AirSac;
@@ -16,6 +17,10 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         [SerializeField] private List<ShapeConfig> _shapes;
         [SerializeField] private GameObject _shapeParent;
         [SerializeField] private MirrorHands _mirrorHands;
+
+        [Header("Connector")]
+        [SerializeField] private Material _connectorMaterial;
+        [SerializeField] private Transform _connectorMidPoint;
 
         [Header("Debug")]
         [SerializeField] private GameObject _debugActiveLeft;
@@ -91,6 +96,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
             AssignHand(_currentShape);
             WireTracker(_currentShape, _currentBall);
+            WireConnector(_currentShape, _currentBall);
         }
 
         private void AssignHand(GameObject shape)
@@ -127,6 +133,18 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
             SplineProgressTracker tracker = obj.GetComponent<SplineProgressTracker>();
             tracker?.SetHand(handObject.transform, handObject.GetComponent<Collider>());
+        }
+
+        private void WireConnector(GameObject shape, GameObject ball)
+        {
+            ProgressTrackerParent tracker = shape.GetComponent<ProgressTrackerParent>();
+            if (tracker == null || tracker.Trackers.Count == 0) return;
+
+            SplineContainer splineContainer = tracker.Trackers[0].SplineContainer;
+            if (splineContainer == null) return;
+
+            BallShapeConnector connector = shape.AddComponent<BallShapeConnector>();
+            connector.Setup(ball.transform, splineContainer, _connectorMaterial, _connectorMidPoint);
         }
 
         private void WireTracker(GameObject shape, GameObject ball)

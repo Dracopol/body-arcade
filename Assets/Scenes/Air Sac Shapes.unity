@@ -3852,6 +3852,8 @@ MonoBehaviour:
   - {fileID: 3628128942024683711, guid: 0e89528c4baf38d46ba6a5038215cfac, type: 3}
   _shapeParent: {fileID: 839052462}
   _mirrorHands: {fileID: 210590404}
+  _connectorMaterial: {fileID: 2100000, guid: 644cb45abe0df07438250c1bd6b70142, type: 2}
+  _connectorMidPoint: {fileID: 1935853991}
   _debugActiveLeft: {fileID: 0}
   _debugActiveRight: {fileID: 0}
 --- !u!114 &1096373140
@@ -7022,6 +7024,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1930472240}
   m_CullTransparentMesh: 1
+--- !u!1 &1935853990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1935853991}
+  m_Layer: 0
+  m_Name: Connector Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1935853991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935853990}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.9, z: 1.68}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1980313985
 GameObject:
   m_ObjectHideFlags: 0
@@ -8977,3 +9010,4 @@ SceneRoots:
   - {fileID: 420203937}
   - {fileID: 165915435}
   - {fileID: 1741708740}
+  - {fileID: 1935853991}

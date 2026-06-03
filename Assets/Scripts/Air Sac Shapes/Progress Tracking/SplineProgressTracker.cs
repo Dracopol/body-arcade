@@ -72,6 +72,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         internal float MaxProgress => _maxProgress;
         internal bool IsWin => _isWin;
         internal bool IsReversed => _isReversed;
+        internal SplineContainer SplineContainer => _splineContainer;
 
         #endregion
 
