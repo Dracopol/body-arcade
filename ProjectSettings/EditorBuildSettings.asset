@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Air Sac Shapes.unity
     guid: c988eb3f37baf4140a77582f8b7c1e60
   - enabled: 1
-    path: Assets/Scenes/Neuro Smash.unity
+    path: Assets/Scenes/NeuroSmash.unity
     guid: 9529c7192cfd11340aabf537802d67e7
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 9779fe8257d93fa42bb53b6a19954f3d, type: 2}

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Main Camera Profile
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.VolumeProfile
   components:
-  - {fileID: 9060892291204757448}
---- !u!114 &9060892291204757448
+  - {fileID: 3514737044127821525}
+--- !u!114 &3514737044127821525
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26,13 +26,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01700fd266d6914ababb731e09af2eb, type: 3}
   m_Name: DepthOfField
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.DepthOfField
-  active: 1
+  active: 0
   mode:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 1
   gaussianStart:
-    m_OverrideState: 0
-    m_Value: 10
+    m_OverrideState: 1
+    m_Value: 55
   gaussianEnd:
     m_OverrideState: 0
     m_Value: 30
@@ -43,20 +43,20 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   focusDistance:
-    m_OverrideState: 0
-    m_Value: 10
-  aperture:
-    m_OverrideState: 0
-    m_Value: 5.6
-  focalLength:
-    m_OverrideState: 0
-    m_Value: 50
-  bladeCount:
-    m_OverrideState: 0
-    m_Value: 5
-  bladeCurvature:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
+  aperture:
+    m_OverrideState: 1
+    m_Value: 3.6
+  focalLength:
+    m_OverrideState: 1
+    m_Value: 9
+  bladeCount:
+    m_OverrideState: 1
+    m_Value: 4
+  bladeCurvature:
+    m_OverrideState: 1
+    m_Value: 0.336
   bladeRotation:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 9

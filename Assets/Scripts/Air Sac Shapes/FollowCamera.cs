@@ -8,7 +8,29 @@ namespace IMVR.BodyArcade.AirSacShapes
 
         [SerializeField] private Camera _camera;
         [SerializeField] private GameObject _target;
+        [SerializeField] private bool _followCameraPosition = false;
         [SerializeField] private float _smoothSpeed = 5f;
+
+        #endregion
+
+        #region Fields
+
+        private Vector3 _previousCameraPosition;
+        private Vector3 _desiredPosition;
+        private Vector3 _targetVelocity;
+
+        #endregion
+
+        #region Setup
+
+        private void Start()
+        {
+            if (_camera != null)
+                _previousCameraPosition = _camera.transform.position;
+
+            if (_target != null)
+                _desiredPosition = _target.transform.position;
+        }
 
         #endregion
 
@@ -19,11 +41,24 @@ namespace IMVR.BodyArcade.AirSacShapes
             if (_camera == null || _target == null)
                 return;
 
-            Vector3 position = _target.transform.position;
-            position.x = Mathf.Lerp(position.x, _camera.transform.position.x, _smoothSpeed * Time.deltaTime);
-            position.y = Mathf.Lerp(position.y, _camera.transform.position.y, _smoothSpeed * Time.deltaTime);
-            position.z = Mathf.Lerp(position.z, _camera.transform.position.z, _smoothSpeed * Time.deltaTime);
-            _target.transform.position = position;
+            if (_followCameraPosition)
+            {
+                _desiredPosition = _camera.transform.position;
+            }
+            else
+            {
+                Vector3 delta = _camera.transform.position - _previousCameraPosition;
+                _desiredPosition += delta;
+            }
+
+            _target.transform.position = Vector3.SmoothDamp(
+                _target.transform.position,
+                _desiredPosition,
+                ref _targetVelocity,
+                1f / _smoothSpeed
+            );
+
+            _previousCameraPosition = _camera.transform.position;
         }
 
         #endregion
