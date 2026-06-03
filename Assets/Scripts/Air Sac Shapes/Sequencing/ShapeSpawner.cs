@@ -20,6 +20,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         [Header("Connector")]
         [SerializeField] private Material _connectorMaterial;
+        [SerializeField] private Material _connectorFillMaterial;
         [SerializeField] private Transform _connectorMidPoint;
 
         [Header("Debug")]
@@ -144,7 +145,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             if (splineContainer == null) return;
 
             BallShapeConnector connector = shape.AddComponent<BallShapeConnector>();
-            connector.Setup(ball.transform, splineContainer, _connectorMaterial, _connectorMidPoint);
+            connector.Setup(ball.transform, splineContainer, _connectorMaterial, _connectorFillMaterial, _connectorMidPoint, tracker);
         }
 
         private void WireTracker(GameObject shape, GameObject ball)

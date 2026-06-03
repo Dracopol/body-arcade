@@ -3853,6 +3853,7 @@ MonoBehaviour:
   _shapeParent: {fileID: 839052462}
   _mirrorHands: {fileID: 210590404}
   _connectorMaterial: {fileID: 2100000, guid: 644cb45abe0df07438250c1bd6b70142, type: 2}
+  _connectorFillMaterial: {fileID: 2100000, guid: 3101cfcb90d7ae14da8ef2a2ca54d127, type: 2}
   _connectorMidPoint: {fileID: 1935853991}
   _debugActiveLeft: {fileID: 0}
   _debugActiveRight: {fileID: 0}
