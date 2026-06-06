@@ -1,7 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
-using IMVR.BodyArcade.AirSacShapes;
 using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 using IMVR.BodyArcade.AirSacShapes.VFX.AirSac;
 using IMVR.BodyArcade.UiRobot;
@@ -10,10 +10,15 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 {
     internal class ShapeSpawner : MonoBehaviour
     {
+        #region Events
+
+        internal event Action OnShapeDestroyed;
+
+        #endregion
+
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private BallSequencer _sequencer;
         [SerializeField] private List<ShapeConfig> _shapes;
         [SerializeField] private GameObject _shapeParent;
         [SerializeField] private MirrorHands _mirrorHands;
@@ -45,16 +50,6 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
                 _shapes = SessionConfigAirSacShapes.Instance.SelectedShapes;
         }
 
-        private void OnEnable()
-        {
-            _sequencer.OnBallChanged += HandleBallChanged;
-        }
-
-        private void OnDisable()
-        {
-            _sequencer.OnBallChanged -= HandleBallChanged;
-        }
-
         #endregion
 
         #region Update
@@ -62,14 +57,17 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private void Update()
         {
             if (_hasSpawned && _currentShape == null)
-                _sequencer.Advance();
+            {
+                _hasSpawned = false;
+                OnShapeDestroyed?.Invoke();
+            }
         }
 
         #endregion
 
-        #region Event handlers
+        #region Internal
 
-        private void HandleBallChanged(GameObject ball)
+        internal void Spawn(GameObject ball)
         {
             _currentBall = ball;
             SpawnShape();
@@ -83,7 +81,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         {
             if (_shapes == null || _shapes.Count == 0 || _shapeParent == null) return;
 
-            int index          = Random.Range(0, _shapes.Count);
+            int index          = UnityEngine.Random.Range(0, _shapes.Count);
             ShapeConfig config = _shapes[index];
             if (config == null || config.Prefab == null) return;
 

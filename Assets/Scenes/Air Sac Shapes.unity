@@ -1653,6 +1653,7 @@ Transform:
   - {fileID: 210590405}
   - {fileID: 576924787}
   - {fileID: 1096373137}
+  - {fileID: 896948919}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &480807730
@@ -3062,6 +3063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.Neuromania.FollowCameraY
   _camera: {fileID: 224017794}
   _target: {fileID: 839052462}
+  _followCameraPosition: 0
   _smoothSpeed: 2.5
 --- !u!1 &845035838
 GameObject:
@@ -3309,6 +3311,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LifeDiamond
   _fillImage: {fileID: 1930472242}
   _outlineImage: {fileID: 664650432}
+--- !u!1 &896948918
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 896948919}
+  - component: {fileID: 896948920}
+  m_Layer: 0
+  m_Name: Temp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &896948919
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896948918}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 420203937}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &896948920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896948918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3991b2b41b9be564ba138f1d445229e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.Sequencing.ShapeSequenceCoordinator
+  _sequencer: {fileID: 1096373140}
+  _spawner: {fileID: 1096373139}
 --- !u!1 &901993391
 GameObject:
   m_ObjectHideFlags: 0
@@ -3847,7 +3895,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed3135462fc7d1445a611b8e4b16ef9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.CorpusVR.Core.ShapeSpawner
-  _sequencer: {fileID: 1096373140}
   _shapes:
   - {fileID: 3628128942024683711, guid: 0e89528c4baf38d46ba6a5038215cfac, type: 3}
   _shapeParent: {fileID: 839052462}
@@ -5768,6 +5815,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a2c793d9cd1a65a4fb6832dafdc921ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a2c793d9cd1a65a4fb6832dafdc921ac, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: a2c793d9cd1a65a4fb6832dafdc921ac, type: 3}
