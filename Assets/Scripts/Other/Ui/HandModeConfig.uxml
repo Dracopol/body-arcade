@@ -13,11 +13,7 @@
                 <ui:Label text="Configure your therapy session settings before starting" class="config-header__subtitle" />
             </ui:VisualElement>
             <ui:VisualElement class="header-right">
-                <ui:VisualElement name="theme-switcher" class="theme-switcher">
-                    <ui:Label name="theme-switcher__label" class="theme-switcher__label" text="Minimalist" picking-mode="Ignore" />
-                    <ui:Label class="theme-switcher__arrow" text="∨" picking-mode="Ignore" />
-                </ui:VisualElement>
-                <ui:VisualElement name="advanced-toggle" class="advanced-toggle">
+<ui:VisualElement name="advanced-toggle" class="advanced-toggle">
                     <ui:Label text="Graph Style" picking-mode="Ignore" class="advanced-toggle__label" />
                     <ui:VisualElement picking-mode="Ignore" class="toggle-track">
                         <ui:VisualElement picking-mode="Ignore" class="toggle-knob" />
@@ -498,15 +494,6 @@
             </ui:VisualElement>
         </ui:VisualElement>
 
-        <!-- Theme Dropdown — last so it renders on top -->
-        <ui:VisualElement name="theme-dropdown" class="game-dropdown">
-            <ui:VisualElement name="theme-dropdown-minimalist" class="dropdown-item">
-                <ui:Label text="Minimalist" picking-mode="Ignore" class="dropdown-item__label" />
-            </ui:VisualElement>
-            <ui:VisualElement name="theme-dropdown-sky" class="dropdown-item">
-                <ui:Label text="Sky" picking-mode="Ignore" class="dropdown-item__label" />
-            </ui:VisualElement>
-        </ui:VisualElement>
 
     </ui:VisualElement>
 </ui:UXML>
