@@ -121,8 +121,8 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                     }
                     else
                     {
-                        _donut.enabled = false;
-                        _tube.enabled = false;
+                        if (_donut != null) _donut.enabled = false;
+                        if (_tube != null) _tube.enabled = false;
                         DestroyAfterDelayAsync(_destroyDelay, _cancellationTokenSource.Token).Forget();
                         return;
                     }
