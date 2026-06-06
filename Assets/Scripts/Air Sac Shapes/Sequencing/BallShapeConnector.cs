@@ -83,6 +83,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         internal async UniTask RetractAsync(CancellationToken ct)
         {
+            if (_trackerParent != null)
+                _trackerParent.RegisterDestroyDelay(_retractDurationSeconds);
             using CancellationTokenSource linked = CancellationTokenSource.CreateLinkedTokenSource(ct, destroyCancellationToken);
             await AnimateAsync(retract: true, linked.Token);
         }

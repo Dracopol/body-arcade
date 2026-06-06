@@ -14,6 +14,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         internal event Action OnShapeDestroyed;
         internal event Action OnShapeWinFill;
+        internal event Action OnShapeAppearComplete;
 
         #endregion
 
@@ -39,6 +40,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private GameObject _currentShape;
         private GameObject _currentBall;
+        private ProgressTrackerParent _currentTrackerParent;
         private bool _hasSpawned;
 
         #endregion
@@ -89,6 +91,16 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
                 if (r != null) r.enabled = true;
         }
 
+        internal void TriggerAppear()
+        {
+            if (_currentTrackerParent == null)
+            {
+                OnShapeAppearComplete?.Invoke();
+                return;
+            }
+            _currentTrackerParent.TriggerAppear();
+        }
+
         #endregion
 
         #region Event handlers
@@ -96,6 +108,11 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private void HandleTrackerWinFill()
         {
             OnShapeWinFill?.Invoke();
+        }
+
+        private void HandleTrackerAppearComplete()
+        {
+            OnShapeAppearComplete?.Invoke();
         }
 
         #endregion
@@ -118,17 +135,19 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
             _hasSpawned = true;
 
-            SubscribeWinFill();
+            SubscribeEvents();
             AssignHand(_currentShape);
             WireTracker(_currentShape, _currentBall);
             WireConnector(_currentShape, _currentBall);
         }
 
-        private void SubscribeWinFill()
+        private void SubscribeEvents()
         {
             ProgressTrackerParent tracker = _currentShape.GetComponent<ProgressTrackerParent>();
             if (tracker == null) return;
-            tracker.OnWinFillComplete += HandleTrackerWinFill;
+            _currentTrackerParent             = tracker;
+            tracker.OnWinFillComplete        += HandleTrackerWinFill;
+            tracker.OnAppearComplete         += HandleTrackerAppearComplete;
         }
 
         private void HideShapeRenderers()

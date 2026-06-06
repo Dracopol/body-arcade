@@ -13,6 +13,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         internal event Action OnWinStateChange;
         internal event Action OnFirstFillComplete;
         internal event Action OnWinFillComplete;
+        internal event Action OnAppearComplete;
 
         #endregion
 
@@ -29,6 +30,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         private int _winCount;
         private int _firstFillCount;
         private int _winFillCount;
+        private int _appearCount;
         private int _completeCount;
 
         #endregion
@@ -53,6 +55,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 tracker.OnWinStateChange    += HandleWinStateChange;
                 tracker.OnFirstFillComplete += HandleFirstFillComplete;
                 tracker.OnWinFillComplete   += HandleWinFillComplete;
+                tracker.OnAppearComplete    += HandleAppearComplete;
                 tracker.OnWinReady          += HandleWinReady;
                 tracker.OnComplete          += HandleComplete;
             }
@@ -67,6 +70,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 tracker.OnWinStateChange    -= HandleWinStateChange;
                 tracker.OnFirstFillComplete -= HandleFirstFillComplete;
                 tracker.OnWinFillComplete   -= HandleWinFillComplete;
+                tracker.OnAppearComplete    -= HandleAppearComplete;
                 tracker.OnWinReady          -= HandleWinReady;
                 tracker.OnComplete          -= HandleComplete;
             }
@@ -80,6 +84,18 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         {
             foreach (SplineProgressTracker tracker in _trackers)
                 tracker.RegisterDestroyDelay(seconds);
+        }
+
+        internal void TriggerAppear()
+        {
+            _appearCount = 0;
+            if (_trackers.Count == 0)
+            {
+                OnAppearComplete?.Invoke();
+                return;
+            }
+            foreach (SplineProgressTracker tracker in _trackers)
+                tracker.TriggerAppear();
         }
 
         #endregion
@@ -117,6 +133,12 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         {
             if (AllReached(ref _winFillCount))
                 OnWinFillComplete?.Invoke();
+        }
+
+        private void HandleAppearComplete()
+        {
+            if (AllReached(ref _appearCount))
+                OnAppearComplete?.Invoke();
         }
 
         private void HandleComplete()
