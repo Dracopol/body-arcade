@@ -39,8 +39,6 @@ namespace IMVR.BodyArcade.UiRobot
 
         #region Events
 
-        internal System.Action<HandMode>   OnHandModeChanged;
-        internal System.Action<MirrorMode> OnMirrorModeChanged;
         internal System.Action<ActiveGame> OnActiveGameChanged;
 
         #endregion
@@ -65,13 +63,6 @@ namespace IMVR.BodyArcade.UiRobot
         private VisualElement _neuroTargetBiasSection;
         private bool          _isAdvancedMode;
 
-        // Hand mode
-        private List<VisualElement> _handOptionRows;
-        private VisualElement       _bothHandsPanel;
-
-        // Mirror
-        private List<VisualElement> _mirrorBtns;
-
         // Focus mode (NeuroMania)
         private List<VisualElement> _focusModeRows;
 
@@ -94,6 +85,10 @@ namespace IMVR.BodyArcade.UiRobot
         // AirSac hand mode
         private List<VisualElement> _airsacHandModeBtns;
         private string              _selectedAirsacHandMode = "Both";
+
+        // Hand visualization
+        private List<VisualElement> _handVizBtns;
+        private bool                _handVisualization = true;
 
         // Difficulty
         private List<VisualElement> _difficultyBtns;
@@ -140,7 +135,6 @@ namespace IMVR.BodyArcade.UiRobot
         private VisualElement _startBtn;
 
         // State
-        private HandMode   _selectedHandMode   = HandMode.BothSimultaneously;
         private MirrorMode _selectedMirrorMode = MirrorMode.Unmirrored;
         private FocusMode  _selectedFocusMode  = FocusMode.Unfocused;
         private HeightMode _selectedHeightMode = HeightMode.EyeLevel;
@@ -156,20 +150,6 @@ namespace IMVR.BodyArcade.UiRobot
         {
             _root = _document.rootVisualElement;
 
-            _handOptionRows = new List<VisualElement>
-            {
-                _root.Q<VisualElement>("option-left-hand"),
-                _root.Q<VisualElement>("option-right-hand"),
-                _root.Q<VisualElement>("option-both-hands")
-            };
-
-            _mirrorBtns = new List<VisualElement>
-            {
-                _root.Q<VisualElement>("mirror-unmirrored"),
-                _root.Q<VisualElement>("mirror-left"),
-                _root.Q<VisualElement>("mirror-right")
-            };
-
             _focusModeRows = new List<VisualElement>
             {
                 _root.Q<VisualElement>("option-normal"),
@@ -184,7 +164,6 @@ namespace IMVR.BodyArcade.UiRobot
                 _root.Q<VisualElement>("option-height-mixed")
             };
 
-            _bothHandsPanel  = _root.Q<VisualElement>("both-hands-options");
             _gameSwitcher    = _root.Q<VisualElement>("game-switcher");
             _gameDropdown    = _root.Q<VisualElement>("game-dropdown");
             _contentAirsac   = _root.Q<VisualElement>("content-airsac");
@@ -212,6 +191,12 @@ namespace IMVR.BodyArcade.UiRobot
                 _root.Q<VisualElement>("airsac-hm-btn-left-mixed"),
                 _root.Q<VisualElement>("airsac-hm-btn-mixed"),
                 _root.Q<VisualElement>("airsac-hm-btn-right-mixed")
+            };
+
+            _handVizBtns = new List<VisualElement>
+            {
+                _root.Q<VisualElement>("hand-viz-btn-no"),
+                _root.Q<VisualElement>("hand-viz-btn-yes")
             };
 
             _difficultyBtns = new List<VisualElement>
@@ -247,12 +232,11 @@ namespace IMVR.BodyArcade.UiRobot
             _timerValueLabel  = _root.Q<Label>("timer-value-label");
             _timerInfoLabel   = _root.Q<Label>("timer-info-label");
 
-            RegisterHandModeCallbacks();
-            RegisterMirrorCallbacks();
             RegisterFocusModeCallbacks();
             RegisterHeightModeCallbacks();
             RegisterHandFocusSliderCallbacks();
             RegisterAirsacHandModeCallbacks();
+            RegisterHandVizCallbacks();
             RegisterDifficultyCallbacks();
             RegisterNeuroHandModeCallbacks();
             RegisterNeuroDifficultyCallbacks();
@@ -264,20 +248,6 @@ namespace IMVR.BodyArcade.UiRobot
             ApplyInitialState();
         }
 
-        private void RegisterHandModeCallbacks()
-        {
-            _handOptionRows[0].RegisterCallback<ClickEvent>(_ => SelectHandMode(HandMode.LeftOnly));
-            _handOptionRows[1].RegisterCallback<ClickEvent>(_ => SelectHandMode(HandMode.RightOnly));
-            _handOptionRows[2].RegisterCallback<ClickEvent>(_ => SelectHandMode(HandMode.BothSimultaneously));
-        }
-
-        private void RegisterMirrorCallbacks()
-        {
-            _mirrorBtns[0].RegisterCallback<ClickEvent>(_ => SelectMirrorMode(MirrorMode.Unmirrored));
-            _mirrorBtns[1].RegisterCallback<ClickEvent>(_ => SelectMirrorMode(MirrorMode.MirrorLeft));
-            _mirrorBtns[2].RegisterCallback<ClickEvent>(_ => SelectMirrorMode(MirrorMode.MirrorRight));
-        }
-
         private void RegisterFocusModeCallbacks()
         {
             _focusModeRows[0].RegisterCallback<ClickEvent>(_ => SelectFocusMode(FocusMode.Unfocused));
@@ -285,11 +255,17 @@ namespace IMVR.BodyArcade.UiRobot
             _focusModeRows[2].RegisterCallback<ClickEvent>(_ => SelectFocusMode(FocusMode.RightFocused));
         }
 
+        private void RegisterHandVizCallbacks()
+        {
+            _handVizBtns[0].RegisterCallback<ClickEvent>(_ => SelectHandViz(false));
+            _handVizBtns[1].RegisterCallback<ClickEvent>(_ => SelectHandViz(true));
+        }
+
         private void RegisterAirsacHandModeCallbacks()
         {
-            _airsacHandModeBtns[0].RegisterCallback<ClickEvent>(_ => SelectAirsacHandMode("Left"));
-            _airsacHandModeBtns[1].RegisterCallback<ClickEvent>(_ => SelectAirsacHandMode("Both"));
-            _airsacHandModeBtns[2].RegisterCallback<ClickEvent>(_ => SelectAirsacHandMode("Right"));
+            _airsacHandModeBtns[0].RegisterCallback<ClickEvent>(_ => SelectAirsacHandMode("Left",  MirrorMode.MirrorLeft));
+            _airsacHandModeBtns[1].RegisterCallback<ClickEvent>(_ => SelectAirsacHandMode("Both",  MirrorMode.Unmirrored));
+            _airsacHandModeBtns[2].RegisterCallback<ClickEvent>(_ => SelectAirsacHandMode("Right", MirrorMode.MirrorRight));
         }
 
         private void RegisterDifficultyCallbacks()
@@ -343,11 +319,11 @@ namespace IMVR.BodyArcade.UiRobot
 
         private void ApplyInitialState()
         {
-            SelectHandMode(_selectedHandMode);
-            SelectMirrorMode(_selectedMirrorMode);
+            UpdateAvailableShapes(HandMode.BothSimultaneously);
             SelectFocusMode(_selectedFocusMode);
             SelectHeightMode(_selectedHeightMode);
-            SelectAirsacHandMode(_selectedAirsacHandMode);
+            SelectAirsacHandMode(_selectedAirsacHandMode, _selectedMirrorMode);
+            SelectHandViz(_handVisualization);
             SelectDifficulty(_selectedDifficulty);
             SelectNeuroHandMode(_selectedNeuroHandMode);
             SelectNeuroDifficulty(_selectedNeuroDifficulty);
@@ -370,8 +346,9 @@ namespace IMVR.BodyArcade.UiRobot
                     .Where(s => s.DifficultyLabel == _selectedDifficulty)
                     .ToList();
 
-                SessionConfigAirSacShapes.Instance.MirrorMode     = ResolveMirrorMode();
-                SessionConfigAirSacShapes.Instance.HandMode        = _selectedHandMode;
+                SessionConfigAirSacShapes.Instance.MirrorMode        = _selectedMirrorMode;
+                SessionConfigAirSacShapes.Instance.HandMode          = HandMode.BothSimultaneously;
+                SessionConfigAirSacShapes.Instance.HandVisualization = _handVisualization;
                 SessionConfigAirSacShapes.Instance.SelectedShapes  = orderedSelection;
                 SessionConfigAirSacShapes.Instance.StrikeAmount    = _strikeAmount;
                 SessionConfigAirSacShapes.Instance.TimerSeconds    = _timerSeconds;
@@ -412,38 +389,6 @@ namespace IMVR.BodyArcade.UiRobot
         #endregion
 
         #region Private
-
-        private MirrorMode ResolveMirrorMode()
-        {
-            if (_selectedHandMode == HandMode.LeftOnly || _selectedHandMode == HandMode.RightOnly)
-                return MirrorMode.Unmirrored;
-            return _selectedMirrorMode;
-        }
-
-        private void SelectHandMode(HandMode mode)
-        {
-            _selectedHandMode = mode;
-
-            foreach (var row in _handOptionRows)
-                row.RemoveFromClassList("selected");
-
-            _handOptionRows[(int)mode].AddToClassList("selected");
-            _bothHandsPanel.EnableInClassList("visible", mode == HandMode.BothSimultaneously);
-
-            UpdateAvailableShapes(mode);
-            OnHandModeChanged?.Invoke(mode);
-        }
-
-        private void SelectMirrorMode(MirrorMode mode)
-        {
-            _selectedMirrorMode = mode;
-
-            foreach (var btn in _mirrorBtns)
-                btn.RemoveFromClassList("selected");
-
-            _mirrorBtns[(int)mode].AddToClassList("selected");
-            OnMirrorModeChanged?.Invoke(mode);
-        }
 
         private void SelectFocusMode(FocusMode mode)
         {
@@ -548,9 +493,17 @@ namespace IMVR.BodyArcade.UiRobot
             _availableShapes = SessionConfigAirSacShapes.Instance.GetShapesForMode(mode);
         }
 
-        private void SelectAirsacHandMode(string mode)
+        private void SelectHandViz(bool show)
+        {
+            _handVisualization = show;
+            _handVizBtns[0].EnableInClassList("selected", !show);
+            _handVizBtns[1].EnableInClassList("selected", show);
+        }
+
+        private void SelectAirsacHandMode(string mode, MirrorMode mirror)
         {
             _selectedAirsacHandMode = mode;
+            _selectedMirrorMode     = mirror;
             var labels = new[] { "Left", "Both", "Right" };
             for (int i = 0; i < _airsacHandModeBtns.Count; i++)
                 _airsacHandModeBtns[i].EnableInClassList("selected", labels[i] == mode);

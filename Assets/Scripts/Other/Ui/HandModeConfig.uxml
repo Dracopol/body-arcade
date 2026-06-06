@@ -25,63 +25,6 @@
         <!-- Air Sac Shapes Content -->
         <ui:VisualElement name="content-airsac" class="game-content">
 
-            <!-- Hand Mode Selection -->
-            <ui:VisualElement class="section-card">
-                <ui:VisualElement class="section-header">
-                    <ui:VisualElement class="section-header__icon" />
-                    <ui:Label text="Hand Mode Selection" class="section-header__label" />
-                </ui:VisualElement>
-                <ui:VisualElement name="option-left-hand" class="option-row">
-                    <ui:VisualElement picking-mode="Ignore" class="radio-outer">
-                        <ui:VisualElement picking-mode="Ignore" class="radio-inner" />
-                    </ui:VisualElement>
-                    <ui:VisualElement picking-mode="Ignore" class="option-text">
-                        <ui:Label text="Left Hand Only" picking-mode="Ignore" class="option-text__label" />
-                        <ui:Label text="Exercise using only the left hand" picking-mode="Ignore" class="option-text__desc" />
-                    </ui:VisualElement>
-                </ui:VisualElement>
-                <ui:VisualElement name="option-right-hand" class="option-row">
-                    <ui:VisualElement picking-mode="Ignore" class="radio-outer">
-                        <ui:VisualElement picking-mode="Ignore" class="radio-inner" />
-                    </ui:VisualElement>
-                    <ui:VisualElement picking-mode="Ignore" class="option-text">
-                        <ui:Label text="Right Hand Only" picking-mode="Ignore" class="option-text__label" />
-                        <ui:Label text="Exercise using only the right hand" picking-mode="Ignore" class="option-text__desc" />
-                    </ui:VisualElement>
-                </ui:VisualElement>
-                <ui:VisualElement name="option-both-hands" class="option-row">
-                    <ui:VisualElement picking-mode="Ignore" class="radio-outer">
-                        <ui:VisualElement picking-mode="Ignore" class="radio-inner" />
-                    </ui:VisualElement>
-                    <ui:VisualElement picking-mode="Ignore" class="option-text">
-                        <ui:Label text="Both Hands Simultaneously" picking-mode="Ignore" class="option-text__label" />
-                        <ui:Label text="Exercise using both hands together" picking-mode="Ignore" class="option-text__desc" />
-                    </ui:VisualElement>
-                </ui:VisualElement>
-            </ui:VisualElement>
-
-            <!-- Both Hands Options -->
-            <ui:VisualElement name="both-hands-options" class="section-card options-panel">
-                <ui:VisualElement class="section-header">
-                    <ui:VisualElement class="section-header__icon" />
-                    <ui:Label text="Both Hands Options" class="section-header__label" />
-                </ui:VisualElement>
-                <ui:VisualElement class="mirror-row">
-                    <ui:VisualElement name="mirror-unmirrored" class="mirror-btn">
-                        <ui:Label text="Unmirrored" picking-mode="Ignore" class="mirror-btn__label" />
-                        <ui:Label text="Each hand moves independently" picking-mode="Ignore" class="mirror-btn__desc" />
-                    </ui:VisualElement>
-                    <ui:VisualElement name="mirror-left" class="mirror-btn">
-                        <ui:Label text="Mirror Left Hand" picking-mode="Ignore" class="mirror-btn__label" />
-                        <ui:Label text="Right hand mirrors left hand movements" picking-mode="Ignore" class="mirror-btn__desc" />
-                    </ui:VisualElement>
-                    <ui:VisualElement name="mirror-right" class="mirror-btn">
-                        <ui:Label text="Mirror Right Hand" picking-mode="Ignore" class="mirror-btn__label" />
-                        <ui:Label text="Left hand mirrors right hand movements" picking-mode="Ignore" class="mirror-btn__desc" />
-                    </ui:VisualElement>
-                </ui:VisualElement>
-            </ui:VisualElement>
-
             <!-- Hand Mode -->
             <ui:VisualElement class="section-card">
                 <ui:VisualElement class="section-header">
@@ -121,6 +64,24 @@
                             </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:Label text="Right" picking-mode="Ignore" class="mirror-btn__label" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Hand Visualization -->
+            <ui:VisualElement class="section-card">
+                <ui:VisualElement class="section-header">
+                    <ui:VisualElement class="section-header__icon" />
+                    <ui:Label text="Hand Visualization" class="section-header__label" />
+                </ui:VisualElement>
+                <ui:VisualElement class="mirror-row">
+                    <ui:VisualElement name="hand-viz-btn-no" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="hand-viz-icon hand-viz-icon--no" />
+                        <ui:Label text="No" picking-mode="Ignore" class="mirror-btn__label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="hand-viz-btn-yes" class="mirror-btn">
+                        <ui:VisualElement picking-mode="Ignore" class="hand-viz-icon hand-viz-icon--yes" />
+                        <ui:Label text="Yes" picking-mode="Ignore" class="mirror-btn__label" />
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>

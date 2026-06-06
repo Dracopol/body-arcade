@@ -216,15 +216,6 @@
     color: #888888;
 }
 
-/* Both Hands Options panel */
-.options-panel {
-    display: none;
-}
-
-.options-panel.visible {
-    display: flex;
-}
-
 /* Mirror buttons row */
 .mirror-row {
     flex-direction: row;
@@ -842,6 +833,22 @@
     background-image: url("StarOutline.png");
     -unity-background-scale-mode: scale-to-fit;
     -unity-background-image-tint-color: #111111;
+}
+
+/* ─── Hand visualization icons ─── */
+.hand-viz-icon {
+    width: 44px;
+    height: 44px;
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: #111111;
+}
+
+.hand-viz-icon--no {
+    background-image: url("../../../Content/Sprites/X.png");
+}
+
+.hand-viz-icon--yes {
+    background-image: url("../../../Content/Sprites/Hands.png");
 }
 
 /* ─── Hand mode buttons row ─── */

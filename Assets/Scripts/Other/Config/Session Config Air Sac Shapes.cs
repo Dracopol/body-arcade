@@ -9,7 +9,8 @@ namespace IMVR.BodyArcade.UiRobot
         internal static SessionConfigAirSacShapes Instance { get; private set; }
 
         internal MirrorMode MirrorMode;
-        internal HandMode HandMode;
+        internal HandMode   HandMode;
+        internal bool       HandVisualization = true;
         internal List<ShapeConfig> SelectedShapes = new();
         internal int? StrikeAmount = 10;
         internal int? TimerSeconds = 60;
