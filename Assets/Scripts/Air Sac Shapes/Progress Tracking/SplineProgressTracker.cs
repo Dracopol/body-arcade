@@ -14,6 +14,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         internal event Action<float> OnMaxProgressChange;
         internal event Action OnWinStateChange;
         internal event Action OnFirstFillComplete;
+        internal event Action OnWinFillComplete;
         internal event Action OnWinReady;
         internal event Action OnComplete;
 
@@ -123,6 +124,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                     {
                         if (_donut != null) _donut.enabled = false;
                         if (_tube != null) _tube.enabled = false;
+                        OnWinFillComplete?.Invoke();
                         DestroyAfterDelayAsync(_destroyDelay, _cancellationTokenSource.Token).Forget();
                         return;
                     }

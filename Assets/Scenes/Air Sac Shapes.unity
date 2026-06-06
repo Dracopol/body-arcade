@@ -3357,6 +3357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.Sequencing.ShapeSequenceCoordinator
   _sequencer: {fileID: 1096373140}
   _spawner: {fileID: 1096373139}
+  _alignToCamera: {fileID: 1096373141}
 --- !u!1 &901993391
 GameObject:
   m_ObjectHideFlags: 0

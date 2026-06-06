@@ -13,6 +13,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         #region Events
 
         internal event Action OnShapeDestroyed;
+        internal event Action OnShapeWinFill;
 
         #endregion
 
@@ -42,6 +43,12 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         #endregion
 
+        #region Properties
+
+        internal BallShapeConnector CurrentConnector { get; private set; }
+
+        #endregion
+
         #region Setup
 
         private void Start()
@@ -58,7 +65,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         {
             if (_hasSpawned && _currentShape == null)
             {
-                _hasSpawned = false;
+                CurrentConnector = null;
+                _hasSpawned      = false;
                 OnShapeDestroyed?.Invoke();
             }
         }
@@ -67,10 +75,27 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         #region Internal
 
-        internal void Spawn(GameObject ball)
+        internal void SpawnHidden(GameObject ball)
         {
             _currentBall = ball;
             SpawnShape();
+            HideShapeRenderers();
+        }
+
+        internal void ShowCurrentShape()
+        {
+            if (_currentShape == null) return;
+            foreach (MeshRenderer r in _currentShape.GetComponentsInChildren<MeshRenderer>())
+                if (r != null) r.enabled = true;
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        private void HandleTrackerWinFill()
+        {
+            OnShapeWinFill?.Invoke();
         }
 
         #endregion
@@ -93,9 +118,24 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
             _hasSpawned = true;
 
+            SubscribeWinFill();
             AssignHand(_currentShape);
             WireTracker(_currentShape, _currentBall);
             WireConnector(_currentShape, _currentBall);
+        }
+
+        private void SubscribeWinFill()
+        {
+            ProgressTrackerParent tracker = _currentShape.GetComponent<ProgressTrackerParent>();
+            if (tracker == null) return;
+            tracker.OnWinFillComplete += HandleTrackerWinFill;
+        }
+
+        private void HideShapeRenderers()
+        {
+            if (_currentShape == null) return;
+            foreach (MeshRenderer r in _currentShape.GetComponentsInChildren<MeshRenderer>())
+                r.enabled = false;
         }
 
         private void AssignHand(GameObject shape)
@@ -131,7 +171,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             if (handObject == null) return;
 
             SplineProgressTracker tracker = obj.GetComponent<SplineProgressTracker>();
-            tracker?.SetHand(handObject.transform, handObject.GetComponent<Collider>());
+            if (tracker != null)
+                tracker.SetHand(handObject.transform, handObject.GetComponent<Collider>());
         }
 
         private void WireConnector(GameObject shape, GameObject ball)
@@ -142,8 +183,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             SplineContainer splineContainer = tracker.Trackers[0].SplineContainer;
             if (splineContainer == null) return;
 
-            BallShapeConnector connector = shape.AddComponent<BallShapeConnector>();
-            connector.Setup(ball.transform, splineContainer, _connectorMaterial, _connectorFillMaterial, _connectorMidPoint, tracker);
+            CurrentConnector = shape.AddComponent<BallShapeConnector>();
+            CurrentConnector.Setup(ball.transform, splineContainer, _connectorMaterial, _connectorFillMaterial, _connectorMidPoint, tracker);
         }
 
         private void WireTracker(GameObject shape, GameObject ball)
@@ -153,9 +194,17 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             ProgressTrackerParent tracker = shape.GetComponent<ProgressTrackerParent>();
             if (tracker == null) return;
 
-            ball.GetComponent<AirSacColor>()?.SetProgressTrackerParent(tracker);
-            ball.GetComponent<AirSacSize>()?.SetProgressTrackerParent(tracker);
-            ball.GetComponent<AirSacProgressParticleVisualizer>()?.SetProgressTrackerParent(tracker);
+            AirSacColor airSacColor = ball.GetComponent<AirSacColor>();
+            if (airSacColor != null)
+                airSacColor.SetProgressTrackerParent(tracker);
+
+            AirSacSize airSacSize = ball.GetComponent<AirSacSize>();
+            if (airSacSize != null)
+                airSacSize.SetProgressTrackerParent(tracker);
+
+            AirSacProgressParticleVisualizer particleVisualizer = ball.GetComponent<AirSacProgressParticleVisualizer>();
+            if (particleVisualizer != null)
+                particleVisualizer.SetProgressTrackerParent(tracker);
         }
 
         #endregion

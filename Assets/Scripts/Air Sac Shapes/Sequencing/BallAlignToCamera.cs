@@ -1,9 +1,16 @@
+using System;
 using UnityEngine;
 
 namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 {
     internal class BallAlignToCamera : MonoBehaviour
     {
+        #region Events
+
+        internal event Action OnAlignComplete;
+
+        #endregion
+
         #region Serialized fields
 
         [Header("References")]
@@ -104,6 +111,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         {
             _pivot.position = _targetPosition;
             _pivot.rotation = _targetRotation;
+            OnAlignComplete?.Invoke();
         }
 
         private void ApplySmooth()
@@ -124,6 +132,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             _pivot.position = _targetPosition;
             _pivot.rotation = _targetRotation;
             _isAligning     = false;
+            OnAlignComplete?.Invoke();
         }
 
         #endregion

@@ -1,3 +1,6 @@
+using Cysharp.Threading.Tasks;
+using System;
+using System.Threading;
 using UnityEngine;
 
 namespace IMVR.BodyArcade.AirSacShapes.Sequencing
@@ -8,35 +11,97 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         [SerializeField] private BallSequencer _sequencer;
         [SerializeField] private ShapeSpawner _spawner;
+        [SerializeField] private BallAlignToCamera _alignToCamera;
+
+        #endregion
+
+        #region Fields
+
+        private CancellationTokenSource _cts;
+        private bool _isSpawning;
 
         #endregion
 
         #region Setup
 
+        private void Awake()
+        {
+            _cts = new CancellationTokenSource();
+        }
+
+        private void OnDestroy()
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
+        }
+
         private void OnEnable()
         {
-            _sequencer.OnBallChanged += HandleBallChanged;
-            _spawner.OnShapeDestroyed += HandleShapeDestroyed;
+            _spawner.OnShapeWinFill    += HandleShapeWinFill;
+            _spawner.OnShapeDestroyed  += HandleShapeDestroyed;
+            _alignToCamera.OnAlignComplete += HandleAlignComplete;
         }
 
         private void OnDisable()
         {
-            _sequencer.OnBallChanged -= HandleBallChanged;
-            _spawner.OnShapeDestroyed -= HandleShapeDestroyed;
+            _spawner.OnShapeWinFill    -= HandleShapeWinFill;
+            _spawner.OnShapeDestroyed  -= HandleShapeDestroyed;
+            _alignToCamera.OnAlignComplete -= HandleAlignComplete;
         }
 
         #endregion
 
         #region Event handlers
 
-        private void HandleBallChanged(GameObject ball)
+        private void HandleShapeWinFill()
         {
-            _spawner.Spawn(ball);
+            RetractConnectorAsync(_cts.Token).Forget();
         }
 
         private void HandleShapeDestroyed()
         {
             _sequencer.Advance();
+        }
+
+        private void HandleAlignComplete()
+        {
+            if (_isSpawning) return;
+            GameObject ball = _sequencer.CurrentBall;
+            if (ball == null) return;
+            SpawnSequenceAsync(ball, _cts.Token).Forget();
+        }
+
+        #endregion
+
+        #region Private
+
+        private async UniTaskVoid RetractConnectorAsync(CancellationToken ct)
+        {
+            try
+            {
+                BallShapeConnector connector = _spawner.CurrentConnector;
+                if (connector == null) return;
+                await connector.RetractAsync(ct);
+            }
+            catch (OperationCanceledException) { }
+        }
+
+        private async UniTaskVoid SpawnSequenceAsync(GameObject ball, CancellationToken ct)
+        {
+            _isSpawning = true;
+            try
+            {
+                _spawner.SpawnHidden(ball);
+                BallShapeConnector connector = _spawner.CurrentConnector;
+                if (connector != null)
+                    await connector.GrowAsync(ct);
+                _spawner.ShowCurrentShape();
+            }
+            catch (OperationCanceledException) { }
+            finally
+            {
+                _isSpawning = false;
+            }
         }
 
         #endregion

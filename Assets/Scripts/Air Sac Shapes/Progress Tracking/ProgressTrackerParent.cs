@@ -12,6 +12,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         internal event Action<float> OnMinMaxChange;
         internal event Action OnWinStateChange;
         internal event Action OnFirstFillComplete;
+        internal event Action OnWinFillComplete;
 
         #endregion
 
@@ -27,6 +28,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         private float _minMaxProgress;
         private int _winCount;
         private int _firstFillCount;
+        private int _winFillCount;
         private int _completeCount;
 
         #endregion
@@ -50,6 +52,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 tracker.OnMaxProgressChange += HandleMaxProgressChange;
                 tracker.OnWinStateChange    += HandleWinStateChange;
                 tracker.OnFirstFillComplete += HandleFirstFillComplete;
+                tracker.OnWinFillComplete   += HandleWinFillComplete;
                 tracker.OnWinReady          += HandleWinReady;
                 tracker.OnComplete          += HandleComplete;
             }
@@ -63,6 +66,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 tracker.OnMaxProgressChange -= HandleMaxProgressChange;
                 tracker.OnWinStateChange    -= HandleWinStateChange;
                 tracker.OnFirstFillComplete -= HandleFirstFillComplete;
+                tracker.OnWinFillComplete   -= HandleWinFillComplete;
                 tracker.OnWinReady          -= HandleWinReady;
                 tracker.OnComplete          -= HandleComplete;
             }
@@ -107,6 +111,12 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         {
             if (AllReached(ref _firstFillCount))
                 OnFirstFillComplete?.Invoke();
+        }
+
+        private void HandleWinFillComplete()
+        {
+            if (AllReached(ref _winFillCount))
+                OnWinFillComplete?.Invoke();
         }
 
         private void HandleComplete()
