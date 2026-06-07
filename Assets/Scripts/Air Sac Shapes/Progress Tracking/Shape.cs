@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 {
-    internal class ProgressTrackerParent : MonoBehaviour
+    internal class Shape : MonoBehaviour
     {
         #region Events
 

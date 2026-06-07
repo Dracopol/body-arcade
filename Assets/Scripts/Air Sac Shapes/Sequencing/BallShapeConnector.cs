@@ -26,7 +26,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private Transform _ballTransform;
         private Transform _midPoint;
         private SplineContainer _splineContainer;
-        private ProgressTrackerParent _trackerParent;
+        private Shape _shape;
         private float _fillProgress;
         private float _retractProgress = 1f;
         private bool _isAnimating = true;
@@ -38,14 +38,14 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void OnEnable()
         {
-            if (_trackerParent != null)
-                _trackerParent.OnMinMaxChange += HandleMinMaxChanged;
+            if (_shape != null)
+                _shape.OnMinMaxChange += HandleMinMaxChanged;
         }
 
         private void OnDisable()
         {
-            if (_trackerParent != null)
-                _trackerParent.OnMinMaxChange -= HandleMinMaxChanged;
+            if (_shape != null)
+                _shape.OnMinMaxChange -= HandleMinMaxChanged;
         }
 
         #endregion
@@ -53,7 +53,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         #region Internal
 
         internal void Setup(Transform ballTransform, SplineContainer splineContainer,
-            Material material, Material fillMaterial, Transform midPoint, ProgressTrackerParent trackerParent)
+            Material material, Material fillMaterial, Transform midPoint, Shape shape)
         {
             _lineRenderer  = GetComponent<LineRenderer>();
             _ballTransform = ballTransform;
@@ -69,22 +69,22 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             ConfigureLineRenderer(_fillLineRenderer, fillMaterial);
             _fillLineRenderer.enabled = false;
 
-            SetProgressTrackerParent(trackerParent);
+            SetShape(shape);
         }
 
-        internal void SetProgressTrackerParent(ProgressTrackerParent tracker)
+        internal void SetShape(Shape shape)
         {
-            if (_trackerParent != null)
-                _trackerParent.OnMinMaxChange -= HandleMinMaxChanged;
-            _trackerParent = tracker;
-            if (_trackerParent != null)
-                _trackerParent.OnMinMaxChange += HandleMinMaxChanged;
+            if (_shape != null)
+                _shape.OnMinMaxChange -= HandleMinMaxChanged;
+            _shape = shape;
+            if (_shape != null)
+                _shape.OnMinMaxChange += HandleMinMaxChanged;
         }
 
         internal async UniTask RetractAsync(CancellationToken ct)
         {
-            if (_trackerParent != null)
-                _trackerParent.RegisterDestroyDelay(_retractDurationSeconds);
+            if (_shape != null)
+                _shape.RegisterDestroyDelay(_retractDurationSeconds);
             using CancellationTokenSource linked = CancellationTokenSource.CreateLinkedTokenSource(ct, destroyCancellationToken);
             await AnimateAsync(retract: true, linked.Token);
         }

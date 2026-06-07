@@ -758,18 +758,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressTracker
   _tube: {fileID: 6993238034221991085}
-  _donut1: {fileID: 7858462706583909789}
+  _knob: {fileID: 0}
   _splineContainer: {fileID: 8308292250996409287}
   _handTransform: {fileID: 0}
   _handCollider: {fileID: 0}
-  _donutCollider: {fileID: 6154579169274208974}
+  _knobCollider: {fileID: 0}
   _radiusToleranceMultiplier: 2
   _tubeRadiusMeters: 0.02
-  _isForwardOnly: 0
   _isReversed: 1
   _drainSpeedPerSecond: 0.1
-  _fillUpPerSecond: 0.5
-  _disappearPerSecond: 3.5
+  _fillSpeedPerSecond: 0.5
+  _disappearSpeedPerSecond: 3.5
+  _appearSpeedPerSecond: 1
   _winThreshold: 0.98
   _debugProgress: 0
   _debugIsHandInside: 0
@@ -1290,18 +1290,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressTracker
   _tube: {fileID: 8590643724099324256}
-  _donut1: {fileID: 4871886512112036166}
+  _knob: {fileID: 0}
   _splineContainer: {fileID: 7310892797119125499}
   _handTransform: {fileID: 0}
   _handCollider: {fileID: 0}
-  _donutCollider: {fileID: 3204072189948162135}
+  _knobCollider: {fileID: 0}
   _radiusToleranceMultiplier: 2
   _tubeRadiusMeters: 0.02
-  _isForwardOnly: 0
-  _isReversed: 1
+  _isReversed: 0
   _drainSpeedPerSecond: 0.1
-  _fillUpPerSecond: 0.5
-  _disappearPerSecond: 3.5
+  _fillSpeedPerSecond: 0.5
+  _disappearSpeedPerSecond: 3.5
+  _appearSpeedPerSecond: 1
   _winThreshold: 0.98
   _debugProgress: 0
   _debugIsHandInside: 0

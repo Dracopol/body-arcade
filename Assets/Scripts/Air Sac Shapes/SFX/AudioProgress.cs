@@ -8,7 +8,7 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private ProgressTrackerParent _progressTracker;
+        [SerializeField] private Shape _progressTracker;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioSource _winAudioSource;
         [SerializeField] private AudioClip _clip;

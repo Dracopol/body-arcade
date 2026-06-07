@@ -8,7 +8,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private ProgressTrackerParent _progressTracker;
+        [SerializeField] private ProgressTracking.Shape _progressTracker;
         [SerializeField] private ParticleSystem _particleEffectPrefab;
 
         [Header("Behaviour")]
@@ -50,7 +50,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
 
         #region Internal
 
-        internal void SetProgressTrackerParent(ProgressTrackerParent tracker)
+        internal void SetShape(ProgressTracking.Shape tracker)
         {
             if (_progressTracker != null)
             {

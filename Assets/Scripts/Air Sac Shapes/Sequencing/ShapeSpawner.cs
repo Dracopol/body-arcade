@@ -40,7 +40,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private GameObject _currentShape;
         private GameObject _currentBall;
-        private ProgressTrackerParent _currentTrackerParent;
+        private Shape _currentTrackerParent;
         private bool _hasSpawned;
 
         #endregion
@@ -143,7 +143,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void SubscribeEvents()
         {
-            ProgressTrackerParent tracker = _currentShape.GetComponent<ProgressTrackerParent>();
+            Shape tracker = _currentShape.GetComponent<Shape>();
             if (tracker == null) return;
             _currentTrackerParent             = tracker;
             tracker.OnWinFillComplete        += HandleTrackerWinFill;
@@ -196,7 +196,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void WireConnector(GameObject shape, GameObject ball)
         {
-            ProgressTrackerParent tracker = shape.GetComponent<ProgressTrackerParent>();
+            Shape tracker = shape.GetComponent<Shape>();
             if (tracker == null || tracker.Trackers.Count == 0) return;
 
             SplineContainer splineContainer = tracker.Trackers[0].SplineContainer;
@@ -210,20 +210,20 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         {
             if (ball == null) return;
 
-            ProgressTrackerParent tracker = shape.GetComponent<ProgressTrackerParent>();
+            Shape tracker = shape.GetComponent<Shape>();
             if (tracker == null) return;
 
             AirSacColor airSacColor = ball.GetComponent<AirSacColor>();
             if (airSacColor != null)
-                airSacColor.SetProgressTrackerParent(tracker);
+                airSacColor.SetShape(tracker);
 
             AirSacSize airSacSize = ball.GetComponent<AirSacSize>();
             if (airSacSize != null)
-                airSacSize.SetProgressTrackerParent(tracker);
+                airSacSize.SetShape(tracker);
 
             AirSacProgressParticleVisualizer particleVisualizer = ball.GetComponent<AirSacProgressParticleVisualizer>();
             if (particleVisualizer != null)
-                particleVisualizer.SetProgressTrackerParent(tracker);
+                particleVisualizer.SetShape(tracker);
         }
 
         #endregion
