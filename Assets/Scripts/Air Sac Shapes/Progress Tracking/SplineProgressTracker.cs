@@ -25,13 +25,13 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         [Header("Extra")]
         [SerializeField] private MeshRenderer _tube;
-        [SerializeField] private MeshRenderer _donut;
+        [SerializeField] private MeshRenderer _knob;
 
         [Header("References")]
         [SerializeField] private SplineContainer _splineContainer;
         [SerializeField] private Transform _handTransform;
         [SerializeField] private Collider _handCollider;
-        [SerializeField] private Collider _donutCollider;
+        [SerializeField] private Collider _knobCollider;
 
         [Header("Behaviour")]
         [SerializeField] private float _radiusToleranceMultiplier = 1.5f;
@@ -131,7 +131,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                     if (_progress <= 0f)
                     {
                         _isDisappearing = false;
-                        if (_donut != null) _donut.enabled = false;
+                        if (_knob != null) _knob.enabled = false;
                         if (_tube != null) _tube.enabled = false;
                         OnWinFillComplete?.Invoke();
                         DestroyAfterDelayAsync(_destroyDelay, _cancellationTokenSource.Token).Forget();
@@ -188,9 +188,9 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 return;
             }
 
-            bool isHandInsideDonut = _donutCollider != null && Physics.ComputePenetration(
+            bool isHandInsideDonut = _knobCollider != null && Physics.ComputePenetration(
                 _handCollider, _handCollider.transform.position, _handCollider.transform.rotation,
-                _donutCollider, _donutCollider.transform.position, _donutCollider.transform.rotation,
+                _knobCollider, _knobCollider.transform.position, _knobCollider.transform.rotation,
                 out _, out _);
 
             if (isHandInsideDonut)

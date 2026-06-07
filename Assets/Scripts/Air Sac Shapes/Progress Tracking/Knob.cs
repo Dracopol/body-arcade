@@ -4,7 +4,7 @@ using UnityEngine.Splines;
 
 namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 {
-    internal class Donut : MonoBehaviour
+    internal class Knob : MonoBehaviour
     {
         #region Serialized fields
 
