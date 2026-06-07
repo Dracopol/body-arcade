@@ -762,7 +762,7 @@ MonoBehaviour:
   _splineContainer: {fileID: 8308292250996409287}
   _handTransform: {fileID: 0}
   _handCollider: {fileID: 0}
-  _knobCollider: {fileID: 0}
+  _knobCollider: {fileID: 6154579169274208974}
   _radiusToleranceMultiplier: 2
   _tubeRadiusMeters: 0.02
   _isReversed: 1
@@ -1294,7 +1294,7 @@ MonoBehaviour:
   _splineContainer: {fileID: 7310892797119125499}
   _handTransform: {fileID: 0}
   _handCollider: {fileID: 0}
-  _knobCollider: {fileID: 0}
+  _knobCollider: {fileID: 3204072189948162135}
   _radiusToleranceMultiplier: 2
   _tubeRadiusMeters: 0.02
   _isReversed: 0

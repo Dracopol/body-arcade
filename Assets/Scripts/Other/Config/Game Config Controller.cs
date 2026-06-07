@@ -7,13 +7,6 @@ using IMVR.BodyArcade;
 
 namespace IMVR.BodyArcade.UiRobot
 {
-    internal enum HandMode
-    {
-        LeftOnly,
-        RightOnly,
-        BothSimultaneously
-    }
-
     internal enum MirrorMode
     {
         Unmirrored,
@@ -79,7 +72,6 @@ namespace IMVR.BodyArcade.UiRobot
         private bool          _isDraggingHandFocus;
         private float         _handFocusBias = 0f;
 
-        // Shape availability
         private List<ShapeConfig> _availableShapes = new();
 
         // AirSac hand mode
@@ -319,7 +311,7 @@ namespace IMVR.BodyArcade.UiRobot
 
         private void ApplyInitialState()
         {
-            UpdateAvailableShapes(HandMode.BothSimultaneously);
+            UpdateAvailableShapes();
             SelectFocusMode(_selectedFocusMode);
             SelectHeightMode(_selectedHeightMode);
             SelectAirsacHandMode(_selectedAirsacHandMode, _selectedMirrorMode);
@@ -347,7 +339,6 @@ namespace IMVR.BodyArcade.UiRobot
                     .ToList();
 
                 SessionConfigAirSacShapes.Instance.MirrorMode        = _selectedMirrorMode;
-                SessionConfigAirSacShapes.Instance.HandMode          = HandMode.BothSimultaneously;
                 SessionConfigAirSacShapes.Instance.HandVisualization = _handVisualization;
                 SessionConfigAirSacShapes.Instance.SelectedShapes  = orderedSelection;
                 SessionConfigAirSacShapes.Instance.StrikeAmount    = _strikeAmount;
@@ -487,10 +478,10 @@ namespace IMVR.BodyArcade.UiRobot
             OnActiveGameChanged?.Invoke(game);
         }
 
-        private void UpdateAvailableShapes(HandMode mode)
+        private void UpdateAvailableShapes()
         {
             if (SessionConfigAirSacShapes.Instance == null) return;
-            _availableShapes = SessionConfigAirSacShapes.Instance.GetShapesForMode(mode);
+            _availableShapes = SessionConfigAirSacShapes.Instance.Shapes;
         }
 
         private void SelectHandViz(bool show)

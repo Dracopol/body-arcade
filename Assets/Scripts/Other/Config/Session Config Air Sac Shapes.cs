@@ -9,15 +9,14 @@ namespace IMVR.BodyArcade.UiRobot
         internal static SessionConfigAirSacShapes Instance { get; private set; }
 
         internal MirrorMode MirrorMode;
-        internal HandMode   HandMode;
         internal bool       HandVisualization = true;
         internal List<ShapeConfig> SelectedShapes = new();
         internal int? StrikeAmount = 10;
         internal int? TimerSeconds = 60;
 
-        [SerializeField] private List<ShapeConfig> _leftHandShapes  = new();
-        [SerializeField] private List<ShapeConfig> _rightHandShapes = new();
-        [SerializeField] private List<ShapeConfig> _bothHandsShapes = new();
+        [SerializeField] private List<ShapeConfig> _shapes = new();
+
+        internal List<ShapeConfig> Shapes => _shapes;
 
         private void Awake()
         {
@@ -29,17 +28,6 @@ namespace IMVR.BodyArcade.UiRobot
 
             Instance = this;
             DontDestroyOnLoad(gameObject);
-        }
-
-        internal List<ShapeConfig> GetShapesForMode(HandMode mode)
-        {
-            return mode switch
-            {
-                HandMode.LeftOnly          => _leftHandShapes,
-                HandMode.RightOnly         => _rightHandShapes,
-                HandMode.BothSimultaneously => _bothHandsShapes,
-                _                          => _bothHandsShapes
-            };
         }
     }
 }

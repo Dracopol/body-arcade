@@ -148,24 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c22e4d66ebb5c4c9a3d75c6efc5633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.UI.SessionConfig
-  _leftHandShapes:
-  - {fileID: 11400000, guid: 756647716a260cf48ae21572233de050, type: 2}
-  - {fileID: 11400000, guid: 16775b698eab9ff4e893c1d14a305b2f, type: 2}
-  - {fileID: 11400000, guid: 3e2d24d1ba2725048ae0bca556b6c721, type: 2}
-  - {fileID: 11400000, guid: e061c469ea2982c41a26aded9d001a84, type: 2}
-  _rightHandShapes:
-  - {fileID: 11400000, guid: 18e8f6bffa37b3947a3715cc17da8396, type: 2}
-  - {fileID: 11400000, guid: 0754582f2a3eaa9408fbc18b9c1f6419, type: 2}
-  - {fileID: 11400000, guid: 0fdbe3ec2e0cc7c438c3705ec31d36cf, type: 2}
-  - {fileID: 11400000, guid: fc0cf764962cf3347815fdfe0311c70a, type: 2}
-  _bothHandsShapes:
-  - {fileID: 11400000, guid: 5813b2e917c605c4c9ccbc99c6b57030, type: 2}
-  - {fileID: 11400000, guid: 435c2a383e99c5d449ed4148ede8c541, type: 2}
-  - {fileID: 11400000, guid: 8338bef01ddf7824c9f5a5bdadbb544b, type: 2}
-  - {fileID: 11400000, guid: 3d39c8d00cbb95548b28132c7af17ca9, type: 2}
-  - {fileID: 11400000, guid: 972283821796f5947aed72b3297e6762, type: 2}
+  _shapes:
   - {fileID: 11400000, guid: 6d0a7a52b5ce6904e950e655eb5688df, type: 2}
-  - {fileID: 11400000, guid: 274185914551f9f4dbf1523db625d3d2, type: 2}
 --- !u!4 &33224839
 Transform:
   m_ObjectHideFlags: 0

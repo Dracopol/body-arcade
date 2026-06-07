@@ -38,9 +38,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         #region Fields
 
-        private GameObject _currentShape;
+        private GameObject _currentShapeObject;
         private GameObject _currentBall;
-        private Shape _currentTrackerParent;
+        private Shape _currentShape;
         private bool _hasSpawned;
 
         #endregion
@@ -65,7 +65,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void Update()
         {
-            if (_hasSpawned && _currentShape == null)
+            if (_hasSpawned && _currentShapeObject == null)
             {
                 CurrentConnector = null;
                 _hasSpawned      = false;
@@ -86,19 +86,19 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         internal void ShowCurrentShape()
         {
-            if (_currentShape == null) return;
-            foreach (MeshRenderer r in _currentShape.GetComponentsInChildren<MeshRenderer>())
+            if (_currentShapeObject == null) return;
+            foreach (MeshRenderer r in _currentShapeObject.GetComponentsInChildren<MeshRenderer>())
                 if (r != null) r.enabled = true;
         }
 
         internal void TriggerAppear()
         {
-            if (_currentTrackerParent == null)
+            if (_currentShape == null)
             {
                 OnShapeAppearComplete?.Invoke();
                 return;
             }
-            _currentTrackerParent.TriggerAppear();
+            _currentShape.TriggerAppear();
         }
 
         #endregion
@@ -127,7 +127,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             ShapeConfig config = _shapes[index];
             if (config == null || config.Prefab == null) return;
 
-            _currentShape = Instantiate(
+            _currentShapeObject = Instantiate(
                 config.Prefab,
                 _shapeParent.transform.position,
                 Quaternion.identity,
@@ -136,24 +136,24 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             _hasSpawned = true;
 
             SubscribeEvents();
-            AssignHand(_currentShape);
-            WireTracker(_currentShape, _currentBall);
-            WireConnector(_currentShape, _currentBall);
+            AssignHand(_currentShapeObject);
+            WireTracker(_currentShapeObject, _currentBall);
+            WireConnector(_currentShapeObject, _currentBall);
         }
 
         private void SubscribeEvents()
         {
-            Shape tracker = _currentShape.GetComponent<Shape>();
+            Shape tracker = _currentShapeObject.GetComponent<Shape>();
             if (tracker == null) return;
-            _currentTrackerParent             = tracker;
+            _currentShape             = tracker;
             tracker.OnWinFillComplete        += HandleTrackerWinFill;
             tracker.OnAppearComplete         += HandleTrackerAppearComplete;
         }
 
         private void HideShapeRenderers()
         {
-            if (_currentShape == null) return;
-            foreach (MeshRenderer r in _currentShape.GetComponentsInChildren<MeshRenderer>())
+            if (_currentShapeObject == null) return;
+            foreach (MeshRenderer r in _currentShapeObject.GetComponentsInChildren<MeshRenderer>())
                 r.enabled = false;
         }
 
