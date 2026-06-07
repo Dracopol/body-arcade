@@ -770,6 +770,7 @@ MonoBehaviour:
   _drainSpeedPerSecond: 0.1
   _fillSpeedPerSecond: 0.5
   _disappearSpeedPerSecond: 3.5
+  _appearSpeedPerSecond: 1
   _winThreshold: 0.98
   _debugProgress: 0
   _debugIsHandInside: 0
@@ -1302,6 +1303,7 @@ MonoBehaviour:
   _drainSpeedPerSecond: 0.1
   _fillSpeedPerSecond: 0.5
   _disappearSpeedPerSecond: 3.5
+  _appearSpeedPerSecond: 1
   _winThreshold: 0.98
   _debugProgress: 0
   _debugIsHandInside: 0

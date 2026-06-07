@@ -36,7 +36,6 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         [Header("Behaviour")]
         [SerializeField] private float _radiusToleranceMultiplier = 1.5f;
         [SerializeField] private float _tubeRadiusMeters = 0.05f;
-        [SerializeField] private bool _isForwardOnly = true;
         [SerializeField] private bool _isReversed = false;
         [SerializeField] private float _drainSpeedPerSecond = 5f;
         [SerializeField] private float _fillSpeedPerSecond = 0.5f;
