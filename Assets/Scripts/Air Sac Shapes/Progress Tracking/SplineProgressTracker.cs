@@ -224,6 +224,11 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
             InitSplineProximity();
         }
 
+        internal void SetKnobCollider(Collider knobCollider)
+        {
+            _knobCollider = knobCollider;
+        }
+
         internal void RegisterDestroyDelay(float seconds)
         {
             _destroyDelay = Mathf.Max(_destroyDelay, seconds);

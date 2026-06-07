@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 33224839}
   - component: {fileID: 33224838}
+  - component: {fileID: 33224840}
   m_Layer: 0
   m_Name: Air Sac Shapes Session Config
   m_TagString: Untagged
@@ -148,8 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c22e4d66ebb5c4c9a3d75c6efc5633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.UI.SessionConfig
-  _shapes:
-  - {fileID: 11400000, guid: 6d0a7a52b5ce6904e950e655eb5688df, type: 2}
 --- !u!4 &33224839
 Transform:
   m_ObjectHideFlags: 0
@@ -165,6 +164,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &33224840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33224837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7df7b7e3e5e0e4449c30671f542211e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.UiRobot.AirSacShapesPreparer
+  _shapes:
+  - {fileID: 11400000, guid: 274185914551f9f4dbf1523db625d3d2, type: 2}
+  _easyDrainSpeed: 5
+  _easySplineRadius: 0.05
+  _mediumDrainSpeed: 5
+  _mediumSplineRadius: 0.05
+  _hardDrainSpeed: 5
+  _hardSplineRadius: 0.05
 --- !u!1 &62081607
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,6 +505,37 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &860873376
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 860873377}
+  m_Layer: 0
+  m_Name: Shapes Preparer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &860873377
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860873376}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.07373, y: -0, z: 1.14217}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1166,7 +1216,7 @@ Transform:
   m_GameObject: {fileID: 1656794760}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.596, y: 1.96, z: 1.21}
+  m_LocalPosition: {x: -0.596, y: 2.871, z: 1.21}
   m_LocalScale: {x: 0.19999999, y: 0.19999999, z: 0.19999999}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1187,6 +1237,7 @@ MonoBehaviour:
   _document: {fileID: 1656794764}
   _airSacShapesSceneName: Air Sac Shapes
   _neuromaniaSsceneName: Neuromania
+  _shapesPreparer: {fileID: 33224840}
 --- !u!1 &1836416747
 GameObject:
   m_ObjectHideFlags: 0
@@ -28408,3 +28459,4 @@ SceneRoots:
   - {fileID: 543450652533392727}
   - {fileID: 2138691213}
   - {fileID: 145564368}
+  - {fileID: 860873377}

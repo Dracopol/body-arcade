@@ -9,9 +9,8 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private SplineContainer _splineContainer;
-        [SerializeField] private SplineProgressTracker _tracker;
         [SerializeField] private Transform _target;
+        [SerializeField] private Collider _collider;
 
         [Header("Behaviour")]
         [SerializeField] private bool _alignRotationToSpline = true;
@@ -20,32 +19,40 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         #region Fields
 
+        private SplineProgressTracker _tracker;
         private Spline _spline;
         private Transform _splineTransform;
 
         #endregion
 
-        #region Setup
+        #region Properties
 
-        private void Awake()
-        {
-            if (_splineContainer != null)
-            {
-                _spline = _splineContainer.Spline;
-                _splineTransform = _splineContainer.transform;
-            }
-        }
+        internal Collider Collider => _collider;
 
-        private void OnEnable()
-        {
-            if (_tracker != null)
-                _tracker.OnMaxProgressChange += HandleMaxProgressChange;
-        }
+        #endregion
 
-        private void OnDisable()
+        #region Internal
+
+        internal void SetTracker(SplineProgressTracker tracker, SplineContainer splineContainer)
         {
             if (_tracker != null)
                 _tracker.OnMaxProgressChange -= HandleMaxProgressChange;
+
+            _tracker = tracker;
+
+            if (splineContainer != null)
+            {
+                _spline          = splineContainer.Spline;
+                _splineTransform = splineContainer.transform;
+            }
+            else
+            {
+                _spline          = null;
+                _splineTransform = null;
+            }
+
+            if (_tracker != null)
+                _tracker.OnMaxProgressChange += HandleMaxProgressChange;
         }
 
         #endregion
@@ -54,7 +61,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         private void HandleMaxProgressChange(float maxProgress)
         {
-            if (_spline == null || _target == null)
+            if (_spline == null || _target == null || _tracker == null)
                 return;
 
             float t = _tracker.IsReversed ? 1f - maxProgress : maxProgress;
@@ -66,9 +73,9 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
             if (!_alignRotationToSpline)
                 return;
 
-            float3 tangent = _tracker.IsReversed ? -localTangent : localTangent;
+            float3 tangent       = _tracker.IsReversed ? -localTangent : localTangent;
             Vector3 worldTangent = _splineTransform.TransformDirection(tangent);
-            Vector3 worldUp = _splineTransform.TransformDirection(localUp);
+            Vector3 worldUp      = _splineTransform.TransformDirection(localUp);
 
             if (worldTangent != Vector3.zero)
                 _target.rotation = Quaternion.LookRotation(worldTangent, worldUp);

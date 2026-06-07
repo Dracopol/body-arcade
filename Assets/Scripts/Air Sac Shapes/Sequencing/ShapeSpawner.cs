@@ -23,6 +23,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         [Header("References")]
         [SerializeField] private GameObject _shapeParent;
         [SerializeField] private MirrorHands _mirrorHands;
+        [SerializeField] private Knob _leftKnob;
+        [SerializeField] private Knob _rightKnob;
 
         [Header("Connector")]
         [SerializeField] private Material _connectorMaterial;
@@ -69,6 +71,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             {
                 CurrentConnector = null;
                 _hasSpawned      = false;
+                if (_leftKnob != null)  _leftKnob.SetTracker(null, null);
+                if (_rightKnob != null) _rightKnob.SetTracker(null, null);
                 OnShapeDestroyed?.Invoke();
             }
         }
@@ -140,6 +144,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
             SubscribeEvents();
             AssignHand(_currentShapeObject);
+            AssignKnobs(_currentShapeObject);
             WireTracker(_currentShapeObject, _currentBall);
             WireConnector(_currentShapeObject, _currentBall);
         }
@@ -178,6 +183,33 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
                 Debug.Log($"[ShapeSpawner] Child: {child.name} tag: {child.tag}");
                 AssignHandToObject(child.gameObject);
             }
+        }
+
+        private void AssignKnobs(GameObject shape)
+        {
+            if (shape.CompareTag("Left") || shape.CompareTag("Right"))
+            {
+                AssignKnobToObject(shape);
+                return;
+            }
+
+            foreach (Transform child in shape.transform)
+                AssignKnobToObject(child.gameObject);
+        }
+
+        private void AssignKnobToObject(GameObject obj)
+        {
+            bool isLeft  = obj.CompareTag("Left");
+            bool isRight = obj.CompareTag("Right");
+            if (!isLeft && !isRight) return;
+
+            Knob knob = isLeft ? _leftKnob : _rightKnob;
+            if (knob == null) return;
+
+            SplineProgressTracker tracker = obj.GetComponent<SplineProgressTracker>();
+            if (tracker == null) return;
+            knob.SetTracker(tracker, tracker.SplineContainer);
+            tracker.SetKnobCollider(knob.Collider);
         }
 
         private void AssignHandToObject(GameObject obj)

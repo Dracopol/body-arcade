@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2704837730602784863
 Transform:
   m_ObjectHideFlags: 0
@@ -45,8 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23df6d3d3be245a47a0d18a788c6a48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressFollower
-  _splineContainer: {fileID: 8308292250996409287}
-  _tracker: {fileID: 2003580426518432753}
   _target: {fileID: 2704837730602784863}
   _alignRotationToSpline: 1
 --- !u!1 &594581081700060483
@@ -289,7 +287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5924744476205382753
 Transform:
   m_ObjectHideFlags: 0
@@ -318,8 +316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23df6d3d3be245a47a0d18a788c6a48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressFollower
-  _splineContainer: {fileID: 7310892797119125499}
-  _tracker: {fileID: 1907444767204352365}
   _target: {fileID: 5924744476205382753}
   _alignRotationToSpline: 1
 --- !u!1 &2997709772294724252
@@ -758,18 +754,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressTracker
   _tube: {fileID: 6993238034221991085}
-  _donut1: {fileID: 7858462706583909789}
+  _knob: {fileID: 0}
   _splineContainer: {fileID: 8308292250996409287}
   _handTransform: {fileID: 0}
   _handCollider: {fileID: 0}
-  _donutCollider: {fileID: 6154579169274208974}
+  _knobCollider: {fileID: 0}
   _radiusToleranceMultiplier: 2
   _tubeRadiusMeters: 0.02
-  _isForwardOnly: 0
   _isReversed: 1
   _drainSpeedPerSecond: 0.1
-  _fillUpPerSecond: 0.5
-  _disappearPerSecond: 3.5
+  _fillSpeedPerSecond: 0.5
+  _disappearSpeedPerSecond: 3.5
+  _appearSpeedPerSecond: 1
   _winThreshold: 0.98
   _debugProgress: 0
   _debugIsHandInside: 0
@@ -1290,18 +1286,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressTracker
   _tube: {fileID: 8590643724099324256}
-  _donut1: {fileID: 4871886512112036166}
+  _knob: {fileID: 0}
   _splineContainer: {fileID: 7310892797119125499}
   _handTransform: {fileID: 0}
   _handCollider: {fileID: 0}
-  _donutCollider: {fileID: 3204072189948162135}
+  _knobCollider: {fileID: 0}
   _radiusToleranceMultiplier: 2
   _tubeRadiusMeters: 0.02
-  _isForwardOnly: 0
   _isReversed: 1
   _drainSpeedPerSecond: 0.1
-  _fillUpPerSecond: 0.5
-  _disappearPerSecond: 3.5
+  _fillSpeedPerSecond: 0.5
+  _disappearSpeedPerSecond: 3.5
+  _appearSpeedPerSecond: 1
   _winThreshold: 0.98
   _debugProgress: 0
   _debugIsHandInside: 0
