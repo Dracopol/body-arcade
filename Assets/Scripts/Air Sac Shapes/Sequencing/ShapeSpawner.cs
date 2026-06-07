@@ -21,7 +21,6 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private List<ShapeConfig> _shapes;
         [SerializeField] private GameObject _shapeParent;
         [SerializeField] private MirrorHands _mirrorHands;
 
@@ -38,6 +37,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         #region Fields
 
+        private List<PreparedShape> _shapes;
         private GameObject _currentShapeObject;
         private GameObject _currentBall;
         private Shape _currentShape;
@@ -123,15 +123,18 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         {
             if (_shapes == null || _shapes.Count == 0 || _shapeParent == null) return;
 
-            int index          = UnityEngine.Random.Range(0, _shapes.Count);
-            ShapeConfig config = _shapes[index];
-            if (config == null || config.Prefab == null) return;
+            int index              = UnityEngine.Random.Range(0, _shapes.Count);
+            PreparedShape prepared = _shapes[index];
+            if (prepared.Config == null || prepared.Config.Prefab == null) return;
 
             _currentShapeObject = Instantiate(
-                config.Prefab,
+                prepared.Config.Prefab,
                 _shapeParent.transform.position,
                 Quaternion.identity,
                 _shapeParent.transform);
+
+            foreach (SplineProgressTracker tracker in _currentShapeObject.GetComponentsInChildren<SplineProgressTracker>())
+                tracker.ApplyDifficultySettings(prepared.DrainSpeed, prepared.SplineRadius);
 
             _hasSpawned = true;
 

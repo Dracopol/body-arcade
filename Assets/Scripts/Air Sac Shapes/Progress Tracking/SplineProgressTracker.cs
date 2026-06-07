@@ -188,12 +188,12 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 return;
             }
 
-            bool isHandInsideDonut = _knobCollider != null && Physics.ComputePenetration(
+            bool isHandInsideKnob = _knobCollider != null && Physics.ComputePenetration(
                 _handCollider, _handCollider.transform.position, _handCollider.transform.rotation,
                 _knobCollider, _knobCollider.transform.position, _knobCollider.transform.rotation,
                 out _, out _);
 
-            if (isHandInsideDonut)
+            if (isHandInsideKnob)
             {
                 float newProgress = Mathf.Max(_maxProgress, splineProgress);
                 if (newProgress >= _winThreshold)
@@ -236,6 +236,12 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
             _winFillsRemaining = 1;
             _isWin             = true;
             OnWinStateChange?.Invoke();
+        }
+
+        internal void ApplyDifficultySettings(float drainSpeed, float splineRadius)
+        {
+            _drainSpeedPerSecond = drainSpeed;
+            _tubeRadiusMeters    = splineRadius;
         }
 
         internal void TriggerAppear()

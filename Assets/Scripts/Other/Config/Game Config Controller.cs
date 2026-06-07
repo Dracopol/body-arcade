@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -27,6 +26,7 @@ namespace IMVR.BodyArcade.UiRobot
         [SerializeField] private UIDocument _document;
         [SerializeField] private string _airSacShapesSceneName = "AirSacShapesScene";
         [SerializeField] private string _neuromaniaSsceneName  = "NeuromaniScene";
+        [SerializeField] private AirSacShapesPreparer _shapesPreparer;
 
         #endregion
 
@@ -72,7 +72,6 @@ namespace IMVR.BodyArcade.UiRobot
         private bool          _isDraggingHandFocus;
         private float         _handFocusBias = 0f;
 
-        private List<ShapeConfig> _availableShapes = new();
 
         // AirSac hand mode
         private List<VisualElement> _airsacHandModeBtns;
@@ -311,7 +310,6 @@ namespace IMVR.BodyArcade.UiRobot
 
         private void ApplyInitialState()
         {
-            UpdateAvailableShapes();
             SelectFocusMode(_selectedFocusMode);
             SelectHeightMode(_selectedHeightMode);
             SelectAirsacHandMode(_selectedAirsacHandMode, _selectedMirrorMode);
@@ -332,15 +330,11 @@ namespace IMVR.BodyArcade.UiRobot
         {
             if (_activeGame == ActiveGame.AirSacShapes)
             {
-                if (SessionConfigAirSacShapes.Instance == null) return;
-
-                var orderedSelection = _availableShapes
-                    .Where(s => s.DifficultyLabel == _selectedDifficulty)
-                    .ToList();
+                if (SessionConfigAirSacShapes.Instance == null || _shapesPreparer == null) return;
 
                 SessionConfigAirSacShapes.Instance.MirrorMode        = _selectedMirrorMode;
                 SessionConfigAirSacShapes.Instance.HandVisualization = _handVisualization;
-                SessionConfigAirSacShapes.Instance.SelectedShapes  = orderedSelection;
+                SessionConfigAirSacShapes.Instance.SelectedShapes    = _shapesPreparer.PrepareForDifficulty(_selectedDifficulty);
                 SessionConfigAirSacShapes.Instance.StrikeAmount    = _strikeAmount;
                 SessionConfigAirSacShapes.Instance.TimerSeconds    = _timerSeconds;
                 SceneManager.LoadScene(_airSacShapesSceneName);
@@ -478,11 +472,6 @@ namespace IMVR.BodyArcade.UiRobot
             OnActiveGameChanged?.Invoke(game);
         }
 
-        private void UpdateAvailableShapes()
-        {
-            if (SessionConfigAirSacShapes.Instance == null) return;
-            _availableShapes = SessionConfigAirSacShapes.Instance.Shapes;
-        }
 
         private void SelectHandViz(bool show)
         {

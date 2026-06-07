@@ -7,7 +7,9 @@ namespace IMVR.BodyArcade
     {
         internal string ShapeName => name;
 
-        [SerializeField] internal string DifficultyLabel = "Easy";
+        [SerializeField] internal bool IsEasy   = true;
+        [SerializeField] internal bool IsMedium;
+        [SerializeField] internal bool IsHard;
         [SerializeField] internal Color ThumbnailColor;
         [SerializeField] internal Sprite ThumbnailSprite;
         [SerializeField] internal GameObject Prefab;
