@@ -1,26 +1,21 @@
 using System;
-using Cysharp.Threading.Tasks;
-using System.Threading;
 using UnityEngine;
 using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 
 namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
 {
-    internal class TubeAnimator : MonoBehaviour
+    [Serializable]
+    internal class TubeAnimator
     {
         #region Events
 
         internal event Action OnFirstFillComplete;
         internal event Action OnWinFillComplete;
         internal event Action OnAppearComplete;
-        internal event Action OnComplete;
 
         #endregion
 
         #region Serialized fields
-
-        [Header("References")]
-        [SerializeField] private SplineProgressTracker _tracker;
 
         [Header("Behaviour")]
         [SerializeField] private float _fillSpeedPerSecond      = 0.5f;
@@ -31,6 +26,8 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
 
         #region Fields
 
+        private SplineProgressTracker _tracker;
+
         private MeshRenderer _tube;
         private MeshRenderer _knob;
 
@@ -40,50 +37,21 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
         private bool  _isDisappearing;
         private bool  _isAppearing;
         private int   _winFillsRemaining;
-        private float _destroyDelay;
-
-        private CancellationTokenSource _cancellationTokenSource;
 
         #endregion
 
-        #region Properties
+        #region Internal
 
-        internal SplineProgressTracker Tracker => _tracker;
-
-        #endregion
-
-        #region Setup
-
-        private void Awake()
+        internal void Init(SplineProgressTracker tracker)
         {
-            _cancellationTokenSource = new CancellationTokenSource();
-            _activeFillSpeed         = _fillSpeedPerSecond;
+            _tracker         = tracker;
+            _activeFillSpeed = _fillSpeedPerSecond;
         }
 
-        private void OnEnable()
+        internal void Tick()
         {
-            if (_tracker != null)
-                _tracker.OnWinStateChange += HandleWinStateChange;
-        }
+            if (_tracker == null) return;
 
-        private void OnDisable()
-        {
-            if (_tracker != null)
-                _tracker.OnWinStateChange -= HandleWinStateChange;
-        }
-
-        private void OnDestroy()
-        {
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource?.Dispose();
-        }
-
-        #endregion
-
-        #region Update
-
-        private void Update()
-        {
             if (_isAppearing)
             {
                 float appeared = Mathf.MoveTowards(_tracker.Progress, 1f, Time.deltaTime * _appearSpeedPerSecond);
@@ -107,12 +75,11 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
                 _tracker.SetProgress(disappeared);
                 if (_tracker.Progress <= 0f)
                 {
-                    _isDisappearing = false;
-                    _isWin          = false;
+                    _isDisappearing    = false;
+                    _isWin             = false;
                     if (_knob != null) _knob.enabled = false;
                     if (_tube != null) _tube.enabled = false;
                     OnWinFillComplete?.Invoke();
-                    DestroyAfterDelayAsync(_destroyDelay, _cancellationTokenSource.Token).Forget();
                 }
                 return;
             }
@@ -143,10 +110,6 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
             _tracker.SetMaxProgress(filledProgress);
         }
 
-        #endregion
-
-        #region Internal
-
         internal void AssignRenderers(MeshRenderer tube, MeshRenderer knob)
         {
             _tube = tube;
@@ -155,17 +118,12 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
 
         internal void ResetState()
         {
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = new CancellationTokenSource();
-
             _activeFillSpeed   = _fillSpeedPerSecond;
             _isWin             = false;
             _isWinFillComplete = false;
             _isDisappearing    = false;
             _isAppearing       = false;
             _winFillsRemaining = 0;
-            _destroyDelay      = 0f;
 
             if (_tube != null) _tube.enabled = true;
             if (_knob != null) _knob.enabled = true;
@@ -179,33 +137,11 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
             _tracker.SetMaxProgress(0f);
         }
 
-        internal void RegisterDestroyDelay(float seconds)
-        {
-            _destroyDelay = Mathf.Max(_destroyDelay, seconds);
-        }
-
-        #endregion
-
-        #region Event handlers
-
-        private void HandleWinStateChange()
+        internal void HandleWinStateChange()
         {
             _isWin             = true;
             _winFillsRemaining = 1;
             _activeFillSpeed   = _fillSpeedPerSecond;
-        }
-
-        #endregion
-
-        #region Private
-
-        private async UniTaskVoid DestroyAfterDelayAsync(float delay, CancellationToken ct)
-        {
-            if (delay > 0f)
-                await UniTask.WaitForSeconds(delay, cancellationToken: ct);
-
-            if (!ct.IsCancellationRequested)
-                OnComplete?.Invoke();
         }
 
         #endregion

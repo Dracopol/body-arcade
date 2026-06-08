@@ -4,7 +4,8 @@ using UnityEngine.Splines;
 
 namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 {
-    internal class SplineProgressTracker : MonoBehaviour
+    [Serializable]
+    internal class SplineProgressTracker
     {
         #region Events
 
@@ -17,13 +18,8 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         #region Serialized fields
 
-        [Header("References")]
-        [SerializeField] private Transform _handTransform;
-        [SerializeField] private Collider _handCollider;
-        [SerializeField] private Collider _knobCollider;
-
         [Header("Behaviour")]
-        [SerializeField] private float _tubeRadiusMeters = 0.05f;
+        [SerializeField] private float _tubeRadiusMeters   = 0.05f;
         [SerializeField] private float _drainSpeedPerSecond = 5f;
         [SerializeField, Range(0f, 1f)] private float _winThreshold = 0.98f;
 
@@ -31,13 +27,17 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         #region Fields
 
+        private Transform _handTransform;
+        private Collider  _handCollider;
+        private Collider  _knobCollider;
+
         private SplineContainer _splineContainer;
         private bool _isReversed;
 
         private float _progress;
         private float _maxProgress;
-        private bool _isWin;
-        private bool _isAnimatorDriven;
+        private bool  _isWin;
+        private bool  _isAnimatorDriven;
 
         private SplineProximity _splineProximity;
 
@@ -45,31 +45,20 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         #region Properties
 
-        internal float Progress       => _progress;
-        internal float MaxProgress    => _maxProgress;
-        internal bool  IsWin          => _isWin;
-        internal bool  IsReversed     => _isReversed;
+        internal float           Progress        => _progress;
+        internal float           MaxProgress     => _maxProgress;
+        internal bool            IsWin           => _isWin;
+        internal bool            IsReversed      => _isReversed;
         internal SplineContainer SplineContainer => _splineContainer;
 
         #endregion
 
-        #region Setup
+        #region Internal
 
-        private void Awake()
-        {
-            InitSplineProximity();
-        }
-
-        #endregion
-
-        #region Update
-
-        private void Update()
+        internal void Tick()
         {
             if (_isWin || _isAnimatorDriven) return;
-
-            if (_handTransform == null || _splineProximity == null || _splineContainer == null)
-                return;
+            if (_handTransform == null || _splineProximity == null || _splineContainer == null) return;
 
             float splineProgress = _splineProximity.FindClosestSplineProgress(
                 out Vector3 closestSplinePoint,
@@ -113,10 +102,6 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 SetMaxProgress(drained);
             }
         }
-
-        #endregion
-
-        #region Internal
 
         internal void AssignSpline(SplineContainer splineContainer, bool isReversed)
         {
@@ -178,9 +163,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
             _maxProgress = maxProgress;
             OnMaxProgressChange?.Invoke(_maxProgress);
 
-            if (_isWin || _maxProgress < 1f)
-                return;
-
+            if (_isWin || _maxProgress < 1f) return;
             OnWinReady?.Invoke();
         }
 

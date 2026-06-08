@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 using IMVR.BodyArcade.AirSacShapes.VFX.AirSac;
 using IMVR.BodyArcade.AirSacShapes.VFX.Tube;
 using IMVR.BodyArcade.AirSacShapes.SFX;
@@ -22,28 +21,23 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private GameObject _shapeParent;
+        [SerializeField] private GameObject  _shapeParent;
         [SerializeField] private MirrorHands _mirrorHands;
-        [SerializeField] private Knob _leftKnob;
-        [SerializeField] private Knob _rightKnob;
 
-        [Header("Left")]
-        [SerializeField] private TubeController _leftTube;
-
-        [Header("Right")]
-        [SerializeField] private TubeController _rightTube;
+        [Header("Tubes")]
+        [SerializeField] private TubesController _tubes;
 
         [Header("Audio")]
         [SerializeField] private AudioProgress _audioProgress;
 
         [Header("Air Sac")]
-        [SerializeField] private AirSacColor _airSacColor;
-        [SerializeField] private AirSacSize _airSacSize;
-        [SerializeField] private AirSacProgressParticleVisualizer _airSacParticleVisualizer;
+        [SerializeField] private AirSacColor                       _airSacColor;
+        [SerializeField] private AirSacSize                        _airSacSize;
+        [SerializeField] private AirSacProgressParticleVisualizer  _airSacParticleVisualizer;
 
         [Header("Connector")]
-        [SerializeField] private Material _connectorMaterial;
-        [SerializeField] private Material _connectorFillMaterial;
+        [SerializeField] private Material  _connectorMaterial;
+        [SerializeField] private Material  _connectorFillMaterial;
         [SerializeField] private Transform _connectorMidPoint;
 
         #endregion
@@ -53,18 +47,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private List<PreparedShape> _shapes;
         private GameObject _currentShapeObject;
         private GameObject _currentBall;
-        private Shape _currentShape;
-        private bool _hasSpawned;
-
-        private int _activeSideCount;
-        private int _winCount;
-        private int _firstFillCount;
-        private int _winFillCount;
-        private int _appearCount;
-        private int _completeCount;
-
-        private float _minProgress;
-        private float _minMaxProgress;
+        private Shape      _currentShape;
+        private bool       _hasSpawned;
 
         #endregion
 
@@ -78,14 +62,26 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void OnEnable()
         {
-            SubscribeTube(_leftTube);
-            SubscribeTube(_rightTube);
+            if (_tubes == null) return;
+            _tubes.OnMinProgressChange    += HandleMinProgressChange;
+            _tubes.OnMinMaxProgressChange += HandleMinMaxProgressChange;
+            _tubes.OnWinStateChange       += HandleWinStateChange;
+            _tubes.OnFirstFillComplete    += HandleFirstFillComplete;
+            _tubes.OnWinFillComplete      += HandleWinFillComplete;
+            _tubes.OnAppearComplete       += HandleAppearComplete;
+            _tubes.OnComplete             += HandleComplete;
         }
 
         private void OnDisable()
         {
-            UnsubscribeTube(_leftTube);
-            UnsubscribeTube(_rightTube);
+            if (_tubes == null) return;
+            _tubes.OnMinProgressChange    -= HandleMinProgressChange;
+            _tubes.OnMinMaxProgressChange -= HandleMinMaxProgressChange;
+            _tubes.OnWinStateChange       -= HandleWinStateChange;
+            _tubes.OnFirstFillComplete    -= HandleFirstFillComplete;
+            _tubes.OnWinFillComplete      -= HandleWinFillComplete;
+            _tubes.OnAppearComplete       -= HandleAppearComplete;
+            _tubes.OnComplete             -= HandleComplete;
         }
 
         private void Start()
@@ -104,8 +100,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             {
                 CurrentConnector = null;
                 _hasSpawned      = false;
-                if (_leftKnob  != null) _leftKnob.SetTracker(null, null);
-                if (_rightKnob != null) _rightKnob.SetTracker(null, null);
+                _currentShape    = null;
                 ResetSceneComponents();
                 OnShapeDestroyed?.Invoke();
             }
@@ -131,27 +126,17 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         internal void TriggerAppear()
         {
-            if (_currentShape == null)
+            if (_currentShape == null || _tubes == null)
             {
                 OnShapeAppearComplete?.Invoke();
                 return;
             }
-
-            _appearCount = 0;
-            if (_activeSideCount == 0)
-            {
-                OnShapeAppearComplete?.Invoke();
-                return;
-            }
-
-            if (_leftTube  != null && _currentShape.LeftSpline  != null) _leftTube.TriggerAppear();
-            if (_rightTube != null && _currentShape.RightSpline != null) _rightTube.TriggerAppear();
+            _tubes.TriggerAppear();
         }
 
         internal void RegisterDestroyDelay(float seconds)
         {
-            if (_leftTube  != null) _leftTube.RegisterDestroyDelay(seconds);
-            if (_rightTube != null) _rightTube.RegisterDestroyDelay(seconds);
+            if (_tubes != null) _tubes.RegisterDestroyDelay(seconds);
         }
 
         #endregion
@@ -177,60 +162,26 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
             _currentShape.SetSpawner(this);
 
-            _activeSideCount = 0;
-            _winCount        = 0;
-            _firstFillCount  = 0;
-            _winFillCount    = 0;
-            _appearCount     = 0;
-            _completeCount   = 0;
-            _minProgress     = 0f;
-            _minMaxProgress  = 0f;
-
-            WireLeft(prepared);
-            WireRight(prepared);
+            if (_tubes != null)
+                _tubes.Wire(_currentShape, prepared.DrainSpeed, prepared.SplineRadius);
 
             _hasSpawned = true;
 
             AssignHands();
-            AssignKnobs();
             WireConnector(_currentShapeObject, _currentBall);
-            WireAirSac(_currentBall);
+            WireAirSac();
 
             if (_audioProgress != null)
                 _audioProgress.SetShape(_currentShape);
         }
 
-        private void WireLeft(PreparedShape prepared)
-        {
-            if (_currentShape.LeftSpline == null) return;
-            _activeSideCount++;
-
-            if (_leftTube != null)
-            {
-                _leftTube.ApplyDifficultySettings(prepared.DrainSpeed, prepared.SplineRadius);
-                _leftTube.Assign(_currentShape.LeftSpline, _currentShape.LeftMeshFilter,
-                                  _currentShape.LeftMeshRenderer, _currentShape.LeftIsReversed);
-            }
-        }
-
-        private void WireRight(PreparedShape prepared)
-        {
-            if (_currentShape.RightSpline == null) return;
-            _activeSideCount++;
-
-            if (_rightTube != null)
-            {
-                _rightTube.ApplyDifficultySettings(prepared.DrainSpeed, prepared.SplineRadius);
-                _rightTube.Assign(_currentShape.RightSpline, _currentShape.RightMeshFilter,
-                                   _currentShape.RightMeshRenderer, _currentShape.RightIsReversed);
-            }
-        }
-
         private void ResetSceneComponents()
         {
-            if (_leftTube  != null) _leftTube.ResetState();
-            if (_rightTube != null) _rightTube.ResetState();
-            if (_audioProgress != null) _audioProgress.SetShape(null);
+            if (_tubes != null)                    _tubes.ResetState();
+            if (_audioProgress != null)            _audioProgress.SetShape(null);
+            if (_airSacColor != null)              _airSacColor.SetShape(null);
+            if (_airSacSize != null)               _airSacSize.SetShape(null);
+            if (_airSacParticleVisualizer != null)  _airSacParticleVisualizer.SetShape(null);
         }
 
         private void HideShapeRenderers()
@@ -242,112 +193,29 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         #endregion
 
-        #region Private — aggregation
+        #region Private — event handlers
 
-        private void SubscribeTube(TubeController tube)
-        {
-            if (tube == null) return;
-            tube.OnProgressChange    += HandleProgressChange;
-            tube.OnMaxProgressChange += HandleMaxProgressChange;
-            tube.OnWinStateChange    += HandleWinStateChange;
-            tube.OnWinReady          += HandleWinReady;
-            tube.OnFirstFillComplete += HandleFirstFillComplete;
-            tube.OnWinFillComplete   += HandleWinFillComplete;
-            tube.OnAppearComplete    += HandleAppearComplete;
-            tube.OnComplete          += HandleComplete;
-        }
-
-        private void UnsubscribeTube(TubeController tube)
-        {
-            if (tube == null) return;
-            tube.OnProgressChange    -= HandleProgressChange;
-            tube.OnMaxProgressChange -= HandleMaxProgressChange;
-            tube.OnWinStateChange    -= HandleWinStateChange;
-            tube.OnWinReady          -= HandleWinReady;
-            tube.OnFirstFillComplete -= HandleFirstFillComplete;
-            tube.OnWinFillComplete   -= HandleWinFillComplete;
-            tube.OnAppearComplete    -= HandleAppearComplete;
-            tube.OnComplete          -= HandleComplete;
-        }
-
-        private void HandleProgressChange(float _)
-        {
-            if (_currentShape == null) return;
-            float newMin = ComputeMin(t => t.Progress);
-            if (Mathf.Approximately(newMin, _minProgress)) return;
-            _minProgress = newMin;
-            _currentShape.InvokeMinProgressChange(_minProgress);
-        }
-
-        private void HandleMaxProgressChange(float _)
-        {
-            if (_currentShape == null) return;
-            float newMin = ComputeMin(t => t.MaxProgress);
-            if (Mathf.Approximately(newMin, _minMaxProgress)) return;
-            _minMaxProgress = newMin;
-            _currentShape.InvokeMinMaxChange(_minMaxProgress);
-        }
-
-        private void HandleWinReady()
-        {
-            if (_leftTube  != null && _currentShape.LeftSpline  != null && _leftTube.MaxProgress  < 1f) return;
-            if (_rightTube != null && _currentShape.RightSpline != null && _rightTube.MaxProgress < 1f) return;
-
-            if (_leftTube  != null && _currentShape.LeftSpline  != null) _leftTube.TriggerWin();
-            if (_rightTube != null && _currentShape.RightSpline != null) _rightTube.TriggerWin();
-        }
-
-        private void HandleWinStateChange()
-        {
-            if (AllReached(ref _winCount))
-                _currentShape.InvokeWinStateChange();
-        }
-
-        private void HandleFirstFillComplete()
-        {
-            if (AllReached(ref _firstFillCount))
-                _currentShape.InvokeFirstFillComplete();
-        }
+        private void HandleMinProgressChange(float v)    { if (_currentShape) _currentShape.InvokeMinProgressChange(v); }
+        private void HandleMinMaxProgressChange(float v) { if (_currentShape) _currentShape.InvokeMinMaxChange(v); }
+        private void HandleWinStateChange()              { if (_currentShape) _currentShape.InvokeWinStateChange(); }
+        private void HandleFirstFillComplete()           { if (_currentShape) _currentShape.InvokeFirstFillComplete(); }
 
         private void HandleWinFillComplete()
         {
-            if (AllReached(ref _winFillCount))
-            {
-                _currentShape.InvokeWinFillComplete();
-                OnShapeWinFill?.Invoke();
-            }
+            if (_currentShape) _currentShape.InvokeWinFillComplete();
+            OnShapeWinFill?.Invoke();
         }
 
         private void HandleAppearComplete()
         {
-            if (AllReached(ref _appearCount))
-            {
-                _currentShape.InvokeAppearComplete();
-                OnShapeAppearComplete?.Invoke();
-            }
+            if (_currentShape) _currentShape.InvokeAppearComplete();
+            OnShapeAppearComplete?.Invoke();
         }
 
         private void HandleComplete()
         {
-            if (!AllReached(ref _completeCount)) return;
             if (_currentShapeObject != null)
                 Destroy(_currentShapeObject);
-        }
-
-        private bool AllReached(ref int count) => ++count >= _activeSideCount;
-
-        private float ComputeMin(Func<TubeController, float> selector)
-        {
-            float min = float.MaxValue;
-            bool  any = false;
-
-            if (_leftTube  != null && _currentShape != null && _currentShape.LeftSpline  != null)
-            { min = Mathf.Min(min, selector(_leftTube));  any = true; }
-
-            if (_rightTube != null && _currentShape != null && _currentShape.RightSpline != null)
-            { min = Mathf.Min(min, selector(_rightTube)); any = true; }
-
-            return any ? min : 0f;
         }
 
         #endregion
@@ -356,29 +224,18 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void AssignHands()
         {
-            if (_currentShape.LeftSpline  != null) AssignHandToTube(_leftTube,  isLeft: true);
-            if (_currentShape.RightSpline != null) AssignHandToTube(_rightTube, isLeft: false);
-        }
+            if (_tubes == null || _mirrorHands == null || _currentShape == null) return;
 
-        private void AssignHandToTube(TubeController tube, bool isLeft)
-        {
-            if (tube == null) return;
-            GameObject handObject = isLeft ? _mirrorHands.ActiveLeft : _mirrorHands.ActiveRight;
-            if (handObject == null) return;
-            tube.SetHand(handObject.transform, handObject.GetComponent<Collider>());
-        }
-
-        private void AssignKnobs()
-        {
-            if (_currentShape.LeftSpline != null && _leftKnob != null && _leftTube != null)
+            if (_currentShape.LeftSpline != null)
             {
-                _leftKnob.SetTracker(_leftTube.Tracker, _leftTube.SplineContainer);
-                _leftTube.SetKnobCollider(_leftKnob.Collider);
+                GameObject hand = _mirrorHands.ActiveLeft;
+                if (hand != null) _tubes.SetLeftHand(hand.transform, hand.GetComponent<Collider>());
             }
-            if (_currentShape.RightSpline != null && _rightKnob != null && _rightTube != null)
+
+            if (_currentShape.RightSpline != null)
             {
-                _rightKnob.SetTracker(_rightTube.Tracker, _rightTube.SplineContainer);
-                _rightTube.SetKnobCollider(_rightKnob.Collider);
+                GameObject hand = _mirrorHands.ActiveRight;
+                if (hand != null) _tubes.SetRightHand(hand.transform, hand.GetComponent<Collider>());
             }
         }
 
@@ -392,10 +249,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
                 _connectorMaterial, _connectorFillMaterial, _connectorMidPoint, shapeData);
         }
 
-        private void WireAirSac(GameObject ball)
+        private void WireAirSac()
         {
-            if (ball == null || _currentShape == null) return;
-
+            if (_currentShape == null) return;
             if (_airSacColor             != null) _airSacColor.SetShape(_currentShape);
             if (_airSacSize              != null) _airSacSize.SetShape(_currentShape);
             if (_airSacParticleVisualizer != null) _airSacParticleVisualizer.SetShape(_currentShape);

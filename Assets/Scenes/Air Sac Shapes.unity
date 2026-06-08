@@ -119,53 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &21104560
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 21104562}
-  - component: {fileID: 21104561}
-  m_Layer: 0
-  m_Name: idk (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &21104561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 21104560}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fd4f85581ea64f40aa832a851d8a7c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.VFX.Tube.TubeController
-  _tracker: {fileID: 964360439}
-  _animator: {fileID: 964360438}
-  _visualizer: {fileID: 964360437}
---- !u!4 &21104562
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 21104560}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.21956, y: 0, z: 0.12143}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &31688771
 GameObject:
   m_ObjectHideFlags: 0
@@ -3640,89 +3593,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 901993391}
   m_CullTransparentMesh: 1
---- !u!1 &964360436
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 964360440}
-  - component: {fileID: 964360439}
-  - component: {fileID: 964360438}
-  - component: {fileID: 964360437}
-  m_Layer: 0
-  m_Name: right
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &964360437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 964360436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da9ab35f1d17e44a83a965df353c0ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.VFX.Shape.TubeFillVisualizer
-  _progressTracker: {fileID: 964360439}
-  _tubeAnimator: {fileID: 964360438}
-  _winColor: {r: 0, g: 1, b: 0, a: 1}
---- !u!114 &964360438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 964360436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63367c1e5c52dd244b9d9895f55c6533, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracking.TubeAnimator
-  _tracker: {fileID: 964360439}
-  _fillSpeedPerSecond: 0.5
-  _disappearSpeedPerSecond: 3.5
-  _appearSpeedPerSecond: 1
---- !u!114 &964360439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 964360436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ca42fbaf99a6b4438c87e933051fde4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracking.SplineProgressTracker
-  _handTransform: {fileID: 0}
-  _handCollider: {fileID: 0}
-  _knobCollider: {fileID: 676286101}
-  _tubeRadiusMeters: 0.05
-  _drainSpeedPerSecond: 5
-  _winThreshold: 0.98
---- !u!4 &964360440
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 964360436}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06646, y: 0.05381, z: 0.03951}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &967669036
 GameObject:
   m_ObjectHideFlags: 0
@@ -4052,89 +3922,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 993276303}
   m_CullTransparentMesh: 1
---- !u!1 &1039195912
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1039195916}
-  - component: {fileID: 1039195915}
-  - component: {fileID: 1039195914}
-  - component: {fileID: 1039195913}
-  m_Layer: 0
-  m_Name: left
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1039195913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1039195912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da9ab35f1d17e44a83a965df353c0ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.VFX.Shape.TubeFillVisualizer
-  _progressTracker: {fileID: 1039195915}
-  _tubeAnimator: {fileID: 1039195914}
-  _winColor: {r: 0, g: 1, b: 0, a: 1}
---- !u!114 &1039195914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1039195912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63367c1e5c52dd244b9d9895f55c6533, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracking.TubeAnimator
-  _tracker: {fileID: 1039195915}
-  _fillSpeedPerSecond: 0.5
-  _disappearSpeedPerSecond: 3.5
-  _appearSpeedPerSecond: 1
---- !u!114 &1039195915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1039195912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ca42fbaf99a6b4438c87e933051fde4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracking.SplineProgressTracker
-  _handTransform: {fileID: 0}
-  _handCollider: {fileID: 0}
-  _knobCollider: {fileID: 1973277456}
-  _tubeRadiusMeters: 0.05
-  _drainSpeedPerSecond: 5
-  _winThreshold: 0.98
---- !u!4 &1039195916
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1039195912}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06646, y: 0.05381, z: 0.03951}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1082796090
 GameObject:
   m_ObjectHideFlags: 0
@@ -4271,10 +4058,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.CorpusVR.Core.ShapeSpawner
   _shapeParent: {fileID: 839052462}
   _mirrorHands: {fileID: 210590404}
-  _leftKnob: {fileID: 2016060643}
-  _rightKnob: {fileID: 327795787}
-  _leftTube: {fileID: 2144714039}
-  _rightTube: {fileID: 21104561}
+  _tubes: {fileID: 2144714041}
   _audioProgress: {fileID: 1159008713}
   _airSacColor: {fileID: 0}
   _airSacSize: {fileID: 0}
@@ -8345,7 +8129,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2144714040}
-  - component: {fileID: 2144714039}
+  - component: {fileID: 2144714041}
   m_Layer: 0
   m_Name: idk
   m_TagString: Untagged
@@ -8353,21 +8137,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2144714039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2144714038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fd4f85581ea64f40aa832a851d8a7c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.VFX.Tube.TubeController
-  _tracker: {fileID: 1039195915}
-  _animator: {fileID: 1039195914}
-  _visualizer: {fileID: 1039195913}
 --- !u!4 &2144714040
 Transform:
   m_ObjectHideFlags: 0
@@ -8383,6 +8152,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2144714041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144714038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1000e1726f90a554cb97def7cc965333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.VFX.Tube.TubesController
+  _leftTracker:
+    _tubeRadiusMeters: 0.05
+    _drainSpeedPerSecond: 5
+    _winThreshold: 0.98
+  _leftAnimator:
+    _fillSpeedPerSecond: 0.5
+    _disappearSpeedPerSecond: 3.5
+    _appearSpeedPerSecond: 1
+  _leftVisualizer:
+    _winColor: {r: 0, g: 1, b: 0, a: 1}
+  _rightTracker:
+    _tubeRadiusMeters: 0.05
+    _drainSpeedPerSecond: 5
+    _winThreshold: 0.98
+  _rightAnimator:
+    _fillSpeedPerSecond: 0.5
+    _disappearSpeedPerSecond: 3.5
+    _appearSpeedPerSecond: 1
+  _rightVisualizer:
+    _winColor: {r: 0, g: 1, b: 0, a: 1}
+  _leftKnob: {fileID: 2016060643}
+  _rightKnob: {fileID: 327795787}
 --- !u!23 &63460644791175479
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9786,8 +9589,5 @@ SceneRoots:
   - {fileID: 1935853991}
   - {fileID: 2016060644}
   - {fileID: 327795788}
-  - {fileID: 1039195916}
-  - {fileID: 964360440}
   - {fileID: 1159008714}
   - {fileID: 2144714040}
-  - {fileID: 21104562}
