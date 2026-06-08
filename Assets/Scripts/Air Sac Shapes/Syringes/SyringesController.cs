@@ -23,7 +23,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         [Header("Tuning (shared by both sides)")]
         [SerializeField] private float _appearSpeed    = 1f;
-        [SerializeField] private float _fillSpeed      = 0.5f;
+        [SerializeField] private float _winFillSpeed   = 0.5f;
         [SerializeField] private float _disappearSpeed = 3.5f;
 
         [Header("Colors")]
@@ -63,8 +63,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         private void Awake()
         {
-            _leftAnimator.Init(_leftTracker,   _fillSpeed, _disappearSpeed, _appearSpeed);
-            _rightAnimator.Init(_rightTracker, _fillSpeed, _disappearSpeed, _appearSpeed);
+            _leftAnimator.Init(_leftTracker,   _winFillSpeed, _disappearSpeed, _appearSpeed);
+            _rightAnimator.Init(_rightTracker, _winFillSpeed, _disappearSpeed, _appearSpeed);
 
             if (_palette == null)
                 Debug.LogError("SyringesController: no SyringePalette assigned — tube colors will be wrong.", this);

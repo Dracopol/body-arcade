@@ -16,7 +16,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         #region Fields
 
         // Tuning — supplied once via Init (shared from SyringesController).
-        private float _fillSpeedPerSecond      = 0.5f;
+        private float _winFillSpeedPerSecond   = 0.5f;
         private float _disappearSpeedPerSecond = 3.5f;
         private float _appearSpeedPerSecond    = 1f;
 
@@ -25,24 +25,21 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         private MeshRenderer _tube;
         private MeshRenderer _knob;
 
-        private float _activeFillSpeed;
-        private bool  _isWin;
-        private bool  _isWinFillComplete;
-        private bool  _isDisappearing;
-        private bool  _isAppearing;
-        private int   _winFillsRemaining;
+        private bool _isWin;
+        private bool _isWinFillComplete;
+        private bool _isDisappearing;
+        private bool _isAppearing;
 
         #endregion
 
         #region Internal
 
-        internal void Init(PlungerTracker tracker, float fillSpeed, float disappearSpeed, float appearSpeed)
+        internal void Init(PlungerTracker tracker, float winFillSpeed, float disappearSpeed, float appearSpeed)
         {
             _tracker                 = tracker;
-            _fillSpeedPerSecond      = fillSpeed;
+            _winFillSpeedPerSecond   = winFillSpeed;
             _disappearSpeedPerSecond = disappearSpeed;
             _appearSpeedPerSecond    = appearSpeed;
-            _activeFillSpeed         = fillSpeed;
         }
 
         internal void Tick()
@@ -81,25 +78,17 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
                 return;
             }
 
-            float filledProgress = Mathf.MoveTowards(_tracker.Progress, 1f, Time.deltaTime * _activeFillSpeed);
+            // Win fill: sweep 0→1 once at fill speed, then hand off to the drain phase.
+            float filledProgress = Mathf.MoveTowards(_tracker.Progress, 1f, Time.deltaTime * _winFillSpeedPerSecond);
 
             if (filledProgress >= 1f)
             {
-                if (_winFillsRemaining > 0)
-                {
-                    _winFillsRemaining--;
-                    filledProgress   = 0f;
-                    _activeFillSpeed = _disappearSpeedPerSecond;
-                    _tracker.SetProgress(filledProgress);
-                    _tracker.SetMaxProgress(filledProgress);
-                    OnFirstFillComplete?.Invoke();
-                    return;
-                }
-
                 if (_isWinFillComplete) return;
                 _isWinFillComplete = true;
                 _isDisappearing    = true;
                 _tracker.SetProgress(1f);
+                _tracker.SetMaxProgress(1f);
+                OnFirstFillComplete?.Invoke();
                 return;
             }
 
@@ -115,12 +104,10 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         internal void ResetState()
         {
-            _activeFillSpeed   = _fillSpeedPerSecond;
             _isWin             = false;
             _isWinFillComplete = false;
             _isDisappearing    = false;
             _isAppearing       = false;
-            _winFillsRemaining = 0;
 
             if (_tube != null) _tube.enabled = true;
             if (_knob != null) _knob.enabled = true;
@@ -136,9 +123,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         internal void HandleWinStateChange()
         {
-            _isWin             = true;
-            _winFillsRemaining = 1;
-            _activeFillSpeed   = _fillSpeedPerSecond;
+            _isWin = true;
         }
 
         #endregion

@@ -8160,8 +8160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.VFX.Tube.TubesController
   _appearSpeed: 1
-  _fillSpeed: 0.5
-  _disappearSpeed: 3.5
+  _winFillSpeed: 0.5
+  _disappearSpeed: 1
   _palette: {fileID: 11400000, guid: a3ba9b9c2e37e774880e24af43c7e169, type: 2}
   _leftPlunger: {fileID: 2016060643}
   _rightPlunger: {fileID: 327795787}
