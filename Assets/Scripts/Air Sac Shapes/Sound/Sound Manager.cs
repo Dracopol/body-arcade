@@ -18,10 +18,6 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
         [SerializeField, Range(0, 1f)] private float _minPitch = 0.8f;
         [SerializeField, Range(1f, 2f)] private float _maxPitch = 2.0f;
 
-        [Header("Debug")]
-        [SerializeField, Range(0f, 1f)] private float _debugProgress = 0f;
-        [SerializeField] private int _debugLastThreshold = 0;
-
         #endregion
 
         #region Fields
@@ -90,14 +86,11 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
         {
             _isWinPhase         = true;
             _lastThresholdIndex = 0;
-            _debugLastThreshold = 0;
             _maxThresholdIndex  = Mathf.FloorToInt(1f / _winStepSize);
         }
 
         private void HandleMaxProgressChange(float maxProgress)
         {
-            _debugProgress = maxProgress;
-
             if (_isFirstFillComplete) return;
 
             float activeStepSize      = _isWinPhase ? _winStepSize : _progressStepSize;
@@ -106,7 +99,6 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
             if (currentThresholdIndex > _lastThresholdIndex)
             {
                 _lastThresholdIndex = currentThresholdIndex;
-                _debugLastThreshold = currentThresholdIndex;
 
                 if (currentThresholdIndex < _maxThresholdIndex)
                     PlayAudio(currentThresholdIndex);
@@ -114,7 +106,6 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
             else if (currentThresholdIndex < _lastThresholdIndex)
             {
                 _lastThresholdIndex = currentThresholdIndex;
-                _debugLastThreshold = currentThresholdIndex;
             }
         }
 
