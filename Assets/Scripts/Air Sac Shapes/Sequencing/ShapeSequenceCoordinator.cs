@@ -39,7 +39,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private void OnEnable()
         {
             _spawner.OnShapeWinFill        += HandleShapeWinFill;
-            _spawner.OnShapeDestroyed      += HandleShapeDestroyed;
+            _spawner.OnShapeComplete       += HandleShapeComplete;
             _spawner.OnShapeAppearComplete += HandleShapeAppearComplete;
             _alignToCamera.OnAlignComplete += HandleAlignComplete;
         }
@@ -47,7 +47,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private void OnDisable()
         {
             _spawner.OnShapeWinFill        -= HandleShapeWinFill;
-            _spawner.OnShapeDestroyed      -= HandleShapeDestroyed;
+            _spawner.OnShapeComplete       -= HandleShapeComplete;
             _spawner.OnShapeAppearComplete -= HandleShapeAppearComplete;
             _alignToCamera.OnAlignComplete -= HandleAlignComplete;
         }
@@ -61,7 +61,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             RetractConnectorAsync(_cts.Token).Forget();
         }
 
-        private void HandleShapeDestroyed()
+        private void HandleShapeComplete()
         {
             _sequencer.Advance();
             GameObject ball = _sequencer.CurrentBall;

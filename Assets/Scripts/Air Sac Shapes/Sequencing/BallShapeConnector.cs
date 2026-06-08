@@ -51,22 +51,37 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         #region Internal
 
-        internal void Setup(Transform ballTransform, SplineContainer splineContainer,
-            Material material, Material fillMaterial, Transform midPoint, Shape shape)
+        // One-time setup: configure the two line renderers and the (single) fill child.
+        // Called once when the shared connector is created; safe to call again (idempotent).
+        internal void Setup(Material material, Material fillMaterial, Transform midPoint)
         {
-            _lineRenderer  = GetComponent<LineRenderer>();
-            _ballTransform = ballTransform;
-            _splineContainer = splineContainer;
-            _midPoint = midPoint;
+            _lineRenderer = GetComponent<LineRenderer>();
+            _midPoint     = midPoint;
 
             ConfigureLineRenderer(_lineRenderer, material);
             _lineRenderer.enabled = false;
 
-            var fillGO = new GameObject("ConnectorFill");
-            fillGO.transform.SetParent(transform, false);
-            _fillLineRenderer = fillGO.AddComponent<LineRenderer>();
+            if (_fillLineRenderer == null)
+            {
+                var fillGO = new GameObject("ConnectorFill");
+                fillGO.transform.SetParent(transform, false);
+                _fillLineRenderer = fillGO.AddComponent<LineRenderer>();
+            }
             ConfigureLineRenderer(_fillLineRenderer, fillMaterial);
             _fillLineRenderer.enabled = false;
+        }
+
+        // Per-cycle: point the shared connector at the current shape + ball and reset
+        // draw state so a reused connector never inherits the previous shape's animation.
+        internal void Retarget(Transform ballTransform, SplineContainer splineContainer, Shape shape)
+        {
+            _ballTransform   = ballTransform;
+            _splineContainer = splineContainer;
+
+            _fillProgress    = 0f;
+            _retractProgress = 1f;
+            _isAnimating     = true;
+            _animationUseFill = false;
 
             SetShape(shape);
         }
@@ -76,7 +91,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             if (_shape != null)
                 _shape.OnMinMaxChange -= HandleMinMaxChanged;
             _shape = shape;
-            if (_shape != null)
+            if (_shape != null && isActiveAndEnabled)
                 _shape.OnMinMaxChange += HandleMinMaxChanged;
         }
 

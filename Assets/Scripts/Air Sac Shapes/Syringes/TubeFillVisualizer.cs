@@ -6,14 +6,15 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
     {
         #region Fields
 
-        // Tuning — supplied once via Init (shared from SyringesController).
-        private Color _winColor = Color.green;
+        // Palette for this side — supplied once via Init (from SyringesController).
+        private Color _fill        = Color.red;
+        private Color _empty       = Color.white;
+        private Color _win         = Color.green;
+        private Color _transparent = Color.clear;
 
         private MeshFilter   _meshFilter;
         private MeshRenderer _tubeRenderer;
         private Material     _material;
-
-        private readonly Color _transparent = Color.clear;
 
         private static readonly int ProgressId      = Shader.PropertyToID("_Progress");
         private static readonly int UvMaxId         = Shader.PropertyToID("_UVMax");
@@ -25,30 +26,35 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         #region Internal
 
-        internal void Init(Color winColor)
+        internal void Init(Color fill, Color empty, Color win, Color transparent)
         {
-            _winColor = winColor;
+            _fill        = fill;
+            _empty       = empty;
+            _win         = win;
+            _transparent = transparent;
         }
 
         internal void AssignMesh(MeshFilter meshFilter, MeshRenderer meshRenderer, bool isReversed)
         {
-            if (_material != null)
+            _meshFilter = meshFilter;
+
+            // Pooled renderers persist — keep one instanced material for the renderer's
+            // whole life; only re-clone when the renderer actually changes. Never destroy
+            // here (that would leave a persistent renderer pointing at a dead material →
+            // Unity's gray fallback). Destruction happens only in Dispose.
+            if (meshRenderer != _tubeRenderer)
             {
-                Object.Destroy(_material);
-                _material = null;
+                _tubeRenderer = meshRenderer;
+                _material     = _tubeRenderer != null ? _tubeRenderer.material : null;
             }
 
-            _meshFilter   = meshFilter;
-            _tubeRenderer = meshRenderer;
+            if (_material == null) return;
 
-            if (_tubeRenderer != null)
-                _material = _tubeRenderer.material;
-
-            if (_material != null)
-            {
-                _material.SetFloat(ReversedId, isReversed ? 1f : 0f);
-                _material.SetFloat(ProgressId, 0f);
-            }
+            // "Chosen" state: empty-coloured tube, nothing filled, transparent backdrop.
+            _material.SetFloat(ReversedId, isReversed ? 1f : 0f);
+            _material.SetFloat(ProgressId, 0f);
+            _material.SetColor(ActiveColorId,   _empty);
+            _material.SetColor(InactiveColorId, _transparent);
 
             DetectUvMax();
         }
@@ -65,17 +71,31 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             _material.SetFloat(ProgressId, progress);
         }
 
+        // Appear animation finished: the tube is now fully Empty; switch into play
+        // colours — Empty backdrop, Fill as the active (player-pushed) colour.
+        internal void HandleAppearComplete()
+        {
+            if (_material == null) return;
+            _material.SetColor(InactiveColorId, _empty);
+            _material.SetFloat(ProgressId, 0f);
+            _material.SetColor(ActiveColorId, _fill);
+        }
+
         internal void HandleWinStateChange()
         {
             if (_material == null) return;
-            _material.SetColor(ActiveColorId, _winColor);
+            _material.SetFloat(ProgressId, 0f);
+            _material.SetColor(ActiveColorId, _win);
         }
 
+        // First win-fill reached the top: flip to the retract look — reversed, draining
+        // the Win-coloured fill away into transparent.
         internal void HandleFirstFillComplete()
         {
             if (_material == null) return;
-            _material.SetColor(ActiveColorId,   _transparent);
-            _material.SetColor(InactiveColorId, _winColor);
+            _material.SetFloat(ReversedId, 1f);
+            _material.SetColor(InactiveColorId, _transparent);
+            _material.SetColor(ActiveColorId, _win);
         }
 
         #endregion

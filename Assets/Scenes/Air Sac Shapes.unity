@@ -4243,14 +4243,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.SFX.AudioProgress
   _audioSource: {fileID: 0}
   _winAudioSource: {fileID: 0}
-  _clip: {fileID: 0}
+  _progressClip: {fileID: 0}
   _winClip: {fileID: 0}
   _progressStepSize: 0.05
   _winStepSize: 0.1
   _minPitch: 0.8
   _maxPitch: 2
-  _debugProgress: 0
-  _debugLastThreshold: 0
 --- !u!4 &1159008714
 Transform:
   m_ObjectHideFlags: 0
@@ -8164,7 +8162,7 @@ MonoBehaviour:
   _appearSpeed: 1
   _fillSpeed: 0.5
   _disappearSpeed: 3.5
-  _winColor: {r: 0, g: 1, b: 0, a: 1}
+  _palette: {fileID: 11400000, guid: a3ba9b9c2e37e774880e24af43c7e169, type: 2}
   _leftPlunger: {fileID: 2016060643}
   _rightPlunger: {fileID: 327795787}
 --- !u!1001 &2120193678882025783

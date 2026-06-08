@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using IMVR.BodyArcade.AirSacShapes.VFX.AirSac;
 using IMVR.BodyArcade.AirSacShapes.Syringes;
@@ -12,7 +11,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
     {
         #region Events
 
-        internal event Action OnShapeDestroyed;
+        internal event Action OnShapeComplete;
         internal event Action OnShapeWinFill;
         internal event Action OnShapeAppearComplete;
 
@@ -44,11 +43,12 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         #region Fields
 
-        private List<PreparedShape> _shapes;
+        private readonly ShapePool _pool = new();
+        private BallShapeConnector _connector;
+
         private GameObject _currentShapeObject;
         private GameObject _currentBall;
         private Shape      _currentShape;
-        private bool       _hasSpawned;
 
         #endregion
 
@@ -86,23 +86,13 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void Start()
         {
-            if (SessionConfigAirSacShapes.Instance != null && SessionConfigAirSacShapes.Instance.SelectedShapes.Count > 0)
-                _shapes = SessionConfigAirSacShapes.Instance.SelectedShapes;
-        }
+            CreateConnector();
 
-        #endregion
-
-        #region Update
-
-        private void Update()
-        {
-            if (_hasSpawned && _currentShapeObject == null)
+            if (SessionConfigAirSacShapes.Instance != null &&
+                SessionConfigAirSacShapes.Instance.SelectedShapes.Count > 0 &&
+                _shapeParent != null)
             {
-                CurrentConnector = null;
-                _hasSpawned      = false;
-                _currentShape    = null;
-                ResetSceneComponents();
-                OnShapeDestroyed?.Invoke();
+                _pool.Build(SessionConfigAirSacShapes.Instance.SelectedShapes, _shapeParent.transform);
             }
         }
 
@@ -145,34 +135,51 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void SpawnShape()
         {
-            if (_shapes == null || _shapes.Count == 0 || _shapeParent == null) return;
+            ShapePool.PooledShape pooled = _pool.Next();
+            if (pooled == null) return;
 
-            int index              = UnityEngine.Random.Range(0, _shapes.Count);
-            PreparedShape prepared = _shapes[index];
-            if (prepared.Config == null || prepared.Config.Prefab == null) return;
-
-            _currentShapeObject = Instantiate(
-                prepared.Config.Prefab,
-                _shapeParent.transform.position,
-                Quaternion.identity,
-                _shapeParent.transform);
-
-            _currentShape = _currentShapeObject.GetComponent<Shape>();
-            if (_currentShape == null) return;
+            _currentShapeObject = pooled.GameObject;
+            _currentShape       = pooled.Shape;
+            _currentShapeObject.SetActive(true);
 
             _currentShape.SetSpawner(this);
 
             if (_syringes != null)
-                _syringes.Wire(_currentShape, prepared.DrainSpeed, prepared.SplineRadius, prepared.WinThreshold);
-
-            _hasSpawned = true;
+                _syringes.Wire(_currentShape, pooled.Prepared.DrainSpeed, pooled.Prepared.SplineRadius, pooled.Prepared.WinThreshold);
 
             AssignHands();
-            WireConnector(_currentShapeObject, _currentBall);
+            WireConnector(_currentShape, _currentBall);
             WireAirSac();
 
             if (_audioProgress != null)
                 _audioProgress.SetShape(_currentShape);
+        }
+
+        private void CreateConnector()
+        {
+            var go = new GameObject("BallShapeConnector");
+            go.transform.SetParent(transform, false);
+            _connector = go.AddComponent<BallShapeConnector>();
+            _connector.Setup(_connectorMaterial, _connectorFillMaterial, _connectorMidPoint);
+            go.SetActive(false);
+        }
+
+        private void ReturnToPool()
+        {
+            ResetSceneComponents();
+
+            if (_connector != null)
+            {
+                _connector.SetShape(null);
+                _connector.gameObject.SetActive(false);
+            }
+
+            if (_currentShapeObject != null)
+                _currentShapeObject.SetActive(false);
+
+            CurrentConnector    = null;
+            _currentShape       = null;
+            _currentShapeObject = null;
         }
 
         private void ResetSceneComponents()
@@ -214,8 +221,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void HandleComplete()
         {
-            if (_currentShapeObject != null)
-                Destroy(_currentShapeObject);
+            ReturnToPool();
+            OnShapeComplete?.Invoke();
         }
 
         #endregion
@@ -239,14 +246,13 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             }
         }
 
-        private void WireConnector(GameObject shape, GameObject ball)
+        private void WireConnector(Shape shape, GameObject ball)
         {
-            Shape shapeData = shape.GetComponent<Shape>();
-            if (shapeData == null || shapeData.LeftSpline == null) return;
+            if (_connector == null || shape == null || shape.LeftSpline == null || ball == null) return;
 
-            CurrentConnector = shape.AddComponent<BallShapeConnector>();
-            CurrentConnector.Setup(ball.transform, shapeData.LeftSpline,
-                _connectorMaterial, _connectorFillMaterial, _connectorMidPoint, shapeData);
+            _connector.gameObject.SetActive(true);
+            _connector.Retarget(ball.transform, shape.LeftSpline, shape);
+            CurrentConnector = _connector;
         }
 
         private void WireAirSac()

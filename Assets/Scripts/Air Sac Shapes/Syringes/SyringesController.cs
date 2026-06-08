@@ -25,7 +25,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         [SerializeField] private float _appearSpeed    = 1f;
         [SerializeField] private float _fillSpeed      = 0.5f;
         [SerializeField] private float _disappearSpeed = 3.5f;
-        [SerializeField] private Color _winColor       = Color.green;
+
+        [Header("Colors")]
+        [SerializeField] private SyringePalette _palette;
 
         [Header("Plungers")]
         [SerializeField] private PlungerVisual _leftPlunger;
@@ -63,8 +65,15 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         {
             _leftAnimator.Init(_leftTracker,   _fillSpeed, _disappearSpeed, _appearSpeed);
             _rightAnimator.Init(_rightTracker, _fillSpeed, _disappearSpeed, _appearSpeed);
-            _leftVisualizer.Init(_winColor);
-            _rightVisualizer.Init(_winColor);
+
+            if (_palette == null)
+                Debug.LogError("SyringesController: no SyringePalette assigned — tube colors will be wrong.", this);
+            else
+            {
+                _leftVisualizer.Init(_palette.FillLeft,  _palette.EmptyLeft,  _palette.FillWin, _palette.Transparent);
+                _rightVisualizer.Init(_palette.FillRight, _palette.EmptyRight, _palette.FillWin, _palette.Transparent);
+            }
+
             _cts = new CancellationTokenSource();
         }
 
@@ -77,10 +86,12 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             // Internal wiring: visualizer reacts to tracker + animator
             _leftTracker.OnProgressChange      += _leftVisualizer.HandleProgressChange;
             _leftTracker.OnWinStateChange      += _leftVisualizer.HandleWinStateChange;
+            _leftAnimator.OnAppearComplete     += _leftVisualizer.HandleAppearComplete;
             _leftAnimator.OnFirstFillComplete  += _leftVisualizer.HandleFirstFillComplete;
 
             _rightTracker.OnProgressChange     += _rightVisualizer.HandleProgressChange;
             _rightTracker.OnWinStateChange     += _rightVisualizer.HandleWinStateChange;
+            _rightAnimator.OnAppearComplete    += _rightVisualizer.HandleAppearComplete;
             _rightAnimator.OnFirstFillComplete += _rightVisualizer.HandleFirstFillComplete;
 
             // Outward: tracker events
@@ -111,10 +122,12 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
             _leftTracker.OnProgressChange     -= _leftVisualizer.HandleProgressChange;
             _leftTracker.OnWinStateChange     -= _leftVisualizer.HandleWinStateChange;
+            _leftAnimator.OnAppearComplete    -= _leftVisualizer.HandleAppearComplete;
             _leftAnimator.OnFirstFillComplete -= _leftVisualizer.HandleFirstFillComplete;
 
             _rightTracker.OnProgressChange     -= _rightVisualizer.HandleProgressChange;
             _rightTracker.OnWinStateChange     -= _rightVisualizer.HandleWinStateChange;
+            _rightAnimator.OnAppearComplete    -= _rightVisualizer.HandleAppearComplete;
             _rightAnimator.OnFirstFillComplete -= _rightVisualizer.HandleFirstFillComplete;
 
             _leftTracker.OnProgressChange    -= HandleProgressChange;
