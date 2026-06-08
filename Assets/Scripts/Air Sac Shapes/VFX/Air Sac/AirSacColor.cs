@@ -1,5 +1,4 @@
 using UnityEngine;
-using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 
 namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
 {
@@ -8,7 +7,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private ProgressTracking.Shape _progressTracker;
+        [SerializeField] private Shape _progressTracker;
         [SerializeField] private Renderer _renderer;
 
         [Header("Behaviour")]
@@ -65,7 +64,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
 
         #region Internal
 
-        internal void SetShape(ProgressTracking.Shape tracker)
+        internal void SetShape(Shape tracker)
         {
             if (_progressTracker != null)
                 _progressTracker.OnMinMaxChange -= HandleMinMaxChanged;

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Splines;
 using IMVR.BodyArcade.AirSacShapes.Sequencing;
 
-namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
+namespace IMVR.BodyArcade.AirSacShapes
 {
     internal class Shape : MonoBehaviour
     {

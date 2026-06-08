@@ -2,8 +2,9 @@ using System;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
+using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 
-namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
+namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
 {
     internal class TubeAnimator : MonoBehaviour
     {

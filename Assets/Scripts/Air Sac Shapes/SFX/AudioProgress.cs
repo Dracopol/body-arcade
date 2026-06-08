@@ -1,5 +1,4 @@
 using UnityEngine;
-using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 
 namespace IMVR.BodyArcade.AirSacShapes.SFX
 {

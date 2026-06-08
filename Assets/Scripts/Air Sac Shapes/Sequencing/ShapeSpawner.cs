@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 using IMVR.BodyArcade.AirSacShapes.VFX.AirSac;
-using IMVR.BodyArcade.AirSacShapes.VFX.Shape;
+using IMVR.BodyArcade.AirSacShapes.VFX.Tube;
 using IMVR.BodyArcade.AirSacShapes.SFX;
 using IMVR.BodyArcade.UiRobot;
 

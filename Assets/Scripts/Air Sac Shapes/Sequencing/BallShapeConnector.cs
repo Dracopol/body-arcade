@@ -3,7 +3,6 @@ using System.Threading;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
-using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 
 namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 {
