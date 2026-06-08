@@ -4058,7 +4058,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.CorpusVR.Core.ShapeSpawner
   _shapeParent: {fileID: 839052462}
   _mirrorHands: {fileID: 210590404}
-  _leftKnob: {fileID: 1973277459}
+  _leftKnob: {fileID: 2016060643}
   _rightKnob: {fileID: 327795787}
   _connectorMaterial: {fileID: 2100000, guid: 644cb45abe0df07438250c1bd6b70142, type: 2}
   _connectorFillMaterial: {fileID: 2100000, guid: 3101cfcb90d7ae14da8ef2a2ca54d127, type: 2}
@@ -7280,7 +7280,6 @@ GameObject:
   - component: {fileID: 1973277458}
   - component: {fileID: 1973277457}
   - component: {fileID: 1973277456}
-  - component: {fileID: 1973277459}
   m_Layer: 0
   m_Name: Sphere Collider
   m_TagString: Untagged
@@ -7296,12 +7295,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973277454}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.49999934, y: 0.5000007, z: 0.49999928, w: 0.5000007}
-  m_LocalPosition: {x: 0.229, y: 0, z: 0}
+  m_LocalRotation: {x: -0.000000029802322, y: 0.000000029802322, z: -0.000000029802322, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2016060644}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1973277456
 SphereCollider:
@@ -7381,21 +7380,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973277454}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1973277459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1973277454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23df6d3d3be245a47a0d18a788c6a48d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracking.Knob
-  _target: {fileID: 1973277455}
-  _collider: {fileID: 1973277456}
-  _alignRotationToSpline: 1
 --- !u!1 &1980313985
 GameObject:
   m_ObjectHideFlags: 0
@@ -7501,7 +7485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressFollower
   _target: {fileID: 2016060644}
-  _collider: {fileID: 0}
+  _collider: {fileID: 1973277456}
   _alignRotationToSpline: 1
 --- !u!4 &2016060644
 Transform:
@@ -7512,10 +7496,11 @@ Transform:
   m_GameObject: {fileID: 2016060642}
   serializedVersion: 2
   m_LocalRotation: {x: -0.4999993, y: 0.5000007, z: 0.4999993, w: 0.5000007}
-  m_LocalPosition: {x: 0.229, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1973277455}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
 --- !u!1001 &2027260495
@@ -8315,6 +8300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.VFX.TubeFillVFX
   _progressTracker: {fileID: 5459692674964593038}
+  _tubeAnimator: {fileID: 0}
   _meshFilter: {fileID: 5262213087129125720}
   _tubeRenderer: {fileID: 91756246294088942}
   _winColor: {r: 0, g: 1, b: 0, a: 1}
@@ -8810,8 +8796,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca42fbaf99a6b4438c87e933051fde4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressTracker
-  _tube: {fileID: 91756246294088942}
-  _knob: {fileID: 0}
   _splineContainer: {fileID: 8720443153638015335}
   _handTransform: {fileID: 185321254}
   _handCollider: {fileID: 185321255}
@@ -8820,9 +8804,6 @@ MonoBehaviour:
   _tubeRadiusMeters: 0.02
   _isReversed: 0
   _drainSpeedPerSecond: 5
-  _fillSpeedPerSecond: 0.5
-  _disappearSpeedPerSecond: 3.5
-  _appearSpeedPerSecond: 1
   _winThreshold: 0.98
   _debugProgress: 0
   _debugIsHandInside: 0
@@ -9398,6 +9379,5 @@ SceneRoots:
   - {fileID: 165915435}
   - {fileID: 1741708740}
   - {fileID: 1935853991}
-  - {fileID: 1973277455}
   - {fileID: 2016060644}
   - {fileID: 327795788}

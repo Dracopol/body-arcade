@@ -1,6 +1,4 @@
 using System;
-using Cysharp.Threading.Tasks;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -13,19 +11,11 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         internal event Action<float> OnProgressChange;
         internal event Action<float> OnMaxProgressChange;
         internal event Action OnWinStateChange;
-        internal event Action OnFirstFillComplete;
-        internal event Action OnWinFillComplete;
-        internal event Action OnAppearComplete;
         internal event Action OnWinReady;
-        internal event Action OnComplete;
 
         #endregion
 
         #region Serialized fields
-
-        [Header("Extra")]
-        [SerializeField] private MeshRenderer _tube;
-        [SerializeField] private MeshRenderer _knob;
 
         [Header("References")]
         [SerializeField] private SplineContainer _splineContainer;
@@ -38,9 +28,6 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         [SerializeField] private float _tubeRadiusMeters = 0.05f;
         [SerializeField] private bool _isReversed = false;
         [SerializeField] private float _drainSpeedPerSecond = 5f;
-        [SerializeField] private float _fillSpeedPerSecond = 0.5f;
-        [SerializeField] private float _disappearSpeedPerSecond = 3.5f;
-        [SerializeField] private float _appearSpeedPerSecond = 1f;
         [SerializeField, Range(0f, 1f)] private float _winThreshold = 0.98f;
 
         [Header("Debug visualization")]
@@ -58,25 +45,19 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         private float _progress;
         private float _maxProgress;
-        private float _activeFillSpeed;
         private bool _isWin;
-        private bool _isWinFillComplete;
-        private bool _isDisappearing;
-        private bool _isAppearing;
-        private int _winFillsRemaining;
-        private float _destroyDelay;
+        private bool _isAnimatorDriven;
 
         private SplineProximity _splineProximity;
-        private CancellationTokenSource _cancellationTokenSource;
 
         #endregion
 
         #region Properties
 
-        internal float Progress => _progress;
-        internal float MaxProgress => _maxProgress;
-        internal bool IsWin => _isWin;
-        internal bool IsReversed => _isReversed;
+        internal float Progress       => _progress;
+        internal float MaxProgress    => _maxProgress;
+        internal bool  IsWin          => _isWin;
+        internal bool  IsReversed     => _isReversed;
         internal SplineContainer SplineContainer => _splineContainer;
 
         #endregion
@@ -85,15 +66,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         private void Awake()
         {
-            _cancellationTokenSource = new CancellationTokenSource();
-            _activeFillSpeed = _fillSpeedPerSecond;
             InitSplineProximity();
-        }
-
-        private void OnDestroy()
-        {
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource?.Dispose();
         }
 
         #endregion
@@ -104,66 +77,11 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         {
             if (_debugOverrideEnabled)
             {
-                SetCurrentProgress(_debugProgressOverride);
+                SetProgress(_debugProgressOverride);
                 return;
             }
 
-            if (_isAppearing)
-            {
-                float appeared = Mathf.MoveTowards(_progress, 1f, Time.deltaTime * _appearSpeedPerSecond);
-                SetCurrentProgress(appeared);
-                if (_progress >= 1f)
-                {
-                    _isAppearing = false;
-                    SetCurrentProgress(0f);
-                    SetMaxProgress(0f);
-                    OnAppearComplete?.Invoke();
-                }
-                return;
-            }
-
-            if (_isWin)
-            {
-                if (_isDisappearing)
-                {
-                    float disappeared = Mathf.MoveTowards(_progress, 0f, Time.deltaTime * _disappearSpeedPerSecond);
-                    SetCurrentProgress(disappeared);
-                    if (_progress <= 0f)
-                    {
-                        _isDisappearing = false;
-                        if (_knob != null) _knob.enabled = false;
-                        if (_tube != null) _tube.enabled = false;
-                        OnWinFillComplete?.Invoke();
-                        DestroyAfterDelayAsync(_destroyDelay, _cancellationTokenSource.Token).Forget();
-                    }
-                    return;
-                }
-
-                float filledProgress = Mathf.MoveTowards(_progress, 1f, Time.deltaTime * _activeFillSpeed);
-
-                if (filledProgress >= 1f)
-                {
-                    if (_winFillsRemaining > 0)
-                    {
-                        _winFillsRemaining--;
-                        filledProgress = 0f;
-                        OnFirstFillComplete?.Invoke();
-                        _activeFillSpeed = _disappearSpeedPerSecond;
-                    }
-                    else
-                    {
-                        if (_isWinFillComplete) return;
-                        _isWinFillComplete = true;
-                        _isDisappearing    = true;
-                        SetCurrentProgress(1f);
-                        return;
-                    }
-                }
-
-                SetCurrentProgress(filledProgress);
-                SetMaxProgress(filledProgress);
-                return;
-            }
+            if (_isWin || _isAnimatorDriven) return;
 
             if (_handTransform == null || _splineProximity == null)
                 return;
@@ -183,7 +101,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
             if (!isHandInside)
             {
                 float drained = Mathf.Lerp(_progress, 0f, Time.deltaTime * _drainSpeedPerSecond);
-                SetCurrentProgress(drained);
+                SetProgress(drained);
                 SetMaxProgress(drained);
                 return;
             }
@@ -198,17 +116,17 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 float newProgress = Mathf.Max(_maxProgress, splineProgress);
                 if (newProgress >= _winThreshold)
                     newProgress = 1f;
-                SetCurrentProgress(newProgress);
+                SetProgress(newProgress);
                 SetMaxProgress(newProgress);
             }
             else if (splineProgress < _maxProgress)
             {
-                SetCurrentProgress(splineProgress);
+                SetProgress(splineProgress);
             }
             else
             {
                 float drained = Mathf.Lerp(_progress, 0f, Time.deltaTime * _drainSpeedPerSecond);
-                SetCurrentProgress(drained);
+                SetProgress(drained);
                 SetMaxProgress(drained);
             }
         }
@@ -229,18 +147,17 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
             _knobCollider = knobCollider;
         }
 
-        internal void RegisterDestroyDelay(float seconds)
-        {
-            _destroyDelay = Mathf.Max(_destroyDelay, seconds);
-        }
-
         internal void TriggerWin()
         {
-            _progress          = 0f;
-            _maxProgress       = 0f;
-            _winFillsRemaining = 1;
-            _isWin             = true;
+            _progress    = 0f;
+            _maxProgress = 0f;
+            _isWin       = true;
             OnWinStateChange?.Invoke();
+        }
+
+        internal void SetAnimatorDriven(bool driven)
+        {
+            _isAnimatorDriven = driven;
         }
 
         internal void ApplyDifficultySettings(float drainSpeed, float splineRadius)
@@ -249,12 +166,23 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
             _tubeRadiusMeters    = splineRadius;
         }
 
-        internal void TriggerAppear()
+        internal void SetProgress(float progress)
         {
-            _progress    = 0f;
-            _maxProgress = 0f;
-            _isAppearing = true;
-            SetCurrentProgress(0f);
+            _progress      = progress;
+            _debugProgress = progress;
+            OnProgressChange?.Invoke(_progress);
+        }
+
+        internal void SetMaxProgress(float maxProgress)
+        {
+            _maxProgress      = maxProgress;
+            _debugMaxProgress = maxProgress;
+            OnMaxProgressChange?.Invoke(_maxProgress);
+
+            if (_isWin || _maxProgress < 1f)
+                return;
+
+            OnWinReady?.Invoke();
         }
 
         #endregion
@@ -269,38 +197,6 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                     _splineContainer.Spline,
                     _splineContainer.transform,
                     _handCollider);
-            }
-        }
-
-        private void SetCurrentProgress(float progress)
-        {
-            _progress      = progress;
-            _debugProgress = progress;
-            OnProgressChange?.Invoke(_progress);
-        }
-
-        private void SetMaxProgress(float maxProgress)
-        {
-            _maxProgress      = maxProgress;
-            _debugMaxProgress = maxProgress;
-            OnMaxProgressChange?.Invoke(_maxProgress);
-
-            if (_isWin || _maxProgress < 1f)
-                return;
-
-            OnWinReady?.Invoke();
-        }
-
-        private async UniTaskVoid DestroyAfterDelayAsync(float delay, CancellationToken ct)
-        {
-            if (delay > 0f)
-                await UniTask.WaitForSeconds(delay, cancellationToken: ct);
-
-            if (!ct.IsCancellationRequested)
-            {
-                // Fire before destroying so ProgressTracker can react
-                OnComplete?.Invoke();
-                Destroy(gameObject);
             }
         }
 

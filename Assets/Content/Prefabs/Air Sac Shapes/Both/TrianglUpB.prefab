@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressFollower
   _target: {fileID: 2704837730602784863}
+  _collider: {fileID: 0}
   _alignRotationToSpline: 1
 --- !u!1 &594581081700060483
 GameObject:
@@ -317,6 +318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressFollower
   _target: {fileID: 5924744476205382753}
+  _collider: {fileID: 0}
   _alignRotationToSpline: 1
 --- !u!1 &2997709772294724252
 GameObject:
@@ -594,6 +596,9 @@ MonoBehaviour:
   _trackers:
   - {fileID: 2003580426518432753}
   - {fileID: 1907444767204352365}
+  _animators:
+  - {fileID: 7255447076854359359}
+  - {fileID: 4488662187862600781}
 --- !u!1 &4363873804856400436
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,6 +721,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2147289084700913848}
   - component: {fileID: 2003580426518432753}
+  - component: {fileID: 7255447076854359359}
   m_Layer: 0
   m_Name: ShapeL
   m_TagString: Left
@@ -753,8 +759,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca42fbaf99a6b4438c87e933051fde4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressTracker
-  _tube: {fileID: 6993238034221991085}
-  _knob: {fileID: 0}
   _splineContainer: {fileID: 8308292250996409287}
   _handTransform: {fileID: 0}
   _handCollider: {fileID: 0}
@@ -763,15 +767,30 @@ MonoBehaviour:
   _tubeRadiusMeters: 0.02
   _isReversed: 1
   _drainSpeedPerSecond: 0.1
-  _fillSpeedPerSecond: 0.5
-  _disappearSpeedPerSecond: 3.5
-  _appearSpeedPerSecond: 1
   _winThreshold: 0.98
   _debugProgress: 0
   _debugIsHandInside: 0
   _debugMaxProgress: 0
   _debugOverrideEnabled: 0
   _debugProgressOverride: 0
+--- !u!114 &7255447076854359359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4791080187711561703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63367c1e5c52dd244b9d9895f55c6533, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracking.TubeAnimator
+  _tracker: {fileID: 2003580426518432753}
+  _tube: {fileID: 6993238034221991085}
+  _knob: {fileID: 0}
+  _fillSpeedPerSecond: 0.5
+  _disappearSpeedPerSecond: 3.5
+  _appearSpeedPerSecond: 1
 --- !u!1 &4977006860874631829
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,6 +836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.VFX.TubeFillVFX
   _progressTracker: {fileID: 1907444767204352365}
+  _tubeAnimator: {fileID: 4488662187862600781}
   _meshFilter: {fileID: 3462332700685689592}
   _tubeRenderer: {fileID: 8590643724099324256}
   _winColor: {r: 0, g: 1, b: 0, a: 1}
@@ -994,6 +1014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.VFX.TubeFillVFX
   _progressTracker: {fileID: 2003580426518432753}
+  _tubeAnimator: {fileID: 7255447076854359359}
   _meshFilter: {fileID: 5552996421215113010}
   _tubeRenderer: {fileID: 6993238034221991085}
   _winColor: {r: 0, g: 1, b: 0, a: 1}
@@ -1248,6 +1269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 346108763086599930}
   - component: {fileID: 1907444767204352365}
+  - component: {fileID: 4488662187862600781}
   m_Layer: 0
   m_Name: ShapeR
   m_TagString: Right
@@ -1285,8 +1307,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca42fbaf99a6b4438c87e933051fde4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracker.SplineProgressTracker
-  _tube: {fileID: 8590643724099324256}
-  _knob: {fileID: 0}
   _splineContainer: {fileID: 7310892797119125499}
   _handTransform: {fileID: 0}
   _handCollider: {fileID: 0}
@@ -1295,15 +1315,30 @@ MonoBehaviour:
   _tubeRadiusMeters: 0.02
   _isReversed: 1
   _drainSpeedPerSecond: 0.1
-  _fillSpeedPerSecond: 0.5
-  _disappearSpeedPerSecond: 3.5
-  _appearSpeedPerSecond: 1
   _winThreshold: 0.98
   _debugProgress: 0
   _debugIsHandInside: 0
   _debugMaxProgress: 0
   _debugOverrideEnabled: 0
   _debugProgressOverride: 0
+--- !u!114 &4488662187862600781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6375667755103549333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63367c1e5c52dd244b9d9895f55c6533, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.ProgressTracking.TubeAnimator
+  _tracker: {fileID: 1907444767204352365}
+  _tube: {fileID: 8590643724099324256}
+  _knob: {fileID: 0}
+  _fillSpeedPerSecond: 0.5
+  _disappearSpeedPerSecond: 3.5
+  _appearSpeedPerSecond: 1
 --- !u!1 &7487014233248485599
 GameObject:
   m_ObjectHideFlags: 0

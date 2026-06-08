@@ -9,6 +9,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Shape
 
         [Header("References")]
         [SerializeField] private SplineProgressTracker _progressTracker;
+        [SerializeField] private TubeAnimator _tubeAnimator;
         [SerializeField] private MeshFilter _meshFilter;
         [SerializeField] private MeshRenderer _tubeRenderer;
 
@@ -54,7 +55,8 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Shape
 
             _progressTracker.OnProgressChange += HandleProgressChange;
             _progressTracker.OnWinStateChange += HandleWinStateChange;
-            _progressTracker.OnFirstFillComplete += HandleFirstFillComplete;
+            if (_tubeAnimator != null)
+                _tubeAnimator.OnFirstFillComplete += HandleFirstFillComplete;
         }
 
         private void OnDisable()
@@ -64,7 +66,8 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Shape
 
             _progressTracker.OnProgressChange -= HandleProgressChange;
             _progressTracker.OnWinStateChange -= HandleWinStateChange;
-            _progressTracker.OnFirstFillComplete -= HandleFirstFillComplete;
+            if (_tubeAnimator != null)
+                _tubeAnimator.OnFirstFillComplete -= HandleFirstFillComplete;
         }
 
         private void OnDestroy()

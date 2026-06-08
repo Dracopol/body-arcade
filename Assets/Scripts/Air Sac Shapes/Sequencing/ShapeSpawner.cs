@@ -201,13 +201,15 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         {
             bool isLeft  = obj.CompareTag("Left");
             bool isRight = obj.CompareTag("Right");
-            if (!isLeft && !isRight) return;
+            if (!isLeft && !isRight) { Debug.Log($"[ShapeSpawner] AssignKnob skipped '{obj.name}' — tag is '{obj.tag}'"); return; }
 
             Knob knob = isLeft ? _leftKnob : _rightKnob;
-            if (knob == null) return;
+            if (knob == null) { Debug.Log($"[ShapeSpawner] AssignKnob '{obj.name}' — knob is null"); return; }
 
             SplineProgressTracker tracker = obj.GetComponent<SplineProgressTracker>();
-            if (tracker == null) return;
+            if (tracker == null) { Debug.Log($"[ShapeSpawner] AssignKnob '{obj.name}' — no SplineProgressTracker on this GO"); return; }
+
+            Debug.Log($"[ShapeSpawner] AssignKnob '{obj.name}' — SplineContainer is {(tracker.SplineContainer != null ? "SET" : "NULL")}");
             knob.SetTracker(tracker, tracker.SplineContainer);
             tracker.SetKnobCollider(knob.Collider);
         }

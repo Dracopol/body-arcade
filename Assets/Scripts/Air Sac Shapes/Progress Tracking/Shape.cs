@@ -20,6 +20,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         #region Serialized fields
 
         [SerializeField] private List<SplineProgressTracker> _trackers;
+        [SerializeField] private List<TubeAnimator> _animators;
 
         #endregion
 
@@ -53,11 +54,15 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 tracker.OnProgressChange    += HandleProgressChange;
                 tracker.OnMaxProgressChange += HandleMaxProgressChange;
                 tracker.OnWinStateChange    += HandleWinStateChange;
-                tracker.OnFirstFillComplete += HandleFirstFillComplete;
-                tracker.OnWinFillComplete   += HandleWinFillComplete;
-                tracker.OnAppearComplete    += HandleAppearComplete;
                 tracker.OnWinReady          += HandleWinReady;
-                tracker.OnComplete          += HandleComplete;
+            }
+
+            foreach (TubeAnimator animator in _animators)
+            {
+                animator.OnFirstFillComplete += HandleFirstFillComplete;
+                animator.OnWinFillComplete   += HandleWinFillComplete;
+                animator.OnAppearComplete    += HandleAppearComplete;
+                animator.OnComplete          += HandleComplete;
             }
         }
 
@@ -68,11 +73,15 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 tracker.OnProgressChange    -= HandleProgressChange;
                 tracker.OnMaxProgressChange -= HandleMaxProgressChange;
                 tracker.OnWinStateChange    -= HandleWinStateChange;
-                tracker.OnFirstFillComplete -= HandleFirstFillComplete;
-                tracker.OnWinFillComplete   -= HandleWinFillComplete;
-                tracker.OnAppearComplete    -= HandleAppearComplete;
                 tracker.OnWinReady          -= HandleWinReady;
-                tracker.OnComplete          -= HandleComplete;
+            }
+
+            foreach (TubeAnimator animator in _animators)
+            {
+                animator.OnFirstFillComplete -= HandleFirstFillComplete;
+                animator.OnWinFillComplete   -= HandleWinFillComplete;
+                animator.OnAppearComplete    -= HandleAppearComplete;
+                animator.OnComplete          -= HandleComplete;
             }
         }
 
@@ -82,20 +91,20 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         internal void RegisterDestroyDelay(float seconds)
         {
-            foreach (SplineProgressTracker tracker in _trackers)
-                tracker.RegisterDestroyDelay(seconds);
+            foreach (TubeAnimator animator in _animators)
+                animator.RegisterDestroyDelay(seconds);
         }
 
         internal void TriggerAppear()
         {
             _appearCount = 0;
-            if (_trackers.Count == 0)
+            if (_animators.Count == 0)
             {
                 OnAppearComplete?.Invoke();
                 return;
             }
-            foreach (SplineProgressTracker tracker in _trackers)
-                tracker.TriggerAppear();
+            foreach (TubeAnimator animator in _animators)
+                animator.TriggerAppear();
         }
 
         #endregion
