@@ -2,7 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
+namespace IMVR.BodyArcade.AirSacShapes.Tubes
 {
     internal class Knob : MonoBehaviour
     {
@@ -64,7 +64,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         private void HandleMaxProgressChange(float maxProgress)
         {
-            if (_spline == null || _target == null || _tracker == null)
+            if (_spline == null || _target == null || _tracker == null || _splineTransform == null)
                 return;
 
             float t = _tracker.IsReversed ? 1f - maxProgress : maxProgress;

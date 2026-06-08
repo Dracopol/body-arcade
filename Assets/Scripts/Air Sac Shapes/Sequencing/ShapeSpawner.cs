@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using IMVR.BodyArcade.AirSacShapes.VFX.AirSac;
-using IMVR.BodyArcade.AirSacShapes.VFX.Tube;
+using IMVR.BodyArcade.AirSacShapes.Tubes;
 using IMVR.BodyArcade.AirSacShapes.SFX;
 using IMVR.BodyArcade.UiRobot;
 
@@ -163,7 +163,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             _currentShape.SetSpawner(this);
 
             if (_tubes != null)
-                _tubes.Wire(_currentShape, prepared.DrainSpeed, prepared.SplineRadius);
+                _tubes.Wire(_currentShape, prepared.DrainSpeed, prepared.SplineRadius, prepared.WinThreshold);
 
             _hasSpawned = true;
 

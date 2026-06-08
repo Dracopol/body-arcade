@@ -64,11 +64,14 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private void HandleShapeDestroyed()
         {
             _sequencer.Advance();
+            GameObject ball = _sequencer.CurrentBall;
+            if (ball == null) return;
+            SpawnSequenceAsync(ball, _cts.Token).Forget();
         }
 
         private void HandleAlignComplete()
         {
-            if (_isSpawning) return;
+            if (_isSpawning || _spawner.CurrentConnector != null) return;
             GameObject ball = _sequencer.CurrentBall;
             if (ball == null) return;
             SpawnSequenceAsync(ball, _cts.Token).Forget();

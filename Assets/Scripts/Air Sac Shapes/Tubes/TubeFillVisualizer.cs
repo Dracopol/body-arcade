@@ -1,19 +1,13 @@
-using System;
 using UnityEngine;
 
-namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
+namespace IMVR.BodyArcade.AirSacShapes.Tubes
 {
-    [Serializable]
     internal class TubeFillVisualizer
     {
-        #region Serialized fields
-
-        [Header("Win Appearance")]
-        [SerializeField] private Color _winColor = Color.green;
-
-        #endregion
-
         #region Fields
+
+        // Tuning — supplied once via Init (shared from TubesController).
+        private Color _winColor = Color.green;
 
         private MeshFilter   _meshFilter;
         private MeshRenderer _tubeRenderer;
@@ -21,21 +15,26 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
 
         private readonly Color _transparent = Color.clear;
 
-        private static readonly int ProgressId     = Shader.PropertyToID("_Progress");
-        private static readonly int UvMaxId        = Shader.PropertyToID("_UVMax");
-        private static readonly int ReversedId     = Shader.PropertyToID("_Reversed");
-        private static readonly int ActiveColorId  = Shader.PropertyToID("_ActiveColor");
+        private static readonly int ProgressId      = Shader.PropertyToID("_Progress");
+        private static readonly int UvMaxId         = Shader.PropertyToID("_UVMax");
+        private static readonly int ReversedId      = Shader.PropertyToID("_Reversed");
+        private static readonly int ActiveColorId   = Shader.PropertyToID("_ActiveColor");
         private static readonly int InactiveColorId = Shader.PropertyToID("_InactiveColor");
 
         #endregion
 
         #region Internal
 
+        internal void Init(Color winColor)
+        {
+            _winColor = winColor;
+        }
+
         internal void AssignMesh(MeshFilter meshFilter, MeshRenderer meshRenderer, bool isReversed)
         {
             if (_material != null)
             {
-                UnityEngine.Object.Destroy(_material);
+                Object.Destroy(_material);
                 _material = null;
             }
 
@@ -57,7 +56,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
         internal void Dispose()
         {
             if (_material != null)
-                UnityEngine.Object.Destroy(_material);
+                Object.Destroy(_material);
         }
 
         internal void HandleProgressChange(float progress)

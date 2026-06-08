@@ -2,9 +2,8 @@ using System;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
-using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 
-namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
+namespace IMVR.BodyArcade.AirSacShapes.Tubes
 {
     internal class TubesController : MonoBehaviour
     {
@@ -22,19 +21,11 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
 
         #region Serialized fields
 
-        [Header("Left Tracker")]
-        [SerializeField] private SplineProgressTracker _leftTracker   = new SplineProgressTracker();
-        [Header("Left Animator")]
-        [SerializeField] private TubeAnimator          _leftAnimator  = new TubeAnimator();
-        [Header("Left Visualizer")]
-        [SerializeField] private TubeFillVisualizer    _leftVisualizer = new TubeFillVisualizer();
-
-        [Header("Right Tracker")]
-        [SerializeField] private SplineProgressTracker _rightTracker   = new SplineProgressTracker();
-        [Header("Right Animator")]
-        [SerializeField] private TubeAnimator          _rightAnimator  = new TubeAnimator();
-        [Header("Right Visualizer")]
-        [SerializeField] private TubeFillVisualizer    _rightVisualizer = new TubeFillVisualizer();
+        [Header("Tuning (shared by both sides)")]
+        [SerializeField] private float _appearSpeed    = 1f;
+        [SerializeField] private float _fillSpeed      = 0.5f;
+        [SerializeField] private float _disappearSpeed = 3.5f;
+        [SerializeField] private Color _winColor       = Color.green;
 
         [Header("Knobs")]
         [SerializeField] private Knob _leftKnob;
@@ -43,6 +34,14 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
         #endregion
 
         #region Fields
+
+        // Pure runtime helpers — no serialized state, constructed here like SplineProximity.
+        private readonly SplineProgressTracker _leftTracker    = new();
+        private readonly SplineProgressTracker _rightTracker   = new();
+        private readonly TubeAnimator          _leftAnimator   = new();
+        private readonly TubeAnimator          _rightAnimator  = new();
+        private readonly TubeFillVisualizer    _leftVisualizer  = new();
+        private readonly TubeFillVisualizer    _rightVisualizer = new();
 
         private int _activeSideCount;
         private int _winCount;
@@ -62,8 +61,10 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
 
         private void Awake()
         {
-            _leftAnimator.Init(_leftTracker);
-            _rightAnimator.Init(_rightTracker);
+            _leftAnimator.Init(_leftTracker,   _fillSpeed, _disappearSpeed, _appearSpeed);
+            _rightAnimator.Init(_rightTracker, _fillSpeed, _disappearSpeed, _appearSpeed);
+            _leftVisualizer.Init(_winColor);
+            _rightVisualizer.Init(_winColor);
             _cts = new CancellationTokenSource();
         }
 
@@ -159,14 +160,14 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
 
         #region Internal
 
-        internal void Wire(Shape shape, float drainSpeed, float splineRadius)
+        internal void Wire(Shape shape, float drainSpeed, float splineRadius, float winThreshold)
         {
             ResetCounts();
 
             if (shape.LeftSpline != null)
             {
                 _activeSideCount++;
-                _leftTracker.ApplyDifficultySettings(drainSpeed, splineRadius);
+                _leftTracker.ApplyDifficultySettings(drainSpeed, splineRadius, winThreshold);
                 _leftTracker.AssignSpline(shape.LeftSpline, shape.LeftIsReversed);
                 _leftAnimator.AssignRenderers(shape.LeftMeshRenderer, null);
                 _leftVisualizer.AssignMesh(shape.LeftMeshFilter, shape.LeftMeshRenderer, shape.LeftIsReversed);
@@ -180,7 +181,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
             if (shape.RightSpline != null)
             {
                 _activeSideCount++;
-                _rightTracker.ApplyDifficultySettings(drainSpeed, splineRadius);
+                _rightTracker.ApplyDifficultySettings(drainSpeed, splineRadius, winThreshold);
                 _rightTracker.AssignSpline(shape.RightSpline, shape.RightIsReversed);
                 _rightAnimator.AssignRenderers(shape.RightMeshRenderer, null);
                 _rightVisualizer.AssignMesh(shape.RightMeshFilter, shape.RightMeshRenderer, shape.RightIsReversed);

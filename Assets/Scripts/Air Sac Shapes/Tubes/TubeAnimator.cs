@@ -1,10 +1,8 @@
 using System;
 using UnityEngine;
-using IMVR.BodyArcade.AirSacShapes.ProgressTracking;
 
-namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
+namespace IMVR.BodyArcade.AirSacShapes.Tubes
 {
-    [Serializable]
     internal class TubeAnimator
     {
         #region Events
@@ -15,16 +13,12 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
 
         #endregion
 
-        #region Serialized fields
-
-        [Header("Behaviour")]
-        [SerializeField] private float _fillSpeedPerSecond      = 0.5f;
-        [SerializeField] private float _disappearSpeedPerSecond = 3.5f;
-        [SerializeField] private float _appearSpeedPerSecond    = 1f;
-
-        #endregion
-
         #region Fields
+
+        // Tuning — supplied once via Init (shared from TubesController).
+        private float _fillSpeedPerSecond      = 0.5f;
+        private float _disappearSpeedPerSecond = 3.5f;
+        private float _appearSpeedPerSecond    = 1f;
 
         private SplineProgressTracker _tracker;
 
@@ -42,10 +36,13 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Tube
 
         #region Internal
 
-        internal void Init(SplineProgressTracker tracker)
+        internal void Init(SplineProgressTracker tracker, float fillSpeed, float disappearSpeed, float appearSpeed)
         {
-            _tracker         = tracker;
-            _activeFillSpeed = _fillSpeedPerSecond;
+            _tracker                 = tracker;
+            _fillSpeedPerSecond      = fillSpeed;
+            _disappearSpeedPerSecond = disappearSpeed;
+            _appearSpeedPerSecond    = appearSpeed;
+            _activeFillSpeed         = fillSpeed;
         }
 
         internal void Tick()

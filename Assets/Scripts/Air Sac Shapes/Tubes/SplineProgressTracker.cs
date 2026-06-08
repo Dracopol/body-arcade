@@ -2,9 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
+namespace IMVR.BodyArcade.AirSacShapes.Tubes
 {
-    [Serializable]
     internal class SplineProgressTracker
     {
         #region Events
@@ -16,16 +15,12 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         #endregion
 
-        #region Serialized fields
-
-        [Header("Behaviour")]
-        [SerializeField] private float _tubeRadiusMeters   = 0.05f;
-        [SerializeField] private float _drainSpeedPerSecond = 5f;
-        [SerializeField, Range(0f, 1f)] private float _winThreshold = 0.98f;
-
-        #endregion
-
         #region Fields
+
+        // Difficulty tuning — supplied per spawn via ApplyDifficultySettings (from PreparedShape).
+        private float _tubeRadiusMeters    = 0.05f;
+        private float _drainSpeedPerSecond = 5f;
+        private float _winThreshold        = 0.98f;
 
         private Transform _handTransform;
         private Collider  _handCollider;
@@ -146,10 +141,11 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
             _isAnimatorDriven = driven;
         }
 
-        internal void ApplyDifficultySettings(float drainSpeed, float splineRadius)
+        internal void ApplyDifficultySettings(float drainSpeed, float splineRadius, float winThreshold)
         {
             _drainSpeedPerSecond = drainSpeed;
             _tubeRadiusMeters    = splineRadius;
+            _winThreshold        = winThreshold;
         }
 
         internal void SetProgress(float progress)
