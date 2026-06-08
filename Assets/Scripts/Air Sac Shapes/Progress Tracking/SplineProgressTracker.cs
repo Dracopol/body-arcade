@@ -24,20 +24,10 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         [SerializeField] private Collider _knobCollider;
 
         [Header("Behaviour")]
-        [SerializeField] private float _radiusToleranceMultiplier = 1.5f;
         [SerializeField] private float _tubeRadiusMeters = 0.05f;
         [SerializeField] private bool _isReversed = false;
         [SerializeField] private float _drainSpeedPerSecond = 5f;
         [SerializeField, Range(0f, 1f)] private float _winThreshold = 0.98f;
-
-        [Header("Debug visualization")]
-        [SerializeField, Range(0f, 1f)] private float _debugProgress;
-        [SerializeField] private bool _debugIsHandInside;
-        [SerializeField, Range(0f, 1f)] private float _debugMaxProgress;
-
-        [Header("Debug override")]
-        [SerializeField] private bool _debugOverrideEnabled;
-        [SerializeField, Range(0f, 1f)] private float _debugProgressOverride;
 
         #endregion
 
@@ -75,12 +65,6 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         private void Update()
         {
-            if (_debugOverrideEnabled)
-            {
-                SetProgress(_debugProgressOverride);
-                return;
-            }
-
             if (_isWin || _isAnimatorDriven) return;
 
             if (_handTransform == null || _splineProximity == null)
@@ -94,9 +78,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 splineProgress = 1f - splineProgress;
 
             float distanceToSplineMeters = (closestSplinePoint - closestColliderPoint).magnitude;
-            bool isHandInside = distanceToSplineMeters <= _tubeRadiusMeters * _radiusToleranceMultiplier;
-
-            _debugIsHandInside = isHandInside;
+            bool isHandInside = distanceToSplineMeters <= _tubeRadiusMeters;
 
             if (!isHandInside)
             {
@@ -168,15 +150,13 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         internal void SetProgress(float progress)
         {
-            _progress      = progress;
-            _debugProgress = progress;
+            _progress = progress;
             OnProgressChange?.Invoke(_progress);
         }
 
         internal void SetMaxProgress(float maxProgress)
         {
-            _maxProgress      = maxProgress;
-            _debugMaxProgress = maxProgress;
+            _maxProgress = maxProgress;
             OnMaxProgressChange?.Invoke(_maxProgress);
 
             if (_isWin || _maxProgress < 1f)
