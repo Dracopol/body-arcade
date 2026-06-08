@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a450de356361d3d488c40adad530674d, type: 3}
   m_Name: Test2
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ShapeConfig
-  DifficultyLabel: Easy
+  IsEasy: 1
+  IsMedium: 0
+  IsHard: 0
   ThumbnailColor: {r: 0.60586685, g: 0.24474381, b: 0.8833891, a: 1}
   ThumbnailSprite: {fileID: 0}
-  Prefab: {fileID: 3628128942024683711, guid: 1a664c4414438dc48a34f57a56465289, type: 3}
+  Prefab: {fileID: 3628128942024683711, guid: 4f8716c38b95ff742b714354cc90943e, type: 3}
   _thumbnailColorInitialized: 1
