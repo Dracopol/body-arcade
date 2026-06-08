@@ -107,8 +107,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
                 _spawner.ShowCurrentShape();
 
                 _appearTcs = new UniTaskCompletionSource();
+                UniTask appearTask = _appearTcs.Task;
                 _spawner.TriggerAppear();
-                await _appearTcs.Task.AttachExternalCancellation(ct);
+                await appearTask.AttachExternalCancellation(ct);
             }
             catch (OperationCanceledException) { }
             finally

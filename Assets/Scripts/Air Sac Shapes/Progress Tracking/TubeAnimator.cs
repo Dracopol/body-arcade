@@ -20,8 +20,6 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         [Header("References")]
         [SerializeField] private SplineProgressTracker _tracker;
-        [SerializeField] private MeshRenderer _tube;
-        [SerializeField] private MeshRenderer _knob;
 
         [Header("Behaviour")]
         [SerializeField] private float _fillSpeedPerSecond      = 0.5f;
@@ -31,6 +29,9 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         #endregion
 
         #region Fields
+
+        private MeshRenderer _tube;
+        private MeshRenderer _knob;
 
         private float _activeFillSpeed;
         private bool  _isWin;
@@ -144,6 +145,30 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
 
         #region Internal
 
+        internal void AssignRenderers(MeshRenderer tube, MeshRenderer knob)
+        {
+            _tube = tube;
+            _knob = knob;
+        }
+
+        internal void ResetState()
+        {
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = new CancellationTokenSource();
+
+            _activeFillSpeed   = _fillSpeedPerSecond;
+            _isWin             = false;
+            _isWinFillComplete = false;
+            _isDisappearing    = false;
+            _isAppearing       = false;
+            _winFillsRemaining = 0;
+            _destroyDelay      = 0f;
+
+            if (_tube != null) _tube.enabled = true;
+            if (_knob != null) _knob.enabled = true;
+        }
+
         internal void TriggerAppear()
         {
             _isAppearing = true;
@@ -178,10 +203,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 await UniTask.WaitForSeconds(delay, cancellationToken: ct);
 
             if (!ct.IsCancellationRequested)
-            {
                 OnComplete?.Invoke();
-                Destroy(gameObject);
-            }
         }
 
         #endregion

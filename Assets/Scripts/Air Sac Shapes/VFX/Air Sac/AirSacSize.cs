@@ -22,6 +22,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         #region Fields
 
         private Vector3 _initialScale;
+        private bool _isWin;
 
         #endregion
 
@@ -36,13 +37,19 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         private void OnEnable()
         {
             if (_progressTracker != null)
-                _progressTracker.OnMinMaxChange += HandleMinMaxChanged;
+            {
+                _progressTracker.OnMinMaxChange   += HandleMinMaxChanged;
+                _progressTracker.OnWinStateChange += HandleWinStateChange;
+            }
         }
 
         private void OnDisable()
         {
             if (_progressTracker != null)
-                _progressTracker.OnMinMaxChange -= HandleMinMaxChanged;
+            {
+                _progressTracker.OnMinMaxChange   -= HandleMinMaxChanged;
+                _progressTracker.OnWinStateChange -= HandleWinStateChange;
+            }
         }
 
         #endregion
@@ -52,12 +59,19 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         internal void SetShape(ProgressTracking.Shape tracker)
         {
             if (_progressTracker != null)
-                _progressTracker.OnMinMaxChange -= HandleMinMaxChanged;
+            {
+                _progressTracker.OnMinMaxChange   -= HandleMinMaxChanged;
+                _progressTracker.OnWinStateChange -= HandleWinStateChange;
+            }
 
             _progressTracker = tracker;
+            _isWin           = false;
 
             if (_progressTracker != null)
-                _progressTracker.OnMinMaxChange += HandleMinMaxChanged;
+            {
+                _progressTracker.OnMinMaxChange   += HandleMinMaxChanged;
+                _progressTracker.OnWinStateChange += HandleWinStateChange;
+            }
         }
 
         #endregion
@@ -67,8 +81,13 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         private void HandleMinMaxChanged(float minMax)
         {
             _debugProgress = minMax;
-            if (_progressTracker.IsWin) return;
+            if (_isWin) return;
             ApplyScale(minMax);
+        }
+
+        private void HandleWinStateChange()
+        {
+            _isWin = true;
         }
 
         #endregion

@@ -10,8 +10,6 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Shape
         [Header("References")]
         [SerializeField] private SplineProgressTracker _progressTracker;
         [SerializeField] private TubeAnimator _tubeAnimator;
-        [SerializeField] private MeshFilter _meshFilter;
-        [SerializeField] private MeshRenderer _tubeRenderer;
 
         [Header("Win Appearance")]
         [SerializeField] private Color _winColor = Color.green;
@@ -21,7 +19,10 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Shape
         #region Fields
 
 
-        private Color _transparent = new Color(0f, 0f, 0f, 0f); 
+        private MeshFilter   _meshFilter;
+        private MeshRenderer _tubeRenderer;
+
+        private Color _transparent = new Color(0f, 0f, 0f, 0f);
         private static readonly int ProgressId = Shader.PropertyToID("_Progress");
         private static readonly int UvMaxId = Shader.PropertyToID("_UVMax");
         private static readonly int ReversedId = Shader.PropertyToID("_Reversed");
@@ -34,18 +35,35 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.Shape
 
         #region Setup
 
-        private void Awake()
+        internal void AssignMesh(MeshFilter meshFilter, MeshRenderer meshRenderer, bool isReversed)
         {
+            if (_material != null)
+            {
+                Destroy(_material);
+                _material = null;
+            }
+
+            _meshFilter   = meshFilter;
+            _tubeRenderer = meshRenderer;
+
             if (_tubeRenderer != null)
                 _material = _tubeRenderer.material;
+
+            if (_material != null)
+            {
+                _material.SetFloat(ReversedId, isReversed ? 1f : 0f);
+                _material.SetFloat(ProgressId, 0f);
+            }
+
+            DetectUvMax();
         }
 
-        private void Start()
+        internal void ResetState()
         {
-            DetectUvMax();
-
-            if (_material != null && _progressTracker != null)
-                _material.SetFloat(ReversedId, _progressTracker.IsReversed ? 1f : 0f);
+            if (_material == null) return;
+            _material.SetFloat(ProgressId, 0f);
+            _material.SetColor(ActiveColorId, Color.white);
+            _material.SetColor(InactiveColorId, Color.white);
         }
 
         private void OnEnable()

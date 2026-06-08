@@ -96,7 +96,6 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         private void SpawnParticleEffect()
         {
             if (_particleEffectPrefab == null) return;
-            if (!_progressTracker.IsWin) return;
 
             ParticleSystem instance = Instantiate(
                 _particleEffectPrefab,

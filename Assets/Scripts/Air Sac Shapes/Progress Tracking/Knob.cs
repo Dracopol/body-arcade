@@ -52,7 +52,10 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
             }
 
             if (_tracker != null)
+            {
                 _tracker.OnMaxProgressChange += HandleMaxProgressChange;
+                HandleMaxProgressChange(_tracker.MaxProgress);
+            }
         }
 
         #endregion

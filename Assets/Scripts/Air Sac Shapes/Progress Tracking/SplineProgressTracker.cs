@@ -18,20 +18,21 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private SplineContainer _splineContainer;
         [SerializeField] private Transform _handTransform;
         [SerializeField] private Collider _handCollider;
         [SerializeField] private Collider _knobCollider;
 
         [Header("Behaviour")]
         [SerializeField] private float _tubeRadiusMeters = 0.05f;
-        [SerializeField] private bool _isReversed = false;
         [SerializeField] private float _drainSpeedPerSecond = 5f;
         [SerializeField, Range(0f, 1f)] private float _winThreshold = 0.98f;
 
         #endregion
 
         #region Fields
+
+        private SplineContainer _splineContainer;
+        private bool _isReversed;
 
         private float _progress;
         private float _maxProgress;
@@ -67,7 +68,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         {
             if (_isWin || _isAnimatorDriven) return;
 
-            if (_handTransform == null || _splineProximity == null)
+            if (_handTransform == null || _splineProximity == null || _splineContainer == null)
                 return;
 
             float splineProgress = _splineProximity.FindClosestSplineProgress(
@@ -116,6 +117,24 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
         #endregion
 
         #region Internal
+
+        internal void AssignSpline(SplineContainer splineContainer, bool isReversed)
+        {
+            ResetState();
+            _splineContainer = splineContainer;
+            _isReversed      = isReversed;
+            InitSplineProximity();
+        }
+
+        internal void ResetState()
+        {
+            _isWin            = false;
+            _isAnimatorDriven = false;
+            _splineContainer  = null;
+            _splineProximity  = null;
+            SetProgress(0f);
+            SetMaxProgress(0f);
+        }
 
         internal void SetHand(Transform handTransform, Collider handCollider)
         {

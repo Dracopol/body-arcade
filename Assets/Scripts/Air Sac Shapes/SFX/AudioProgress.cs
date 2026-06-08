@@ -8,7 +8,6 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private Shape _progressTracker;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioSource _winAudioSource;
         [SerializeField] private AudioClip _clip;
@@ -28,6 +27,8 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
 
         #region Fields
 
+        private Shape _progressTracker;
+
         private int _lastThresholdIndex = 0;
         private int _maxThresholdIndex;
         private bool _isWinPhase = false;
@@ -37,14 +38,37 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
 
         #region Setup
 
+        internal void SetShape(Shape shape)
+        {
+            if (_progressTracker != null)
+            {
+                _progressTracker.OnMinMaxChange      -= HandleMaxProgressChange;
+                _progressTracker.OnWinStateChange    -= HandleWinStateChange;
+                _progressTracker.OnFirstFillComplete -= HandleFirstFillComplete;
+            }
+
+            _progressTracker       = shape;
+            _isWinPhase            = false;
+            _isFirstFillComplete   = false;
+            _lastThresholdIndex    = 0;
+            _maxThresholdIndex     = Mathf.FloorToInt(1f / _progressStepSize);
+
+            if (_progressTracker != null)
+            {
+                _progressTracker.OnMinMaxChange      += HandleMaxProgressChange;
+                _progressTracker.OnWinStateChange    += HandleWinStateChange;
+                _progressTracker.OnFirstFillComplete += HandleFirstFillComplete;
+            }
+        }
+
         private void OnEnable()
         {
             _maxThresholdIndex = Mathf.FloorToInt(1f / _progressStepSize);
 
             if (_progressTracker != null)
             {
-                _progressTracker.OnMinMaxChange    += HandleMaxProgressChange;
-                _progressTracker.OnWinStateChange   += HandleWinStateChange;
+                _progressTracker.OnMinMaxChange      += HandleMaxProgressChange;
+                _progressTracker.OnWinStateChange    += HandleWinStateChange;
                 _progressTracker.OnFirstFillComplete += HandleFirstFillComplete;
             }
         }
@@ -53,8 +77,8 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
         {
             if (_progressTracker != null)
             {
-                _progressTracker.OnMinMaxChange    -= HandleMaxProgressChange;
-                _progressTracker.OnWinStateChange   -= HandleWinStateChange;
+                _progressTracker.OnMinMaxChange      -= HandleMaxProgressChange;
+                _progressTracker.OnWinStateChange    -= HandleWinStateChange;
                 _progressTracker.OnFirstFillComplete -= HandleFirstFillComplete;
             }
         }
