@@ -557,7 +557,7 @@ GameObject:
   - component: {fileID: 7508540095979709351}
   - component: {fileID: 1008639161607394685}
   m_Layer: 0
-  m_Name: TriangleDownB
+  m_Name: TriangleDownB 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

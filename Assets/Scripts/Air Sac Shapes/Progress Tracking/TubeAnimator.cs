@@ -107,6 +107,7 @@ namespace IMVR.BodyArcade.AirSacShapes.ProgressTracking
                 if (_tracker.Progress <= 0f)
                 {
                     _isDisappearing = false;
+                    _isWin          = false;
                     if (_knob != null) _knob.enabled = false;
                     if (_tube != null) _tube.enabled = false;
                     OnWinFillComplete?.Invoke();

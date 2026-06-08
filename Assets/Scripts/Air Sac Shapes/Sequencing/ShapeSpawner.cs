@@ -96,6 +96,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         {
             if (SessionConfigAirSacShapes.Instance != null && SessionConfigAirSacShapes.Instance.SelectedShapes.Count > 0)
                 _shapes = SessionConfigAirSacShapes.Instance.SelectedShapes;
+
         }
 
         #endregion
@@ -108,9 +109,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             {
                 CurrentConnector = null;
                 _hasSpawned      = false;
-                ResetSceneComponents();
                 if (_leftKnob != null)  _leftKnob.SetTracker(null, null);
                 if (_rightKnob != null) _rightKnob.SetTracker(null, null);
+                ResetSceneComponents();
                 OnShapeDestroyed?.Invoke();
             }
         }
