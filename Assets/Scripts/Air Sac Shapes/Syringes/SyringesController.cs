@@ -3,9 +3,9 @@ using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
 
-namespace IMVR.BodyArcade.AirSacShapes.Tubes
+namespace IMVR.BodyArcade.AirSacShapes.Syringes
 {
-    internal class TubesController : MonoBehaviour
+    internal class SyringesController : MonoBehaviour
     {
         #region Events
 
@@ -27,17 +27,17 @@ namespace IMVR.BodyArcade.AirSacShapes.Tubes
         [SerializeField] private float _disappearSpeed = 3.5f;
         [SerializeField] private Color _winColor       = Color.green;
 
-        [Header("Knobs")]
-        [SerializeField] private Knob _leftKnob;
-        [SerializeField] private Knob _rightKnob;
+        [Header("Plungers")]
+        [SerializeField] private PlungerVisual _leftPlunger;
+        [SerializeField] private PlungerVisual _rightPlunger;
 
         #endregion
 
         #region Fields
 
         // Pure runtime helpers — no serialized state, constructed here like SplineProximity.
-        private readonly SplineProgressTracker _leftTracker    = new();
-        private readonly SplineProgressTracker _rightTracker   = new();
+        private readonly PlungerTracker _leftTracker    = new();
+        private readonly PlungerTracker _rightTracker   = new();
         private readonly TubeAnimator          _leftAnimator   = new();
         private readonly TubeAnimator          _rightAnimator  = new();
         private readonly TubeFillVisualizer    _leftVisualizer  = new();
@@ -171,10 +171,10 @@ namespace IMVR.BodyArcade.AirSacShapes.Tubes
                 _leftTracker.AssignSpline(shape.LeftSpline, shape.LeftIsReversed);
                 _leftAnimator.AssignRenderers(shape.LeftMeshRenderer, null);
                 _leftVisualizer.AssignMesh(shape.LeftMeshFilter, shape.LeftMeshRenderer, shape.LeftIsReversed);
-                if (_leftKnob != null)
+                if (_leftPlunger != null)
                 {
-                    _leftKnob.SetTracker(_leftTracker, _leftTracker.SplineContainer);
-                    _leftTracker.SetKnobCollider(_leftKnob.Collider);
+                    _leftPlunger.SetTracker(_leftTracker, _leftTracker.SplineContainer);
+                    _leftTracker.SetKnobCollider(_leftPlunger.Collider);
                 }
             }
 
@@ -185,10 +185,10 @@ namespace IMVR.BodyArcade.AirSacShapes.Tubes
                 _rightTracker.AssignSpline(shape.RightSpline, shape.RightIsReversed);
                 _rightAnimator.AssignRenderers(shape.RightMeshRenderer, null);
                 _rightVisualizer.AssignMesh(shape.RightMeshFilter, shape.RightMeshRenderer, shape.RightIsReversed);
-                if (_rightKnob != null)
+                if (_rightPlunger != null)
                 {
-                    _rightKnob.SetTracker(_rightTracker, _rightTracker.SplineContainer);
-                    _rightTracker.SetKnobCollider(_rightKnob.Collider);
+                    _rightPlunger.SetTracker(_rightTracker, _rightTracker.SplineContainer);
+                    _rightTracker.SetKnobCollider(_rightPlunger.Collider);
                 }
             }
         }
@@ -226,8 +226,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Tubes
             _rightAnimator.ResetState();
             _leftVisualizer.AssignMesh(null, null, false);
             _rightVisualizer.AssignMesh(null, null, false);
-            if (_leftKnob  != null) _leftKnob.SetTracker(null, null);
-            if (_rightKnob != null) _rightKnob.SetTracker(null, null);
+            if (_leftPlunger  != null) _leftPlunger.SetTracker(null, null);
+            if (_rightPlunger != null) _rightPlunger.SetTracker(null, null);
         }
 
         #endregion
@@ -283,7 +283,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Tubes
 
         private bool AllReached(ref int count) => ++count >= _activeSideCount;
 
-        private float ComputeMin(Func<SplineProgressTracker, float> selector)
+        private float ComputeMin(Func<PlungerTracker, float> selector)
         {
             float min = float.MaxValue;
             bool  any = false;

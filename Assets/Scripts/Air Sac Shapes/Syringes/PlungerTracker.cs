@@ -2,9 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace IMVR.BodyArcade.AirSacShapes.Tubes
+namespace IMVR.BodyArcade.AirSacShapes.Syringes
 {
-    internal class SplineProgressTracker
+    internal class PlungerTracker
     {
         #region Events
 
@@ -18,6 +18,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Tubes
         #region Fields
 
         // Difficulty tuning — supplied per spawn via ApplyDifficultySettings (from PreparedShape).
+        // unused by knob-gated Tick — kept for difficulty config compatibility
         private float _tubeRadiusMeters    = 0.05f;
         private float _drainSpeedPerSecond = 5f;
         private float _winThreshold        = 0.98f;
@@ -55,47 +56,28 @@ namespace IMVR.BodyArcade.AirSacShapes.Tubes
             if (_isWin || _isAnimatorDriven) return;
             if (_handTransform == null || _splineProximity == null || _splineContainer == null) return;
 
-            float splineProgress = _splineProximity.FindClosestSplineProgress(
-                out Vector3 closestSplinePoint,
-                out Vector3 closestColliderPoint);
+            bool holdingKnob = _knobCollider != null && Physics.ComputePenetration(
+                _handCollider, _handCollider.transform.position, _handCollider.transform.rotation,
+                _knobCollider, _knobCollider.transform.position, _knobCollider.transform.rotation,
+                out _, out _);
 
-            if (_isReversed)
-                splineProgress = 1f - splineProgress;
-
-            float distanceToSplineMeters = (closestSplinePoint - closestColliderPoint).magnitude;
-            bool isHandInside = distanceToSplineMeters <= _tubeRadiusMeters;
-
-            if (!isHandInside)
+            if (!holdingKnob)
             {
-                float drained = Mathf.Lerp(_progress, 0f, Time.deltaTime * _drainSpeedPerSecond);
+                // Idle / "give name" mode: drain knob back toward 0.
+                float drained = Mathf.Lerp(_maxProgress, 0f, Time.deltaTime * _drainSpeedPerSecond);
                 SetProgress(drained);
                 SetMaxProgress(drained);
                 return;
             }
 
-            bool isHandInsideKnob = _knobCollider != null && Physics.ComputePenetration(
-                _handCollider, _handCollider.transform.position, _handCollider.transform.rotation,
-                _knobCollider, _knobCollider.transform.position, _knobCollider.transform.rotation,
-                out _, out _);
+            // Holding the knob: closest spline point is the progress; commit it.
+            float splineProgress = _splineProximity.FindClosestSplineProgress(out _, out _);
+            if (_isReversed) splineProgress = 1f - splineProgress;
 
-            if (isHandInsideKnob)
-            {
-                float newProgress = Mathf.Max(_maxProgress, splineProgress);
-                if (newProgress >= _winThreshold)
-                    newProgress = 1f;
-                SetProgress(newProgress);
-                SetMaxProgress(newProgress);
-            }
-            else if (splineProgress < _maxProgress)
-            {
-                SetProgress(splineProgress);
-            }
-            else
-            {
-                float drained = Mathf.Lerp(_progress, 0f, Time.deltaTime * _drainSpeedPerSecond);
-                SetProgress(drained);
-                SetMaxProgress(drained);
-            }
+            float newProgress = Mathf.Max(_maxProgress, splineProgress);
+            if (newProgress >= _winThreshold) newProgress = 1f;
+            SetProgress(newProgress);
+            SetMaxProgress(newProgress);
         }
 
         internal void AssignSpline(SplineContainer splineContainer, bool isReversed)

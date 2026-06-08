@@ -4055,7 +4055,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.CorpusVR.Core.ShapeSpawner
   _shapeParent: {fileID: 839052462}
   _mirrorHands: {fileID: 210590404}
-  _tubes: {fileID: 2144714041}
+  _syringes: {fileID: 2144714041}
   _audioProgress: {fileID: 1159008713}
   _airSacColor: {fileID: 0}
   _airSacSize: {fileID: 0}
@@ -8165,8 +8165,8 @@ MonoBehaviour:
   _fillSpeed: 0.5
   _disappearSpeed: 3.5
   _winColor: {r: 0, g: 1, b: 0, a: 1}
-  _leftKnob: {fileID: 2016060643}
-  _rightKnob: {fileID: 327795787}
+  _leftPlunger: {fileID: 2016060643}
+  _rightPlunger: {fileID: 327795787}
 --- !u!1001 &2120193678882025783
 PrefabInstance:
   m_ObjectHideFlags: 0

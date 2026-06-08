@@ -2,9 +2,9 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace IMVR.BodyArcade.AirSacShapes.Tubes
+namespace IMVR.BodyArcade.AirSacShapes.Syringes
 {
-    internal class Knob : MonoBehaviour
+    internal class PlungerVisual : MonoBehaviour
     {
         #region Serialized fields
 
@@ -19,7 +19,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Tubes
 
         #region Fields
 
-        private SplineProgressTracker _tracker;
+        private PlungerTracker _tracker;
         private Spline _spline;
         private Transform _splineTransform;
 
@@ -33,7 +33,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Tubes
 
         #region Internal
 
-        internal void SetTracker(SplineProgressTracker tracker, SplineContainer splineContainer)
+        internal void SetTracker(PlungerTracker tracker, SplineContainer splineContainer)
         {
             if (_tracker != null)
                 _tracker.OnMaxProgressChange -= HandleMaxProgressChange;

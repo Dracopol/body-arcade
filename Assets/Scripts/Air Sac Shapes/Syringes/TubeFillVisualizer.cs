@@ -1,12 +1,12 @@
 using UnityEngine;
 
-namespace IMVR.BodyArcade.AirSacShapes.Tubes
+namespace IMVR.BodyArcade.AirSacShapes.Syringes
 {
     internal class TubeFillVisualizer
     {
         #region Fields
 
-        // Tuning — supplied once via Init (shared from TubesController).
+        // Tuning — supplied once via Init (shared from SyringesController).
         private Color _winColor = Color.green;
 
         private MeshFilter   _meshFilter;

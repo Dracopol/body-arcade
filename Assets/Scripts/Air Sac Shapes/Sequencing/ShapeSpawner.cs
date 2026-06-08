@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using IMVR.BodyArcade.AirSacShapes.VFX.AirSac;
-using IMVR.BodyArcade.AirSacShapes.Tubes;
+using IMVR.BodyArcade.AirSacShapes.Syringes;
 using IMVR.BodyArcade.AirSacShapes.SFX;
 using IMVR.BodyArcade.UiRobot;
 
@@ -24,8 +24,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         [SerializeField] private GameObject  _shapeParent;
         [SerializeField] private MirrorHands _mirrorHands;
 
-        [Header("Tubes")]
-        [SerializeField] private TubesController _tubes;
+        [Header("Syringes")]
+        [SerializeField] private SyringesController _syringes;
 
         [Header("Audio")]
         [SerializeField] private AudioProgress _audioProgress;
@@ -62,26 +62,26 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void OnEnable()
         {
-            if (_tubes == null) return;
-            _tubes.OnMinProgressChange    += HandleMinProgressChange;
-            _tubes.OnMinMaxProgressChange += HandleMinMaxProgressChange;
-            _tubes.OnWinStateChange       += HandleWinStateChange;
-            _tubes.OnFirstFillComplete    += HandleFirstFillComplete;
-            _tubes.OnWinFillComplete      += HandleWinFillComplete;
-            _tubes.OnAppearComplete       += HandleAppearComplete;
-            _tubes.OnComplete             += HandleComplete;
+            if (_syringes == null) return;
+            _syringes.OnMinProgressChange    += HandleMinProgressChange;
+            _syringes.OnMinMaxProgressChange += HandleMinMaxProgressChange;
+            _syringes.OnWinStateChange       += HandleWinStateChange;
+            _syringes.OnFirstFillComplete    += HandleFirstFillComplete;
+            _syringes.OnWinFillComplete      += HandleWinFillComplete;
+            _syringes.OnAppearComplete       += HandleAppearComplete;
+            _syringes.OnComplete             += HandleComplete;
         }
 
         private void OnDisable()
         {
-            if (_tubes == null) return;
-            _tubes.OnMinProgressChange    -= HandleMinProgressChange;
-            _tubes.OnMinMaxProgressChange -= HandleMinMaxProgressChange;
-            _tubes.OnWinStateChange       -= HandleWinStateChange;
-            _tubes.OnFirstFillComplete    -= HandleFirstFillComplete;
-            _tubes.OnWinFillComplete      -= HandleWinFillComplete;
-            _tubes.OnAppearComplete       -= HandleAppearComplete;
-            _tubes.OnComplete             -= HandleComplete;
+            if (_syringes == null) return;
+            _syringes.OnMinProgressChange    -= HandleMinProgressChange;
+            _syringes.OnMinMaxProgressChange -= HandleMinMaxProgressChange;
+            _syringes.OnWinStateChange       -= HandleWinStateChange;
+            _syringes.OnFirstFillComplete    -= HandleFirstFillComplete;
+            _syringes.OnWinFillComplete      -= HandleWinFillComplete;
+            _syringes.OnAppearComplete       -= HandleAppearComplete;
+            _syringes.OnComplete             -= HandleComplete;
         }
 
         private void Start()
@@ -126,17 +126,17 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         internal void TriggerAppear()
         {
-            if (_currentShape == null || _tubes == null)
+            if (_currentShape == null || _syringes == null)
             {
                 OnShapeAppearComplete?.Invoke();
                 return;
             }
-            _tubes.TriggerAppear();
+            _syringes.TriggerAppear();
         }
 
         internal void RegisterDestroyDelay(float seconds)
         {
-            if (_tubes != null) _tubes.RegisterDestroyDelay(seconds);
+            if (_syringes != null) _syringes.RegisterDestroyDelay(seconds);
         }
 
         #endregion
@@ -162,8 +162,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
             _currentShape.SetSpawner(this);
 
-            if (_tubes != null)
-                _tubes.Wire(_currentShape, prepared.DrainSpeed, prepared.SplineRadius, prepared.WinThreshold);
+            if (_syringes != null)
+                _syringes.Wire(_currentShape, prepared.DrainSpeed, prepared.SplineRadius, prepared.WinThreshold);
 
             _hasSpawned = true;
 
@@ -177,7 +177,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void ResetSceneComponents()
         {
-            if (_tubes != null)                    _tubes.ResetState();
+            if (_syringes != null)                    _syringes.ResetState();
             if (_audioProgress != null)            _audioProgress.SetShape(null);
             if (_airSacColor != null)              _airSacColor.SetShape(null);
             if (_airSacSize != null)               _airSacSize.SetShape(null);
@@ -224,18 +224,18 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void AssignHands()
         {
-            if (_tubes == null || _mirrorHands == null || _currentShape == null) return;
+            if (_syringes == null || _mirrorHands == null || _currentShape == null) return;
 
             if (_currentShape.LeftSpline != null)
             {
                 GameObject hand = _mirrorHands.ActiveLeft;
-                if (hand != null) _tubes.SetLeftHand(hand.transform, hand.GetComponent<Collider>());
+                if (hand != null) _syringes.SetLeftHand(hand.transform, hand.GetComponent<Collider>());
             }
 
             if (_currentShape.RightSpline != null)
             {
                 GameObject hand = _mirrorHands.ActiveRight;
-                if (hand != null) _tubes.SetRightHand(hand.transform, hand.GetComponent<Collider>());
+                if (hand != null) _syringes.SetRightHand(hand.transform, hand.GetComponent<Collider>());
             }
         }
 

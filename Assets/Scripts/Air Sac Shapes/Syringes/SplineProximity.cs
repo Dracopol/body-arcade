@@ -3,7 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace IMVR.BodyArcade.AirSacShapes.Tubes
+namespace IMVR.BodyArcade.AirSacShapes.Syringes
 {
     internal class SplineProximity
     {

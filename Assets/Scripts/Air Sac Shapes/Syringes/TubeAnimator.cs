@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace IMVR.BodyArcade.AirSacShapes.Tubes
+namespace IMVR.BodyArcade.AirSacShapes.Syringes
 {
     internal class TubeAnimator
     {
@@ -15,12 +15,12 @@ namespace IMVR.BodyArcade.AirSacShapes.Tubes
 
         #region Fields
 
-        // Tuning — supplied once via Init (shared from TubesController).
+        // Tuning — supplied once via Init (shared from SyringesController).
         private float _fillSpeedPerSecond      = 0.5f;
         private float _disappearSpeedPerSecond = 3.5f;
         private float _appearSpeedPerSecond    = 1f;
 
-        private SplineProgressTracker _tracker;
+        private PlungerTracker _tracker;
 
         private MeshRenderer _tube;
         private MeshRenderer _knob;
@@ -36,7 +36,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Tubes
 
         #region Internal
 
-        internal void Init(SplineProgressTracker tracker, float fillSpeed, float disappearSpeed, float appearSpeed)
+        internal void Init(PlungerTracker tracker, float fillSpeed, float disappearSpeed, float appearSpeed)
         {
             _tracker                 = tracker;
             _fillSpeedPerSecond      = fillSpeed;
