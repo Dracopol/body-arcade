@@ -1,15 +1,15 @@
 using UnityEngine;
 
-namespace IMVR.BodyArcade.AirSacShapes.SFX
+namespace IMVR.BodyArcade.AirSacShapes.Sound
 {
-    internal class AudioProgress : MonoBehaviour
+    internal class SoundManager : MonoBehaviour
     {
         #region Serialized fields
 
         [Header("References")]
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioSource _winAudioSource;
-        [SerializeField] private AudioClip _clip;
+        [SerializeField] private AudioClip _progressClip;
         [SerializeField] private AudioClip _winClip;
 
         [Header("Behaviour")]
@@ -130,14 +130,14 @@ namespace IMVR.BodyArcade.AirSacShapes.SFX
 
         private void PlayAudio(int thresholdIndex)
         {
-            if (_audioSource == null || _clip == null) return;
+            if (_audioSource == null || _progressClip == null) return;
 
             float t = _maxThresholdIndex > 0
                 ? Mathf.Clamp01((float)thresholdIndex / _maxThresholdIndex)
                 : 0f;
 
             _audioSource.pitch = Mathf.Lerp(_minPitch, _maxPitch, t);
-            _audioSource.PlayOneShot(_clip);
+            _audioSource.PlayOneShot(_progressClip);
         }
 
         #endregion

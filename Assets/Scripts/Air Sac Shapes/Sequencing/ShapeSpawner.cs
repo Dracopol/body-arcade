@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using IMVR.BodyArcade.AirSacShapes.VFX.AirSac;
 using IMVR.BodyArcade.AirSacShapes.Syringes;
-using IMVR.BodyArcade.AirSacShapes.SFX;
+using IMVR.BodyArcade.AirSacShapes.Sound;
 using IMVR.BodyArcade.UiRobot;
 
 namespace IMVR.BodyArcade.AirSacShapes.Sequencing
@@ -28,7 +28,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         [SerializeField] private SyringesController _syringes;
 
         [Header("Audio")]
-        [SerializeField] private AudioProgress _audioProgress;
+        [SerializeField] private SoundManager _audioProgress;
 
         [Header("Air Sac")]
         [SerializeField] private AirSacColor                       _airSacColor;
