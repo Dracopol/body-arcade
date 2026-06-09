@@ -33,6 +33,12 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         [SerializeField] private PlungerVisual _leftPlunger;
         [SerializeField] private PlungerVisual _rightPlunger;
 
+        [Header("Plunger FX")]
+        [SerializeField] private ParticleSystem _leftPlungerParticles;
+        [SerializeField] private ParticleSystem _rightPlungerParticles;
+        [SerializeField, Min(0f)] private float _plungerStepDelay = 0.2f;
+        [SerializeField] private Sound.SoundManager _soundManager;
+
         #endregion
 
         #region Fields
@@ -44,6 +50,11 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         private readonly TubeAnimator          _rightAnimator  = new();
         private readonly TubeFillVisualizer    _leftVisualizer  = new();
         private readonly TubeFillVisualizer    _rightVisualizer = new();
+        private readonly PlungerSequencer       _plungerSequencer = new();
+
+        private bool _leftPlay;   // side is in play mode (enabled, not won)
+        private bool _rightPlay;
+        private bool _winSequenceStarted;
 
         private int _activeSideCount;
         private int _winCount;
@@ -113,6 +124,12 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             _rightAnimator.OnFirstFillComplete += HandleFirstFillComplete;
             _rightAnimator.OnWinFillComplete   += HandleWinFillComplete;
             _rightAnimator.OnAppearComplete    += HandleAppearComplete;
+
+            // Idle "interact" hint driven by touch edges
+            _leftTracker.OnPlungerTouched   += HandleLeftTouched;
+            _leftTracker.OnPlungerReleased  += HandleLeftReleased;
+            _rightTracker.OnPlungerTouched  += HandleRightTouched;
+            _rightTracker.OnPlungerReleased += HandleRightReleased;
         }
 
         private void OnDisable()
@@ -147,6 +164,11 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             _rightAnimator.OnFirstFillComplete -= HandleFirstFillComplete;
             _rightAnimator.OnWinFillComplete   -= HandleWinFillComplete;
             _rightAnimator.OnAppearComplete    -= HandleAppearComplete;
+
+            _leftTracker.OnPlungerTouched   -= HandleLeftTouched;
+            _leftTracker.OnPlungerReleased  -= HandleLeftReleased;
+            _rightTracker.OnPlungerTouched  -= HandleRightTouched;
+            _rightTracker.OnPlungerReleased -= HandleRightReleased;
         }
 
         private void OnDestroy()
@@ -219,6 +241,13 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         internal void TriggerAppear()
         {
             _appearCount = 0;
+            _leftPlay    = false;
+            _rightPlay   = false;
+
+            // Plungers start hidden; the enable sequence reveals them after the tube appears.
+            if (_leftPlunger  != null) _leftPlunger.SetVisible(false);
+            if (_rightPlunger != null) _rightPlunger.SetVisible(false);
+
             if (_activeSideCount == 0) { OnAppearComplete?.Invoke(); return; }
             if (_leftTracker.SplineContainer  != null) _leftAnimator.TriggerAppear();
             if (_rightTracker.SplineContainer != null) _rightAnimator.TriggerAppear();
@@ -239,8 +268,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             _rightAnimator.ResetState();
             _leftVisualizer.AssignMesh(null, null, false);
             _rightVisualizer.AssignMesh(null, null, false);
-            if (_leftPlunger  != null) _leftPlunger.SetTracker(null, null);
-            if (_rightPlunger != null) _rightPlunger.SetTracker(null, null);
+            if (_leftPlunger  != null) { _leftPlunger.EndHint();  _leftPlunger.SetVisible(false);  _leftPlunger.SetTracker(null, null); }
+            if (_rightPlunger != null) { _rightPlunger.EndHint(); _rightPlunger.SetVisible(false); _rightPlunger.SetTracker(null, null); }
         }
 
         #endregion
@@ -265,11 +294,53 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         private void HandleWinReady()
         {
+            if (_winSequenceStarted) return;
             if (_leftTracker.SplineContainer  != null && _leftTracker.MaxProgress  < 1f) return;
             if (_rightTracker.SplineContainer != null && _rightTracker.MaxProgress < 1f) return;
 
+            _winSequenceStarted = true;
+            WinSequenceAsync(_cts.Token).Forget();
+        }
+
+        private async UniTaskVoid WinSequenceAsync(CancellationToken ct)
+        {
+            // Leaving play mode — block input, stop hints, then disable plungers one-by-one
+            // before the win fill/drain animation runs.
+            _leftPlay  = false;
+            _rightPlay = false;
+            if (_leftTracker.SplineContainer  != null) _leftTracker.SetAnimatorDriven(true);
+            if (_rightTracker.SplineContainer != null) _rightTracker.SetAnimatorDriven(true);
+
+            Action left  = _leftTracker.SplineContainer  != null ? DisableLeftPlunger  : (Action)null;
+            Action right = _rightTracker.SplineContainer != null ? DisableRightPlunger : (Action)null;
+
+            await _plungerSequencer.RunAsync(left, right, _plungerStepDelay, ct);
+            if (ct.IsCancellationRequested) return;
+
             if (_leftTracker.SplineContainer  != null) _leftTracker.TriggerWin();
             if (_rightTracker.SplineContainer != null) _rightTracker.TriggerWin();
+        }
+
+        private void DisableLeftPlunger()
+        {
+            // Place FX before hiding so we still read the plunger's current position.
+            PlayParticlesAt(_leftPlungerParticles, _leftPlunger);
+            if (_leftPlunger != null) { _leftPlunger.EndHint(); _leftPlunger.SetVisible(false); }
+            if (_soundManager != null) _soundManager.PlayPlungerDisappear();
+        }
+
+        private void DisableRightPlunger()
+        {
+            PlayParticlesAt(_rightPlungerParticles, _rightPlunger);
+            if (_rightPlunger != null) { _rightPlunger.EndHint(); _rightPlunger.SetVisible(false); }
+            if (_soundManager != null) _soundManager.PlayPlungerDisappear();
+        }
+
+        private static void PlayParticlesAt(ParticleSystem ps, PlungerVisual plunger)
+        {
+            if (ps == null) return;
+            if (plunger != null) ps.transform.position = plunger.FxPosition;
+            ps.Play();
         }
 
         private void HandleWinStateChange()
@@ -291,7 +362,66 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         private void HandleAppearComplete()
         {
-            if (AllReached(ref _appearCount)) OnAppearComplete?.Invoke();
+            if (!AllReached(ref _appearCount)) return;
+
+            // Tube appear done on both sides — keep play input blocked while the plungers
+            // enable one-by-one, then open play and fire the outward appear-complete.
+            if (_leftTracker.SplineContainer  != null) _leftTracker.SetAnimatorDriven(true);
+            if (_rightTracker.SplineContainer != null) _rightTracker.SetAnimatorDriven(true);
+
+            EnablePlungersAsync(_cts.Token).Forget();
+        }
+
+        private async UniTaskVoid EnablePlungersAsync(CancellationToken ct)
+        {
+            Action left  = _leftTracker.SplineContainer  != null ? EnableLeftPlunger  : (Action)null;
+            Action right = _rightTracker.SplineContainer != null ? EnableRightPlunger : (Action)null;
+
+            await _plungerSequencer.RunAsync(left, right, _plungerStepDelay, ct);
+            if (ct.IsCancellationRequested) return;
+
+            // Open play mode and let the idle hints start.
+            if (_leftTracker.SplineContainer != null)
+            {
+                _leftTracker.SetAnimatorDriven(false);
+                _leftPlay = true;
+                if (_leftPlunger != null) _leftPlunger.BeginHint();
+            }
+            if (_rightTracker.SplineContainer != null)
+            {
+                _rightTracker.SetAnimatorDriven(false);
+                _rightPlay = true;
+                if (_rightPlunger != null) _rightPlunger.BeginHint();
+            }
+
+            OnAppearComplete?.Invoke();
+        }
+
+        private void EnableLeftPlunger()
+        {
+            if (_leftPlunger != null) _leftPlunger.SetVisible(true);
+            PlayParticlesAt(_leftPlungerParticles, _leftPlunger);
+            if (_soundManager != null) _soundManager.PlayPlungerAppear();
+        }
+
+        private void EnableRightPlunger()
+        {
+            if (_rightPlunger != null) _rightPlunger.SetVisible(true);
+            PlayParticlesAt(_rightPlungerParticles, _rightPlunger);
+            if (_soundManager != null) _soundManager.PlayPlungerAppear();
+        }
+
+        private void HandleLeftTouched()  { if (_leftPlunger  != null) _leftPlunger.EndHint(); }
+        private void HandleRightTouched() { if (_rightPlunger != null) _rightPlunger.EndHint(); }
+
+        private void HandleLeftReleased()
+        {
+            if (_leftPlay && _leftPlunger != null) _leftPlunger.BeginHint();
+        }
+
+        private void HandleRightReleased()
+        {
+            if (_rightPlay && _rightPlunger != null) _rightPlunger.BeginHint();
         }
 
         private bool AllReached(ref int count) => ++count >= _activeSideCount;
@@ -311,14 +441,17 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         private void ResetCounts()
         {
-            _activeSideCount = 0;
-            _winCount        = 0;
-            _firstFillCount  = 0;
-            _winFillCount    = 0;
-            _appearCount     = 0;
-            _minProgress     = 0f;
-            _minMaxProgress  = 0f;
-            _destroyDelay    = 0f;
+            _activeSideCount    = 0;
+            _winCount           = 0;
+            _firstFillCount     = 0;
+            _winFillCount       = 0;
+            _appearCount        = 0;
+            _minProgress        = 0f;
+            _minMaxProgress     = 0f;
+            _destroyDelay       = 0f;
+            _winSequenceStarted = false;
+            _leftPlay           = false;
+            _rightPlay          = false;
         }
 
         private void CancelPendingDestroy()

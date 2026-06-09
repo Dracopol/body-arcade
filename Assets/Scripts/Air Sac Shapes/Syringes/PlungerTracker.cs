@@ -12,6 +12,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         internal event Action<float> OnMaxProgressChange;
         internal event Action OnWinStateChange;
         internal event Action OnWinReady;
+        internal event Action OnPlungerTouched;
+        internal event Action OnPlungerReleased;
 
         #endregion
 
@@ -34,6 +36,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         private float _maxProgress;
         private bool  _isWin;
         private bool  _isAnimatorDriven;
+        private bool  _wasHolding;
 
         private SplineProximity _splineProximity;
 
@@ -53,13 +56,19 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         internal void Tick()
         {
-            if (_isWin || _isAnimatorDriven) return;
-            if (_handTransform == null || _splineProximity == null || _splineContainer == null) return;
+            if (_isWin || _isAnimatorDriven ||
+                _handTransform == null || _splineProximity == null || _splineContainer == null)
+            {
+                SetHolding(false);   // not in play mode — ensure released
+                return;
+            }
 
             bool holdingKnob = _knobCollider != null && Physics.ComputePenetration(
                 _handCollider, _handCollider.transform.position, _handCollider.transform.rotation,
                 _knobCollider, _knobCollider.transform.position, _knobCollider.transform.rotation,
                 out _, out _);
+
+            SetHolding(holdingKnob);
 
             if (!holdingKnob)
             {
@@ -94,6 +103,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             _isAnimatorDriven = false;
             _splineContainer  = null;
             _splineProximity  = null;
+            _wasHolding       = false;
             SetProgress(0f);
             SetMaxProgress(0f);
         }
@@ -148,6 +158,14 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         #endregion
 
         #region Private
+
+        private void SetHolding(bool holding)
+        {
+            if (holding == _wasHolding) return;
+            _wasHolding = holding;
+            if (holding) OnPlungerTouched?.Invoke();
+            else         OnPlungerReleased?.Invoke();
+        }
 
         private void InitSplineProximity()
         {

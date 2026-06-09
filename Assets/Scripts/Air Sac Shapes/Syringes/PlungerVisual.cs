@@ -11,6 +11,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         [Header("References")]
         [SerializeField] private Transform _target;
         [SerializeField] private Collider _collider;
+        [SerializeField] private GameObject _visualRoot;
+        [SerializeField] private PlungerColorFlickerHint _hint;
 
         [Header("Behaviour")]
         [SerializeField] private bool _alignRotationToSpline = true;
@@ -28,6 +30,30 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         #region Properties
 
         internal Collider Collider => _collider;
+
+        // World position of the visible plunger — used to place FX at the knob.
+        internal Vector3 FxPosition => _target != null ? _target.position : transform.position;
+
+        #endregion
+
+        #region Visibility & hint
+
+        internal void SetVisible(bool visible)
+        {
+            if (_visualRoot != null) _visualRoot.SetActive(visible);
+            if (_collider != null)   _collider.enabled = visible;
+            if (!visible) EndHint();
+        }
+
+        internal void BeginHint()
+        {
+            if (_hint != null) _hint.Begin();
+        }
+
+        internal void EndHint()
+        {
+            if (_hint != null) _hint.End();
+        }
 
         #endregion
 

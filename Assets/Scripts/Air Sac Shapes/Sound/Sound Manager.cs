@@ -12,6 +12,11 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
         [SerializeField] private AudioClip _progressClip;
         [SerializeField] private AudioClip _winClip;
 
+        [Header("Plunger SFX")]
+        [SerializeField] private AudioSource _plungerAudioSource;
+        [SerializeField] private AudioClip _plungerAppearClip;
+        [SerializeField] private AudioClip _plungerDisappearClip;
+
         [Header("Behaviour")]
         [SerializeField, Range(0.01f, 1f)] private float _progressStepSize = 0.05f;
         [SerializeField, Range(0.01f, 1f)] private float _winStepSize = 0.10f;
@@ -54,6 +59,18 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
                 _progressTracker.OnWinStateChange    += HandleWinStateChange;
                 _progressTracker.OnFirstFillComplete += HandleFirstFillComplete;
             }
+        }
+
+        internal void PlayPlungerAppear()
+        {
+            if (_plungerAudioSource != null && _plungerAppearClip != null)
+                _plungerAudioSource.PlayOneShot(_plungerAppearClip);
+        }
+
+        internal void PlayPlungerDisappear()
+        {
+            if (_plungerAudioSource != null && _plungerDisappearClip != null)
+                _plungerAudioSource.PlayOneShot(_plungerDisappearClip);
         }
 
         private void OnEnable()
