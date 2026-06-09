@@ -11,16 +11,14 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         [SerializeField] private Renderer _renderer;
 
         [Header("Behaviour")]
-        [SerializeField] private float _finalSizeMultiplier = 1.5f;
-
-        [Header("Debug")]
-        [SerializeField, Range(0f, 1f)] private float _debugProgress = 0f;
+        [SerializeField] private float _startSizeMultiplier = 1.5f;
 
         #endregion
 
         #region Fields
 
         private Vector3 _initialScale;
+        private bool _scaleCached;
         private bool _isWin;
 
         #endregion
@@ -29,8 +27,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
 
         private void Awake()
         {
-            if (_renderer != null)
-                _initialScale = _renderer.transform.localScale;
+            ResetToStart();   // show enlarged Start size from session start, before any shape binds
         }
 
         private void OnEnable()
@@ -73,13 +70,19 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
             }
         }
 
+        internal void ResetToStart()
+        {
+            EnsureInitialScale();
+            _isWin = false;
+            ApplyScale(0f);   // enlarged
+        }
+
         #endregion
 
         #region Event handlers
 
         private void HandleMinMaxChanged(float minMax)
         {
-            _debugProgress = minMax;
             if (_isWin) return;
             ApplyScale(minMax);
         }
@@ -93,11 +96,19 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
 
         #region Private
 
+        private void EnsureInitialScale()
+        {
+            if (_scaleCached || _renderer == null) return;
+            _initialScale = _renderer.transform.localScale;
+            _scaleCached  = true;
+        }
+
         private void ApplyScale(float progress)
         {
             if (_renderer == null) return;
 
-            float scaleFactor = Mathf.Lerp(1f, _finalSizeMultiplier, progress);
+            // Start enlarged (t=0) and shrink back to original (t=1) as the player fills.
+            float scaleFactor = Mathf.Lerp(_startSizeMultiplier, 1f, progress);
             _renderer.transform.localScale = _initialScale * scaleFactor;
         }
 

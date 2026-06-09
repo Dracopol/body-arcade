@@ -14,9 +14,6 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         [SerializeField] private Color _startCellColor = new Color32(0xC3, 0x29, 0x29, 0xFF);
         [SerializeField] private Color _startLineColor = new Color32(0x95, 0x50, 0x50, 0xFF);
 
-        [Header("Debug")]
-        [SerializeField, Range(0f, 1f)] private float _debugProgress = 0f;
-
         #endregion
 
         #region Fields
@@ -27,6 +24,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         private Material _material;
         private Color _baseCellColor;
         private Color _baseLineColor;
+        private bool _isWin;
 
         #endregion
 
@@ -34,24 +32,25 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
 
         private void Awake()
         {
-            if (_renderer != null)
-            {
-                _material      = _renderer.material;
-                _baseCellColor = _material.GetColor(CellColorId);
-                _baseLineColor = _material.GetColor(LineColorId);
-            }
+            ResetToStart();   // show Start colors from session start, before any shape binds
         }
 
         private void OnEnable()
         {
             if (_progressTracker != null)
-                _progressTracker.OnMinMaxChange += HandleMinMaxChanged;
+            {
+                _progressTracker.OnMinMaxChange   += HandleMinMaxChanged;
+                _progressTracker.OnWinStateChange += HandleWinStateChange;
+            }
         }
 
         private void OnDisable()
         {
             if (_progressTracker != null)
-                _progressTracker.OnMinMaxChange -= HandleMinMaxChanged;
+            {
+                _progressTracker.OnMinMaxChange   -= HandleMinMaxChanged;
+                _progressTracker.OnWinStateChange -= HandleWinStateChange;
+            }
         }
 
         private void OnDestroy()
@@ -67,12 +66,26 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         internal void SetShape(Shape tracker)
         {
             if (_progressTracker != null)
-                _progressTracker.OnMinMaxChange -= HandleMinMaxChanged;
+            {
+                _progressTracker.OnMinMaxChange   -= HandleMinMaxChanged;
+                _progressTracker.OnWinStateChange -= HandleWinStateChange;
+            }
 
             _progressTracker = tracker;
+            _isWin           = false;
 
             if (_progressTracker != null)
-                _progressTracker.OnMinMaxChange += HandleMinMaxChanged;
+            {
+                _progressTracker.OnMinMaxChange   += HandleMinMaxChanged;
+                _progressTracker.OnWinStateChange += HandleWinStateChange;
+            }
+        }
+
+        internal void ResetToStart()
+        {
+            EnsureMaterial();
+            _isWin = false;
+            ApplyColor(0f);
         }
 
         #endregion
@@ -81,13 +94,27 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
 
         private void HandleMinMaxChanged(float minMax)
         {
-            _debugProgress = minMax;
+            if (_isWin) return;   // hold the play-end colors through the win animation
             ApplyColor(minMax);
+        }
+
+        private void HandleWinStateChange()
+        {
+            _isWin = true;
         }
 
         #endregion
 
         #region Private
+
+        private void EnsureMaterial()
+        {
+            if (_material != null || _renderer == null) return;
+
+            _material      = _renderer.material;
+            _baseCellColor = _material.GetColor(CellColorId);
+            _baseLineColor = _material.GetColor(LineColorId);
+        }
 
         private void ApplyColor(float t)
         {

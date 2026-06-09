@@ -29,11 +29,6 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         [Header("Audio")]
         [SerializeField] private SoundManager _audioProgress;
 
-        [Header("Air Sac")]
-        [SerializeField] private AirSacColor                       _airSacColor;
-        [SerializeField] private AirSacSize                        _airSacSize;
-        [SerializeField] private AirSacProgressParticleVisualizer  _airSacParticleVisualizer;
-
         [Header("Connector")]
         [SerializeField] private Material  _connectorMaterial;
         [SerializeField] private Material  _connectorFillMaterial;
@@ -49,6 +44,11 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private GameObject _currentShapeObject;
         private GameObject _currentBall;
         private Shape      _currentShape;
+
+        // The current ball IS the air sac — its three visualizers, cached per cycle for unbind.
+        private AirSacColor                      _airSacColor;
+        private AirSacSize                       _airSacSize;
+        private AirSacProgressParticleVisualizer _airSacParticles;
 
         #endregion
 
@@ -184,11 +184,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void ResetSceneComponents()
         {
-            if (_syringes != null)                    _syringes.ResetState();
-            if (_audioProgress != null)            _audioProgress.SetShape(null);
-            if (_airSacColor != null)              _airSacColor.SetShape(null);
-            if (_airSacSize != null)               _airSacSize.SetShape(null);
-            if (_airSacParticleVisualizer != null)  _airSacParticleVisualizer.SetShape(null);
+            if (_syringes != null)     _syringes.ResetState();
+            if (_audioProgress != null) _audioProgress.SetShape(null);
+            UnbindAirSac();
         }
 
         private void HideShapeRenderers()
@@ -255,12 +253,29 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             CurrentConnector = _connector;
         }
 
+        // The current ball IS the air sac. Grab its three visualizers, reset them to the
+        // Start look (so a replayed sac animates fresh), then bind this shape's progress.
         private void WireAirSac()
         {
-            if (_currentShape == null) return;
-            if (_airSacColor             != null) _airSacColor.SetShape(_currentShape);
-            if (_airSacSize              != null) _airSacSize.SetShape(_currentShape);
-            if (_airSacParticleVisualizer != null) _airSacParticleVisualizer.SetShape(_currentShape);
+            if (_currentShape == null || _currentBall == null) return;
+
+            _airSacColor     = _currentBall.GetComponent<AirSacColor>();
+            _airSacSize      = _currentBall.GetComponent<AirSacSize>();
+            _airSacParticles = _currentBall.GetComponent<AirSacProgressParticleVisualizer>();
+
+            if (_airSacColor != null) { _airSacColor.ResetToStart(); _airSacColor.SetShape(_currentShape); }
+            if (_airSacSize  != null) { _airSacSize.ResetToStart();  _airSacSize.SetShape(_currentShape); }
+            if (_airSacParticles != null) _airSacParticles.SetShape(_currentShape);
+        }
+
+        private void UnbindAirSac()
+        {
+            if (_airSacColor     != null) _airSacColor.SetShape(null);
+            if (_airSacSize      != null) _airSacSize.SetShape(null);
+            if (_airSacParticles != null) _airSacParticles.SetShape(null);
+            _airSacColor     = null;
+            _airSacSize      = null;
+            _airSacParticles = null;
         }
 
         #endregion
