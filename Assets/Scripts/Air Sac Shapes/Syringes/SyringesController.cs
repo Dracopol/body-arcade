@@ -38,6 +38,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         [SerializeField] private ParticleSystem _rightPlungerParticles;
         [SerializeField, Min(0f)] private float _plungerStepDelay = 0.2f;
         [SerializeField] private Sound.SoundManager _soundManager;
+        [SerializeField] private Haptics.HapticManager _haptics;
 
         #endregion
 
@@ -411,17 +412,30 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             if (_soundManager != null) _soundManager.PlayPlungerAppear();
         }
 
-        private void HandleLeftTouched()  { if (_leftPlunger  != null) _leftPlunger.EndHint(); }
-        private void HandleRightTouched() { if (_rightPlunger != null) _rightPlunger.EndHint(); }
+        private void HandleLeftTouched()
+        {
+            if (_leftPlunger != null) _leftPlunger.EndHint();
+            if (_haptics != null) _haptics.PlayTouch(Haptics.HapticManager.Side.Left);
+        }
+
+        private void HandleRightTouched()
+        {
+            if (_rightPlunger != null) _rightPlunger.EndHint();
+            if (_haptics != null) _haptics.PlayTouch(Haptics.HapticManager.Side.Right);
+        }
 
         private void HandleLeftReleased()
         {
-            if (_leftPlay && _leftPlunger != null) _leftPlunger.BeginHint();
+            if (!_leftPlay) return;
+            if (_leftPlunger != null) _leftPlunger.BeginHint();
+            if (_haptics != null) _haptics.PlayRelease(Haptics.HapticManager.Side.Left);
         }
 
         private void HandleRightReleased()
         {
-            if (_rightPlay && _rightPlunger != null) _rightPlunger.BeginHint();
+            if (!_rightPlay) return;
+            if (_rightPlunger != null) _rightPlunger.BeginHint();
+            if (_haptics != null) _haptics.PlayRelease(Haptics.HapticManager.Side.Right);
         }
 
         private bool AllReached(ref int count) => ++count >= _activeSideCount;

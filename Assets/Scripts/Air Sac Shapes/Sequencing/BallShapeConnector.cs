@@ -30,6 +30,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private float _retractProgress = 1f;
         private bool _isAnimating = true;
         private bool _animationUseFill;
+        private bool _fillFrozen;   // once won, stop following progress so the connector holds its play-end fill
 
         #endregion
 
@@ -38,13 +39,19 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private void OnEnable()
         {
             if (_shape != null)
-                _shape.OnMinMaxChange += HandleMinMaxChanged;
+            {
+                _shape.OnMinMaxChange   += HandleMinMaxChanged;
+                _shape.OnWinStateChange += HandleWinStateChange;
+            }
         }
 
         private void OnDisable()
         {
             if (_shape != null)
-                _shape.OnMinMaxChange -= HandleMinMaxChanged;
+            {
+                _shape.OnMinMaxChange   -= HandleMinMaxChanged;
+                _shape.OnWinStateChange -= HandleWinStateChange;
+            }
         }
 
         #endregion
@@ -82,6 +89,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             _retractProgress = 1f;
             _isAnimating     = true;
             _animationUseFill = false;
+            _fillFrozen      = false;
 
             SetShape(shape);
         }
@@ -89,10 +97,16 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         internal void SetShape(Shape shape)
         {
             if (_shape != null)
-                _shape.OnMinMaxChange -= HandleMinMaxChanged;
+            {
+                _shape.OnMinMaxChange   -= HandleMinMaxChanged;
+                _shape.OnWinStateChange -= HandleWinStateChange;
+            }
             _shape = shape;
             if (_shape != null && isActiveAndEnabled)
-                _shape.OnMinMaxChange += HandleMinMaxChanged;
+            {
+                _shape.OnMinMaxChange   += HandleMinMaxChanged;
+                _shape.OnWinStateChange += HandleWinStateChange;
+            }
         }
 
         internal async UniTask RetractAsync(CancellationToken ct)
@@ -132,7 +146,14 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void HandleMinMaxChanged(float progress)
         {
+            // Once won, hold the play-end fill — ignore the win-fill sweep that re-drives progress.
+            if (_fillFrozen) return;
             _fillProgress = progress;
+        }
+
+        private void HandleWinStateChange()
+        {
+            _fillFrozen = true;
         }
 
         #endregion
