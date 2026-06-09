@@ -4391,6 +4391,7 @@ MonoBehaviour:
   _audioSource: {fileID: 682367411}
   _winAudioSource: {fileID: 1748346116}
   _progressClip: {fileID: 8300000, guid: bcf304ec656a3924ba663ddf846caa3f, type: 3}
+  _winProgressClip: {fileID: 8300000, guid: 49a269545fb14b3478b7da2dd1449247, type: 3}
   _winClip: {fileID: 8300000, guid: 23511a9d39bb7414c9fc11670861a1e4, type: 3}
   _plungerAudioSource: {fileID: 1414724242}
   _plungerAppearClip: {fileID: 8300000, guid: 82c3f4c15a7a80847a3d14da511e252b, type: 3}
@@ -4399,6 +4400,8 @@ MonoBehaviour:
   _winStepSize: 0.1
   _minPitch: 0.8
   _maxPitch: 2
+  _progressVolume: 0.8
+  _winProgressVolume: 1
 --- !u!4 &1159008714
 Transform:
   m_ObjectHideFlags: 0

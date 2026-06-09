@@ -10,6 +10,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioSource _winAudioSource;
         [SerializeField] private AudioClip _progressClip;
+        [SerializeField] private AudioClip _winProgressClip;
         [SerializeField] private AudioClip _winClip;
 
         [Header("Plunger SFX")]
@@ -22,6 +23,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
         [SerializeField, Range(0.01f, 1f)] private float _winStepSize = 0.10f;
         [SerializeField, Range(0, 1f)] private float _minPitch = 0.8f;
         [SerializeField, Range(1f, 2f)] private float _maxPitch = 2.0f;
+        [SerializeField, Range(0f, 1f)] private float _progressVolume = 1f;
+        [SerializeField, Range(0f, 1f)] private float _winProgressVolume = 1f;
 
         #endregion
 
@@ -138,14 +141,16 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
 
         private void PlayAudio(int thresholdIndex)
         {
-            if (_audioSource == null || _progressClip == null) return;
+            AudioClip clip   = _isWinPhase ? _winProgressClip : _progressClip;
+            float     volume = _isWinPhase ? _winProgressVolume : _progressVolume;
+            if (_audioSource == null || clip == null) return;
 
             float t = _maxThresholdIndex > 0
                 ? Mathf.Clamp01((float)thresholdIndex / _maxThresholdIndex)
                 : 0f;
 
             _audioSource.pitch = Mathf.Lerp(_minPitch, _maxPitch, t);
-            _audioSource.PlayOneShot(_progressClip);
+            _audioSource.PlayOneShot(clip, volume);
         }
 
         #endregion

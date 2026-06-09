@@ -497,8 +497,8 @@ MonoBehaviour:
   LeftSpline: {fileID: 8308292250996409287}
   LeftMeshFilter: {fileID: 5552996421215113010}
   LeftMeshRenderer: {fileID: 6993238034221991085}
-  LeftIsReversed: 0
+  LeftIsReversed: 1
   RightSpline: {fileID: 7310892797119125499}
   RightMeshFilter: {fileID: 3462332700685689592}
   RightMeshRenderer: {fileID: 8590643724099324256}
-  RightIsReversed: 0
+  RightIsReversed: 1
