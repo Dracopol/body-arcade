@@ -9,6 +9,7 @@ namespace IMVR.BodyArcade.UiRobot
 
         internal MirrorMode MirrorMode;
         internal bool       HandVisualization = true;
+        internal bool       Vibration = true;
         internal List<PreparedShape> SelectedShapes = new();
         internal int? StrikeAmount = 10;
         internal int? TimerSeconds = 60;

@@ -81,6 +81,10 @@ namespace IMVR.BodyArcade.UiRobot
         private List<VisualElement> _handVizBtns;
         private bool                _handVisualization = true;
 
+        // Vibration
+        private List<VisualElement> _vibrationBtns;
+        private bool                _vibration = true;
+
         // Difficulty
         private List<VisualElement> _difficultyBtns;
         private string              _selectedDifficulty = "Easy";
@@ -92,20 +96,6 @@ namespace IMVR.BodyArcade.UiRobot
         // NeuroMania difficulty
         private List<VisualElement> _neuroDifficultyBtns;
         private string              _selectedNeuroDifficulty = "Easy";
-
-        // Strike stepper
-        private VisualElement _strikeDecreaseBtn;
-        private VisualElement _strikeIncreaseBtn;
-        private VisualElement _strikeUnlimitedBtn;
-        private Label         _strikeValueLabel;
-        private Label         _strikeInfoLabel;
-
-        // Timer stepper
-        private VisualElement _timerDecreaseBtn;
-        private VisualElement _timerIncreaseBtn;
-        private VisualElement _timerDisableBtn;
-        private Label         _timerValueLabel;
-        private Label         _timerInfoLabel;
 
         // Bias picker
         private VisualElement _biasGrid;
@@ -130,8 +120,6 @@ namespace IMVR.BodyArcade.UiRobot
         private FocusMode  _selectedFocusMode  = FocusMode.Unfocused;
         private HeightMode _selectedHeightMode = HeightMode.EyeLevel;
         private ActiveGame _activeGame         = ActiveGame.AirSacShapes;
-        private int?       _strikeAmount       = 5;
-        private int?       _timerSeconds       = 60;
 
         #endregion
 
@@ -190,6 +178,12 @@ namespace IMVR.BodyArcade.UiRobot
                 _root.Q<VisualElement>("hand-viz-btn-yes")
             };
 
+            _vibrationBtns = new List<VisualElement>
+            {
+                _root.Q<VisualElement>("vibration-btn-no"),
+                _root.Q<VisualElement>("vibration-btn-yes")
+            };
+
             _difficultyBtns = new List<VisualElement>
             {
                 _root.Q<VisualElement>("difficulty-easy"),
@@ -211,28 +205,15 @@ namespace IMVR.BodyArcade.UiRobot
                 _root.Q<VisualElement>("neuro-difficulty-hard")
             };
 
-            _strikeDecreaseBtn  = _root.Q<VisualElement>("strike-decrease-btn");
-            _strikeIncreaseBtn  = _root.Q<VisualElement>("strike-increase-btn");
-            _strikeUnlimitedBtn = _root.Q<VisualElement>("strike-unlimited-btn");
-            _strikeValueLabel   = _root.Q<Label>("strike-value-label");
-            _strikeInfoLabel    = _root.Q<Label>("strike-info-label");
-
-            _timerDecreaseBtn = _root.Q<VisualElement>("timer-decrease-btn");
-            _timerIncreaseBtn = _root.Q<VisualElement>("timer-increase-btn");
-            _timerDisableBtn  = _root.Q<VisualElement>("timer-disable-btn");
-            _timerValueLabel  = _root.Q<Label>("timer-value-label");
-            _timerInfoLabel   = _root.Q<Label>("timer-info-label");
-
             RegisterFocusModeCallbacks();
             RegisterHeightModeCallbacks();
             RegisterHandFocusSliderCallbacks();
             RegisterAirsacHandModeCallbacks();
             RegisterHandVizCallbacks();
+            RegisterVibrationCallbacks();
             RegisterDifficultyCallbacks();
             RegisterNeuroHandModeCallbacks();
             RegisterNeuroDifficultyCallbacks();
-            RegisterStrikeCallbacks();
-            RegisterTimerCallbacks();
             RegisterStartCallback();
             RegisterDropdownCallbacks();
             RegisterBiasPickerCallbacks();
@@ -250,6 +231,12 @@ namespace IMVR.BodyArcade.UiRobot
         {
             _handVizBtns[0].RegisterCallback<ClickEvent>(_ => SelectHandViz(false));
             _handVizBtns[1].RegisterCallback<ClickEvent>(_ => SelectHandViz(true));
+        }
+
+        private void RegisterVibrationCallbacks()
+        {
+            _vibrationBtns[0].RegisterCallback<ClickEvent>(_ => SelectVibration(false));
+            _vibrationBtns[1].RegisterCallback<ClickEvent>(_ => SelectVibration(true));
         }
 
         private void RegisterAirsacHandModeCallbacks()
@@ -280,20 +267,6 @@ namespace IMVR.BodyArcade.UiRobot
             _neuroDifficultyBtns[2].RegisterCallback<ClickEvent>(_ => SelectNeuroDifficulty("Hard"));
         }
 
-        private void RegisterStrikeCallbacks()
-        {
-            _strikeDecreaseBtn.RegisterCallback<ClickEvent>(_ => AdjustStrikeAmount(-1));
-            _strikeIncreaseBtn.RegisterCallback<ClickEvent>(_ => AdjustStrikeAmount(1));
-            _strikeUnlimitedBtn.RegisterCallback<ClickEvent>(_ => ToggleUnlimitedStrikes());
-        }
-
-        private void RegisterTimerCallbacks()
-        {
-            _timerDecreaseBtn.RegisterCallback<ClickEvent>(_ => AdjustTimer(-5));
-            _timerIncreaseBtn.RegisterCallback<ClickEvent>(_ => AdjustTimer(5));
-            _timerDisableBtn.RegisterCallback<ClickEvent>(_ => ToggleDisableTimer());
-        }
-
         private void RegisterStartCallback()
         {
             _startBtn?.RegisterCallback<ClickEvent>(_ => HandleStartSession());
@@ -314,12 +287,11 @@ namespace IMVR.BodyArcade.UiRobot
             SelectHeightMode(_selectedHeightMode);
             SelectAirsacHandMode(_selectedAirsacHandMode, _selectedMirrorMode);
             SelectHandViz(_handVisualization);
+            SelectVibration(_vibration);
             SelectDifficulty(_selectedDifficulty);
             SelectNeuroHandMode(_selectedNeuroHandMode);
             SelectNeuroDifficulty(_selectedNeuroDifficulty);
             SelectGame(_activeGame);
-            UpdateStrikeDisplay();
-            UpdateTimerDisplay();
         }
 
         #endregion
@@ -334,9 +306,8 @@ namespace IMVR.BodyArcade.UiRobot
 
                 SessionConfigAirSacShapes.Instance.MirrorMode        = _selectedMirrorMode;
                 SessionConfigAirSacShapes.Instance.HandVisualization = _handVisualization;
+                SessionConfigAirSacShapes.Instance.Vibration         = _vibration;
                 SessionConfigAirSacShapes.Instance.SelectedShapes    = _shapesPreparer.PrepareForDifficulty(_selectedDifficulty);
-                SessionConfigAirSacShapes.Instance.StrikeAmount    = _strikeAmount;
-                SessionConfigAirSacShapes.Instance.TimerSeconds    = _timerSeconds;
                 SceneManager.LoadScene(_airSacShapesSceneName);
             }
             else
@@ -480,6 +451,13 @@ namespace IMVR.BodyArcade.UiRobot
             _handVizBtns[1].EnableInClassList("selected", show);
         }
 
+        private void SelectVibration(bool enabled)
+        {
+            _vibration = enabled;
+            _vibrationBtns[0].EnableInClassList("selected", !enabled);
+            _vibrationBtns[1].EnableInClassList("selected", enabled);
+        }
+
         private void SelectAirsacHandMode(string mode, MirrorMode mirror)
         {
             _selectedAirsacHandMode = mode;
@@ -511,62 +489,6 @@ namespace IMVR.BodyArcade.UiRobot
             var labels = new[] { "Easy", "Medium", "Hard" };
             for (int i = 0; i < _neuroDifficultyBtns.Count; i++)
                 _neuroDifficultyBtns[i].EnableInClassList("selected", labels[i] == difficulty);
-        }
-
-        private void AdjustStrikeAmount(int delta)
-        {
-            if (_strikeAmount == null) return;
-            _strikeAmount = Mathf.Max(1, _strikeAmount.Value + delta);
-            UpdateStrikeDisplay();
-        }
-
-        private void ToggleUnlimitedStrikes()
-        {
-            _strikeAmount = _strikeAmount == null ? 10 : (int?)null;
-            UpdateStrikeDisplay();
-        }
-
-        private void UpdateStrikeDisplay()
-        {
-            var isUnlimited = _strikeAmount == null;
-            _strikeValueLabel.text = isUnlimited ? "∞" : _strikeAmount.Value.ToString();
-            _strikeUnlimitedBtn.EnableInClassList("active", isUnlimited);
-            _strikeDecreaseBtn.EnableInClassList("disabled", isUnlimited);
-            _strikeIncreaseBtn.EnableInClassList("disabled", isUnlimited);
-            _strikeInfoLabel.text = isUnlimited ? "No strike limit" : $"Target: {_strikeAmount} strikes";
-        }
-
-        private void AdjustTimer(int delta)
-        {
-            if (_timerSeconds == null) return;
-            _timerSeconds = Mathf.Max(5, _timerSeconds.Value + delta);
-            UpdateTimerDisplay();
-        }
-
-        private void ToggleDisableTimer()
-        {
-            _timerSeconds = _timerSeconds == null ? 60 : (int?)null;
-            UpdateTimerDisplay();
-        }
-
-        private void UpdateTimerDisplay()
-        {
-            var isDisabled = _timerSeconds == null;
-            _timerValueLabel.text = isDisabled ? "—" : _timerSeconds.Value.ToString();
-            _timerDisableBtn.EnableInClassList("active", isDisabled);
-            _timerDecreaseBtn.EnableInClassList("disabled", isDisabled);
-            _timerIncreaseBtn.EnableInClassList("disabled", isDisabled);
-            _timerInfoLabel.text = isDisabled ? "No time limit" : FormatDuration(_timerSeconds.Value);
-        }
-
-        private static string FormatDuration(int seconds)
-        {
-            if (seconds < 60) return $"Session duration: {seconds}s";
-            var minutes = seconds / 60;
-            var remainder = seconds % 60;
-            return remainder == 0
-                ? $"Session duration: {minutes}m"
-                : $"Session duration: {minutes}m {remainder}s";
         }
 
         private void PositionDropdownBelowSwitcher()

@@ -68,24 +68,6 @@
                 </ui:VisualElement>
             </ui:VisualElement>
 
-            <!-- Hand Visualization -->
-            <ui:VisualElement class="section-card">
-                <ui:VisualElement class="section-header">
-                    <ui:VisualElement class="section-header__icon" />
-                    <ui:Label text="Hand Visualization" class="section-header__label" />
-                </ui:VisualElement>
-                <ui:VisualElement class="mirror-row">
-                    <ui:VisualElement name="hand-viz-btn-no" class="mirror-btn">
-                        <ui:VisualElement picking-mode="Ignore" class="hand-viz-icon hand-viz-icon--no" />
-                        <ui:Label text="No" picking-mode="Ignore" class="mirror-btn__label" />
-                    </ui:VisualElement>
-                    <ui:VisualElement name="hand-viz-btn-yes" class="mirror-btn">
-                        <ui:VisualElement picking-mode="Ignore" class="hand-viz-icon hand-viz-icon--yes" />
-                        <ui:Label text="Yes" picking-mode="Ignore" class="mirror-btn__label" />
-                    </ui:VisualElement>
-                </ui:VisualElement>
-            </ui:VisualElement>
-
             <!-- Difficulty Selection -->
             <ui:VisualElement class="section-card">
                 <ui:VisualElement class="section-header">
@@ -138,54 +120,43 @@
                 </ui:VisualElement>
             </ui:VisualElement>
 
-            <!-- Strike Amount + Timer Settings -->
+            <!-- Hand Visualization + Vibration -->
             <ui:VisualElement class="two-col-row">
 
-                <!-- Strike Amount -->
+                <!-- Hand Visualization -->
                 <ui:VisualElement class="section-card section-card--half">
                     <ui:VisualElement class="section-header">
                         <ui:VisualElement class="section-header__icon" />
-                        <ui:Label text="Strike Amount" class="section-header__label" />
+                        <ui:Label text="Hand Visualization" class="section-header__label" />
                     </ui:VisualElement>
-                    <ui:VisualElement class="stepper-row">
-                        <ui:VisualElement name="strike-decrease-btn" class="stepper-btn">
-                            <ui:Label text="−" picking-mode="Ignore" class="stepper-btn__label" />
+                    <ui:VisualElement class="mirror-row">
+                        <ui:VisualElement name="hand-viz-btn-no" class="mirror-btn">
+                            <ui:VisualElement picking-mode="Ignore" class="hand-viz-icon hand-viz-icon--no" />
+                            <ui:Label text="No" picking-mode="Ignore" class="mirror-btn__label" />
                         </ui:VisualElement>
-                        <ui:VisualElement class="stepper-value-box">
-                            <ui:Label name="strike-value-label" text="5" class="stepper-value" />
-                        </ui:VisualElement>
-                        <ui:VisualElement name="strike-increase-btn" class="stepper-btn">
-                            <ui:Label text="+" picking-mode="Ignore" class="stepper-btn__label" />
+                        <ui:VisualElement name="hand-viz-btn-yes" class="mirror-btn">
+                            <ui:VisualElement picking-mode="Ignore" class="hand-viz-icon hand-viz-icon--yes" />
+                            <ui:Label text="Yes" picking-mode="Ignore" class="mirror-btn__label" />
                         </ui:VisualElement>
                     </ui:VisualElement>
-                    <ui:VisualElement name="strike-unlimited-btn" class="toggle-btn">
-                        <ui:Label text="∞  Set to Unlimited" picking-mode="Ignore" class="toggle-btn__label" />
-                    </ui:VisualElement>
-                    <ui:Label name="strike-info-label" text="Target: 5 strikes" class="info-label" />
                 </ui:VisualElement>
 
-                <!-- Timer Settings -->
+                <!-- Vibration -->
                 <ui:VisualElement class="section-card section-card--half">
                     <ui:VisualElement class="section-header">
                         <ui:VisualElement class="section-header__icon" />
-                        <ui:Label text="Timer Settings" class="section-header__label" />
+                        <ui:Label text="Vibration" class="section-header__label" />
                     </ui:VisualElement>
-                    <ui:VisualElement class="stepper-row">
-                        <ui:VisualElement name="timer-decrease-btn" class="stepper-btn">
-                            <ui:Label text="−" picking-mode="Ignore" class="stepper-btn__label" />
+                    <ui:VisualElement class="mirror-row">
+                        <ui:VisualElement name="vibration-btn-no" class="mirror-btn">
+                            <ui:VisualElement picking-mode="Ignore" class="vibration-icon vibration-icon--no" />
+                            <ui:Label text="No" picking-mode="Ignore" class="mirror-btn__label" />
                         </ui:VisualElement>
-                        <ui:VisualElement class="stepper-value-box">
-                            <ui:Label name="timer-value-label" text="60" class="stepper-value" />
-                            <ui:Label text="sec" picking-mode="Ignore" class="stepper-unit" />
-                        </ui:VisualElement>
-                        <ui:VisualElement name="timer-increase-btn" class="stepper-btn">
-                            <ui:Label text="+" picking-mode="Ignore" class="stepper-btn__label" />
+                        <ui:VisualElement name="vibration-btn-yes" class="mirror-btn">
+                            <ui:VisualElement picking-mode="Ignore" class="vibration-icon vibration-icon--yes" />
+                            <ui:Label text="Yes" picking-mode="Ignore" class="mirror-btn__label" />
                         </ui:VisualElement>
                     </ui:VisualElement>
-                    <ui:VisualElement name="timer-disable-btn" class="toggle-btn">
-                        <ui:Label text="✕  Disable Timer" picking-mode="Ignore" class="toggle-btn__label" />
-                    </ui:VisualElement>
-                    <ui:Label name="timer-info-label" text="Session duration: 1m" class="info-label" />
                 </ui:VisualElement>
 
             </ui:VisualElement>
