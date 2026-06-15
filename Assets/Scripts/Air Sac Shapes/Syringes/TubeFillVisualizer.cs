@@ -50,10 +50,10 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
             if (_material == null) return;
 
-            // "Chosen" state: empty-coloured tube, nothing filled, transparent backdrop.
+            // "Chosen" state: fill-coloured tube reveals over transparent during appear.
             _material.SetFloat(ReversedId, isReversed ? 1f : 0f);
             _material.SetFloat(ProgressId, 0f);
-            _material.SetColor(ActiveColorId,   _empty);
+            _material.SetColor(ActiveColorId,   _fill);
             _material.SetColor(InactiveColorId, _transparent);
 
             DetectUvMax();
