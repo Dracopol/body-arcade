@@ -71,14 +71,15 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             _material.SetFloat(ProgressId, progress);
         }
 
-        // Appear animation finished: the tube is now fully Empty; switch into play
-        // colours — Empty backdrop, Fill as the active (player-pushed) colour.
+        // Appear animation finished: switch into play colours — tube starts full of
+        // antidote and drains from top down as the player pushes (Reversed=1).
         internal void HandleAppearComplete()
         {
             if (_material == null) return;
-            _material.SetColor(InactiveColorId, _empty);
+            _material.SetFloat(ReversedId, 1f);
+            _material.SetColor(ActiveColorId,   _empty);
+            _material.SetColor(InactiveColorId, _fill);
             _material.SetFloat(ProgressId, 0f);
-            _material.SetColor(ActiveColorId, _fill);
         }
 
         internal void HandleWinStateChange()
@@ -88,12 +89,12 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             _material.SetColor(ActiveColorId, _win);
         }
 
-        // First win-fill reached the top: flip to the retract look — reversed, draining
-        // the Win-coloured fill away into transparent.
+        // First win-fill reached the top: flip to the retract look — drain the win
+        // colour away into transparent from the bottom up (Reversed=0).
         internal void HandleFirstFillComplete()
         {
             if (_material == null) return;
-            _material.SetFloat(ReversedId, 1f);
+            _material.SetFloat(ReversedId, 0f);
             _material.SetColor(InactiveColorId, _transparent);
             _material.SetColor(ActiveColorId, _win);
         }

@@ -74,7 +74,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         {
             EnsureInitialScale();
             _isWin = false;
-            ApplyScale(0f);   // enlarged
+            ApplyScale(0f);   // small — antidote not yet injected
         }
 
         #endregion
@@ -107,8 +107,8 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         {
             if (_renderer == null) return;
 
-            // Start enlarged (t=0) and shrink back to original (t=1) as the player fills.
-            float scaleFactor = Mathf.Lerp(_startSizeMultiplier, 1f, progress);
+            // Start small (t=0) and grow to original (t=1) as antidote fills the air sac.
+            float scaleFactor = Mathf.Lerp(1f / _startSizeMultiplier, 1f, progress);
             _renderer.transform.localScale = _initialScale * scaleFactor;
         }
 

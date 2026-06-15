@@ -207,29 +207,31 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void DrawNormal(Vector3 splineEnd)
         {
-            float boundary    = 1f - _fillProgress;
-            int fillSegments  = Mathf.RoundToInt(_fillProgress * _segmentCount);
-            int baseSegments  = _segmentCount - fillSegments;
+            float boundary   = _fillProgress;
+            int fillSegments = Mathf.RoundToInt(_fillProgress * _segmentCount);
+            int baseSegments = _segmentCount - fillSegments;
 
-            _lineRenderer.enabled = baseSegments > 0;
-            if (_lineRenderer.enabled)
-            {
-                _lineRenderer.positionCount = baseSegments + 1;
-                for (int i = 0; i <= baseSegments; i++)
-                {
-                    float t = boundary * (i / (float)baseSegments);
-                    _lineRenderer.SetPosition(i, SampleCurve(splineEnd, _ballTransform.position, t));
-                }
-            }
-
+            // Fill grows from spline-end (t=0) toward ball (t=1) — antidote travels syringe→air sac.
             _fillLineRenderer.enabled = fillSegments > 0;
             if (_fillLineRenderer.enabled)
             {
                 _fillLineRenderer.positionCount = fillSegments + 1;
                 for (int i = 0; i <= fillSegments; i++)
                 {
-                    float t = boundary + _fillProgress * (i / (float)fillSegments);
+                    float t = boundary * (i / (float)fillSegments);
                     _fillLineRenderer.SetPosition(i, SampleCurve(splineEnd, _ballTransform.position, t));
+                }
+            }
+
+            // Unfilled portion: from fill boundary to ball (t=1).
+            _lineRenderer.enabled = baseSegments > 0;
+            if (_lineRenderer.enabled)
+            {
+                _lineRenderer.positionCount = baseSegments + 1;
+                for (int i = 0; i <= baseSegments; i++)
+                {
+                    float t = boundary + (1f - boundary) * (i / (float)baseSegments);
+                    _lineRenderer.SetPosition(i, SampleCurve(splineEnd, _ballTransform.position, t));
                 }
             }
         }
