@@ -60,7 +60,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         // One-time setup: configure the two line renderers and the (single) fill child.
         // Called once when the shared connector is created; safe to call again (idempotent).
-        internal void Setup(Material material, Material fillMaterial, Transform midPoint)
+        internal void Setup(Material material, Material fillMaterial, Transform midPoint, float growDuration, float retractDuration)
         {
             _lineRenderer = GetComponent<LineRenderer>();
             _midPoint     = midPoint;
@@ -76,6 +76,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             }
             ConfigureLineRenderer(_fillLineRenderer, fillMaterial);
             _fillLineRenderer.enabled = false;
+
+            _growDurationSeconds    = growDuration;
+            _retractDurationSeconds = retractDuration;
         }
 
         // Per-cycle: point the shared connector at the current shape + ball and reset

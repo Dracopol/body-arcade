@@ -33,6 +33,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         [SerializeField] private Material  _connectorMaterial;
         [SerializeField] private Material  _connectorFillMaterial;
         [SerializeField] private Transform _connectorMidPoint;
+        [SerializeField] private float     _connectorGrowDuration    = 0.5f;
+        [SerializeField] private float     _connectorRetractDuration = 0.5f;
 
         #endregion
 
@@ -160,7 +162,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             var go = new GameObject("BallShapeConnector");
             go.transform.SetParent(transform, false);
             _connector = go.AddComponent<BallShapeConnector>();
-            _connector.Setup(_connectorMaterial, _connectorFillMaterial, _connectorMidPoint);
+            _connector.Setup(_connectorMaterial, _connectorFillMaterial, _connectorMidPoint, _connectorGrowDuration, _connectorRetractDuration);
             go.SetActive(false);
         }
 
