@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
@@ -9,6 +10,19 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         [Header("References")]
         [SerializeField] private Shape _progressTracker;
         [SerializeField] private ParticleSystem _particleEffectPrefab;
+        [SerializeField] private Transform _scaleTarget;
+
+        [Header("Punch")]
+        [SerializeField] private float _punchScale    = 0.7f;
+        [SerializeField] private float _punchDuration = 0.08f;
+        [SerializeField] private float _returnDuration = 0.2f;
+
+        #endregion
+
+        #region Fields
+
+        private Vector3 _originalScale;
+        private bool    _scaleCached;
 
         #endregion
 
@@ -48,6 +62,12 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         private void HandleFirstFillComplete()
         {
             SpawnParticleEffect();
+            if (_scaleTarget != null)
+            {
+                EnsureScale();
+                StopAllCoroutines();
+                StartCoroutine(PunchCoroutine());
+            }
         }
 
         #endregion
@@ -68,6 +88,38 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
             Destroy(instance.gameObject, lifetime);
 
             _progressTracker.RegisterDestroyDelay(lifetime);
+        }
+
+        private void EnsureScale()
+        {
+            if (_scaleCached) return;
+            _originalScale = _scaleTarget.localScale;
+            _scaleCached   = true;
+        }
+
+        private IEnumerator PunchCoroutine()
+        {
+            // Squish down
+            float elapsed = 0f;
+            while (elapsed < _punchDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / _punchDuration);
+                _scaleTarget.localScale = Vector3.Lerp(_originalScale, _originalScale * _punchScale, t);
+                yield return null;
+            }
+
+            // Spring back
+            elapsed = 0f;
+            while (elapsed < _returnDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / _returnDuration);
+                _scaleTarget.localScale = Vector3.Lerp(_originalScale * _punchScale, _originalScale, t);
+                yield return null;
+            }
+
+            _scaleTarget.localScale = _originalScale;
         }
 
         #endregion

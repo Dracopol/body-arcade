@@ -110,7 +110,6 @@ MonoBehaviour:
   _renderer: {fileID: 1357520862598228299}
   _startCellColor: {r: 0.7647059, g: 0.16078432, b: 0.16078432, a: 1}
   _startLineColor: {r: 0.58431375, g: 0.3137255, b: 0.3137255, a: 1}
-  _debugProgress: 0
 --- !u!114 &4495437648748164367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,9 +124,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.Visualizers.AirSacProgressParticleVisualizer
   _progressTracker: {fileID: 0}
   _particleEffectPrefab: {fileID: 19861012, guid: 4e9c13d8b1156ee4ea3d901540833300, type: 3}
-  _progressStepSize: 0.98
-  _debugProgress: 0
-  _debugLastThreshold: 0
+  _scaleTarget: {fileID: 5611540330118314555}
+  _punchScale: 0.7
+  _punchDuration: 0.08
+  _returnDuration: 0.2
 --- !u!82 &2963558882812849330
 AudioSource:
   m_ObjectHideFlags: 0
@@ -239,5 +239,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.VFX.AirSacSize
   _progressTracker: {fileID: 0}
   _renderer: {fileID: 1357520862598228299}
-  _finalSizeMultiplier: 1.5
-  _debugProgress: 0
+  _startSizeMultiplier: 1.5

@@ -131,7 +131,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         {
             if (_ballTransform == null || _splineContainer == null) return;
 
-            float3 localPoint = SplineUtility.EvaluatePosition(_splineContainer.Spline, 1f);
+            float3 localPoint = SplineUtility.EvaluatePosition(_splineContainer.Spline, 0f);
             Vector3 splineEnd = _splineContainer.transform.TransformPoint(localPoint);
 
             if (_isAnimating)
