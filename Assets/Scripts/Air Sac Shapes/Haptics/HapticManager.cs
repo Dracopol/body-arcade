@@ -66,6 +66,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Haptics
 
         private void Play(Side side, AnimationCurve curve, float duration)
         {
+            if (UiRobot.SessionConfigAirSacShapes.Instance != null &&
+                !UiRobot.SessionConfigAirSacShapes.Instance.Vibration) return;
+
             InputDevice device = Resolve(side);
             if (!device.isValid) return;
 
