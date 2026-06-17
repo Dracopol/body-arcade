@@ -13,6 +13,12 @@ namespace IMVR.BodyArcade.AirSacShapes
         [SerializeField] private GameObject _copyLeft;
         [SerializeField] private Camera _camera;
 
+        [Header("Hand Visualization")]
+        [SerializeField] private GameObject _leftHandVisual;
+        [SerializeField] private GameObject _rightHandVisual;
+        [SerializeField] private GameObject _mirrorLeftHandVisual;
+        [SerializeField] private GameObject _mirrorRightHandVisual;
+
         [Header("Debug")]
         [SerializeField] private float _debugCameraX;
 
@@ -47,6 +53,12 @@ namespace IMVR.BodyArcade.AirSacShapes
             _mirrorMode = SessionConfigAirSacShapes.Instance != null
                 ? SessionConfigAirSacShapes.Instance.MirrorMode
                 : MirrorMode.Unmirrored;
+
+            bool handViz = SessionConfigAirSacShapes.Instance == null || SessionConfigAirSacShapes.Instance.HandVisualization;
+            if (_leftHandVisual        != null) _leftHandVisual.SetActive(handViz);
+            if (_rightHandVisual       != null) _rightHandVisual.SetActive(handViz);
+            if (_mirrorLeftHandVisual  != null) _mirrorLeftHandVisual.SetActive(handViz);
+            if (_mirrorRightHandVisual != null) _mirrorRightHandVisual.SetActive(handViz);
 
             ApplyMirrorMode();
         }

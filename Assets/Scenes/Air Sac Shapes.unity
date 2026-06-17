@@ -923,6 +923,10 @@ MonoBehaviour:
   _copyRight: {fileID: 40502263}
   _copyLeft: {fileID: 1130532714}
   _camera: {fileID: 224017794}
+  _leftHandVisual: {fileID: 1673070606}
+  _rightHandVisual: {fileID: 359763385}
+  _mirrorLeftHandVisual: {fileID: 1636712998}
+  _mirrorRightHandVisual: {fileID: 1708965747}
   _debugCameraX: 0
 --- !u!4 &210590405
 Transform:
