@@ -414,18 +414,19 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         private void HandleLeftTouched()
         {
-            if (_leftPlunger != null) _leftPlunger.EndHint();
+            if (_leftPlunger != null) { _leftPlunger.EndHint(); _leftPlunger.BeginTouchParticles(); }
             if (_haptics != null) _haptics.PlayTouch(Haptics.HapticManager.Side.Left);
         }
 
         private void HandleRightTouched()
         {
-            if (_rightPlunger != null) _rightPlunger.EndHint();
+            if (_rightPlunger != null) { _rightPlunger.EndHint(); _rightPlunger.BeginTouchParticles(); }
             if (_haptics != null) _haptics.PlayTouch(Haptics.HapticManager.Side.Right);
         }
 
         private void HandleLeftReleased()
         {
+            if (_leftPlunger != null) _leftPlunger.EndTouchParticles();
             if (!_leftPlay) return;
             if (_leftPlunger != null) _leftPlunger.BeginHint();
             if (_haptics != null) _haptics.PlayRelease(Haptics.HapticManager.Side.Left);
@@ -433,6 +434,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         private void HandleRightReleased()
         {
+            if (_rightPlunger != null) _rightPlunger.EndTouchParticles();
             if (!_rightPlay) return;
             if (_rightPlunger != null) _rightPlunger.BeginHint();
             if (_haptics != null) _haptics.PlayRelease(Haptics.HapticManager.Side.Right);

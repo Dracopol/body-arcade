@@ -13,6 +13,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         [SerializeField] private Collider _collider;
         [SerializeField] private GameObject _visualRoot;
         [SerializeField] private PlungerColorFlickerHint _hint;
+        [SerializeField] private ParticleSystem _touchParticles;
+        [SerializeField] private bool _touchParticlesEnabled = true;
 
         [Header("Behaviour")]
         [SerializeField] private bool _alignRotationToSpline = true;
@@ -42,7 +44,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         {
             if (_visualRoot != null) _visualRoot.SetActive(visible);
             if (_collider != null)   _collider.enabled = visible;
-            if (!visible) EndHint();
+            if (!visible) { EndHint(); EndTouchParticles(); }
         }
 
         internal void BeginHint()
@@ -53,6 +55,16 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         internal void EndHint()
         {
             if (_hint != null) _hint.End();
+        }
+
+        internal void BeginTouchParticles()
+        {
+            if (_touchParticlesEnabled && _touchParticles != null) _touchParticles.Play();
+        }
+
+        internal void EndTouchParticles()
+        {
+            if (_touchParticlesEnabled && _touchParticles != null) _touchParticles.Stop();
         }
 
         #endregion
