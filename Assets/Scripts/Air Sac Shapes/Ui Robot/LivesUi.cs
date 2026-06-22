@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace IMVR.BodyArcade.UiRobot
@@ -23,6 +25,8 @@ namespace IMVR.BodyArcade.UiRobot
         private int  _currentLives;
         private int  _activeSlots;
         private bool _unlimited;
+
+        private CancellationTokenSource _shatterCts;
 
         #endregion
 
@@ -60,6 +64,12 @@ namespace IMVR.BodyArcade.UiRobot
             Refresh();
         }
 
+        private void OnDestroy()
+        {
+            _shatterCts?.Cancel();
+            _shatterCts?.Dispose();
+        }
+
         #endregion
 
         #region Public
@@ -69,7 +79,7 @@ namespace IMVR.BodyArcade.UiRobot
             if (_unlimited || _currentLives <= 0) return;
 
             _currentLives--;
-            Refresh();
+            PlayShatterAsync(_currentLives).Forget();
 
             if (_currentLives <= 0)
                 OnLivesEmpty?.Invoke();
@@ -92,6 +102,21 @@ namespace IMVR.BodyArcade.UiRobot
         #endregion
 
         #region Private
+
+        // Shatter the diamond at the just-emptied slot, leaving the rest untouched.
+        private async UniTaskVoid PlayShatterAsync(int slotIndex)
+        {
+            _shatterCts ??= new CancellationTokenSource();
+
+            try
+            {
+                await _diamonds[slotIndex].PlayShatterAsync(_shatterCts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                // Cancelled by OnDestroy; nothing to clean up here.
+            }
+        }
 
         private void Refresh()
         {
