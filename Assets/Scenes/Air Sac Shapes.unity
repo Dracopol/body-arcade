@@ -15,11 +15,11 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
   m_Fog: 1
-  m_FogColor: {r: 0.8584906, g: 0.6881991, b: 0.66816485, a: 1}
-  m_FogMode: 3
+  m_FogColor: {r: 0.854902, g: 0.7294118, b: 0.7176471, a: 1}
+  m_FogMode: 1
   m_FogDensity: 0.001
   m_LinearFogStart: 0
-  m_LinearFogEnd: 300
+  m_LinearFogEnd: 240
   m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
@@ -1220,7 +1220,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 165915434}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.00055919134, y: -0.004365945, z: 0.0055910535, w: 0.9999747}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1228,7 +1228,7 @@ Transform:
   - {fileID: 2143567279}
   - {fileID: 839052463}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.067, y: -0.5, z: 0.64}
 --- !u!1 &173181457
 GameObject:
   m_ObjectHideFlags: 0
@@ -8777,6 +8777,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LifeDiamond
   _fillImage: {fileID: 1803081478}
   _outlineImage: {fileID: 901993393}
+  _shatterDurationSeconds: 0.35
+  _shatterScalePunch: 1.4
 --- !u!1 &570423949
 GameObject:
   m_ObjectHideFlags: 0
@@ -9082,7 +9084,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2120193678882025784}
@@ -10114,6 +10116,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LifeDiamond
   _fillImage: {fileID: 838056447}
   _outlineImage: {fileID: 1029648335}
+  _shatterDurationSeconds: 0.35
+  _shatterScalePunch: 1.4
 --- !u!1 &772552072
 GameObject:
   m_ObjectHideFlags: 0
@@ -10371,6 +10375,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LifeDiamond
   _fillImage: {fileID: 1494289641}
   _outlineImage: {fileID: 1963031147}
+  _shatterDurationSeconds: 0.35
+  _shatterScalePunch: 1.4
 --- !u!1 &838056445
 GameObject:
   m_ObjectHideFlags: 0
@@ -10995,6 +11001,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LifeDiamond
   _fillImage: {fileID: 1930472242}
   _outlineImage: {fileID: 664650432}
+  _shatterDurationSeconds: 0.35
+  _shatterScalePunch: 1.4
 --- !u!1 &881106095
 GameObject:
   m_ObjectHideFlags: 0
@@ -12714,6 +12722,96 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180645287}
   m_CullTransparentMesh: 1
+--- !u!1 &1193820584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1193820587}
+  - component: {fileID: 1193820586}
+  - component: {fileID: 1193820585}
+  m_Layer: 0
+  m_Name: Fog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &1193820585
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193820584}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 4b54d2b26266f124d99585f02ba82570, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1193820586
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193820584}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1193820587
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193820584}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -2, z: 300}
+  m_LocalScale: {x: 100, y: 1, z: 100}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1203512648 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8551373563188010361, guid: 2c087139b7052d142a01c09f93f54017, type: 3}
@@ -12964,6 +13062,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LifeDiamond
   _fillImage: {fileID: 153861700}
   _outlineImage: {fileID: 1462272501}
+  _shatterDurationSeconds: 0.35
+  _shatterScalePunch: 1.4
 --- !u!1 &1307327234
 GameObject:
   m_ObjectHideFlags: 0
@@ -13196,6 +13296,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LifeDiamond
   _fillImage: {fileID: 1895187538}
   _outlineImage: {fileID: 113846359}
+  _shatterDurationSeconds: 0.35
+  _shatterScalePunch: 1.4
 --- !u!1 &1327127857
 GameObject:
   m_ObjectHideFlags: 0
@@ -15346,6 +15448,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LifeDiamond
   _fillImage: {fileID: 881106097}
   _outlineImage: {fileID: 344540184}
+  _shatterDurationSeconds: 0.35
+  _shatterScalePunch: 1.4
 --- !u!1 &1616368847
 GameObject:
   m_ObjectHideFlags: 0
@@ -20295,6 +20399,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1741708740}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a2c793d9cd1a65a4fb6832dafdc921ac, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a2c793d9cd1a65a4fb6832dafdc921ac, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -20961,6 +21069,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LifeDiamond
   _fillImage: {fileID: 408136608}
   _outlineImage: {fileID: 1180645289}
+  _shatterDurationSeconds: 0.35
+  _shatterScalePunch: 1.4
 --- !u!1 &1741708739
 GameObject:
   m_ObjectHideFlags: 0
@@ -21779,6 +21889,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LifeDiamond
   _fillImage: {fileID: 581292208}
   _outlineImage: {fileID: 852771251}
+  _shatterDurationSeconds: 0.35
+  _shatterScalePunch: 1.4
 --- !u!1 &1855589549
 GameObject:
   m_ObjectHideFlags: 0
@@ -21831,6 +21943,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LifeDiamond
   _fillImage: {fileID: 1812355961}
   _outlineImage: {fileID: 1097560326}
+  _shatterDurationSeconds: 0.35
+  _shatterScalePunch: 1.4
 --- !u!1 &1872609909
 GameObject:
   m_ObjectHideFlags: 0
@@ -36325,3 +36439,4 @@ SceneRoots:
   - {fileID: 4114616940768472091}
   - {fileID: 1903503102}
   - {fileID: 1131270696}
+  - {fileID: 1193820587}
