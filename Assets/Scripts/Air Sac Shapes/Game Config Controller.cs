@@ -127,7 +127,6 @@ namespace IMVR.BodyArcade.UiRobot
 
         private void Start()
         {
-            Debug.Log($"[Config] Controller Start. Total controllers in scene: {FindObjectsByType<HandModeConfigController>(FindObjectsSortMode.None).Length}, my preparer null? {_shapesPreparer == null}, my GO: {gameObject.name} (scene: {gameObject.scene.name})");
             _root = _document.rootVisualElement;
 
             _focusModeRows = new List<VisualElement>
@@ -309,11 +308,7 @@ namespace IMVR.BodyArcade.UiRobot
                     if (preparers.Length > 0) _shapesPreparer = preparers[0];
                 }
 
-                if (SessionConfigAirSacShapes.Instance == null || _shapesPreparer == null)
-                {
-                    Debug.LogWarning($"[Config] Start aborted. SessionConfig.Instance null? {SessionConfigAirSacShapes.Instance == null}, preparer null? {_shapesPreparer == null}");
-                    return;
-                }
+                if (SessionConfigAirSacShapes.Instance == null || _shapesPreparer == null) return;
 
                 SessionConfigAirSacShapes.Instance.MirrorMode        = _selectedMirrorMode;
                 SessionConfigAirSacShapes.Instance.HandVisualization = _handVisualization;
