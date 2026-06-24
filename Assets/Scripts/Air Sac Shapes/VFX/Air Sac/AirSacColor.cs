@@ -88,6 +88,15 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
             ApplyColor(0f);
         }
 
+        // Skipped balls (outside the play window) start already healed: show the play-end color
+        // and freeze so a later bind can't drag them back to the unhealthy Start look.
+        internal void SetHealthy()
+        {
+            EnsureMaterial();
+            ApplyColor(1f);
+            _isWin = true;
+        }
+
         #endregion
 
         #region Event handlers

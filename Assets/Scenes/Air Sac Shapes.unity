@@ -3176,6 +3176,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5340379726178338088, guid: 2c087139b7052d142a01c09f93f54017, type: 3}
+      propertyPath: m_Name
+      value: Airsac Play 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5340379726178338088, guid: 2c087139b7052d142a01c09f93f54017, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -3208,6 +3212,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c087139b7052d142a01c09f93f54017, type: 3}
+--- !u!1 &513040614 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5340379726178338088, guid: 2c087139b7052d142a01c09f93f54017, type: 3}
+  m_PrefabInstance: {fileID: 513040613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &515285473
 GameObject:
   m_ObjectHideFlags: 0
@@ -11893,6 +11902,7 @@ MonoBehaviour:
   - {fileID: 633573696}
   - {fileID: 304560547}
   - {fileID: 1145467231}
+  - {fileID: 513040614}
   - {fileID: 1547438630}
 --- !u!114 &1096373141
 MonoBehaviour:
@@ -15311,7 +15321,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5788881781468919290, guid: 6c31a447968a193409b5c1c66fc99bce, type: 3}
       propertyPath: m_Name
-      value: Airsac Play 25
+      value: Airsac Play 26
       objectReference: {fileID: 0}
     - target: {fileID: 8006994257403903540, guid: 6c31a447968a193409b5c1c66fc99bce, type: 3}
       propertyPath: m_Enabled

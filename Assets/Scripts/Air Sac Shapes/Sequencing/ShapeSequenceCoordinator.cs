@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
 using UnityEngine;
+using IMVR.BodyArcade.AirSacShapes.VFX.AirSac;
 
 namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 {
@@ -37,6 +38,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private void Start()
         {
             _sequencer.StartAtLast(_reps);
+            HealSkippedBalls();
             _sequencer.Advance(); // first ball → OnBallChanged → align → HandleAlignComplete spawns
         }
 
@@ -100,6 +102,21 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         #endregion
 
         #region Private
+
+        // Balls before the play window are never played, so show them already healed at startup.
+        private void HealSkippedBalls()
+        {
+            foreach (GameObject ball in _sequencer.GetSkippedBalls(_reps))
+            {
+                if (ball == null) continue;
+
+                AirSacColor color = ball.GetComponent<AirSacColor>();
+                if (color != null) color.SetHealthy();
+
+                AirSacSize size = ball.GetComponent<AirSacSize>();
+                if (size != null) size.SetHealthy();
+            }
+        }
 
         private async UniTaskVoid RetractConnectorAsync(CancellationToken ct)
         {

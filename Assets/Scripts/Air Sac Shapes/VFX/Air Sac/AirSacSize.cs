@@ -77,6 +77,15 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
             ApplyScale(0f);   // small — antidote not yet injected
         }
 
+        // Skipped balls (outside the play window) start already healed: show the full play-end
+        // size and freeze so a later bind can't drag them back to the small Start look.
+        internal void SetHealthy()
+        {
+            EnsureInitialScale();
+            ApplyScale(1f);   // full — already healed
+            _isWin = true;
+        }
+
         #endregion
 
         #region Event handlers

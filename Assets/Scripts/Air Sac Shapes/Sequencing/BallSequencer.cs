@@ -41,6 +41,15 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             _currentIndex = _balls.Count - reps - 1;
         }
 
+        // The balls before the play window (indices 0 .. count-reps-1) — never played, so the
+        // coordinator marks them already healthy at startup.
+        internal IEnumerable<GameObject> GetSkippedBalls(int reps)
+        {
+            int windowStart = _balls.Count - reps;
+            for (int i = 0; i < windowStart; i++)
+                yield return _balls[i];
+        }
+
         // Advance to the next ball. Returns true if a valid ball was reached, false once the
         // sequence has walked past the last ball (window finished).
         internal bool Advance()
