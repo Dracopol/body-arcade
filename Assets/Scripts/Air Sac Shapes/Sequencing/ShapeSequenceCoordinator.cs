@@ -13,6 +13,10 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         [SerializeField] private ShapeSpawner _spawner;
         [SerializeField] private BallAlignToCamera _alignToCamera;
 
+        // Temporary stand-in for the future SessionConfigAirSacShapes value: how many of the
+        // last balls to play. The sequence plays the last `_reps` balls, then wins.
+        [SerializeField] private int _reps = 1;
+
         #endregion
 
         #region Fields
@@ -28,6 +32,12 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private void Awake()
         {
             _cts = new CancellationTokenSource();
+        }
+
+        private void Start()
+        {
+            _sequencer.StartAtLast(_reps);
+            _sequencer.Advance(); // first ball → OnBallChanged → align → HandleAlignComplete spawns
         }
 
         private void OnDestroy()
@@ -63,7 +73,11 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void HandleShapeComplete()
         {
-            _sequencer.Advance();
+            if (!_sequencer.Advance())
+            {
+                Debug.Log("win"); // temporary stand-in for the real win flow
+                return;
+            }
             GameObject ball = _sequencer.CurrentBall;
             if (ball == null) return;
             SpawnSequenceAsync(ball, _cts.Token).Forget();

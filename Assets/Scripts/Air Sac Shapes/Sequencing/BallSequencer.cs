@@ -32,22 +32,24 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         #endregion
 
-        #region Setup
-
-        private void Start()
-        {
-            Advance();
-        }
-
-        #endregion
-
         #region Internal
 
-        internal void Advance()
+        // Position the cursor one before the window start (the last `reps` balls) so the next
+        // Advance() lands on the first ball of the window. The coordinator drives the kickoff.
+        internal void StartAtLast(int reps)
         {
-            if (_balls == null || _balls.Count == 0) return;
-            _currentIndex = (_currentIndex + 1) % _balls.Count;
+            _currentIndex = _balls.Count - reps - 1;
+        }
+
+        // Advance to the next ball. Returns true if a valid ball was reached, false once the
+        // sequence has walked past the last ball (window finished).
+        internal bool Advance()
+        {
+            if (_balls == null || _balls.Count == 0) return false;
+            _currentIndex++;
+            if (_currentIndex >= _balls.Count) return false;
             OnBallChanged?.Invoke(CurrentBall);
+            return true;
         }
 
         #endregion

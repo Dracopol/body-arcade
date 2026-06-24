@@ -11149,6 +11149,7 @@ MonoBehaviour:
   _sequencer: {fileID: 1096373140}
   _spawner: {fileID: 1096373139}
   _alignToCamera: {fileID: 1096373141}
+  _reps: 3
 --- !u!1 &900716600
 GameObject:
   m_ObjectHideFlags: 0
