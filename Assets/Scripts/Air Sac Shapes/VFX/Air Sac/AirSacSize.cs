@@ -11,7 +11,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         [SerializeField] private Renderer _renderer;
 
         [Header("Behaviour")]
-        [SerializeField] private float _startSizeMultiplier = 1.5f;
+        [SerializeField] private float _healthySizeMultiplier = 1.5f;
 
         #endregion
 
@@ -27,7 +27,7 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
 
         private void Awake()
         {
-            ResetToStart();   // show enlarged Start size from session start, before any shape binds
+            ResetToStart();   // show default Start size from session start, before any shape binds
         }
 
         private void OnEnable()
@@ -74,15 +74,15 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         {
             EnsureInitialScale();
             _isWin = false;
-            ApplyScale(0f);   // small — antidote not yet injected
+            ApplyScale(0f);   // default size — antidote not yet injected
         }
 
-        // Skipped balls (outside the play window) start already healed: show the full play-end
-        // size and freeze so a later bind can't drag them back to the small Start look.
+        // Skipped balls (outside the play window) start already healed: show the enlarged play-end
+        // size and freeze so a later bind can't drag them back to the default Start look.
         internal void SetHealthy()
         {
             EnsureInitialScale();
-            ApplyScale(1f);   // full — already healed
+            ApplyScale(1f);   // enlarged — already healed
             _isWin = true;
         }
 
@@ -116,8 +116,8 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
         {
             if (_renderer == null) return;
 
-            // Start small (t=0) and grow to original (t=1) as antidote fills the air sac.
-            float scaleFactor = Mathf.Lerp(1f / _startSizeMultiplier, 1f, progress);
+            // Start at default size (t=0) and grow above it (t=1) as antidote fills the air sac.
+            float scaleFactor = Mathf.Lerp(1f, _healthySizeMultiplier, progress);
             _renderer.transform.localScale = _initialScale * scaleFactor;
         }
 
