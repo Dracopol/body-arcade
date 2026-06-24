@@ -3,6 +3,7 @@ using System;
 using System.Threading;
 using UnityEngine;
 using IMVR.BodyArcade.AirSacShapes.VFX.AirSac;
+using IMVR.BodyArcade.UiRobot;
 
 namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 {
@@ -14,8 +15,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         [SerializeField] private ShapeSpawner _spawner;
         [SerializeField] private BallAlignToCamera _alignToCamera;
 
-        // Temporary stand-in for the future SessionConfigAirSacShapes value: how many of the
-        // last balls to play. The sequence plays the last `_reps` balls, then wins.
+        // Fallback used when the scene runs without the config flow (no SessionConfigAirSacShapes
+        // instance). Otherwise the value comes from the config scene. How many of the last balls
+        // to play: the sequence plays the last `_reps` balls, then wins.
         [SerializeField] private int _reps = 1;
 
         #endregion
@@ -37,6 +39,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void Start()
         {
+            if (SessionConfigAirSacShapes.Instance != null)
+                _reps = SessionConfigAirSacShapes.Instance.Reps;
+
             _sequencer.StartAtLast(_reps);
             HealSkippedBalls();
             _sequencer.Advance(); // first ball → OnBallChanged → align → HandleAlignComplete spawns
