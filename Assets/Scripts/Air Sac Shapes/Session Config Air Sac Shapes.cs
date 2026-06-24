@@ -16,7 +16,7 @@ namespace IMVR.BodyArcade.UiRobot
 
         private void Awake()
         {
-            if (Instance != null)
+            if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
                 return;
@@ -24,6 +24,12 @@ namespace IMVR.BodyArcade.UiRobot
 
             Instance = this;
             DontDestroyOnLoad(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this)
+                Instance = null;
         }
     }
 }
