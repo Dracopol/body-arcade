@@ -177,8 +177,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.UiRobot.AirSacShapesPreparer
   _shapes:
+  - {fileID: 11400000, guid: b0dfcfad30928f04a989a4ffd4fa7b75, type: 2}
+  - {fileID: 11400000, guid: 52b75d6ac6cf3264c9e44c82912bfbab, type: 2}
+  - {fileID: 11400000, guid: 2f30e71d677ce5641bc071d945c152a9, type: 2}
+  - {fileID: 11400000, guid: c30a1d728d8490b4c8fee785ac2659ed, type: 2}
+  - {fileID: 11400000, guid: 13bddc7b0490a4944be381b3b3b1656c, type: 2}
+  - {fileID: 11400000, guid: abae6e03ce921a047889cfe31bec413b, type: 2}
+  - {fileID: 11400000, guid: 842732bb43eaad24ca01cd9a38d05bb5, type: 2}
+  - {fileID: 11400000, guid: 842732bb43eaad24ca01cd9a38d05bb5, type: 2}
   - {fileID: 11400000, guid: 4a8356c9a5f7020449c1051f3f2c0d04, type: 2}
-  - {fileID: 11400000, guid: 8a3161516d1869b45a35456d3ea468df, type: 2}
+  - {fileID: 11400000, guid: 972b0c4900617ab4ca66efc624beeb04, type: 2}
   _easyDrainSpeed: 0
   _easySplineRadius: 0.05
   _easyWinThreshold: 0.98
