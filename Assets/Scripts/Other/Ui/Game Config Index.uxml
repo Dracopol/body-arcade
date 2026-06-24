@@ -25,6 +25,25 @@
         <!-- Air Sac Shapes Content -->
         <ui:VisualElement name="content-airsac" class="game-content">
 
+            <!-- Repetitions -->
+            <ui:VisualElement class="section-card">
+                <ui:VisualElement class="section-header">
+                    <ui:VisualElement class="section-header__icon" />
+                    <ui:Label text="Repetitions" class="section-header__label" />
+                </ui:VisualElement>
+                <ui:VisualElement class="stepper-row">
+                    <ui:VisualElement name="reps-stepper-minus" class="stepper-btn">
+                        <ui:Label text="−" picking-mode="Ignore" class="stepper-btn__label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="stepper-value-box">
+                        <ui:Label name="reps-stepper-value" text="1" picking-mode="Ignore" class="stepper-value" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="reps-stepper-plus" class="stepper-btn">
+                        <ui:Label text="+" picking-mode="Ignore" class="stepper-btn__label" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
             <!-- Hand Mode -->
             <ui:VisualElement class="section-card">
                 <ui:VisualElement class="section-header">

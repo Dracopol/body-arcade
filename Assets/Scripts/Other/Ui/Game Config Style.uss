@@ -390,19 +390,18 @@
 .stepper-row {
     flex-direction: row;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
 }
 
 .stepper-btn {
-    width: 34px;
-    height: 34px;
+    flex: 1;
+    height: 48px;
     border-radius: 6px;
     border-width: 1px;
     border-color: #dddddd;
     background-color: #f5f5f5;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
     transition: background-color 0.1s;
 }
 
@@ -419,7 +418,7 @@
 }
 
 .stepper-btn__label {
-    font-size: 18px;
+    font-size: 24px;
     color: #111111;
     -unity-text-align: middle-center;
 }
@@ -428,7 +427,7 @@
     flex: 1;
     flex-direction: row;
     align-items: center;
-    height: 34px;
+    height: 48px;
     border-radius: 6px;
     border-width: 1px;
     border-color: #dddddd;
@@ -438,7 +437,7 @@
 
 .stepper-value {
     flex: 1;
-    font-size: 14px;
+    font-size: 18px;
     -unity-font-style: bold;
     color: #111111;
     -unity-text-align: middle-center;

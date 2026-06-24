@@ -73,6 +73,14 @@ namespace IMVR.BodyArcade.UiRobot
         private float         _handFocusBias = 0f;
 
 
+        // Reps stepper
+        private const int MinReps = 1;
+        private const int MaxReps = 25;
+        private VisualElement _repsStepperMinus;
+        private VisualElement _repsStepperPlus;
+        private Label         _repsStepperValue;
+        private int           _selectedReps = 1;
+
         // AirSac hand mode
         private List<VisualElement> _airsacHandModeBtns;
         private string              _selectedAirsacHandMode = "Both";
@@ -165,6 +173,10 @@ namespace IMVR.BodyArcade.UiRobot
             _neuroHeightSection     = _root.Q<VisualElement>("neuro-height");
             _neuroTargetBiasSection = _root.Q<VisualElement>("neuro-target-bias");
 
+            _repsStepperMinus = _root.Q<VisualElement>("reps-stepper-minus");
+            _repsStepperPlus  = _root.Q<VisualElement>("reps-stepper-plus");
+            _repsStepperValue = _root.Q<Label>("reps-stepper-value");
+
             _airsacHandModeBtns = new List<VisualElement>
             {
                 _root.Q<VisualElement>("airsac-hm-btn-left-mixed"),
@@ -208,6 +220,7 @@ namespace IMVR.BodyArcade.UiRobot
             RegisterFocusModeCallbacks();
             RegisterHeightModeCallbacks();
             RegisterHandFocusSliderCallbacks();
+            RegisterRepsStepperCallbacks();
             RegisterAirsacHandModeCallbacks();
             RegisterHandVizCallbacks();
             RegisterVibrationCallbacks();
@@ -237,6 +250,12 @@ namespace IMVR.BodyArcade.UiRobot
         {
             _vibrationBtns[0].RegisterCallback<ClickEvent>(_ => SelectVibration(false));
             _vibrationBtns[1].RegisterCallback<ClickEvent>(_ => SelectVibration(true));
+        }
+
+        private void RegisterRepsStepperCallbacks()
+        {
+            _repsStepperMinus.RegisterCallback<ClickEvent>(_ => SetReps(_selectedReps - 1));
+            _repsStepperPlus.RegisterCallback<ClickEvent>(_ => SetReps(_selectedReps + 1));
         }
 
         private void RegisterAirsacHandModeCallbacks()
@@ -286,6 +305,7 @@ namespace IMVR.BodyArcade.UiRobot
             SelectFocusMode(_selectedFocusMode);
             SelectHeightMode(_selectedHeightMode);
             SelectAirsacHandMode(_selectedAirsacHandMode, _selectedMirrorMode);
+            SetReps(_selectedReps);
             SelectHandViz(_handVisualization);
             SelectVibration(_vibration);
             SelectDifficulty(_selectedDifficulty);
@@ -313,6 +333,7 @@ namespace IMVR.BodyArcade.UiRobot
                 SessionConfigAirSacShapes.Instance.MirrorMode        = _selectedMirrorMode;
                 SessionConfigAirSacShapes.Instance.HandVisualization = _handVisualization;
                 SessionConfigAirSacShapes.Instance.Vibration         = _vibration;
+                SessionConfigAirSacShapes.Instance.Reps              = _selectedReps;
                 SessionConfigAirSacShapes.Instance.SelectedShapes    = _shapesPreparer.PrepareForDifficulty(_selectedDifficulty);
                 SceneManager.LoadScene(_airSacShapesSceneName);
             }
@@ -471,6 +492,14 @@ namespace IMVR.BodyArcade.UiRobot
             var labels = new[] { "Left", "Both", "Right" };
             for (int i = 0; i < _airsacHandModeBtns.Count; i++)
                 _airsacHandModeBtns[i].EnableInClassList("selected", labels[i] == mode);
+        }
+
+        private void SetReps(int reps)
+        {
+            _selectedReps = Mathf.Clamp(reps, MinReps, MaxReps);
+            _repsStepperValue.text = _selectedReps.ToString();
+            _repsStepperMinus.EnableInClassList("disabled", _selectedReps <= MinReps);
+            _repsStepperPlus.EnableInClassList("disabled", _selectedReps >= MaxReps);
         }
 
         private void SelectDifficulty(string difficulty)
