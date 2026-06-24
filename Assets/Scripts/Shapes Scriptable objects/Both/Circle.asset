@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a450de356361d3d488c40adad530674d, type: 3}
-  m_Name: Romb Down
+  m_Name: Circle
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ShapeConfig
-  DifficultyLabel: Easy
-  ThumbnailColor: {r: 0.2552525, g: 0.31629097, b: 0.84833866, a: 1}
-  ThumbnailSprite: {fileID: 0}
-  Prefab: {fileID: 3628128942024683711, guid: 3476351be725b674d9f9e577d9154a64, type: 3}
-  _thumbnailColorInitialized: 1
+  IsEasy: 1
+  IsMedium: 0
+  IsHard: 0
+  Prefab: {fileID: 3628128942024683711, guid: 55144b1cf2b64474b9044e4bbc17a03b, type: 3}

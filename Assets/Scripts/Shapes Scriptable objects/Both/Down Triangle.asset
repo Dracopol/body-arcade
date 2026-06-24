@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a450de356361d3d488c40adad530674d, type: 3}
+  m_Name: Down Triangle
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ShapeConfig
+  IsEasy: 1
+  IsMedium: 0
+  IsHard: 0
+  ThumbnailColor: {r: 0.8158733, g: 0.23816745, b: 0.15645017, a: 1}
+  ThumbnailSprite: {fileID: 0}
+  Prefab: {fileID: 3628128942024683711, guid: 9565f714dacbad648a461437d0a8f0c3, type: 3}
+  _thumbnailColorInitialized: 1
