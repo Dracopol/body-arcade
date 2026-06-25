@@ -34,6 +34,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         private float _maxProgress;
         private bool  _isWin;
         private bool  _isAnimatorDriven;
+        private bool  _isExternallyDriven;
         private bool  _wasHolding;
 
         private SplineProximity _splineProximity;
@@ -54,7 +55,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         internal void Tick()
         {
-            if (_isWin || _isAnimatorDriven ||
+            if (_isWin || _isAnimatorDriven || _isExternallyDriven ||
                 _handTransform == null || _splineProximity == null || _splineContainer == null)
             {
                 SetHolding(false);   // not in play mode — ensure released
@@ -97,11 +98,12 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         internal void ResetState()
         {
-            _isWin            = false;
-            _isAnimatorDriven = false;
-            _splineContainer  = null;
-            _splineProximity  = null;
-            _wasHolding       = false;
+            _isWin              = false;
+            _isAnimatorDriven   = false;
+            _isExternallyDriven = false;
+            _splineContainer    = null;
+            _splineProximity    = null;
+            _wasHolding         = false;
             SetProgress(0f);
             SetMaxProgress(0f);
         }
@@ -129,6 +131,21 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         internal void SetAnimatorDriven(bool driven)
         {
             _isAnimatorDriven = driven;
+        }
+
+        // Follower side in mirror modes: skip hand-driven Tick so progress can be mirrored
+        // from the source side via FollowProgress instead of the (imperfect) copy hand.
+        internal void SetExternallyDriven(bool driven)
+        {
+            _isExternallyDriven = driven;
+        }
+
+        // Mirror the source knob's progress; reuses the setters so events still fire and the
+        // existing win aggregation keeps working.
+        internal void FollowProgress(float progress, float maxProgress)
+        {
+            SetProgress(progress);
+            SetMaxProgress(maxProgress);
         }
 
         internal void ApplyDifficultySettings(float drainSpeed, float winThreshold)

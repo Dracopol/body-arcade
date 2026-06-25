@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
+using IMVR.BodyArcade.UiRobot;
 
 namespace IMVR.BodyArcade.AirSacShapes.Syringes
 {
@@ -33,6 +34,10 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         [SerializeField] private PlungerVisual _leftPlunger;
         [SerializeField] private PlungerVisual _rightPlunger;
 
+        // In mirror modes, the follower (copy) side mirrors the source knob's progress instead of
+        // being driven by the mirrored hand. Only gates behaviour inside mirror modes.
+        [SerializeField] private bool _mirrorFollowKnob = true;
+
         [Header("Plunger FX")]
         [SerializeField] private ParticleSystem _leftPlungerParticles;
         [SerializeField] private ParticleSystem _rightPlungerParticles;
@@ -56,6 +61,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         private bool _leftPlay;   // side is in play mode (enabled, not won)
         private bool _rightPlay;
         private bool _winSequenceStarted;
+
+        private MirrorMode _mirrorMode;
+        private bool       _followerActive;   // a follower side is wired for the current shape
 
         private int _activeSideCount;
         private int _winCount;
@@ -87,6 +95,10 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             }
 
             _cts = new CancellationTokenSource();
+
+            _mirrorMode = SessionConfigAirSacShapes.Instance != null
+                ? SessionConfigAirSacShapes.Instance.MirrorMode
+                : MirrorMode.Unmirrored;
         }
 
         private void OnEnable()
@@ -190,6 +202,16 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             _rightTracker.Tick();
             _leftAnimator.Tick();
             _rightAnimator.Tick();
+
+            // Mirror modes: after the source side ticks, copy its progress to the follower so the
+            // follower knob moves in lockstep instead of being pushed by the mirrored hand.
+            if (_followerActive)
+            {
+                PlungerTracker source   = SourceTracker;
+                PlungerTracker follower = FollowerTracker;
+                if (source != null && follower != null && !follower.IsWin)
+                    follower.FollowProgress(source.Progress, source.MaxProgress);
+            }
         }
 
         #endregion
@@ -229,6 +251,12 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
                     _rightTracker.SetKnobCollider(_rightPlunger.Collider);
                 }
             }
+
+            // In a mirror mode with both sides active, the follower side mirrors the source knob's
+            // progress instead of being hand-driven. Single-sided shapes have no follower.
+            _followerActive = _mirrorFollowKnob && IsMirrorMode && _activeSideCount == 2;
+            if (_followerActive)
+                FollowerTracker.SetExternallyDriven(true);
         }
 
         internal void SetLeftHand(Transform handTransform, Collider handCollider)
@@ -265,6 +293,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         {
             CancelPendingDestroy();
             ResetCounts();
+            _followerActive = false;
             _leftTracker.ResetState();
             _rightTracker.ResetState();
             _leftAnimator.ResetState();
@@ -418,12 +447,14 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         {
             if (_leftPlunger != null) { _leftPlunger.EndHint(); _leftPlunger.BeginTouchParticles(); }
             if (_haptics != null) _haptics.PlayTouch(Haptics.HapticManager.Side.Left);
+            FollowerTouchFeedback();   // no-op unless this is the source side of a mirror follow
         }
 
         private void HandleRightTouched()
         {
             if (_rightPlunger != null) { _rightPlunger.EndHint(); _rightPlunger.BeginTouchParticles(); }
             if (_haptics != null) _haptics.PlayTouch(Haptics.HapticManager.Side.Right);
+            FollowerTouchFeedback();
         }
 
         private void HandleLeftReleased()
@@ -432,6 +463,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             if (!_leftPlay) return;
             if (_leftPlunger != null) _leftPlunger.BeginHint();
             if (_haptics != null) _haptics.PlayRelease(Haptics.HapticManager.Side.Left);
+            FollowerReleaseFeedback();
         }
 
         private void HandleRightReleased()
@@ -440,6 +472,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             if (!_rightPlay) return;
             if (_rightPlunger != null) _rightPlunger.BeginHint();
             if (_haptics != null) _haptics.PlayRelease(Haptics.HapticManager.Side.Right);
+            FollowerReleaseFeedback();
         }
 
         private bool AllReached(ref int count) => ++count >= _activeSideCount;
@@ -470,6 +503,43 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             _winSequenceStarted = false;
             _leftPlay           = false;
             _rightPlay          = false;
+        }
+
+        // Source side = the real hand; follower side = the mirrored copy. MirrorRight plays the
+        // right hand (left follows); MirrorLeft plays the left hand (right follows).
+        private PlungerTracker SourceTracker => _mirrorMode == MirrorMode.MirrorLeft
+            ? _leftTracker
+            : _rightTracker;
+
+        private PlungerTracker FollowerTracker => _mirrorMode == MirrorMode.MirrorLeft
+            ? _rightTracker
+            : _leftTracker;
+
+        private PlungerVisual FollowerPlunger => _mirrorMode == MirrorMode.MirrorLeft
+            ? _rightPlunger
+            : _leftPlunger;
+
+        private Haptics.HapticManager.Side FollowerHapticSide => _mirrorMode == MirrorMode.MirrorLeft
+            ? Haptics.HapticManager.Side.Right
+            : Haptics.HapticManager.Side.Left;
+
+        private bool IsMirrorMode =>
+            _mirrorMode == MirrorMode.MirrorLeft || _mirrorMode == MirrorMode.MirrorRight;
+
+        // Mirror the source side's touch/release feedback onto the follower: knob particles + idle
+        // hint and a synchronized buzz on the follower's own controller.
+        private void FollowerTouchFeedback()
+        {
+            if (!_followerActive) return;
+            if (FollowerPlunger != null) { FollowerPlunger.EndHint(); FollowerPlunger.BeginTouchParticles(); }
+            if (_haptics != null) _haptics.PlayTouch(FollowerHapticSide);
+        }
+
+        private void FollowerReleaseFeedback()
+        {
+            if (!_followerActive) return;
+            if (FollowerPlunger != null) { FollowerPlunger.EndTouchParticles(); FollowerPlunger.BeginHint(); }
+            if (_haptics != null) _haptics.PlayRelease(FollowerHapticSide);
         }
 
         private void CancelPendingDestroy()
