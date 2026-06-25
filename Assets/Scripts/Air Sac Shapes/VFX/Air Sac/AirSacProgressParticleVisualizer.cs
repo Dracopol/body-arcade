@@ -3,12 +3,14 @@ using UnityEngine;
 
 namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
 {
+    // Punch-scale + particle burst for the air sac end animation. Driven explicitly by the
+    // end animator: Punch() runs on both win and fail; SpawnParticles() is win-only and
+    // returns the effect lifetime so the caller can hold teardown until it finishes.
     internal class AirSacProgressParticleVisualizer : MonoBehaviour
     {
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private Shape _progressTracker;
         [SerializeField] private ParticleSystem _particleEffectPrefab;
         [SerializeField] private Transform _scaleTarget;
 
@@ -26,57 +28,22 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
 
         #endregion
 
-        #region Setup
-
-        private void OnEnable()
-        {
-            if (_progressTracker != null)
-                _progressTracker.OnFirstFillComplete += HandleFirstFillComplete;
-        }
-
-        private void OnDisable()
-        {
-            if (_progressTracker != null)
-                _progressTracker.OnFirstFillComplete -= HandleFirstFillComplete;
-        }
-
-        #endregion
-
         #region Internal
 
-        internal void SetShape(Shape tracker)
+        // Squish-and-spring punch. Shared by win and fail.
+        internal void Punch()
         {
-            if (_progressTracker != null)
-                _progressTracker.OnFirstFillComplete -= HandleFirstFillComplete;
-
-            _progressTracker = tracker;
-
-            if (_progressTracker != null)
-                _progressTracker.OnFirstFillComplete += HandleFirstFillComplete;
+            if (_scaleTarget == null) return;
+            EnsureScale();
+            StopAllCoroutines();
+            StartCoroutine(PunchCoroutine());
         }
 
-        #endregion
-
-        #region Event handlers
-
-        private void HandleFirstFillComplete()
+        // Spawns the celebration particle burst (win only) and returns its lifetime in seconds
+        // (0 if there is no prefab) so the caller can delay teardown until the effect finishes.
+        internal float SpawnParticles()
         {
-            SpawnParticleEffect();
-            if (_scaleTarget != null)
-            {
-                EnsureScale();
-                StopAllCoroutines();
-                StartCoroutine(PunchCoroutine());
-            }
-        }
-
-        #endregion
-
-        #region Private
-
-        private void SpawnParticleEffect()
-        {
-            if (_particleEffectPrefab == null) return;
+            if (_particleEffectPrefab == null) return 0f;
 
             ParticleSystem instance = Instantiate(
                 _particleEffectPrefab,
@@ -87,8 +54,12 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
             float lifetime = main.duration + Mathf.Max(main.startLifetime.constantMax, main.startLifetime.constant, 2f);
             Destroy(instance.gameObject, lifetime);
 
-            _progressTracker.RegisterDestroyDelay(lifetime);
+            return lifetime;
         }
+
+        #endregion
+
+        #region Private
 
         private void EnsureScale()
         {

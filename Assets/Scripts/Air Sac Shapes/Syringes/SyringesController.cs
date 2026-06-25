@@ -18,6 +18,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         internal event Action OnAppearComplete;
         internal event Action OnComplete;
         internal event Action OnSourceHandReleased;   // real hand left the knob during active play
+        internal event Action OnFailReady;            // input locked + plungers retired — run fail visuals
+        internal event Action OnFailComplete;         // fail teardown delay elapsed — return to pool
 
         #endregion
 
@@ -62,6 +64,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         private bool _leftPlay;   // side is in play mode (enabled, not won)
         private bool _rightPlay;
         private bool _winSequenceStarted;
+        private bool _failSequenceStarted;
 
         private MirrorMode _mirrorMode;
         private bool       _followerActive;   // a follower side is wired for the current shape
@@ -77,6 +80,18 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         private float _destroyDelay;
 
         private CancellationTokenSource _cts;
+
+        #endregion
+
+        #region Properties
+
+        // Aggregated min of both sides' max progress (0 = sick, 1 = healed). The end animator
+        // reads this for the final fraction: win drives it to 1; fail holds the last play value.
+        internal float MinMaxProgress => _minMaxProgress;
+
+        // True once a fail sequence has started — lets the spawner pick win vs fail cues at the
+        // shared fill-complete moment.
+        internal bool IsFailing => _failSequenceStarted;
 
         #endregion
 
@@ -206,7 +221,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
             // Mirror modes: after the source side ticks, copy its progress to the follower so the
             // follower knob moves in lockstep instead of being pushed by the mirrored hand.
-            if (_followerActive)
+            // Stop mirroring once an end sequence starts: win sets follower.IsWin; fail has its own
+            // fill driving both sides, so the source→follower copy must not fight it.
+            if (_followerActive && !_failSequenceStarted)
             {
                 PlungerTracker source   = SourceTracker;
                 PlungerTracker follower = FollowerTracker;
@@ -354,6 +371,63 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             if (_rightTracker.SplineContainer != null) _rightTracker.TriggerWin();
         }
 
+        // Called by the game state on a timer/lives fail. Mirrors the win sequence's lock + retire,
+        // but never triggers win (so progress freezes at the fraction reached), then runs the fail
+        // visuals and delayed teardown. Deduped against win and repeat fails.
+        internal void TriggerFail()
+        {
+            if (_winSequenceStarted || _failSequenceStarted) return;
+            _failSequenceStarted = true;
+            FailSequenceAsync(_cts.Token).Forget();
+        }
+
+        private async UniTaskVoid FailSequenceAsync(CancellationToken ct)
+        {
+            // Leaving play mode — block input (freezes the drain, so MaxProgress holds the
+            // fraction reached), then retire the plungers exactly like the win sequence.
+            _leftPlay  = false;
+            _rightPlay = false;
+            if (_leftTracker.SplineContainer  != null) _leftTracker.SetAnimatorDriven(true);
+            if (_rightTracker.SplineContainer != null) _rightTracker.SetAnimatorDriven(true);
+
+            // Capture the fraction reached BEFORE the fill resets progress; this is what the green
+            // tube fills to and what the air sac reveals.
+            float fraction = ComputeMin(t => t.MaxProgress);
+
+            Action left  = _leftTracker.SplineContainer  != null ? DisableLeftPlunger  : (Action)null;
+            Action right = _rightTracker.SplineContainer != null ? DisableRightPlunger : (Action)null;
+
+            await _plungerSequencer.RunAsync(left, right, _plungerStepDelay, ct);
+            if (ct.IsCancellationRequested) return;
+
+            // Tell the spawner to begin the air sac reveal (follow the rising fill) + fail sound +
+            // connector drain, then start the green tube fail-fill to the captured fraction. The
+            // drain-complete (OnWinFillComplete) drives teardown for both outcomes.
+            OnFailReady?.Invoke();
+            StartEndFill(fraction);
+        }
+
+        // Begin the green fill on each active side toward the given target (1 for win, the fraction
+        // reached for fail). Resets progress to 0 so the fill sweeps cleanly from empty.
+        private void StartEndFill(float target)
+        {
+            if (_leftTracker.SplineContainer != null)
+            {
+                _leftVisualizer.HandleWinStateChange();   // tube → win/green colour
+                _leftTracker.SetProgress(0f);
+                _leftTracker.SetMaxProgress(0f);
+                _leftAnimator.TriggerFailFill(target);
+            }
+
+            if (_rightTracker.SplineContainer != null)
+            {
+                _rightVisualizer.HandleWinStateChange();
+                _rightTracker.SetProgress(0f);
+                _rightTracker.SetMaxProgress(0f);
+                _rightAnimator.TriggerFailFill(target);
+            }
+        }
+
         private void DisableLeftPlunger()
         {
             // Place FX before hiding so we still read the plunger's current position.
@@ -386,11 +460,14 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             if (AllReached(ref _firstFillCount)) OnFirstFillComplete?.Invoke();
         }
 
+        // End-fill drain finished on all sides (win or fail). Drives teardown for both: a fail
+        // routes to OnFailComplete, a win to OnComplete, after the registered VFX delay.
         private void HandleWinFillComplete()
         {
             if (!AllReached(ref _winFillCount)) return;
-            OnWinFillComplete?.Invoke();
-            DestroyAfterDelayAsync(_destroyDelay, _cts.Token).Forget();
+            bool won = !_failSequenceStarted;
+            if (won) OnWinFillComplete?.Invoke();
+            DestroyAfterDelayAsync(_destroyDelay, won, _cts.Token).Forget();
         }
 
         private void HandleAppearComplete()
@@ -503,10 +580,11 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             _appearCount        = 0;
             _minProgress        = 0f;
             _minMaxProgress     = 0f;
-            _destroyDelay       = 0f;
-            _winSequenceStarted = false;
-            _leftPlay           = false;
-            _rightPlay          = false;
+            _destroyDelay        = 0f;
+            _winSequenceStarted  = false;
+            _failSequenceStarted = false;
+            _leftPlay            = false;
+            _rightPlay           = false;
         }
 
         // Source side = the real hand; follower side = the mirrored copy. MirrorRight plays the
@@ -553,12 +631,16 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             _cts = new CancellationTokenSource();
         }
 
-        private async UniTaskVoid DestroyAfterDelayAsync(float delay, CancellationToken ct)
+        // Awaited by the fail sequence; fire-and-forgotten by the win path. Fires the matching
+        // completion event after the registered VFX delay so animations finish before teardown.
+        private async UniTask DestroyAfterDelayAsync(float delay, bool won, CancellationToken ct)
         {
             if (delay > 0f)
                 await UniTask.WaitForSeconds(delay, cancellationToken: ct);
-            if (!ct.IsCancellationRequested)
-                OnComplete?.Invoke();
+            if (ct.IsCancellationRequested) return;
+
+            if (won) OnComplete?.Invoke();
+            else     OnFailComplete?.Invoke();
         }
 
         #endregion

@@ -57,6 +57,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private void OnEnable()
         {
             _spawner.OnShapeWinFill        += HandleShapeWinFill;
+            _spawner.OnShapeFailFill       += HandleShapeFailFill;
             _spawner.OnShapeComplete       += HandleShapeComplete;
             _spawner.OnShapeFailed         += HandleShapeFailed;
             _spawner.OnShapeAppearComplete += HandleShapeAppearComplete;
@@ -66,6 +67,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private void OnDisable()
         {
             _spawner.OnShapeWinFill        -= HandleShapeWinFill;
+            _spawner.OnShapeFailFill       -= HandleShapeFailFill;
             _spawner.OnShapeComplete       -= HandleShapeComplete;
             _spawner.OnShapeFailed         -= HandleShapeFailed;
             _spawner.OnShapeAppearComplete -= HandleShapeAppearComplete;
@@ -78,6 +80,13 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
 
         private void HandleShapeWinFill()
         {
+            RetractConnectorAsync(_cts.Token).Forget();
+        }
+
+        // Fail: freeze the connector at its partial fill, then drain it away like a win retract.
+        private void HandleShapeFailFill()
+        {
+            _spawner.CurrentConnector?.FreezeFill();
             RetractConnectorAsync(_cts.Token).Forget();
         }
 

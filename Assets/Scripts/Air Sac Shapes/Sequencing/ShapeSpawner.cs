@@ -14,6 +14,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         internal event Action OnShapeComplete;
         internal event Action OnShapeFailed;
         internal event Action OnShapeWinFill;
+        internal event Action OnShapeFailFill;       // fail: input locked — run the connector drain
         internal event Action OnShapeAppearComplete;
 
         #endregion
@@ -48,10 +49,11 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         private GameObject _currentBall;
         private Shape      _currentShape;
 
-        // The current ball IS the air sac — its three visualizers, cached per cycle for unbind.
+        // The current ball IS the air sac — its visualizers + end animator, cached per cycle for unbind.
         private AirSacColor                      _airSacColor;
         private AirSacSize                       _airSacSize;
         private AirSacProgressParticleVisualizer _airSacParticles;
+        private AirSacEndAnimator                _airSacEnd;
 
         #endregion
 
@@ -73,6 +75,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             _syringes.OnWinFillComplete      += HandleWinFillComplete;
             _syringes.OnAppearComplete       += HandleAppearComplete;
             _syringes.OnComplete             += HandleComplete;
+            _syringes.OnFailReady            += HandleFailReady;
+            _syringes.OnFailComplete         += HandleFailComplete;
         }
 
         private void OnDisable()
@@ -85,6 +89,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             _syringes.OnWinFillComplete      -= HandleWinFillComplete;
             _syringes.OnAppearComplete       -= HandleAppearComplete;
             _syringes.OnComplete             -= HandleComplete;
+            _syringes.OnFailReady            -= HandleFailReady;
+            _syringes.OnFailComplete         -= HandleFailComplete;
         }
 
         private void Start()
@@ -130,15 +136,6 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         internal void RegisterDestroyDelay(float seconds)
         {
             if (_syringes != null) _syringes.RegisterDestroyDelay(seconds);
-        }
-
-        // Fail path: tear down the current shape (same as a win) but emit the failed signal so the
-        // coordinator advances and the game state tallies it as uncompleted. No win VFX.
-        internal void AbortCurrentShape()
-        {
-            if (_currentShape == null) return;
-            ReturnToPool();
-            OnShapeFailed?.Invoke();
         }
 
         #endregion
@@ -213,9 +210,29 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         #region Private — event handlers
 
         private void HandleMinProgressChange(float v)    { if (_currentShape) _currentShape.InvokeMinProgressChange(v); }
-        private void HandleMinMaxProgressChange(float v) { if (_currentShape) _currentShape.InvokeMinMaxChange(v); }
-        private void HandleWinStateChange()              { if (_currentShape) _currentShape.InvokeWinStateChange(); }
-        private void HandleFirstFillComplete()           { if (_currentShape) _currentShape.InvokeFirstFillComplete(); }
+
+        private void HandleMinMaxProgressChange(float v)
+        {
+            if (_currentShape) _currentShape.InvokeMinMaxChange(v);
+            // The green tube fill publishes min-max as it rises during the end reveal — the sac
+            // follows it (no-op until BeginReveal, so it stays sick during play).
+            _airSacEnd?.Follow(v);
+        }
+
+        private void HandleWinStateChange()
+        {
+            if (_currentShape) _currentShape.InvokeWinStateChange();
+            // Win: the tube has turned green and is about to fill — start the sac reveal.
+            _airSacEnd?.BeginReveal();
+        }
+
+        private void HandleFirstFillComplete()
+        {
+            if (_currentShape) _currentShape.InvokeFirstFillComplete();
+            // The fill reached its target (win = 1, fail = fraction): freeze the sac, punch, and
+            // on a win spawn particles. Win sound fires via the Shape event on SoundManager.
+            _airSacEnd?.FillComplete(won: _syringes == null || !_syringes.IsFailing);
+        }
 
         private void HandleWinFillComplete()
         {
@@ -233,6 +250,22 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         {
             ReturnToPool();
             OnShapeComplete?.Invoke();
+        }
+
+        // Fail: input is locked and plungers are retired. Begin the sac reveal (it will follow the
+        // green tube fail-fill up to the fraction reached), play the fail sound, and drain the
+        // connector. Punch + freeze happen at fill-complete, just like a win.
+        private void HandleFailReady()
+        {
+            _airSacEnd?.BeginReveal();
+            if (_audioProgress != null) _audioProgress.PlayShapeFail();
+            OnShapeFailFill?.Invoke();
+        }
+
+        private void HandleFailComplete()
+        {
+            ReturnToPool();
+            OnShapeFailed?.Invoke();
         }
 
         #endregion
@@ -265,8 +298,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             CurrentConnector = _connector;
         }
 
-        // The current ball IS the air sac. Grab its three visualizers, reset them to the
-        // Start look (so a replayed sac animates fresh), then bind this shape's progress.
+        // The current ball IS the air sac. Grab its visualizers + end animator and reset color/size
+        // to the sick Start look (no during-play animation now — the end animator reveals at the
+        // end). Inject the destroy-delay sink so the end animation holds teardown until it finishes.
         private void WireAirSac()
         {
             if (_currentShape == null || _currentBall == null) return;
@@ -274,20 +308,24 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             _airSacColor     = _currentBall.GetComponent<AirSacColor>();
             _airSacSize      = _currentBall.GetComponent<AirSacSize>();
             _airSacParticles = _currentBall.GetComponent<AirSacProgressParticleVisualizer>();
+            _airSacEnd       = _currentBall.GetComponent<AirSacEndAnimator>();
 
-            if (_airSacColor != null) { _airSacColor.ResetToStart(); _airSacColor.SetShape(_currentShape); }
-            if (_airSacSize  != null) { _airSacSize.ResetToStart();  _airSacSize.SetShape(_currentShape); }
-            if (_airSacParticles != null) _airSacParticles.SetShape(_currentShape);
+            if (_airSacColor != null) _airSacColor.ResetToStart();
+            if (_airSacSize  != null) _airSacSize.ResetToStart();
+            if (_airSacEnd   != null)
+            {
+                _airSacEnd.ResetReveal();
+                _airSacEnd.SetDestroyDelaySink(RegisterDestroyDelay);
+            }
         }
 
         private void UnbindAirSac()
         {
-            if (_airSacColor     != null) _airSacColor.SetShape(null);
-            if (_airSacSize      != null) _airSacSize.SetShape(null);
-            if (_airSacParticles != null) _airSacParticles.SetShape(null);
+            if (_airSacEnd != null) _airSacEnd.SetDestroyDelaySink(null);
             _airSacColor     = null;
             _airSacSize      = null;
             _airSacParticles = null;
+            _airSacEnd       = null;
         }
 
         #endregion

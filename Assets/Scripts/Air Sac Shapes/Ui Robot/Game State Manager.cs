@@ -101,7 +101,9 @@ namespace IMVR.BodyArcade.UiRobot
             if (_shapeEnding) return;
             _shapeEnding = true;
             _timer.StopTimer();
-            _spawner.AbortCurrentShape();
+            // Mirror the win flow: the syringes lock input, retire plungers, run the fail visuals
+            // (partial reveal + fail sound + connector drain), then tear down via OnFailComplete.
+            _syringes.TriggerFail();
         }
 
         #endregion

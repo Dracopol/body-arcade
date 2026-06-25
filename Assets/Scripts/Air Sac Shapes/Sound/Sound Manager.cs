@@ -12,6 +12,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
         [SerializeField] private AudioClip _progressClip;
         [SerializeField] private AudioClip _winProgressClip;
         [SerializeField] private AudioClip _winClip;
+        [SerializeField] private AudioClip _failClip;
 
         [Header("Plunger SFX")]
         [SerializeField] private AudioSource _plungerAudioSource;
@@ -74,6 +75,14 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
         {
             if (_plungerAudioSource != null && _plungerDisappearClip != null)
                 _plungerAudioSource.PlayOneShot(_plungerDisappearClip);
+        }
+
+        // Distinct cue for an incomplete shape (timer/lives fail). Counterpart to the win clip,
+        // played directly by the spawner's fail path (the win clip fires via the Shape event).
+        internal void PlayShapeFail()
+        {
+            if (_winAudioSource != null && _failClip != null)
+                _winAudioSource.PlayOneShot(_failClip);
         }
 
         private void OnEnable()

@@ -25,7 +25,10 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         private MeshRenderer _tube;
         private MeshRenderer _knob;
 
-        private bool _isWin;
+        // The end fill (win or fail) sweeps 0 → _fillTarget, then drains to 0. Win fills fully (1);
+        // a fail fills only to the fraction of progress reached.
+        private bool  _isEndFill;
+        private float _fillTarget = 1f;
         private bool _isWinFillComplete;
         private bool _isDisappearing;
         private bool _isAppearing;
@@ -61,7 +64,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
                 return;
             }
 
-            if (!_isWin) return;
+            if (!_isEndFill) return;
 
             if (_isDisappearing)
             {
@@ -70,7 +73,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
                 if (_tracker.Progress <= 0f)
                 {
                     _isDisappearing    = false;
-                    _isWin             = false;
+                    _isEndFill         = false;
                     if (_knob != null) _knob.enabled = false;
                     if (_tube != null) _tube.enabled = false;
                     OnWinFillComplete?.Invoke();
@@ -78,16 +81,16 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
                 return;
             }
 
-            // Win fill: sweep 0→1 once at fill speed, then hand off to the drain phase.
-            float filledProgress = Mathf.MoveTowards(_tracker.Progress, 1f, Time.deltaTime * _winFillSpeedPerSecond);
+            // End fill: sweep 0 → _fillTarget once at fill speed, then hand off to the drain phase.
+            float filledProgress = Mathf.MoveTowards(_tracker.Progress, _fillTarget, Time.deltaTime * _winFillSpeedPerSecond);
 
-            if (filledProgress >= 1f)
+            if (filledProgress >= _fillTarget)
             {
                 if (_isWinFillComplete) return;
                 _isWinFillComplete = true;
                 _isDisappearing    = true;
-                _tracker.SetProgress(1f);
-                _tracker.SetMaxProgress(1f);
+                _tracker.SetProgress(_fillTarget);
+                _tracker.SetMaxProgress(_fillTarget);
                 OnFirstFillComplete?.Invoke();
                 return;
             }
@@ -104,7 +107,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         internal void ResetState()
         {
-            _isWin             = false;
+            _isEndFill         = false;
+            _fillTarget        = 1f;
             _isWinFillComplete = false;
             _isDisappearing    = false;
             _isAppearing       = false;
@@ -121,9 +125,18 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             _tracker.SetMaxProgress(0f);
         }
 
+        // Win: fill the tube all the way (fraction 1) before draining.
         internal void HandleWinStateChange()
         {
-            _isWin = true;
+            _isEndFill  = true;
+            _fillTarget = 1f;
+        }
+
+        // Fail: fill the tube only to the fraction of progress reached, then drain (same machine).
+        internal void TriggerFailFill(float target)
+        {
+            _isEndFill  = true;
+            _fillTarget = Mathf.Clamp01(target);
         }
 
         #endregion

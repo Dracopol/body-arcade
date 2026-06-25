@@ -2,12 +2,14 @@ using UnityEngine;
 
 namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
 {
+    // Applies the air sac's size based on a fraction (0 = default, 1 = enlarged/healed).
+    // A pure "apply fraction" primitive: the end animator drives Apply() each frame from the
+    // green tube fill during the end reveal. Skipped balls use ResetToStart/SetHealthy.
     internal class AirSacSize : MonoBehaviour
     {
         #region Serialized fields
 
         [Header("References")]
-        [SerializeField] private Shape _progressTracker;
         [SerializeField] private Renderer _renderer;
 
         [Header("Behaviour")]
@@ -19,7 +21,6 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
 
         private Vector3 _initialScale;
         private bool _scaleCached;
-        private bool _isWin;
 
         #endregion
 
@@ -30,75 +31,29 @@ namespace IMVR.BodyArcade.AirSacShapes.VFX.AirSac
             ResetToStart();   // show default Start size from session start, before any shape binds
         }
 
-        private void OnEnable()
-        {
-            if (_progressTracker != null)
-            {
-                _progressTracker.OnMinMaxChange   += HandleMinMaxChanged;
-                _progressTracker.OnWinStateChange += HandleWinStateChange;
-            }
-        }
-
-        private void OnDisable()
-        {
-            if (_progressTracker != null)
-            {
-                _progressTracker.OnMinMaxChange   -= HandleMinMaxChanged;
-                _progressTracker.OnWinStateChange -= HandleWinStateChange;
-            }
-        }
-
         #endregion
 
         #region Internal
 
-        internal void SetShape(Shape tracker)
+        // Apply a healed fraction directly (0 = default, 1 = enlarged/healed). Driven each frame
+        // by the end animator as the green tube fill rises.
+        internal void Apply(float progress)
         {
-            if (_progressTracker != null)
-            {
-                _progressTracker.OnMinMaxChange   -= HandleMinMaxChanged;
-                _progressTracker.OnWinStateChange -= HandleWinStateChange;
-            }
-
-            _progressTracker = tracker;
-            _isWin           = false;
-
-            if (_progressTracker != null)
-            {
-                _progressTracker.OnMinMaxChange   += HandleMinMaxChanged;
-                _progressTracker.OnWinStateChange += HandleWinStateChange;
-            }
+            EnsureInitialScale();
+            ApplyScale(progress);
         }
 
         internal void ResetToStart()
         {
             EnsureInitialScale();
-            _isWin = false;
             ApplyScale(0f);   // default size — antidote not yet injected
         }
 
-        // Skipped balls (outside the play window) start already healed: show the enlarged play-end
-        // size and freeze so a later bind can't drag them back to the default Start look.
+        // Skipped balls (outside the play window) start already healed: show the enlarged play-end size.
         internal void SetHealthy()
         {
             EnsureInitialScale();
             ApplyScale(1f);   // enlarged — already healed
-            _isWin = true;
-        }
-
-        #endregion
-
-        #region Event handlers
-
-        private void HandleMinMaxChanged(float minMax)
-        {
-            if (_isWin) return;
-            ApplyScale(minMax);
-        }
-
-        private void HandleWinStateChange()
-        {
-            _isWin = true;
         }
 
         #endregion

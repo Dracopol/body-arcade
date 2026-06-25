@@ -2067,8 +2067,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63f8efbd13cb5d44ca3c0e98561076a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.UiRobot.RobotHover
-  _amplitudeMeters: 0.1
-  _cyclesPerSecond: 0.5
+  _amplitudeMeters: 0.05
+  _cyclesPerSecond: 0.3
+  _camera: {fileID: 224017794}
+  _yAxisOnly: 1
+  _yawOffsetDegrees: -90
 --- !u!1001 &357296870
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11742,6 +11745,7 @@ MonoBehaviour:
   _progressClip: {fileID: 8300000, guid: bcf304ec656a3924ba663ddf846caa3f, type: 3}
   _winProgressClip: {fileID: 8300000, guid: 49a269545fb14b3478b7da2dd1449247, type: 3}
   _winClip: {fileID: 8300000, guid: 870908489a0a37948a8ad97e3a857007, type: 3}
+  _failClip: {fileID: 8300000, guid: 23511a9d39bb7414c9fc11670861a1e4, type: 3}
   _plungerAudioSource: {fileID: 1414724242}
   _plungerAppearClip: {fileID: 8300000, guid: 82c3f4c15a7a80847a3d14da511e252b, type: 3}
   _plungerDisappearClip: {fileID: 8300000, guid: 23bbb0b06f2f12a4db61eb82bb0a569e, type: 3}

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4495437648748164367}
   - component: {fileID: 2963558882812849330}
   - component: {fileID: 8006994257403903540}
+  - component: {fileID: 8825317970737409220}
   m_Layer: 0
   m_Name: Airsac
   m_TagString: Untagged
@@ -106,7 +107,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb947bc0fee1ca8468dc4f45985ee08c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.Visualizers.AirSacProgressVisualizer
-  _progressTracker: {fileID: 0}
   _renderer: {fileID: 1357520862598228299}
   _startCellColor: {r: 0.7647059, g: 0.16078432, b: 0.16078432, a: 1}
   _startLineColor: {r: 0.58431375, g: 0.3137255, b: 0.3137255, a: 1}
@@ -122,7 +122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2338510584517ae4aaf79765226437f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.Visualizers.AirSacProgressParticleVisualizer
-  _progressTracker: {fileID: 0}
   _particleEffectPrefab: {fileID: 19861012, guid: 4e9c13d8b1156ee4ea3d901540833300, type: 3}
   _scaleTarget: {fileID: 5611540330118314555}
   _punchScale: 0.7
@@ -237,6 +236,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a24ee330b691554ab5b56e7906b3c64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.VFX.AirSacSize
-  _progressTracker: {fileID: 0}
   _renderer: {fileID: 1357520862598228299}
-  _startSizeMultiplier: 1.5
+  _healthySizeMultiplier: 1.5
+--- !u!114 &8825317970737409220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5788881781468919290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b24a1ac6d494fb43b9a6bb9db75c974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.AirSacShapes.VFX.AirSac.AirSacEndAnimator
+  _color: {fileID: 2071320697040299891}
+  _size: {fileID: 8006994257403903540}
+  _particles: {fileID: 4495437648748164367}
+  _revealDurationSeconds: 0.5

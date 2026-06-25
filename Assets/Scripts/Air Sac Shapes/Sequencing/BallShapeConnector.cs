@@ -112,6 +112,13 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             }
         }
 
+        // Fail first-cut: stop following play progress so the partly-filled connector holds its
+        // current fill, then RetractAsync drains it away (instead of the connector just vanishing).
+        internal void FreezeFill()
+        {
+            _fillFrozen = true;
+        }
+
         internal async UniTask RetractAsync(CancellationToken ct)
         {
             if (_shape != null)
