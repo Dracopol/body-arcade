@@ -14,6 +14,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         [SerializeField] private BallSequencer _sequencer;
         [SerializeField] private ShapeSpawner _spawner;
         [SerializeField] private BallAlignToCamera _alignToCamera;
+        [SerializeField] private GameStateManager _gameState;
 
         // Fallback used when the scene runs without the config flow (no SessionConfigAirSacShapes
         // instance). Otherwise the value comes from the config scene. How many of the last balls
@@ -57,6 +58,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         {
             _spawner.OnShapeWinFill        += HandleShapeWinFill;
             _spawner.OnShapeComplete       += HandleShapeComplete;
+            _spawner.OnShapeFailed         += HandleShapeFailed;
             _spawner.OnShapeAppearComplete += HandleShapeAppearComplete;
             _alignToCamera.OnAlignComplete += HandleAlignComplete;
         }
@@ -65,6 +67,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         {
             _spawner.OnShapeWinFill        -= HandleShapeWinFill;
             _spawner.OnShapeComplete       -= HandleShapeComplete;
+            _spawner.OnShapeFailed         -= HandleShapeFailed;
             _spawner.OnShapeAppearComplete -= HandleShapeAppearComplete;
             _alignToCamera.OnAlignComplete -= HandleAlignComplete;
         }
@@ -78,13 +81,24 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             RetractConnectorAsync(_cts.Token).Forget();
         }
 
-        private void HandleShapeComplete()
+        private void HandleShapeComplete() => AdvanceToNextOrFinish(won: true);
+
+        private void HandleShapeFailed() => AdvanceToNextOrFinish(won: false);
+
+        private void AdvanceToNextOrFinish(bool won)
         {
+            if (_gameState != null)
+            {
+                if (won) _gameState.RecordWon();
+                else     _gameState.RecordFailed();
+            }
+
             if (!_sequencer.Advance())
             {
-                Debug.Log("win"); // temporary stand-in for the real win flow
+                if (_gameState != null) _gameState.LogResult();
                 return;
             }
+
             GameObject ball = _sequencer.CurrentBall;
             if (ball == null) return;
             SpawnSequenceAsync(ball, _cts.Token).Forget();

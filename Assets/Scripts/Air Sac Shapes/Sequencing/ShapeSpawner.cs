@@ -12,6 +12,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         #region Events
 
         internal event Action OnShapeComplete;
+        internal event Action OnShapeFailed;
         internal event Action OnShapeWinFill;
         internal event Action OnShapeAppearComplete;
 
@@ -129,6 +130,15 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
         internal void RegisterDestroyDelay(float seconds)
         {
             if (_syringes != null) _syringes.RegisterDestroyDelay(seconds);
+        }
+
+        // Fail path: tear down the current shape (same as a win) but emit the failed signal so the
+        // coordinator advances and the game state tallies it as uncompleted. No win VFX.
+        internal void AbortCurrentShape()
+        {
+            if (_currentShape == null) return;
+            ReturnToPool();
+            OnShapeFailed?.Invoke();
         }
 
         #endregion

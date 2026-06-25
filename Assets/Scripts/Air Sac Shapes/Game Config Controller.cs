@@ -334,6 +334,8 @@ namespace IMVR.BodyArcade.UiRobot
                 SessionConfigAirSacShapes.Instance.HandVisualization = _handVisualization;
                 SessionConfigAirSacShapes.Instance.Vibration         = _vibration;
                 SessionConfigAirSacShapes.Instance.Reps              = _selectedReps;
+                SessionConfigAirSacShapes.Instance.StrikeAmount      = _shapesPreparer.LivesForDifficulty(_selectedDifficulty);
+                SessionConfigAirSacShapes.Instance.TimerSeconds      = _shapesPreparer.TimeSecondsForDifficulty(_selectedDifficulty);
                 SessionConfigAirSacShapes.Instance.SelectedShapes    = _shapesPreparer.PrepareForDifficulty(_selectedDifficulty);
                 SceneManager.LoadScene(_airSacShapesSceneName);
             }

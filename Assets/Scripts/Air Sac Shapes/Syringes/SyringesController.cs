@@ -17,6 +17,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         internal event Action OnWinFillComplete;
         internal event Action OnAppearComplete;
         internal event Action OnComplete;
+        internal event Action OnSourceHandReleased;   // real hand left the knob during active play
 
         #endregion
 
@@ -464,6 +465,8 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             if (_leftPlunger != null) _leftPlunger.BeginHint();
             if (_haptics != null) _haptics.PlayRelease(Haptics.HapticManager.Side.Left);
             FollowerReleaseFeedback();
+            // Only real (source) hands reach here — the follower's tracker never fires release.
+            OnSourceHandReleased?.Invoke();
         }
 
         private void HandleRightReleased()
@@ -473,6 +476,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             if (_rightPlunger != null) _rightPlunger.BeginHint();
             if (_haptics != null) _haptics.PlayRelease(Haptics.HapticManager.Side.Right);
             FollowerReleaseFeedback();
+            OnSourceHandReleased?.Invoke();
         }
 
         private bool AllReached(ref int count) => ++count >= _activeSideCount;

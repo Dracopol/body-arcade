@@ -70,6 +70,20 @@ namespace IMVR.BodyArcade.UiRobot
             return result;
         }
 
+        internal int LivesForDifficulty(string difficulty) => difficulty switch
+        {
+            "Medium" => _mediumLives,
+            "Hard"   => _hardLives,
+            _        => _easyLives
+        };
+
+        internal int TimeSecondsForDifficulty(string difficulty) => difficulty switch
+        {
+            "Medium" => _mediumTimeSeconds,
+            "Hard"   => _hardTimeSeconds,
+            _        => _easyTimeSeconds
+        };
+
         #endregion
     }
 }
