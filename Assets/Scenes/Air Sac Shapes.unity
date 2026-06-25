@@ -296,7 +296,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 82435258}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9b87ae5bac62614ebba3f97be05ecbd, type: 3}
   m_Name: 
@@ -26905,6 +26905,7 @@ MonoBehaviour:
   _palette: {fileID: 11400000, guid: a3ba9b9c2e37e774880e24af43c7e169, type: 2}
   _leftPlunger: {fileID: 2016060643}
   _rightPlunger: {fileID: 327795787}
+  _mirrorFollowKnob: 1
   _leftPlungerParticles: {fileID: 4114616940753262053}
   _rightPlungerParticles: {fileID: 1903503101}
   _plungerStepDelay: 0.2

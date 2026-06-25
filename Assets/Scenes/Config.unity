@@ -191,14 +191,17 @@ MonoBehaviour:
   _easyKnobSizeMultiplier: 2
   _easyWinThreshold: 0.98
   _easyLives: 5
-  _mediumDrainSpeed: 0.5
+  _easyTimeSeconds: 60
+  _mediumDrainSpeed: 0.3
   _mediumKnobSizeMultiplier: 1.5
   _mediumWinThreshold: 0.98
   _mediumLives: 4
+  _mediumTimeSeconds: 45
   _hardDrainSpeed: 5
   _hardKnobSizeMultiplier: 1
   _hardWinThreshold: 0.98
   _hardLives: 3
+  _hardTimeSeconds: 30
 --- !u!1 &62081607
 GameObject:
   m_ObjectHideFlags: 0
