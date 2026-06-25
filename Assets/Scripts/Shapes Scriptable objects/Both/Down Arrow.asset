@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Down Arrow
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ShapeConfig
   IsEasy: 1
-  IsMedium: 0
-  IsHard: 0
+  IsMedium: 1
+  IsHard: 1
   Prefab: {fileID: 3628128942024683711, guid: 3b7f0ad474b306f4ab82f73f963cb407, type: 3}

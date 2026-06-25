@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: Down Triangle
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ShapeConfig
   IsEasy: 1
-  IsMedium: 0
-  IsHard: 0
-  ThumbnailColor: {r: 0.8158733, g: 0.23816745, b: 0.15645017, a: 1}
-  ThumbnailSprite: {fileID: 0}
+  IsMedium: 1
+  IsHard: 1
   Prefab: {fileID: 3628128942024683711, guid: 9565f714dacbad648a461437d0a8f0c3, type: 3}
-  _thumbnailColorInitialized: 1

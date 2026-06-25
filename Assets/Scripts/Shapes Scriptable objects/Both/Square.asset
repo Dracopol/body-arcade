@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Square
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ShapeConfig
   IsEasy: 1
-  IsMedium: 0
-  IsHard: 0
+  IsMedium: 1
+  IsHard: 1
   Prefab: {fileID: 3628128942024683711, guid: 0d8da95813d84124c8094474a0572b62, type: 3}

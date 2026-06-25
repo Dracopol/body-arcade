@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Up Triangle
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.ShapeConfig
   IsEasy: 1
-  IsMedium: 0
-  IsHard: 0
+  IsMedium: 1
+  IsHard: 1
   Prefab: {fileID: 3628128942024683711, guid: 4f8716c38b95ff742b714354cc90943e, type: 3}
