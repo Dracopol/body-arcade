@@ -17,6 +17,7 @@ namespace IMVR.BodyArcade.UiRobot
         [SerializeField] private ShapeSpawner _spawner;
         [SerializeField] private SyringesController _syringes;
         [SerializeField] private SoundManager _soundManager;
+        [SerializeField] private DamageVignette _vignette;
 
         #endregion
 
@@ -82,6 +83,7 @@ namespace IMVR.BodyArcade.UiRobot
         private void HandleHandReleased()
         {
             if (_soundManager != null) _soundManager.PlayLoseLife();
+            if (_vignette != null) _vignette.Flash();
             _lives.LoseLife();   // no-op when unlimited; does not touch the timer (continuity)
         }
 
