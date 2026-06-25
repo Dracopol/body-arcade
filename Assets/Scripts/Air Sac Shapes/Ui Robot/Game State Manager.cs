@@ -1,6 +1,7 @@
 using UnityEngine;
 using IMVR.BodyArcade.AirSacShapes.Sequencing;
 using IMVR.BodyArcade.AirSacShapes.Syringes;
+using IMVR.BodyArcade.AirSacShapes.Sound;
 
 namespace IMVR.BodyArcade.UiRobot
 {
@@ -15,6 +16,7 @@ namespace IMVR.BodyArcade.UiRobot
         [SerializeField] private TimerUi _timer;
         [SerializeField] private ShapeSpawner _spawner;
         [SerializeField] private SyringesController _syringes;
+        [SerializeField] private SoundManager _soundManager;
 
         #endregion
 
@@ -79,6 +81,7 @@ namespace IMVR.BodyArcade.UiRobot
 
         private void HandleHandReleased()
         {
+            if (_soundManager != null) _soundManager.PlayLoseLife();
             _lives.LoseLife();   // no-op when unlimited; does not touch the timer (continuity)
         }
 

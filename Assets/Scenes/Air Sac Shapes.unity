@@ -587,6 +587,7 @@ MonoBehaviour:
   _timer: {fileID: 808404611}
   _spawner: {fileID: 1096373139}
   _syringes: {fileID: 2144714041}
+  _soundManager: {fileID: 1159008713}
 --- !u!1 &99798414
 GameObject:
   m_ObjectHideFlags: 0
@@ -8609,6 +8610,135 @@ Transform:
   - {fileID: 1384548947}
   m_Father: {fileID: 846022435}
   m_LocalEulerAnglesHint: {x: 1.858, y: -5.543, z: 8.566}
+--- !u!1 &588793199
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 588793201}
+  - component: {fileID: 588793200}
+  m_Layer: 0
+  m_Name: GameObject (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &588793200
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588793199}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &588793201
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588793199}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.41888, y: -0, z: 0.07591}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &616695568
 GameObject:
   m_ObjectHideFlags: 0
@@ -11746,6 +11876,8 @@ MonoBehaviour:
   _winProgressClip: {fileID: 8300000, guid: 49a269545fb14b3478b7da2dd1449247, type: 3}
   _winClip: {fileID: 8300000, guid: 870908489a0a37948a8ad97e3a857007, type: 3}
   _failClip: {fileID: 8300000, guid: 23511a9d39bb7414c9fc11670861a1e4, type: 3}
+  _loseLifeAudioSource: {fileID: 588793200}
+  _loseLifeClip: {fileID: 8300000, guid: 5dce290643c54a94aab5f7b536ec26dd, type: 3}
   _plungerAudioSource: {fileID: 1414724242}
   _plungerAppearClip: {fileID: 8300000, guid: 82c3f4c15a7a80847a3d14da511e252b, type: 3}
   _plungerDisappearClip: {fileID: 8300000, guid: 23bbb0b06f2f12a4db61eb82bb0a569e, type: 3}
@@ -35633,6 +35765,7 @@ SceneRoots:
   - {fileID: 682367412}
   - {fileID: 1748346117}
   - {fileID: 1414724243}
+  - {fileID: 588793201}
   - {fileID: 4114616940768472091}
   - {fileID: 1903503102}
   - {fileID: 1193820587}

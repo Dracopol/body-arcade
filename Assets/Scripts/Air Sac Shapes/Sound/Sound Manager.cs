@@ -14,6 +14,10 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
         [SerializeField] private AudioClip _winClip;
         [SerializeField] private AudioClip _failClip;
 
+        [Header("Lose Life SFX")]
+        [SerializeField] private AudioSource _loseLifeAudioSource;
+        [SerializeField] private AudioClip _loseLifeClip;
+
         [Header("Plunger SFX")]
         [SerializeField] private AudioSource _plungerAudioSource;
         [SerializeField] private AudioClip _plungerAppearClip;
@@ -83,6 +87,13 @@ namespace IMVR.BodyArcade.AirSacShapes.Sound
         {
             if (_winAudioSource != null && _failClip != null)
                 _winAudioSource.PlayOneShot(_failClip);
+        }
+
+        // Played by GameStateManager when the player loses a life (hand off the plunger).
+        internal void PlayLoseLife()
+        {
+            if (_loseLifeAudioSource != null && _loseLifeClip != null)
+                _loseLifeAudioSource.PlayOneShot(_loseLifeClip);
         }
 
         private void OnEnable()
