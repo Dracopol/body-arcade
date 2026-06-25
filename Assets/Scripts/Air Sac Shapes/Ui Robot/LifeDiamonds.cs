@@ -37,8 +37,9 @@ namespace IMVR.BodyArcade.UiRobot
 
         public void SetSlotEnabled(bool slotEnabled)
         {
-            _fillImage.enabled    = slotEnabled;
-            _outlineImage.enabled = slotEnabled;
+            // Toggle the whole GameObject so the layout group stops reserving
+            // space for unused slots, keeping the active hearts centered.
+            gameObject.SetActive(slotEnabled);
         }
 
         public void SetFilled(bool filled)

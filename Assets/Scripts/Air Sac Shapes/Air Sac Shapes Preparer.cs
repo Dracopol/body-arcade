@@ -15,16 +15,19 @@ namespace IMVR.BodyArcade.UiRobot
         [SerializeField] private float _easyDrainSpeed         = 5f;
         [SerializeField] private float _easyKnobSizeMultiplier = 1f;
         [SerializeField, Range(0f, 1f)] private float _easyWinThreshold = 0.98f;
+        [SerializeField] private int   _easyLives = 10;
 
         [Header("Medium")]
         [SerializeField] private float _mediumDrainSpeed         = 5f;
         [SerializeField] private float _mediumKnobSizeMultiplier = 1f;
         [SerializeField, Range(0f, 1f)] private float _mediumWinThreshold = 0.98f;
+        [SerializeField] private int   _mediumLives = 10;
 
         [Header("Hard")]
         [SerializeField] private float _hardDrainSpeed         = 5f;
         [SerializeField] private float _hardKnobSizeMultiplier = 1f;
         [SerializeField, Range(0f, 1f)] private float _hardWinThreshold = 0.98f;
+        [SerializeField] private int   _hardLives = 10;
 
         #endregion
 

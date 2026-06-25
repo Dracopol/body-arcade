@@ -2185,7 +2185,7 @@ MonoBehaviour:
   - {fileID: 603358059}
   - {fileID: 687535452}
   - {fileID: 734644904}
-  _editorStartingLives: 5
+  _editorStartingLives: 2
 --- !u!1 &1456912537
 GameObject:
   m_ObjectHideFlags: 0
@@ -2921,7 +2921,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_Spacing: 50
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
