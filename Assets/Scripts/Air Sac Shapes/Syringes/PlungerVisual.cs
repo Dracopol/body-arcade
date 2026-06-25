@@ -27,6 +27,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         private Spline _spline;
         private Transform _splineTransform;
 
+        private Vector3 _knobInitialScale;
+        private bool _knobScaleCached;
+
         #endregion
 
         #region Properties
@@ -70,6 +73,19 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         #endregion
 
         #region Internal
+
+        // Per-difficulty knob size: scale the spline-driven knob transform by multiplying its
+        // authored scale. Captured once so re-wiring across shapes doesn't compound the scale.
+        internal void SetKnobSizeMultiplier(float multiplier)
+        {
+            if (_target == null) return;
+            if (!_knobScaleCached)
+            {
+                _knobInitialScale = _target.localScale;
+                _knobScaleCached  = true;
+            }
+            _target.localScale = _knobInitialScale * multiplier;
+        }
 
         internal void SetTracker(PlungerTracker tracker, SplineContainer splineContainer)
         {

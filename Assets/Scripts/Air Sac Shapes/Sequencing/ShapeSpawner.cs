@@ -147,7 +147,7 @@ namespace IMVR.BodyArcade.AirSacShapes.Sequencing
             _currentShape.SetSpawner(this);
 
             if (_syringes != null)
-                _syringes.Wire(_currentShape, pooled.Prepared.DrainSpeed, pooled.Prepared.SplineRadius, pooled.Prepared.WinThreshold);
+                _syringes.Wire(_currentShape, pooled.Prepared.DrainSpeed, pooled.Prepared.KnobSizeMultiplier, pooled.Prepared.WinThreshold);
 
             AssignHands();
             WireConnector(_currentShape, _currentBall);

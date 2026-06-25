@@ -20,8 +20,6 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
         #region Fields
 
         // Difficulty tuning — supplied per spawn via ApplyDifficultySettings (from PreparedShape).
-        // unused by knob-gated Tick — kept for difficulty config compatibility
-        private float _tubeRadiusMeters    = 0.05f;
         private float _drainSpeedPerSecond = 5f;
         private float _winThreshold        = 0.98f;
 
@@ -133,10 +131,9 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             _isAnimatorDriven = driven;
         }
 
-        internal void ApplyDifficultySettings(float drainSpeed, float splineRadius, float winThreshold)
+        internal void ApplyDifficultySettings(float drainSpeed, float winThreshold)
         {
             _drainSpeedPerSecond = drainSpeed;
-            _tubeRadiusMeters    = splineRadius;
             _winThreshold        = winThreshold;
         }
 

@@ -196,19 +196,20 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
 
         #region Internal
 
-        internal void Wire(Shape shape, float drainSpeed, float splineRadius, float winThreshold)
+        internal void Wire(Shape shape, float drainSpeed, float knobSizeMultiplier, float winThreshold)
         {
             ResetCounts();
 
             if (shape.LeftSpline != null)
             {
                 _activeSideCount++;
-                _leftTracker.ApplyDifficultySettings(drainSpeed, splineRadius, winThreshold);
+                _leftTracker.ApplyDifficultySettings(drainSpeed, winThreshold);
                 _leftTracker.AssignSpline(shape.LeftSpline, shape.LeftIsReversed);
                 _leftAnimator.AssignRenderers(shape.LeftMeshRenderer, null);
                 _leftVisualizer.AssignMesh(shape.LeftMeshFilter, shape.LeftMeshRenderer, shape.LeftIsReversed);
                 if (_leftPlunger != null)
                 {
+                    _leftPlunger.SetKnobSizeMultiplier(knobSizeMultiplier);
                     _leftPlunger.SetTracker(_leftTracker, _leftTracker.SplineContainer);
                     _leftTracker.SetKnobCollider(_leftPlunger.Collider);
                 }
@@ -217,12 +218,13 @@ namespace IMVR.BodyArcade.AirSacShapes.Syringes
             if (shape.RightSpline != null)
             {
                 _activeSideCount++;
-                _rightTracker.ApplyDifficultySettings(drainSpeed, splineRadius, winThreshold);
+                _rightTracker.ApplyDifficultySettings(drainSpeed, winThreshold);
                 _rightTracker.AssignSpline(shape.RightSpline, shape.RightIsReversed);
                 _rightAnimator.AssignRenderers(shape.RightMeshRenderer, null);
                 _rightVisualizer.AssignMesh(shape.RightMeshFilter, shape.RightMeshRenderer, shape.RightIsReversed);
                 if (_rightPlunger != null)
                 {
+                    _rightPlunger.SetKnobSizeMultiplier(knobSizeMultiplier);
                     _rightPlunger.SetTracker(_rightTracker, _rightTracker.SplineContainer);
                     _rightTracker.SetKnobCollider(_rightPlunger.Collider);
                 }

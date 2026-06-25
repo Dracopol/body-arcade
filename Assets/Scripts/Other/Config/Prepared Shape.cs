@@ -6,7 +6,7 @@ namespace IMVR.BodyArcade.UiRobot
     {
         internal ShapeConfig Config;
         internal float DrainSpeed;
-        internal float SplineRadius;
+        internal float KnobSizeMultiplier;
         internal float WinThreshold;
     }
 }
