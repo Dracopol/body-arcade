@@ -1254,7 +1254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMVR.BodyArcade.UI.HandModeConfigController
   _document: {fileID: 1656794764}
   _airSacShapesSceneName: Air Sac Shapes
-  _neuromaniaSsceneName: Neuromania
+  _neuromaniaSsceneName: NeuroSmash
   _shapesPreparer: {fileID: 33224840}
 --- !u!1 &1836416747
 GameObject:
